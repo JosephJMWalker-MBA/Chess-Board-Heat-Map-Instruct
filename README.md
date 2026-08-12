@@ -70,4 +70,5 @@ See:
 - [`docs/CONCEPT.md`](docs/CONCEPT.md)
 - [`docs/MEASUREMENT_MODEL.md`](docs/MEASUREMENT_MODEL.md)
 - [`docs/ROADMAP.md`](docs/ROADMAP.md)
+- [`docs/DECISIONS.md`](docs/DECISIONS.md)
 - [`GEMINI.md`](GEMINI.md)
