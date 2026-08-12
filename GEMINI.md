@@ -7,8 +7,10 @@ Before changing code or architecture, read in full:
 1. `README.md`
 2. `docs/CONCEPT.md`
 3. `docs/MEASUREMENT_MODEL.md`
-4. `docs/ROADMAP.md`
-5. `docs/DECISIONS.md`
+4. `docs/ARCHITECTURE.md`
+5. `docs/ROADMAP.md`
+6. `docs/DECISIONS.md`
+7. `docs/MILESTONE_1.md` when Milestone 1 is active
 
 If implementation and documentation disagree about the product concept, stop and surface the conflict rather than silently redefining the concept.
 
@@ -34,9 +36,21 @@ Those may be evidence layers, but none independently defines leverage or pivotal
 
 A square can be evenly controlled yet pivotal. A heavily controlled square can be strategically irrelevant. Preserve this distinction in data models, naming, tests, and UI.
 
+## Architecture invariant
+
+The reference measurement pipeline is:
+
+`legal position -> Python analysis core -> Stockfish adapter -> versioned measurement records -> visualization`
+
+The Python analysis core must remain runnable and testable without the web layer.
+
+The web layer is a consumer of measurement records. Do not move legal move generation, engine execution, score normalization, square attribution, leverage, hazard, or pivotality semantics into frontend code for convenience.
+
+For the initial reference implementation, use native Stockfish execution adjacent to the Python core. Browser-side engine execution is deferred.
+
 ## Current implementation authority
 
-Follow the active milestone in `docs/ROADMAP.md`.
+Follow the active milestone in `docs/ROADMAP.md` and its milestone contract when present.
 
 Do not jump ahead because a later feature is easy to scaffold.
 
@@ -47,6 +61,7 @@ In particular, do not add:
 - user accounts,
 - nonstandard chess variants,
 - a composite pivotality score,
+- browser-side Stockfish,
 - or polished product infrastructure
 
 until the roadmap reaches those milestones or the maintainer explicitly changes scope.
@@ -141,8 +156,10 @@ Visual intensity must never imply more certainty than the underlying data suppor
 
 ## Current goal
 
+Milestone 1 is governed by `docs/MILESTONE_1.md`.
+
 The first meaningful implementation target is:
 
-> Given a legal FEN, return an inspectable set of legal-move engine consequences under a controlled analysis budget, with enough metadata to reproduce and compare the results.
+> Given a legal FEN, return an inspectable, versioned set of legal-move engine observations under a declared search budget, with explicit score perspective and enough metadata to reproduce the results.
 
-No heatmap is required until that evidence layer is trustworthy.
+No square heatmap, leverage score, hazard score, or pivotality score is required until that evidence layer is trustworthy.
