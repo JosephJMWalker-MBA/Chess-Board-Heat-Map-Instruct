@@ -130,20 +130,33 @@ ChessHeat should remain reproducible and inspectable at the measurement layer.
 
 ---
 
+## D-010 — Python analysis core with a versioned evidence boundary
+
+**Status:** Accepted
+
+**Decision:**
+
+ChessHeat will use a Python-first analysis core that communicates with Stockfish through a narrow engine adapter and emits versioned, structured measurement records. The analysis core must be runnable and testable without any web interface.
+
+The web visualization layer will consume those records. It must not own engine execution, score normalization, legal move generation, square attribution, leverage calculation, hazard calculation, or other measurement semantics.
+
+For the initial prototype, Stockfish should run as a native engine process adjacent to the Python analysis core. Browser-side WebAssembly engine execution may be considered later as a deployment optimization, but it is not the reference measurement implementation.
+
+The frontend framework remains intentionally undecided until the measurement pipeline is proven.
+
+**Reference flow:**
+
+`legal chess position -> Python analysis core -> Stockfish adapter -> raw engine evidence -> ChessHeat measurement records -> web visualization`
+
+**Reason:**
+
+The core research claim concerns measurement, not rendering. Separating the analysis instrument from the interface makes the measurement model independently testable, reproducible, inspectable, and replaceable. It also prevents UI convenience from quietly changing chess semantics.
+
+---
+
 ## Open decisions
 
 The following remain intentionally unresolved:
-
-### O-001 — Implementation stack
-
-Questions include:
-
-- browser-only vs local/server engine execution,
-- TypeScript vs Python analysis core,
-- Stockfish native binary vs WebAssembly integration,
-- frontend framework and chessboard library.
-
-Do not choose based solely on scaffolding convenience.
 
 ### O-002 — Engine budget
 
@@ -168,3 +181,7 @@ Need to validate which combination, if any, of consequence magnitude, PV recurre
 ### O-007 — Validation method
 
 Need to define human/chess-expert and fixture-based methods for determining whether ChessHeat surfaces genuinely useful positional structure.
+
+### O-008 — Web visualization stack
+
+Choose the frontend framework, board component strategy, and deployment shape only after the analysis core produces stable versioned measurement records. The UI must remain a consumer of measurement semantics, not their owner.
