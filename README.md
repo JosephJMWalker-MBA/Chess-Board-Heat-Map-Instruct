@@ -59,16 +59,30 @@ Stockfish is intended to serve as a **measurement instrument**, not as the produ
 
 Generative AI may eventually explain measured changes, but it must not invent the underlying chess evidence.
 
+## Reference architecture
+
+The reference measurement pipeline is deliberately engine-first and headless:
+
+`legal chess position -> Python analysis core -> Stockfish adapter -> versioned measurement records -> web visualization`
+
+The Python core owns chess measurement semantics. The future web interface consumes evidence rather than recreating engine or scoring logic in the browser.
+
 ## Current phase
 
-This repository begins with conceptual and measurement design before implementation. The first milestone is to produce a deterministic, inspectable prototype that can answer:
+**Milestone 1: Position + Engine Harness**
 
-> **Given a legal chess position, can we produce a useful square-level leverage map whose meaning is defensible and testable?**
+The immediate goal is not a heatmap. It is to establish trustworthy evidence:
+
+> **Given a legal FEN, can ChessHeat return a reproducible, inspectable engine observation for every legal root move under the same declared search budget?**
+
+Only after that layer is trustworthy will the project begin attributing consequence evidence to squares.
 
 See:
 
 - [`docs/CONCEPT.md`](docs/CONCEPT.md)
 - [`docs/MEASUREMENT_MODEL.md`](docs/MEASUREMENT_MODEL.md)
+- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)
 - [`docs/ROADMAP.md`](docs/ROADMAP.md)
 - [`docs/DECISIONS.md`](docs/DECISIONS.md)
+- [`docs/MILESTONE_1.md`](docs/MILESTONE_1.md)
 - [`GEMINI.md`](GEMINI.md)
