@@ -1,5 +1,5 @@
 import pytest
-from chessheat.models import AnalysisRecord, MoveObservation, Score, Regret, PlyObservation, SquareEffectRole
+from chessheat.models import AnalysisRecord, MoveObservation, Score, PlyObservation, SquareEffectRole
 from chessheat.recurrence import aggregate_square_recurrence
 
 def test_distinct_line_count():
@@ -12,7 +12,7 @@ def test_distinct_line_count():
         is_capture=False,
         resulting_fen="mock",
         score=Score(type="cp", value=10, perspective="white"),
-        regret=Regret(type="cp", value=0, perspective="white"),
+        regret=Score(type="cp", value=0, perspective="white"),
         parsed_pv=[
             PlyObservation(ply_number=1, uci="e2e4", origin="e2", destination="e4", roles=[SquareEffectRole.ORIGIN, SquareEffectRole.DESTINATION]),
             PlyObservation(ply_number=2, uci="d7d5", origin="d7", destination="d5", roles=[SquareEffectRole.ORIGIN, SquareEffectRole.DESTINATION]),
@@ -50,7 +50,7 @@ def test_multiple_lines():
         is_capture=False,
         resulting_fen="mock",
         score=Score(type="cp", value=10, perspective="white"),
-        regret=Regret(type="cp", value=0, perspective="white"),
+        regret=Score(type="cp", value=0, perspective="white"),
         parsed_pv=[
             PlyObservation(ply_number=1, uci="e2e4", origin="e2", destination="e4", roles=[SquareEffectRole.ORIGIN, SquareEffectRole.DESTINATION]),
             PlyObservation(ply_number=2, uci="d7d5", origin="d7", destination="d5", roles=[SquareEffectRole.ORIGIN, SquareEffectRole.DESTINATION]),
@@ -65,7 +65,7 @@ def test_multiple_lines():
         is_capture=False,
         resulting_fen="mock",
         score=Score(type="cp", value=5, perspective="white"),
-        regret=Regret(type="cp", value=5, perspective="white"),
+        regret=Score(type="cp", value=5, perspective="white"),
         parsed_pv=[
             PlyObservation(ply_number=1, uci="d2d4", origin="d2", destination="d4", roles=[SquareEffectRole.ORIGIN, SquareEffectRole.DESTINATION]),
             PlyObservation(ply_number=2, uci="d7d5", origin="d7", destination="d5", roles=[SquareEffectRole.ORIGIN, SquareEffectRole.DESTINATION]),
@@ -135,7 +135,7 @@ def test_candidate_policy_max_regret():
             uci=f"m{i}", san=f"M{i}", origin_square=f"a{i+1}", destination_square=f"b{i+1}",
             is_capture=False, is_castling=False, is_en_passant=False, resulting_fen="",
             score=Score(type="cp", value=100-i*10, perspective="white"),
-            regret=Regret(type="cp", value=i*10, perspective="white"),
+            regret=Score(type="cp", value=i*10, perspective="white"),
             parsed_pv=parsed_pv
         )
         obs_list.append(obs)
@@ -165,7 +165,7 @@ def test_candidate_policy_changes_denominator():
             uci=f"m{i}", san=f"M{i}", origin_square=f"a{i+1}", destination_square=f"b{i+1}",
             is_capture=False, is_castling=False, is_en_passant=False, resulting_fen="",
             score=Score(type="cp", value=100-i*10, perspective="white"),
-            regret=Regret(type="cp", value=i*10, perspective="white"),
+            regret=Score(type="cp", value=i*10, perspective="white"),
             parsed_pv=[PlyObservation(ply_number=1, uci=f"m{i}", origin=f"a{i+1}", destination=f"b{i+1}", roles=[SquareEffectRole.ORIGIN, SquareEffectRole.DESTINATION])]
         )
         obs_list.append(obs)

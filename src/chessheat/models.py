@@ -7,10 +7,7 @@ class Score(BaseModel):
     value: int
     perspective: Literal["white", "black"]
 
-class Regret(BaseModel):
-    type: Literal["cp", "mate_diff", "mixed"]
-    value: Optional[int]
-    perspective: Literal["white", "black"]
+
 
 class SquareEffectRole(str, Enum):
     ORIGIN = "origin"
@@ -30,7 +27,7 @@ class ImplicatedMove(BaseModel):
     uci: str
     roles: List[SquareEffectRole]
     outcome: Score
-    regret: Optional[Regret] = None
+    regret: Optional[Score] = None
     promotion: Optional[str] = None
 
 class SquareAttribution(BaseModel):
@@ -77,7 +74,7 @@ class MoveObservation(BaseModel):
     is_en_passant: bool = False
     resulting_fen: str
     score: Score
-    regret: Optional[Regret] = None
+    regret: Optional[Score] = None
     principal_variation: Optional[List[str]] = None
     parsed_pv: List[PlyObservation] = Field(default_factory=list)
 
@@ -140,7 +137,7 @@ class CandidateProvenance(BaseModel):
     admitted_count: int
     admitted_root_moves: List[str]
     candidate_scores: Dict[str, Score]
-    candidate_regrets: Dict[str, Regret]
+    candidate_regrets: Dict[str, Score]
     aggregated_pvs: int
 
 class RecurrenceResult(BaseModel):

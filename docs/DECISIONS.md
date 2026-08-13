@@ -351,3 +351,5 @@ Should files, diagonals, corridors, king zones, pawn complexes, and disjoint tac
 ### O-012 — Temporal Ledger
 
 Can move history provide a distinct measurable description of investment, optionality, conversion, and persistence while preserving current-state invariance under true transpositions?
+
+**Status (T1.10a):** The core Temporal Ledger architecture and consequence primitives have been implemented and secured under a strict semantic protocol. It correctly measures historical reappearance and counterfactual outcomes without contaminating current-state amplitude logic.

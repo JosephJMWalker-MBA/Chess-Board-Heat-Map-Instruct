@@ -1,3 +1,7 @@
+> [!WARNING]
+> **Superseded Document**
+> The results described in this report are retained as **development and forensic evidence (T1.8-D)**. It is not a valid preregistered experiment. The claimed fixture preflight failed to ensure transition eligibility, and the execution lacked a strict seal. See `t1_8a_audit_report.md` for the forensic audit.
+
 # T1.8 — Preregistered Structural Conversion Challenge Suite
 
 This report presents the results of executing the T1.8 preregistered 14-fixture challenge suite (C1–C14) against the frozen Temporal Ledger and Consequence architectures.

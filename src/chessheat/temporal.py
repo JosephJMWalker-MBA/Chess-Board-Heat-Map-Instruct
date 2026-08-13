@@ -432,6 +432,12 @@ def build_temporal_ledger_from_pgn(pgn_string: str) -> TemporalLedger:
                         co.is_removed_left_censored = rem_event.is_left_censored and start == 0
                         break
             
+            def check_reappearance(event, current_ply):
+                for (start, end) in event.active_intervals:
+                    if end is not None and end <= current_ply and start < current_ply:
+                        return True
+                return False
+                
             if born_event:
                 # Find the interval that started at this transition ply
                 for (start, end) in born_event.active_intervals:
@@ -440,7 +446,7 @@ def build_temporal_ledger_from_pgn(pgn_string: str) -> TemporalLedger:
                         co.observed_duration_of_born_episode = effective_end - start
                         co.is_born_right_censored = (end is None)
                         break
-                co.is_born_reappearance = born_event.episode_count() > 1 and co.born_event_signature in previously_observed_signatures
+                co.is_born_reappearance = check_reappearance(born_event, co.ply)
                 
         for cf in transition.counterfactual_evidence:
             rem_event = active_events_dict.get(cf.predecessor_signature)
@@ -460,7 +466,7 @@ def build_temporal_ledger_from_pgn(pgn_string: str) -> TemporalLedger:
                         cf.observed_duration_of_born_episode = effective_end - start
                         cf.is_born_right_censored = (end is None)
                         break
-                cf.is_born_reappearance = born_event.episode_count() > 1 and cf.successor_signature in previously_observed_signatures
+                cf.is_born_reappearance = check_reappearance(born_event, transition.ply)
 
     return TemporalLedger(
         final_fen=board.fen(),

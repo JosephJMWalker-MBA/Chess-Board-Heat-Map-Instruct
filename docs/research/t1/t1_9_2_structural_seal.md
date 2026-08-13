@@ -1,3 +1,7 @@
+> [!WARNING]
+> **Insufficient Seal**
+> The seal described below was anchored to a stale git tree (the commit SHA merely added a readme, while the working tree contained the actual T1 architecture). T1.9a determined this seal was insufficient and broke provenance.
+
 # T1.9.2 — Structural Seal
 
 ## Mechanical Preflight Verification

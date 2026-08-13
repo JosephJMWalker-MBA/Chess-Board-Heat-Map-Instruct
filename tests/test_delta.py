@@ -58,10 +58,10 @@ def test_analyze_transition_perspectives():
 
 def test_compute_square_deltas_states():
     # Setup some mock attributions
-    from chessheat.models import SquareAttribution, ImplicatedMove, Score, Regret, SquareEffectRole
+    from chessheat.models import SquareAttribution, ImplicatedMove, Score, SquareEffectRole
 
-    m1 = ImplicatedMove(uci="e2e4", roles=[SquareEffectRole.DESTINATION], outcome=Score(type="cp", value=10, perspective="white"), regret=Regret(type="cp", value=0, perspective="white"))
-    m2 = ImplicatedMove(uci="d2d4", roles=[SquareEffectRole.DESTINATION], outcome=Score(type="cp", value=5, perspective="white"), regret=Regret(type="cp", value=5, perspective="white"))
+    m1 = ImplicatedMove(uci="e2e4", roles=[SquareEffectRole.DESTINATION], outcome=Score(type="cp", value=10, perspective="white"), regret=Score(type="cp", value=0, perspective="white"))
+    m2 = ImplicatedMove(uci="d2d4", roles=[SquareEffectRole.DESTINATION], outcome=Score(type="cp", value=5, perspective="white"), regret=Score(type="cp", value=5, perspective="white"))
 
     # e4 was present before and after -> persisted
     before_e4 = SquareAttribution(square="e4", implicated_moves=[m1, m2])

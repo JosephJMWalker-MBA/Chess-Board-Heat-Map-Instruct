@@ -1,3 +1,7 @@
+> [!WARNING]
+> **Superseded Document**
+> The design described in this report is retained as **development and forensic evidence (T1.8-D)**. It is not a valid preregistered experiment. See `t1_8a_audit_report.md` and `t1_8b_validation_protocol.md`.
+
 # T1.8 — Preregistered Structural Conversion Challenge Suite Report
 
 ## Overview

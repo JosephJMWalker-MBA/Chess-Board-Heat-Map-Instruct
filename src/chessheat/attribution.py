@@ -1,25 +1,6 @@
 from typing import Dict, List, Optional
-from .models import AnalysisRecord, MoveObservation, Regret, Score, SquareEffectRole, SquareAttribution, ImplicatedMove
-
-def calculate_regret(best_score: Score, move_score: Score) -> Regret:
-    # Both scores must be from the same perspective
-    assert best_score.perspective == move_score.perspective
-
-    if best_score.type == "cp" and move_score.type == "cp":
-        # Best score is higher, so regret is best - move
-        diff = best_score.value - move_score.value
-        return Regret(type="cp", value=diff, perspective=best_score.perspective)
-    elif best_score.type == "mate" and move_score.type == "mate":
-        # Mate values: positive is mate in X for us, negative is mate in X against us.
-        # Actually it's simpler to just not do math on mates for now, or just track difference.
-        # But difference between mates isn't a linear "regret". Let's use mixed/null for mate regret for now
-        # to avoid bad math, unless they are literally identical.
-        if best_score.value == move_score.value:
-            return Regret(type="mate_diff", value=0, perspective=best_score.perspective)
-        return Regret(type="mate_diff", value=None, perspective=best_score.perspective)
-    else:
-        # Mixed
-        return Regret(type="mixed", value=None, perspective=best_score.perspective)
+from .models import AnalysisRecord, MoveObservation, Score, SquareEffectRole, SquareAttribution, ImplicatedMove
+from .consequence import compute_regrets
 
 def extract_direct_effects(move_obs: MoveObservation) -> Dict[str, List[SquareEffectRole]]:
     effects: Dict[str, List[SquareEffectRole]] = {}
@@ -96,21 +77,17 @@ def aggregate_square_attributions(record: AnalysisRecord) -> Dict[str, SquareAtt
     if not record.move_observations:
         return {}
 
-    # 1. Find best move to calculate regret
-    best_move_obs = record.move_observations[0]
-    for obs in record.move_observations[1:]:
-        if compare_scores(obs.score, best_move_obs.score) > 0:
-            best_move_obs = obs
-
-    best_score = best_move_obs.score
+    # 1. Compute regrets globally for the root universe
+    scores_dict = {obs.san: obs.score for obs in record.move_observations}
+    all_regrets = compute_regrets(scores_dict)
 
     # 2. Map moves to squares
     # square -> list of move observations
     square_moves: Dict[str, List[MoveObservation]] = {}
 
     for obs in record.move_observations:
-        # compute regret
-        obs.regret = calculate_regret(best_score, obs.score)
+        # assign regret
+        obs.regret = all_regrets[obs.san]
 
         effects = extract_direct_effects(obs)
         for sq in effects.keys():

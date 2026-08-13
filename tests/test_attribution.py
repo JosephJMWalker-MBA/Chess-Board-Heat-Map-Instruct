@@ -1,6 +1,7 @@
 import pytest
 from chessheat.models import MoveObservation, Score, SquareEffectRole, AnalysisRecord
-from chessheat.attribution import calculate_regret, extract_direct_effects, compare_scores, aggregate_square_attributions
+from chessheat.attribution import extract_direct_effects, compare_scores, aggregate_square_attributions
+from chessheat.consequence import compute_regrets
 
 def test_compare_scores():
     # white perspective
@@ -19,19 +20,18 @@ def test_compare_scores():
     s5 = Score(type="mate", value=1, perspective="white")
     assert compare_scores(s5, s3) == 1 # mate in 1 is better than mate in 2
 
-def test_calculate_regret():
+def test_compute_regrets():
     best = Score(type="cp", value=50, perspective="white")
     move = Score(type="cp", value=10, perspective="white")
+    
+    regrets = compute_regrets({"best": best, "move": move})
+    assert regrets["move"].value == 40
+    assert regrets["move"].type == "cp"
 
-    r = calculate_regret(best, move)
-    assert r.type == "cp"
-    assert r.value == 40
-
-    # mixed
-    best_m = Score(type="mate", value=3, perspective="white")
-    r2 = calculate_regret(best_m, move)
-    assert r2.type == "mixed"
-    assert r2.value is None
+    best_m = Score(type="mate", value=1, perspective="white")
+    regrets_mixed = compute_regrets({"best": best_m, "move": move})
+    assert regrets_mixed["best"].type == "mate"
+    assert regrets_mixed["best"].value == 1
 
 def test_extract_direct_effects():
     # normal move

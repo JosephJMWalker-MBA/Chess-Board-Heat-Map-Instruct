@@ -1,5 +1,5 @@
 import pytest
-from chessheat.models import AnalysisRecord, MoveObservation, Score, Regret, EventBundle
+from chessheat.models import AnalysisRecord, MoveObservation, Score, EventBundle
 from chessheat.geometry import GeometryDelta, AttackRelationship, PieceRef
 from chessheat.association import aggregate_bundle_leverage, _compute_distribution
 
@@ -23,19 +23,19 @@ def test_bundle_leverage():
         uci="e2e4", san="e4", origin_square="e2", destination_square="e4",
         is_capture=False, resulting_fen="f1",
         score=Score(type="cp", value=100, perspective="white"),
-        regret=Regret(type="cp", value=0, perspective="white")
+        regret=Score(type="cp", value=0, perspective="white"),
     )
     obs2 = MoveObservation(
         uci="d2d4", san="d4", origin_square="d2", destination_square="d4",
         is_capture=False, resulting_fen="f2",
         score=Score(type="cp", value=80, perspective="white"),
-        regret=Regret(type="cp", value=20, perspective="white")
+        regret=Score(type="cp", value=20, perspective="white")
     )
     obs3 = MoveObservation(
         uci="g1f3", san="Nf3", origin_square="g1", destination_square="f3",
         is_capture=False, resulting_fen="f3",
         score=Score(type="cp", value=50, perspective="white"),
-        regret=Regret(type="cp", value=50, perspective="white")
+        regret=Score(type="cp", value=50, perspective="white"),
     )
 
     record = AnalysisRecord(

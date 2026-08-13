@@ -1,3 +1,7 @@
+> [!WARNING]
+> **Superseded Document**
+> The execution described in this report is retained as **development and forensic evidence (T1.8-D)**. It is not a valid preregistered experiment. The claimed fixture preflight failed to ensure transition eligibility (e.g., C1/C2/C5 were invalid), and the execution suffered from runtime script mutation. See `t1_8a_audit_report.md` for the forensic audit.
+
 # T1.8 — Structural Conversion Evidence Bundles & Falsification Report
 
 > [!WARNING]

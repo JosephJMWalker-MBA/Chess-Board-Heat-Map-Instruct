@@ -157,7 +157,7 @@ Until then, separate evidence layers remain the scientifically preferred represe
 
 ## Research Track T1 — Temporal Ledger
 
-**Status: Proposed; do not fuse into current-state heat yet**
+**Status: Under active measurement validation (T1.10a). Do not fuse into current-state heat yet.**
 
 Question:
 

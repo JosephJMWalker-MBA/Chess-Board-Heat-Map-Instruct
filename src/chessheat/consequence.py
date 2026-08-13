@@ -93,15 +93,33 @@ class ConversionEvidenceBundle(BaseModel):
     def is_isolated(self) -> bool:
         return len(self.candidates) == 1
 
-def compute_regret(baseline: Score, move_score: Score) -> Score:
-    if baseline.type == 'cp' and move_score.type == 'cp':
-        return Score(type='cp', value=baseline.value - move_score.value, perspective=baseline.perspective)
-    elif baseline.type == 'mate' and move_score.type == 'mate':
-        return Score(type='mate', value=baseline.value - move_score.value, perspective=baseline.perspective)
-    else:
-        # Mixed types - return the move score directly as the regret is technically undefined in CP terms
-        return move_score
+def compute_regrets(scores: Dict[str, Score]) -> Dict[str, Score]:
+    """
+    Authoritative primitive for computing typed regrets across a legal root universe.
+    E^* = max(E(m)) over CP-comparable roots.
+    R(m) = E^* - E(m) >= 0.
+    Mate outcomes preserve typing.
+    """
+    # 1. Identify E^* strictly from CP-comparable outcomes
+    cp_scores = [s.value for s in scores.values() if s.type == 'cp']
+    e_star = max(cp_scores) if cp_scores else None
 
+    regrets = {}
+    for m, s in scores.items():
+        if s.type == 'mate':
+            # Preserve mate typing
+            regrets[m] = Score(type='mate', value=s.value, perspective=s.perspective)
+        else:
+            if e_star is None:
+                # This should not happen unless there are no CP comparable roots (all-mate position)
+                # But if all are mate, then s.type would be 'mate' and we wouldn't be in this else block.
+                raise ValueError(f"No CP scores found but processing a CP move {m}.")
+            r = e_star - s.value
+            if r < 0:
+                raise ValueError(f"Regret invariant violated! R(m)={r} < 0 for {m}")
+            regrets[m] = Score(type='cp', value=r, perspective=s.perspective)
+            
+    return regrets
 def couple_consequences(ledger: TemporalLedger, adapter: EngineAdapter, budget_type: str, budget_value: int, comparison_perspective: Optional[str] = None) -> List[ConversionEvidenceBundle]:
     all_candidates = []
     analysis_cache: Dict[str, AnalysisRecord] = {}
@@ -119,6 +137,8 @@ def couple_consequences(ledger: TemporalLedger, adapter: EngineAdapter, budget_t
         baseline = record.baseline_observation
         
         move_obs_dict: Dict[str, MoveObservation] = {obs.san: obs for obs in record.move_observations}
+        all_scores = {m: obs.score for m, obs in move_obs_dict.items()}
+        all_regrets = compute_regrets(all_scores)
         
         for cf in transition.counterfactual_evidence:
             candidate = ConversionCandidateEvidence(
@@ -132,8 +152,7 @@ def couple_consequences(ledger: TemporalLedger, adapter: EngineAdapter, budget_t
                         obs = move_obs_dict[m]
                         partition.moves.append(m)
                         partition.outcomes.append(obs.score)
-                        regret = compute_regret(baseline, obs.score)
-                        partition.regrets.append(regret)
+                        partition.regrets.append(all_regrets[m])
                         
             populate_partition(cf.m_11, candidate.m11_outcomes)
             populate_partition(cf.m_10, candidate.m10_outcomes)

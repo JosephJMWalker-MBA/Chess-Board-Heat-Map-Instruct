@@ -92,27 +92,26 @@ Established or strongly supported so far:
 
 The hostile W-suite is preserved as development / hostile-validation evidence, **not** as pristine one-shot final validation. Several fixture and execution-protocol failures were retained rather than rewritten.
 
-### Immediate next step — M8.6.4
+### Current state — T1 Consequence & Temporal Validation
 
-Before any new threshold tuning, perform a semantic-integrity audit of Recurrence and `ShapeSelectivity-v1`.
+The project is currently finalizing **Track 1 (T1) — Consequence, Counterfactuals, and Reappearance**. 
+T1 implements the architecture for a unified mathematical model of **opportunity cost (regret)** and a **Temporal Ledger** tracking board state evolution across moves.
 
-The audit must resolve:
+Recent validation work under T1.10a has formalized:
+- A unified regret primitive guaranteeing $R(m) \ge 0$.
+- Engine-free fixture preflight asserting invariant eligibility before expensive engine search.
+- A strict execution seal (commit SHA, manifest hashing, clean tree verification).
+- Comprehensive temporal evidence outputs (observed age, duration, censoring, reappearance, bundle identity).
 
-- exact per-channel observed / rejected / selected states;
-- the invariant `distinct_line_count <= admitted_candidate_count`;
-- historical reports of recurrence counts larger than the admitted candidate set;
-- the distinction between legal root moves, admitted recurrence candidates, PV length, distinct candidate lines, and total visits;
-- the fact that the current selectivity helper returns one prioritized channel source and one prioritized rejection reason rather than a complete independent multi-channel state record.
+The T1.8 and T1.9 experimental runs are retained exclusively as **development and forensic evidence**, having exposed edge cases that T1.10a subsequently repaired.
 
-Do not retune `ShapeSelectivity-v1` during this audit.
+## Emergent Research Note
 
-## Future research
+ChessHeat is increasingly producing an inspectable representational language for chess decision structure—state, alternatives, geometry, consequence, temporal succession, persistence, confounding, and evidentiary limits. 
 
-A separate **Temporal Ledger** research track is proposed to study how a position was formed through temporal investment, constraint, conversion, and persistence.
+Opening instruction remains a downstream application; whether the representation layer itself is the primary research contribution remains an open question. 
 
-History must not contaminate objective current-state semantics. Two different histories that arrive at the same complete legal state should produce the same current-state ChessHeat evidence while being allowed to produce different historical ledgers.
-
-Opening instruction remains a long-term goal, but it is downstream of measurement integrity.
+*Note: The scope of this representation language is restricted to chess and does not attempt to generalize to other domains.*
 
 ## Research record
 

@@ -1,3 +1,7 @@
+> [!WARNING]
+> **Superseded Document**
+> The results described in this report are retained as **provisionally sealed development evidence (T1.9-P)**. It is not a valid preregistered experiment. The seal was anchored to a stale git tree, breaking provenance. Furthermore, the regret calculation was mathematically flawed (`wrong E* => all derived R(m) are semantically invalid`). See `t1_9a_audit_report.md` for the forensic audit.
+
 # T1.9 — Fresh Hostile Conversion-Evidence Validation Suite
 
 > [!WARNING]
