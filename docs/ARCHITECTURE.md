@@ -2,164 +2,253 @@
 
 ## Purpose
 
-ChessHeat is being built as a measurement system first and a visualization product second.
+ChessHeat is a measurement system first and a visualization product second.
 
 The architecture therefore separates chess truth/evidence from presentation:
 
-`Position -> Python analysis core -> Stockfish -> versioned measurement records -> visualization`
+`Position -> Python analysis core -> Stockfish -> typed measurement records -> spatial evidence layers -> visualization`
 
 The web layer is not allowed to redefine measurement semantics.
+
+> **The mathematics needs to earn the color.**
 
 ## 1. Python analysis core
 
 The Python package is the reference implementation for chess analysis and ChessHeat measurements.
 
-Responsibilities:
+Current responsibilities include:
 
-- validate and load legal chess positions,
-- preserve complete FEN state,
-- generate legal moves,
-- communicate with Stockfish through a narrow adapter,
-- preserve raw engine output needed for reproducibility,
-- normalize engine evidence only through documented/versioned rules,
-- produce move-level consequence records,
-- later produce square-level attribution, leverage, hazard, and heat-delta records,
-- serialize results into a stable schema,
-- expose deterministic tests and fixture analysis.
+- validate and load legal chess positions;
+- preserve complete FEN state;
+- generate legal root moves;
+- communicate with Stockfish through a narrow adapter;
+- preserve raw engine evidence required for reproducibility;
+- maintain explicit comparison perspective;
+- preserve typed CP / mate outcomes;
+- compute root-choice regret where semantics permit;
+- produce direct square attribution;
+- preserve principal-variation recurrence and candidate provenance;
+- extract deterministic structural geometry;
+- compute geometry deltas;
+- associate geometry events / bundles with root-move outcome distributions;
+- expose experimental fusion and selectivity layers without hiding raw inputs;
+- support paired-position / delta analysis;
+- emit inspectable JSON research artifacts;
+- remain runnable from tests and command line without a browser or generative model.
 
-The core must remain usable from tests and a command-line entry point without a browser, server, database, or generative model.
+The core must remain the authority for measurement semantics.
 
 ## 2. Stockfish adapter
 
 Stockfish is an external evidence source behind an interface owned by ChessHeat.
 
-The adapter should accept explicit analysis settings and return structured engine observations. ChessHeat code outside the adapter should not depend directly on UCI parsing details.
+The adapter accepts explicit analysis settings and returns structured engine observations. ChessHeat code outside the adapter should not depend directly on UCI details.
 
-Initial implementation target:
+Reference properties include:
 
-- native Stockfish process,
-- UCI communication,
-- explicit engine identity/version when available,
-- explicit search budget,
-- explicit score perspective,
-- principal variation evidence where requested,
-- clean startup/shutdown behavior,
-- testability through an adapter seam.
+- native Stockfish process;
+- explicit executable / engine identity when available;
+- explicit search budget;
+- explicit score perspective;
+- principal variation evidence;
+- clean startup / shutdown behavior;
+- adapter seam for tests.
 
 Future WASM or remote-engine implementations may satisfy the same logical interface, but they must not silently alter measurement meaning.
 
-## 3. Measurement records
+## 3. Measurement record layers
 
-The boundary between analysis and presentation is a versioned structured record.
-
-The exact schema will evolve, but the initial shape should preserve evidence roughly at these levels:
+The system now contains multiple evidence layers. They must remain inspectable rather than being collapsed prematurely.
 
 ### Analysis metadata
 
-- schema version,
-- input FEN,
-- side to move,
-- engine identity/version,
-- search settings,
-- analysis timestamp if persistence requires it,
-- normalization/version identifiers where applicable.
+Preserve:
 
-### Position evidence
-
-- baseline engine observation,
-- legal move count,
-- optional control geometry as a separate evidence layer.
+- schema version where applicable;
+- input FEN;
+- side to move;
+- comparison perspective;
+- engine identity / version;
+- search settings;
+- candidate policy;
+- legal root count;
+- admitted recurrence candidate count;
+- implementation / experiment identity where sealed.
 
 ### Move evidence
 
-For every analyzed legal root move:
+For every analyzed legal root move, preserve:
 
-- UCI move,
-- SAN move,
-- origin square,
-- destination square,
-- special-move metadata where relevant,
-- raw resulting-position engine observation,
-- principal variation evidence if collected,
-- normalized consequence values only when the normalization rule is explicitly defined.
+- UCI;
+- SAN;
+- origin / destination;
+- special-move metadata;
+- resulting FEN;
+- typed score;
+- root-choice regret where defined;
+- parsed principal variation;
+- directly implicated squares / roles.
 
-### Future square evidence
+### Recurrence evidence
 
-Square records may later include distinct fields for:
+Preserve:
 
-- control,
-- direct consequence attribution,
-- opportunity/upside,
-- hazard/downside,
-- recurrence across candidate lines,
-- heat delta,
-- supported/unsupported attribution status.
+- total legal moves;
+- admitted candidate count;
+- admitted root moves;
+- candidate score / regret provenance;
+- distinct line count;
+- line fraction;
+- visit count;
+- earliest ply;
+- role-specific recurrence.
 
-Do not collapse these into one scalar merely because the frontend wants one color.
+### Structural geometry evidence
 
-## 4. Web visualization layer
+Preserve deterministic board relationships such as:
 
-The web application is a consumer of measurement records.
+- attacks;
+- defenses;
+- rays;
+- paths;
+- blockers;
+- mobility;
+- geometry deltas across root moves.
 
-Responsibilities may eventually include:
+### Event-bundle evidence
 
-- rendering the chessboard,
-- rendering control/leverage/hazard layers,
-- showing before/after heat delta,
-- exploring move evidence,
-- opening-teaching interactions,
-- selecting positions and navigating games.
+When structural events share the same producing-move set, preserve them together with:
+
+- constituent events;
+- producing / non-producing moves;
+- implicated region;
+- outcome / regret distributions;
+- association statistics;
+- confounding state.
+
+### Shape / amplitude separation
+
+Do not treat spatial ranking as absolute leverage magnitude.
+
+Keep conceptually distinct:
+
+`S(s | P)` — spatial shape / localization
+
+`A(P)` — position-level decision-leverage amplitude
+
+Typed amplitude must preserve CP / mate semantics and zero-optionality state.
+
+## 4. Selectivity layer
+
+`ShapeSelectivity-v1` is an experimental attention policy over raw spatial evidence.
+
+Its thresholds are development-tuned and must remain versioned.
+
+Rejected evidence is not deleted.
+
+The current helper is an ordered first-pass selector, not a full independent multi-channel state recorder. M8.6.4 must reconcile that implementation detail with forensic reporting before further tuning.
+
+## 5. Visualization layer
+
+The viewer is a consumer of measurement records.
+
+Responsibilities may include:
+
+- board rendering;
+- evidence-layer selection;
+- spatial overlays;
+- before / after delta inspection;
+- square / region provenance inspection;
+- future instructional interactions.
 
 It must not independently calculate legal chess truth or redefine ChessHeat measurements.
 
 If UI logic needs new measurement information, extend the analysis schema rather than recreating the calculation in JavaScript.
 
-## 5. Dependency direction
+## 6. Dependency direction
 
 Desired dependency direction:
 
-`UI -> measurement schema <- analysis core -> engine adapter -> Stockfish`
+`UI -> measurement records <- analysis core -> engine adapter -> Stockfish`
 
-The schema is the contract between the analysis instrument and its consumers.
+Within the analysis core, keep evidence transforms layered:
 
-Avoid architecture in which:
+`root engine evidence`
 
-- React components call Stockfish directly,
-- color functions contain hidden chess heuristics,
-- frontend code computes alternate score normalization,
-- generative AI fills missing engine evidence,
-- the database becomes the only representation of analysis semantics.
+`-> direct attribution / recurrence / geometry`
 
-## 6. Reproducibility
+`-> event association / bundles`
 
-An analysis result should eventually be reproducible from:
+`-> experimental selectivity / fusion`
 
-- the input position,
-- ChessHeat measurement version,
-- Stockfish version,
-- engine settings/search budget,
-- normalization rules,
-- attribution rules.
+`-> visualization consumers`
+
+Do not allow downstream rendering choices to mutate upstream evidence meaning.
+
+## 7. Reproducibility
+
+An analysis should be reproducible from enough information to identify:
+
+- input legal state;
+- ChessHeat implementation version;
+- Stockfish executable / version;
+- engine settings / search budget;
+- comparison perspective;
+- candidate policy;
+- attribution / recurrence / geometry rules;
+- selectivity / fusion version when used.
 
 Visual appearance is not part of measurement reproducibility.
 
-## 7. Current non-goals
+## 8. Experimental integrity
 
-Do not build these during the first engine-harness milestone:
+Research fixtures are part of the architecture because the model is still provisional.
 
-- polished chessboard UI,
-- accounts/authentication,
-- cloud persistence,
-- opening database integration,
-- generative explanations,
-- composite pivotality score,
-- browser-side Stockfish,
-- multiplayer/gameplay infrastructure.
+Required principles:
 
-## 8. Design test
+- validate board legality, not only FEN parseability;
+- preserve invalid fixtures rather than silently repairing them;
+- preserve failed holdouts / seals with corrected status;
+- distinguish fixture failure, protocol failure, representation failure, selectivity failure, and projection failure;
+- never convert hostile-validation evidence into a marketing accuracy claim;
+- do not retune a frozen rule on the same hostile evidence used to expose its blind spots.
 
-A useful architecture check is:
+## 9. Temporal Ledger boundary
 
-> Could ChessHeat analyze a directory of FEN fixtures, emit JSON records, and be scientifically inspected without starting the web app?
+A future historical layer may consume sequences of legal positions and existing deterministic deltas.
 
-For the reference implementation, the answer should always be yes.
+It must remain separate from current-state semantics until independently validated.
+
+For true transpositions reaching the same complete legal state:
+
+`CurrentState(H_A, P) = CurrentState(H_B, P)`
+
+while:
+
+`TemporalLedger(H_A) != TemporalLedger(H_B)`
+
+may be legitimate.
+
+History must not become an excuse to inject narrative causality into state-based evidence.
+
+## 10. Current non-goals
+
+Do not prioritize yet:
+
+- production accounts / auth;
+- cloud persistence;
+- large opening databases;
+- generative chess truth;
+- a final composite pivotality score;
+- browser-side Stockfish as the reference engine;
+- multiplayer infrastructure;
+- nonstandard rule variants;
+- polished product scaling.
+
+## 11. Design test
+
+A useful architecture check remains:
+
+> Could ChessHeat analyze a directory of legal fixtures, emit inspectable evidence records, reproduce the research transforms, and be scientifically audited without starting the web app?
+
+For the reference implementation, the answer should remain yes.
