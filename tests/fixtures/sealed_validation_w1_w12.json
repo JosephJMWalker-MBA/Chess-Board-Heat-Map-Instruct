@@ -1,0 +1,227 @@
+{
+  "schema": "chessheat_w_suite_v1",
+  "fixtures": [
+    {
+      "fixture_id": "W1_Deep_PV",
+      "fen": "8/8/8/8/8/pk6/1r6/K7 b - - 0 1",
+      "side_to_move": "black",
+      "semantic_hypothesis": "A forcing sequence where a pivotal geometrical fact only matters at ply 4 or later.",
+      "expected_regions": [
+        {
+          "id": "deep_mate_square",
+          "squares": ["a2", "b1", "a1"],
+          "rationale": "Squares involved in the mate net which is 4+ plies deep.",
+          "type": "localized_square_set"
+        }
+      ],
+      "expected_amplitude_behavior": "mate",
+      "stress_target": "recurrence_depth (earliest_ply <= 2)",
+      "falsification_criterion": "Rule rejects the deep mating net because earliest_ply > 2.",
+      "fixture_construction_notes": "A position requiring a long forcing sequence to reveal the critical square."
+    },
+    {
+      "fixture_id": "W2_Two_Line_Recurrence",
+      "fen": "6k1/5ppp/8/8/3N4/8/5PPP/6K1 w - - 0 1",
+      "side_to_move": "white",
+      "semantic_hypothesis": "A critical geometric relationship appears in exactly two strong winning lines.",
+      "expected_regions": [
+        {
+          "id": "critical_fork",
+          "squares": ["e6", "d8", "c7"],
+          "rationale": "Squares supporting the two main forks.",
+          "type": "relationship_complex"
+        }
+      ],
+      "expected_amplitude_behavior": "cp",
+      "stress_target": "recurrence_line_support (distinct_line_count >= 3)",
+      "falsification_criterion": "Rule rejects the fork squares because distinct_line_count < 3.",
+      "fixture_construction_notes": "A position with exactly two good variations supporting the pivotal region."
+    },
+    {
+      "fixture_id": "W3_Single_Consequential_Move",
+      "fen": "5rk1/5ppp/8/8/8/8/5PPP/4R1K1 w - - 0 1",
+      "side_to_move": "white",
+      "semantic_hypothesis": "A single uniquely consequential move (back-rank mate) among many legal moves.",
+      "expected_regions": [
+        {
+          "id": "back_rank_corridor",
+          "squares": ["e8", "f8", "g8"],
+          "rationale": "The back rank squares that enable the immediate mate.",
+          "type": "path"
+        }
+      ],
+      "expected_amplitude_behavior": "mate",
+      "stress_target": "direct_candidate_support (candidate_fraction >= 0.15) and bundle (producing_move_count >= 3)",
+      "falsification_criterion": "Rule rejects the region because only 1 move out of many triggers it.",
+      "fixture_construction_notes": "Simple back-rank mate in 1. Re8# is the only consequential move."
+    },
+    {
+      "fixture_id": "W4_Legitimate_Broad_Bundle",
+      "fen": "2r3k1/1p3ppp/1p6/8/2Q5/8/1P3PPP/6K1 w - - 0 1",
+      "side_to_move": "white",
+      "semantic_hypothesis": "A single piece controls or influences a vast section of the board.",
+      "expected_regions": [
+        {
+          "id": "queen_radiance",
+          "squares": ["c4", "c5", "c6", "c7", "c8", "d4", "e4", "f4", "g4", "h4", "b4", "a4", "b5", "a6", "d5", "e6", "f7", "g8"],
+          "rationale": "The massive set of squares influenced by the centralized Queen.",
+          "type": "diffuse_region"
+        }
+      ],
+      "expected_amplitude_behavior": "cp",
+      "stress_target": "bundle_region_extent (implicated_region_size <= 15)",
+      "falsification_criterion": "Rule rejects the bundle because the region size > 15.",
+      "fixture_construction_notes": "A centralized Queen that dominates many squares, testing the region size ceiling."
+    },
+    {
+      "fixture_id": "W5_Quiet_Positional",
+      "fen": "8/8/2k5/8/8/2K5/8/8 w - - 0 1",
+      "side_to_move": "white",
+      "semantic_hypothesis": "Quiet positional multi-square leverage without tactical severity.",
+      "expected_regions": [
+        {
+          "id": "opposition_squares",
+          "squares": ["c4", "c5", "d4", "d5"],
+          "rationale": "Squares involved in gaining the King opposition.",
+          "type": "relationship_complex"
+        }
+      ],
+      "expected_amplitude_behavior": "low",
+      "stress_target": "amplitude_thresholds and general tactical bias",
+      "falsification_criterion": "Region is missed due to low amplitude or lack of severe regret.",
+      "fixture_construction_notes": "King and Pawn or just King opposition."
+    },
+    {
+      "fixture_id": "W6_Recurring_Negligible_Consequence",
+      "fen": "8/8/8/8/8/8/k7/K7 w - - 0 1",
+      "side_to_move": "white",
+      "semantic_hypothesis": "Strong recurring geometry with negligible consequence.",
+      "expected_regions": [
+        {
+          "id": "king_oscillation",
+          "squares": ["a2", "b1", "a1", "b2"],
+          "rationale": "The squares the kings shuffle between in a drawn position.",
+          "type": "localized_square_set"
+        }
+      ],
+      "expected_amplitude_behavior": "zero-optionality or low",
+      "stress_target": "amplitude_shape_separation",
+      "falsification_criterion": "Shape is correctly identified but heat should be scaled to 0 due to 0 amplitude.",
+      "fixture_construction_notes": "Dead drawn king vs king."
+    },
+    {
+      "fixture_id": "W7_Balanced_Negative_Control",
+      "fen": "r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/2N2N2/PPPP1PPP/R1BQK2R w KQkq - 0 1",
+      "side_to_move": "white",
+      "semantic_hypothesis": "Busy but balanced control in a complex equal position.",
+      "expected_regions": [
+        {
+          "id": "center_control",
+          "squares": ["d4", "e4", "d5", "e5"],
+          "rationale": "The heavily contested central squares.",
+          "type": "relationship_complex"
+        }
+      ],
+      "expected_amplitude_behavior": "low",
+      "stress_target": "false_heat_suppression",
+      "falsification_criterion": "Model erroneously applies high heat due to high move counts despite equal evaluations.",
+      "fixture_construction_notes": "Four Knights Game, perfectly equal."
+    },
+    {
+      "fixture_id": "W8_Mate_Sensitive",
+      "fen": "1k6/1P6/1K6/8/8/8/8/8 w - - 0 1",
+      "side_to_move": "white",
+      "semantic_hypothesis": "Choices preserve vs forfeit forced mate.",
+      "expected_regions": [
+        {
+          "id": "stalemate_trap",
+          "squares": ["b7", "b8", "a8", "c8"],
+          "rationale": "Squares critical to allowing or denying stalemate/mate.",
+          "type": "localized_square_set"
+        }
+      ],
+      "expected_amplitude_behavior": "mate",
+      "stress_target": "typed_A_mate",
+      "falsification_criterion": "A_cp fails to capture leverage because differences are in mate space.",
+      "fixture_construction_notes": "King and Pawn vs King endgame where one move mates/stalemates."
+    },
+    {
+      "fixture_id": "W9_Zero_Optionality_Severe",
+      "fen": "8/8/8/8/8/2k5/p7/K7 w - - 0 1",
+      "side_to_move": "white",
+      "semantic_hypothesis": "Strategically severe position with exactly one legal move.",
+      "expected_regions": [
+        {
+          "id": "forced_move_squares",
+          "squares": ["a1", "b1", "a2"],
+          "rationale": "The single path available to the King.",
+          "type": "path"
+        }
+      ],
+      "expected_amplitude_behavior": "zero-optionality",
+      "stress_target": "zero_optionality_semantics",
+      "falsification_criterion": "Amplitude incorrectly assigns heat when there is no decision leverage.",
+      "fixture_construction_notes": "White has exactly 1 legal move, but position is totally lost."
+    },
+    {
+      "fixture_id": "W10_Genuine_Overloaded_Defender",
+      "fen": "8/8/8/8/2k5/3q4/8/1K6 b - - 0 1",
+      "side_to_move": "black",
+      "semantic_hypothesis": "A genuinely overloaded defender with two defensive obligations.",
+      "expected_regions": [
+        {
+          "id": "overloaded_obligations",
+          "squares": ["d3", "c3", "e3"],
+          "rationale": "The defender and the two squares it must defend.",
+          "type": "relationship_complex"
+        }
+      ],
+      "expected_amplitude_behavior": "cp",
+      "stress_target": "relational_geography",
+      "falsification_criterion": "Model fails to associate the defender with both obligations simultaneously.",
+      "fixture_construction_notes": "Abstract construction representing overload."
+    },
+    {
+      "fixture_id": "W11_Long_Corridor",
+      "fen": "8/8/8/3b4/8/5R2/8/7K b - - 0 1",
+      "side_to_move": "black",
+      "semantic_hypothesis": "A long pin/skewer/discovered-attack corridor.",
+      "expected_regions": [
+        {
+          "id": "skewer_corridor",
+          "squares": ["d5", "e4", "f3", "g2", "h1"],
+          "rationale": "The entire long diagonal of the skewer.",
+          "type": "path"
+        }
+      ],
+      "expected_amplitude_behavior": "cp",
+      "stress_target": "multi_square_ray_localization",
+      "falsification_criterion": "Model truncates the ray or fails to capture all intermediate squares.",
+      "fixture_construction_notes": "Bishop pins Rook to King across the long diagonal."
+    },
+    {
+      "fixture_id": "W12_Disjoint_Regions",
+      "fen": "r6k/5ppp/8/8/8/8/5PPP/4R1K1 w - - 0 1",
+      "side_to_move": "white",
+      "semantic_hypothesis": "Two disjoint legitimate pivotal regions in the same position.",
+      "expected_regions": [
+        {
+          "id": "back_rank_mate",
+          "squares": ["e8", "f8", "g8"],
+          "rationale": "The immediate mating threat on the kingside.",
+          "type": "path"
+        },
+        {
+          "id": "queenside_action",
+          "squares": ["a8", "a7", "b8"],
+          "rationale": "A secondary tactical skirmish on the queenside (abstracted here).",
+          "type": "localized_square_set"
+        }
+      ],
+      "expected_amplitude_behavior": "mixed",
+      "stress_target": "multi_hotspot_preservation",
+      "falsification_criterion": "Model inappropriately forces all heat into only one region.",
+      "fixture_construction_notes": "A position containing two separate tactical zones."
+    }
+  ]
+}
