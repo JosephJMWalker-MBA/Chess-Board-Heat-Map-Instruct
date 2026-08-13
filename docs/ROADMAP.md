@@ -81,7 +81,7 @@ Important corrections:
 
 ## Milestone 6 — Principal-variation recurrence
 
-**Status: Implemented; semantic audit pending**
+**Status: Implemented; semantic audit complete**
 
 Implemented candidate-policy provenance and square recurrence across admitted PVs.
 
@@ -95,13 +95,11 @@ Preserved metrics include:
 - earliest ply;
 - role-specific recurrence.
 
-Finding:
+Findings:
 
-Recurrence adds real future-path information but frequency alone does not establish leverage.
-
-Required invariant:
-
-`distinct_line_count <= admitted_candidate_count`
+- recurrence adds real future-path information but frequency alone does not establish leverage;
+- candidate-universe definition is part of Recurrence semantics;
+- `distinct_line_count <= admitted_candidate_count` is a required invariant.
 
 ## Milestone 7 — Structural geometry and indirect evidence
 
@@ -129,7 +127,7 @@ Completed research work includes:
 - zero-optionality semantics;
 - spatial selectivity profiling;
 - frozen `ShapeSelectivity-v1` development policy;
-- hostile W-suite construction and forensic audit.
+- hostile W-suite construction, forensic audit, corrected retrospective development run, and candidate-set sensitivity characterization.
 
 ### Findings
 
@@ -137,11 +135,13 @@ Completed research work includes:
 - within-position rank normalization can manufacture relative hotspots in low-amplitude positions;
 - **where leverage is** and **how much leverage exists** must remain separate;
 - severity != decision leverage;
-- recurrence remains a major source of spatial diffuseness;
-- rigid selectivity rules predictably lose rare, deep, broad, and multi-focal legitimate evidence;
 - W-v2 is hostile validation / development evidence, not pristine one-shot final validation;
+- the original W-v2 run omitted the frozen Recurrence candidate policy and therefore measured an all-legal-root candidate universe rather than the intended top-5 universe;
 - **recurrence is conditional on the future set;**
-- **specificity and spatial coverage trade against one another.**
+- on the hostile W development corpus, restricting Recurrence to the top five candidates reduced non-target benchmark geography but also removed some expected benchmark-target geography, demonstrating a specificity-coverage tradeoff for that corpus;
+- W2, W4, and W12 demonstrate preregistered hostile failure modes of the frozen policy on those fixtures; they do not establish how prevalent those failure modes are in chess generally;
+- residual non-target geography remained after the Recurrence correction, including Bundle-heavy cases, so correcting Recurrence does not validate Bundle semantics;
+- `top_n=5` remains a frozen development choice, not an established optimum or chess law.
 
 ### M8 exit condition
 
@@ -151,7 +151,7 @@ Still unmet:
 
 Until then, separate evidence layers remain the scientifically preferred representation.
 
-*Update (M8 Freeze):* The first major research phase for this milestone has concluded and is now frozen. We established the critical mathematical distinctions above rather than tuning arbitrary thresholds. Future work must treat candidate-universe design as a fundamental research question. No further tuning of ShapeSelectivity-v1 or derivation of v2 is authorized in this phase.
+*Freeze rule:* The first major research phase for this milestone is closed. No further tuning of `ShapeSelectivity-v1` or derivation of `ShapeSelectivity-v2` from the W corpus is authorized in this phase. Future work must treat candidate-universe design as a separate mathematical research question.
 
 ---
 
@@ -206,17 +206,6 @@ Investigate whether recurrence relevance should depend on how strongly passage t
 Do not begin by simply tightening `ShapeSelectivity-v1` thresholds.
 
 ---
-
-*Update (M8 Freeze):* The first major research phase for this milestone has concluded and is now frozen. We established critical mathematical distinctions rather than tuning arbitrary thresholds:
-- control != importance
-- regret != causal delta
-- association != causality
-- shape != amplitude
-- severity != decision leverage
-- recurrence is conditional on the future set
-- specificity and spatial coverage trade against one another
-
-Future work must treat candidate-universe design as a fundamental research question. No further tuning of ShapeSelectivity-v1 or derivation of v2 is authorized in this phase.
 
 ## Milestone 9 — Opening teacher prototype
 
