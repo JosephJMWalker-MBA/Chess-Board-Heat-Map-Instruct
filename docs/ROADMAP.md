@@ -161,12 +161,12 @@ Until then, separate evidence layers remain the scientifically preferred represe
 
 Question:
 
-> Can the actual move history describe how the present spatial structure was formed through investment, constraint, conversion, and persistence?
+> Can the actual move history describe how the present spatial structure was formed through investment, optionality, conversion, and persistence?
 
 Candidate descriptive dimensions:
 
 - **Investment** — where tempi / movable resources were repeatedly spent;
-- **Constraint** — where sequences repeatedly narrowed viable choices;
+- **Optionality** — where sequences repeatedly narrowed viable choices;
 - **Conversion** — where temporary activity became persistent structure;
 - **Persistence** — which structural relationships survived, reversed, or reappeared.
 

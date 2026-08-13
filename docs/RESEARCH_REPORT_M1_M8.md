@@ -631,7 +631,7 @@ Where were tempi and movable resources repeatedly spent?
 
 Repeated movement is not automatically waste. Compensation must remain observable rather than being assumed.
 
-### Constraint
+### Optionality
 
 Where did move sequences repeatedly narrow the opponent's viable choice space?
 

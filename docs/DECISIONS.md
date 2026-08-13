@@ -282,7 +282,7 @@ F4, prior holdout attempts, W-v2 execution, W10/W11 legality failures, and W7's 
 
 **Decision:**
 
-A future Temporal Ledger may measure historical investment, constraint, conversion, and persistence, but it must not contaminate objective current-state ChessHeat semantics.
+A future Temporal Ledger may measure historical investment, optionality, conversion, and persistence, but it must not contaminate objective current-state ChessHeat semantics.
 
 For two histories that arrive at the same complete legal state, current-state evidence should agree while historical ledgers may differ.
 
@@ -350,4 +350,4 @@ Should files, diagonals, corridors, king zones, pawn complexes, and disjoint tac
 
 ### O-012 — Temporal Ledger
 
-Can move history provide a distinct measurable description of investment, constraint, conversion, and persistence while preserving current-state invariance under true transpositions?
+Can move history provide a distinct measurable description of investment, optionality, conversion, and persistence while preserving current-state invariance under true transpositions?
