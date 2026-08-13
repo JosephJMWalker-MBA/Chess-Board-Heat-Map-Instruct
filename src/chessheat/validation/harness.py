@@ -20,15 +20,23 @@ def extract_all_signatures(board: chess.Board) -> Set[Any]:
     return sigs
 
 class ValidationHarness:
-    def __init__(self, engine_path: str = "stockfish", budget_nodes: int = 500000):
+    def __init__(self, engine_path: str = "stockfish", budget_nodes: int = 500000, threads: int = 1, hash_mb: int = 16, comparison_perspective: str = "white"):
         self.engine_path = engine_path
         self.budget_nodes = budget_nodes
+        self.threads = threads
+        self.hash_mb = hash_mb
+        if comparison_perspective not in ("white", "black"):
+            raise ValueError("comparison_perspective must be 'white' or 'black'")
+        self.comparison_perspective = comparison_perspective
         self.engine = None
+        self.engine_version = "Unknown"
 
     def __enter__(self):
         self.engine = chess.engine.SimpleEngine.popen_uci(self.engine_path)
         try:
-            self.engine.configure({"Hash": 16, "Threads": 1})
+            self.engine.configure({"Hash": self.hash_mb, "Threads": self.threads})
+            # Try to get engine name/version
+            self.engine_version = self.engine.id.get('name', 'Unknown')
         except Exception:
             self.engine.quit()
             raise
@@ -38,9 +46,9 @@ class ValidationHarness:
         if self.engine:
             self.engine.quit()
 
-    @staticmethod
-    def create_seal(manifest_hash: str, protocol_hash: str, engine_path: str, engine_version: str, threads: int, hash_mb: int, nodes: int, comparison_perspective: str, output_dir: str) -> Dict[str, Any]:
-        """Implement a serializable pre-execution seal."""
+    def create_seal(self, manifest_path: str, protocol_path: str, output_dir: str) -> Dict[str, Any]:
+        """Implement a serializable pre-execution seal tied to harness configuration."""
+        import os, hashlib
         result = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True)
         if result.returncode != 0:
             raise RuntimeError("Failed to check git status")
@@ -51,27 +59,41 @@ class ValidationHarness:
         sha_result = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True)
         commit_sha = sha_result.stdout.strip()
         
+        # Hash harness itself for identity
+        harness_hash = hashlib.sha256(open(__file__, "rb").read()).hexdigest()
+        
+        # Hash inputs
+        def file_sha256(path: str) -> str:
+            if not os.path.exists(path):
+                return f"MISSING_{path}"
+            return hashlib.sha256(open(path, "rb").read()).hexdigest()
+            
+        manifest_hash = file_sha256(manifest_path)
+        protocol_hash = file_sha256(protocol_path)
+        
+        # Ensure output directory exists
+        os.makedirs(output_dir, exist_ok=True)
+        
         return {
             "git_commit_sha": commit_sha,
             "working_tree_clean": is_clean,
-            "harness_identity": "ValidationHarness_v2",
+            "harness_identity": harness_hash,
             "manifest_hash": manifest_hash,
             "protocol_hash": protocol_hash,
-            "engine_path": engine_path,
-            "engine_version": engine_version,
-            "engine_threads": threads,
-            "engine_hash_mb": hash_mb,
-            "engine_node_budget": nodes,
-            "comparison_perspective": comparison_perspective,
-            "output_directory_identity": output_dir
+            "engine_path": self.engine_path,
+            "engine_version": self.engine_version,
+            "engine_threads": self.threads,
+            "engine_hash_mb": self.hash_mb,
+            "engine_node_budget": self.budget_nodes,
+            "comparison_perspective": self.comparison_perspective,
+            "output_directory_identity": os.path.abspath(output_dir)
         }
 
     def evaluate_move(self, board: chess.Board, move: chess.Move) -> Score:
         board.push(move)
         try:
             info = self.engine.analyse(board, chess.engine.Limit(nodes=self.budget_nodes))
-            played_color = not board.turn
-            if played_color == chess.WHITE:
+            if self.comparison_perspective == "white":
                 s = info["score"].white()
             else:
                 s = info["score"].black()
@@ -174,14 +196,31 @@ class ValidationHarness:
                 "median_cp_regret": median_cp
             }
 
-        def get_squares(sig):
-            if hasattr(sig, "implicated_squares"):
-                return sig.implicated_squares()
-            if hasattr(sig, "source_square") and hasattr(sig, "target_square"):
-                return {sig.source_square, sig.target_square}
-            return set()
+        shared_squares = transition_evidence.shared_squares if hasattr(transition_evidence, 'shared_squares') else []
+
+        bundle_ev = None
+        if bundle:
+            import hashlib
+            candidates_data = []
+            for c in bundle.candidates:
+                candidates_data.append({
+                    "predecessor": str(c.structural_evidence.predecessor),
+                    "successor": str(c.structural_evidence.successor),
+                    "m11": c.structural_evidence.m_11,
+                    "m10": c.structural_evidence.m_10,
+                    "m01": c.structural_evidence.m_01,
+                    "m00": c.structural_evidence.m_00,
+                })
             
-        shared_squares = list(get_squares(predecessor_sig) & get_squares(successor_sig))
+            # Deterministic canonical serialization + SHA-256
+            import json
+            canonical_str = json.dumps(candidates_data, sort_keys=True)
+            bundle_id = hashlib.sha256(canonical_str.encode('utf-8')).hexdigest()
+            
+            bundle_ev = {
+                "bundle_identity": bundle_id,
+                "bundle_constituent_candidate_pairs": candidates_data
+            }
 
         return {
             "fen": fen,
@@ -215,9 +254,38 @@ class ValidationHarness:
                     set(transition_evidence.m_00) == set(m_00)
                 ) if transition_evidence else None
             },
-            "bundle_evidence": {
-                "bundle_identity": hash(frozenset(bundle.constituent_events)) if bundle else None,
-                "bundle_constituent_candidate_pairs": [{"e": str(e), "f": str(f)} for e in bundle.constituent_events for f in bundle.constituent_events] if bundle else None,
-            },
-            "paired_history_evidence": None # Placeholder for terminal-state vs current-state comparison
+            "bundle_evidence": bundle_ev
+        }
+
+    def compare_transpositions(self, initial_fen: str, moves_a: List[str], moves_b: List[str]) -> Dict[str, Any]:
+        board_a = chess.Board(initial_fen)
+        for move_san in moves_a:
+            board_a.push_san(move_san)
+            
+        board_b = chess.Board(initial_fen)
+        for move_san in moves_b:
+            board_b.push_san(move_san)
+            
+        fen_a = board_a.fen()
+        fen_b = board_b.fen()
+        
+        # Check structural equality
+        from chessheat.validation.harness import extract_all_signatures
+        geom_a = extract_all_signatures(board_a)
+        geom_b = extract_all_signatures(board_b)
+        
+        legal_roots_a = set(board_a.legal_moves)
+        legal_roots_b = set(board_b.legal_moves)
+        
+        # Temporal Ledger differences could be derived from full TemporalLedger evaluation.
+        # For validation harness purposes, we just record the structural invariants.
+        return {
+            "history_a": moves_a,
+            "history_b": moves_b,
+            "terminal_fen_a": fen_a,
+            "terminal_fen_b": fen_b,
+            "terminal_fen_equality": fen_a == fen_b,
+            "geometry_equality": geom_a == geom_b,
+            "legal_root_equality": legal_roots_a == legal_roots_b,
+            "temporal_ledger_inequality": moves_a != moves_b # Simplified representation of different historical paths
         }

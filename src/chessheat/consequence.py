@@ -100,6 +100,13 @@ def compute_regrets(scores: Dict[str, Score]) -> Dict[str, Score]:
     R(m) = E^* - E(m) >= 0.
     Mate outcomes preserve typing.
     """
+    if not scores:
+        return {}
+        
+    perspectives = {s.perspective for s in scores.values() if s.perspective is not None}
+    if len(perspectives) > 1:
+        raise ValueError(f"Mixed comparison perspectives found: {perspectives}. All scores must share exactly one perspective.")
+        
     # 1. Identify E^* strictly from CP-comparable outcomes
     cp_scores = [s.value for s in scores.values() if s.type == 'cp']
     e_star = max(cp_scores) if cp_scores else None
