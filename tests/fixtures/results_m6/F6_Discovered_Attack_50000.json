@@ -1,0 +1,1738 @@
+{
+  "fen": "4k3/8/8/3q4/3B4/8/8/3R2K1 w - - 0 1",
+  "layer": "recurrence",
+  "candidate_policy": {
+    "top_n": 5
+  },
+  "recurrence": {
+    "g1": {
+      "square": "g1",
+      "overall": {
+        "distinct_line_count": 4,
+        "line_fraction": 0.8,
+        "visit_count": 4,
+        "earliest_ply": 1
+      },
+      "by_role": {
+        "origin": {
+          "distinct_line_count": 4,
+          "line_fraction": 0.8,
+          "visit_count": 4,
+          "earliest_ply": 1
+        }
+      }
+    },
+    "f1": {
+      "square": "f1",
+      "overall": {
+        "distinct_line_count": 1,
+        "line_fraction": 0.2,
+        "visit_count": 2,
+        "earliest_ply": 1
+      },
+      "by_role": {
+        "destination": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 1
+        },
+        "origin": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 3
+        }
+      }
+    },
+    "f3": {
+      "square": "f3",
+      "overall": {
+        "distinct_line_count": 2,
+        "line_fraction": 0.4,
+        "visit_count": 4,
+        "earliest_ply": 2
+      },
+      "by_role": {
+        "destination": {
+          "distinct_line_count": 2,
+          "line_fraction": 0.4,
+          "visit_count": 3,
+          "earliest_ply": 2
+        },
+        "origin": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 15
+        }
+      }
+    },
+    "d5": {
+      "square": "d5",
+      "overall": {
+        "distinct_line_count": 3,
+        "line_fraction": 0.6,
+        "visit_count": 3,
+        "earliest_ply": 2
+      },
+      "by_role": {
+        "origin": {
+          "distinct_line_count": 3,
+          "line_fraction": 0.6,
+          "visit_count": 3,
+          "earliest_ply": 2
+        }
+      }
+    },
+    "e1": {
+      "square": "e1",
+      "overall": {
+        "distinct_line_count": 2,
+        "line_fraction": 0.4,
+        "visit_count": 2,
+        "earliest_ply": 1
+      },
+      "by_role": {
+        "destination": {
+          "distinct_line_count": 2,
+          "line_fraction": 0.4,
+          "visit_count": 2,
+          "earliest_ply": 1
+        }
+      }
+    },
+    "d1": {
+      "square": "d1",
+      "overall": {
+        "distinct_line_count": 3,
+        "line_fraction": 0.6,
+        "visit_count": 3,
+        "earliest_ply": 1
+      },
+      "by_role": {
+        "origin": {
+          "distinct_line_count": 3,
+          "line_fraction": 0.6,
+          "visit_count": 3,
+          "earliest_ply": 1
+        }
+      }
+    },
+    "d7": {
+      "square": "d7",
+      "overall": {
+        "distinct_line_count": 2,
+        "line_fraction": 0.4,
+        "visit_count": 2,
+        "earliest_ply": 2
+      },
+      "by_role": {
+        "destination": {
+          "distinct_line_count": 2,
+          "line_fraction": 0.4,
+          "visit_count": 2,
+          "earliest_ply": 2
+        }
+      }
+    },
+    "e8": {
+      "square": "e8",
+      "overall": {
+        "distinct_line_count": 3,
+        "line_fraction": 0.6,
+        "visit_count": 3,
+        "earliest_ply": 2
+      },
+      "by_role": {
+        "origin": {
+          "distinct_line_count": 3,
+          "line_fraction": 0.6,
+          "visit_count": 3,
+          "earliest_ply": 2
+        }
+      }
+    },
+    "f2": {
+      "square": "f2",
+      "overall": {
+        "distinct_line_count": 3,
+        "line_fraction": 0.6,
+        "visit_count": 4,
+        "earliest_ply": 1
+      },
+      "by_role": {
+        "destination": {
+          "distinct_line_count": 3,
+          "line_fraction": 0.6,
+          "visit_count": 3,
+          "earliest_ply": 1
+        },
+        "origin": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 3
+        }
+      }
+    },
+    "d4": {
+      "square": "d4",
+      "overall": {
+        "distinct_line_count": 2,
+        "line_fraction": 0.4,
+        "visit_count": 3,
+        "earliest_ply": 3
+      },
+      "by_role": {
+        "origin": {
+          "distinct_line_count": 2,
+          "line_fraction": 0.4,
+          "visit_count": 2,
+          "earliest_ply": 3
+        },
+        "destination": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 8
+        },
+        "capture": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 8
+        }
+      }
+    },
+    "d3": {
+      "square": "d3",
+      "overall": {
+        "distinct_line_count": 1,
+        "line_fraction": 0.2,
+        "visit_count": 1,
+        "earliest_ply": 1
+      },
+      "by_role": {
+        "destination": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 1
+        }
+      }
+    },
+    "f5": {
+      "square": "f5",
+      "overall": {
+        "distinct_line_count": 1,
+        "line_fraction": 0.2,
+        "visit_count": 1,
+        "earliest_ply": 2
+      },
+      "by_role": {
+        "destination": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 2
+        }
+      }
+    },
+    "e3": {
+      "square": "e3",
+      "overall": {
+        "distinct_line_count": 1,
+        "line_fraction": 0.2,
+        "visit_count": 1,
+        "earliest_ply": 3
+      },
+      "by_role": {
+        "destination": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 3
+        }
+      }
+    },
+    "d2": {
+      "square": "d2",
+      "overall": {
+        "distinct_line_count": 1,
+        "line_fraction": 0.2,
+        "visit_count": 2,
+        "earliest_ply": 1
+      },
+      "by_role": {
+        "destination": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 1
+        },
+        "origin": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 3
+        }
+      }
+    },
+    "g5": {
+      "square": "g5",
+      "overall": {
+        "distinct_line_count": 1,
+        "line_fraction": 0.2,
+        "visit_count": 2,
+        "earliest_ply": 2
+      },
+      "by_role": {
+        "destination": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 2
+        },
+        "origin": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 4
+        }
+      }
+    },
+    "g2": {
+      "square": "g2",
+      "overall": {
+        "distinct_line_count": 1,
+        "line_fraction": 0.2,
+        "visit_count": 2,
+        "earliest_ply": 3
+      },
+      "by_role": {
+        "destination": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 3
+        },
+        "origin": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 9
+        }
+      }
+    },
+    "c1": {
+      "square": "c1",
+      "overall": {
+        "distinct_line_count": 1,
+        "line_fraction": 0.2,
+        "visit_count": 2,
+        "earliest_ply": 4
+      },
+      "by_role": {
+        "destination": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 4
+        },
+        "origin": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 6
+        }
+      }
+    },
+    "h2": {
+      "square": "h2",
+      "overall": {
+        "distinct_line_count": 1,
+        "line_fraction": 0.2,
+        "visit_count": 2,
+        "earliest_ply": 5
+      },
+      "by_role": {
+        "destination": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 5
+        },
+        "origin": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 7
+        }
+      }
+    },
+    "f4": {
+      "square": "f4",
+      "overall": {
+        "distinct_line_count": 1,
+        "line_fraction": 0.2,
+        "visit_count": 2,
+        "earliest_ply": 6
+      },
+      "by_role": {
+        "destination": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 6
+        },
+        "origin": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 8
+        }
+      }
+    },
+    "h3": {
+      "square": "h3",
+      "overall": {
+        "distinct_line_count": 1,
+        "line_fraction": 0.2,
+        "visit_count": 2,
+        "earliest_ply": 7
+      },
+      "by_role": {
+        "destination": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 7
+        },
+        "origin": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 11
+        }
+      }
+    },
+    "g3": {
+      "square": "g3",
+      "overall": {
+        "distinct_line_count": 1,
+        "line_fraction": 0.2,
+        "visit_count": 4,
+        "earliest_ply": 9
+      },
+      "by_role": {
+        "destination": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 2,
+          "earliest_ply": 9
+        },
+        "origin": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 2,
+          "earliest_ply": 13
+        }
+      }
+    },
+    "h8": {
+      "square": "h8",
+      "overall": {
+        "distinct_line_count": 1,
+        "line_fraction": 0.2,
+        "visit_count": 2,
+        "earliest_ply": 10
+      },
+      "by_role": {
+        "destination": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 10
+        },
+        "origin": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 16
+        }
+      }
+    },
+    "g4": {
+      "square": "g4",
+      "overall": {
+        "distinct_line_count": 1,
+        "line_fraction": 0.2,
+        "visit_count": 2,
+        "earliest_ply": 11
+      },
+      "by_role": {
+        "destination": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 11
+        },
+        "origin": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 17
+        }
+      }
+    },
+    "f7": {
+      "square": "f7",
+      "overall": {
+        "distinct_line_count": 1,
+        "line_fraction": 0.2,
+        "visit_count": 2,
+        "earliest_ply": 12
+      },
+      "by_role": {
+        "destination": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 12
+        },
+        "origin": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 14
+        }
+      }
+    },
+    "g6": {
+      "square": "g6",
+      "overall": {
+        "distinct_line_count": 1,
+        "line_fraction": 0.2,
+        "visit_count": 2,
+        "earliest_ply": 14
+      },
+      "by_role": {
+        "destination": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 14
+        },
+        "origin": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 18
+        }
+      }
+    },
+    "c8": {
+      "square": "c8",
+      "overall": {
+        "distinct_line_count": 1,
+        "line_fraction": 0.2,
+        "visit_count": 1,
+        "earliest_ply": 16
+      },
+      "by_role": {
+        "destination": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 16
+        }
+      }
+    },
+    "h4": {
+      "square": "h4",
+      "overall": {
+        "distinct_line_count": 1,
+        "line_fraction": 0.2,
+        "visit_count": 1,
+        "earliest_ply": 17
+      },
+      "by_role": {
+        "destination": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 17
+        }
+      }
+    },
+    "h6": {
+      "square": "h6",
+      "overall": {
+        "distinct_line_count": 1,
+        "line_fraction": 0.2,
+        "visit_count": 1,
+        "earliest_ply": 18
+      },
+      "by_role": {
+        "destination": {
+          "distinct_line_count": 1,
+          "line_fraction": 0.2,
+          "visit_count": 1,
+          "earliest_ply": 18
+        }
+      }
+    }
+  },
+  "attributions": {
+    "d4": {
+      "square": "d4",
+      "move_count": 12,
+      "as_origin": 12,
+      "as_destination": 0,
+      "as_capture": 0,
+      "best_move": "d4a1",
+      "worst_move": "d4a7",
+      "best_outcome_cp": -507,
+      "worst_outcome_cp": -605,
+      "mean_cp_outcome": -551.1666666666666,
+      "min_cp_regret": 505,
+      "max_cp_regret": 603,
+      "mean_cp_regret": 549.1666666666666,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d4h8",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -575,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 573,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "d4g7",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -549,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 547,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "d4a7",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -605,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 603,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "d4f6",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -588,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 586,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "d4b6",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -557,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 555,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "d4e5",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -595,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 593,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "d4c5",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -540,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 538,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "d4e3",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -520,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 518,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "d4c3",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -509,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 507,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "d4f2",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -559,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 557,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "d4b2",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -510,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 508,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "d4a1",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -507,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 505,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "h8": {
+      "square": "h8",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "d4h8",
+      "worst_move": "d4h8",
+      "best_outcome_cp": -575,
+      "worst_outcome_cp": -575,
+      "mean_cp_outcome": -575.0,
+      "min_cp_regret": 573,
+      "max_cp_regret": 573,
+      "mean_cp_regret": 573.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d4h8",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -575,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 573,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "g7": {
+      "square": "g7",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "d4g7",
+      "worst_move": "d4g7",
+      "best_outcome_cp": -549,
+      "worst_outcome_cp": -549,
+      "mean_cp_outcome": -549.0,
+      "min_cp_regret": 547,
+      "max_cp_regret": 547,
+      "mean_cp_regret": 547.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d4g7",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -549,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 547,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "a7": {
+      "square": "a7",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "d4a7",
+      "worst_move": "d4a7",
+      "best_outcome_cp": -605,
+      "worst_outcome_cp": -605,
+      "mean_cp_outcome": -605.0,
+      "min_cp_regret": 603,
+      "max_cp_regret": 603,
+      "mean_cp_regret": 603.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d4a7",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -605,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 603,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "f6": {
+      "square": "f6",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "d4f6",
+      "worst_move": "d4f6",
+      "best_outcome_cp": -588,
+      "worst_outcome_cp": -588,
+      "mean_cp_outcome": -588.0,
+      "min_cp_regret": 586,
+      "max_cp_regret": 586,
+      "mean_cp_regret": 586.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d4f6",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -588,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 586,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "b6": {
+      "square": "b6",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "d4b6",
+      "worst_move": "d4b6",
+      "best_outcome_cp": -557,
+      "worst_outcome_cp": -557,
+      "mean_cp_outcome": -557.0,
+      "min_cp_regret": 555,
+      "max_cp_regret": 555,
+      "mean_cp_regret": 555.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d4b6",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -557,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 555,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "e5": {
+      "square": "e5",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "d4e5",
+      "worst_move": "d4e5",
+      "best_outcome_cp": -595,
+      "worst_outcome_cp": -595,
+      "mean_cp_outcome": -595.0,
+      "min_cp_regret": 593,
+      "max_cp_regret": 593,
+      "mean_cp_regret": 593.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d4e5",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -595,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 593,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "c5": {
+      "square": "c5",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "d4c5",
+      "worst_move": "d4c5",
+      "best_outcome_cp": -540,
+      "worst_outcome_cp": -540,
+      "mean_cp_outcome": -540.0,
+      "min_cp_regret": 538,
+      "max_cp_regret": 538,
+      "mean_cp_regret": 538.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d4c5",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -540,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 538,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "e3": {
+      "square": "e3",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "d4e3",
+      "worst_move": "d4e3",
+      "best_outcome_cp": -520,
+      "worst_outcome_cp": -520,
+      "mean_cp_outcome": -520.0,
+      "min_cp_regret": 518,
+      "max_cp_regret": 518,
+      "mean_cp_regret": 518.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d4e3",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -520,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 518,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "c3": {
+      "square": "c3",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "d4c3",
+      "worst_move": "d4c3",
+      "best_outcome_cp": -509,
+      "worst_outcome_cp": -509,
+      "mean_cp_outcome": -509.0,
+      "min_cp_regret": 507,
+      "max_cp_regret": 507,
+      "mean_cp_regret": 507.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d4c3",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -509,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 507,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "f2": {
+      "square": "f2",
+      "move_count": 2,
+      "as_origin": 0,
+      "as_destination": 2,
+      "as_capture": 0,
+      "best_move": "g1f2",
+      "worst_move": "d4f2",
+      "best_outcome_cp": -23,
+      "worst_outcome_cp": -559,
+      "mean_cp_outcome": -291.0,
+      "min_cp_regret": 21,
+      "max_cp_regret": 557,
+      "mean_cp_regret": 289.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d4f2",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -559,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 557,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "g1f2",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -23,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 21,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "b2": {
+      "square": "b2",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "d4b2",
+      "worst_move": "d4b2",
+      "best_outcome_cp": -510,
+      "worst_outcome_cp": -510,
+      "mean_cp_outcome": -510.0,
+      "min_cp_regret": 508,
+      "max_cp_regret": 508,
+      "mean_cp_regret": 508.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d4b2",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -510,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 508,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "a1": {
+      "square": "a1",
+      "move_count": 2,
+      "as_origin": 0,
+      "as_destination": 2,
+      "as_capture": 0,
+      "best_move": "d1a1",
+      "worst_move": "d4a1",
+      "best_outcome_cp": -497,
+      "worst_outcome_cp": -507,
+      "mean_cp_outcome": -502.0,
+      "min_cp_regret": 495,
+      "max_cp_regret": 505,
+      "mean_cp_regret": 500.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d4a1",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -507,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 505,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "d1a1",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -497,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 495,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "g1": {
+      "square": "g1",
+      "move_count": 3,
+      "as_origin": 3,
+      "as_destination": 0,
+      "as_capture": 0,
+      "best_move": "g1f1",
+      "worst_move": "g1h2",
+      "best_outcome_cp": -2,
+      "worst_outcome_cp": -502,
+      "mean_cp_outcome": -175.66666666666666,
+      "min_cp_regret": 0,
+      "max_cp_regret": 500,
+      "mean_cp_regret": 173.66666666666666,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "g1h2",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -502,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 500,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "g1f2",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -23,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 21,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "g1f1",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -2,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 0,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "h2": {
+      "square": "h2",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "g1h2",
+      "worst_move": "g1h2",
+      "best_outcome_cp": -502,
+      "worst_outcome_cp": -502,
+      "mean_cp_outcome": -502.0,
+      "min_cp_regret": 500,
+      "max_cp_regret": 500,
+      "mean_cp_regret": 500.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "g1h2",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -502,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 500,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "f1": {
+      "square": "f1",
+      "move_count": 2,
+      "as_origin": 0,
+      "as_destination": 2,
+      "as_capture": 0,
+      "best_move": "g1f1",
+      "worst_move": "d1f1",
+      "best_outcome_cp": -2,
+      "worst_outcome_cp": -242,
+      "mean_cp_outcome": -122.0,
+      "min_cp_regret": 0,
+      "max_cp_regret": 240,
+      "mean_cp_regret": 120.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "g1f1",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -2,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 0,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "d1f1",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -242,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 240,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "d1": {
+      "square": "d1",
+      "move_count": 7,
+      "as_origin": 7,
+      "as_destination": 0,
+      "as_capture": 0,
+      "best_move": "d1e1",
+      "worst_move": "d1b1",
+      "best_outcome_cp": -4,
+      "worst_outcome_cp": -509,
+      "mean_cp_outcome": -285.42857142857144,
+      "min_cp_regret": 2,
+      "max_cp_regret": 507,
+      "mean_cp_regret": 283.42857142857144,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d1d3",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -6,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 4,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "d1d2",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -232,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 230,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "d1f1",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -242,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 240,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "d1e1",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -4,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 2,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "d1c1",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -508,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 506,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "d1b1",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -509,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 507,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "d1a1",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -497,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 495,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "d3": {
+      "square": "d3",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "d1d3",
+      "worst_move": "d1d3",
+      "best_outcome_cp": -6,
+      "worst_outcome_cp": -6,
+      "mean_cp_outcome": -6.0,
+      "min_cp_regret": 4,
+      "max_cp_regret": 4,
+      "mean_cp_regret": 4.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d1d3",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -6,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 4,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "d2": {
+      "square": "d2",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "d1d2",
+      "worst_move": "d1d2",
+      "best_outcome_cp": -232,
+      "worst_outcome_cp": -232,
+      "mean_cp_outcome": -232.0,
+      "min_cp_regret": 230,
+      "max_cp_regret": 230,
+      "mean_cp_regret": 230.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d1d2",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -232,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 230,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "e1": {
+      "square": "e1",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "d1e1",
+      "worst_move": "d1e1",
+      "best_outcome_cp": -4,
+      "worst_outcome_cp": -4,
+      "mean_cp_outcome": -4.0,
+      "min_cp_regret": 2,
+      "max_cp_regret": 2,
+      "mean_cp_regret": 2.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d1e1",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -4,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 2,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "c1": {
+      "square": "c1",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "d1c1",
+      "worst_move": "d1c1",
+      "best_outcome_cp": -508,
+      "worst_outcome_cp": -508,
+      "mean_cp_outcome": -508.0,
+      "min_cp_regret": 506,
+      "max_cp_regret": 506,
+      "mean_cp_regret": 506.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d1c1",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -508,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 506,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "b1": {
+      "square": "b1",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "d1b1",
+      "worst_move": "d1b1",
+      "best_outcome_cp": -509,
+      "worst_outcome_cp": -509,
+      "mean_cp_outcome": -509.0,
+      "min_cp_regret": 507,
+      "max_cp_regret": 507,
+      "mean_cp_regret": 507.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d1b1",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": -509,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 507,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    }
+  },
+  "engine_name": "Stockfish 18",
+  "engine_options": {
+    "Threads": 1,
+    "Hash": 16
+  }
+}

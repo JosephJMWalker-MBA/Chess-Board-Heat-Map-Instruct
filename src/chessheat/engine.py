@@ -28,8 +28,12 @@ class StockfishAdapter(EngineAdapter):
     def __init__(self, stockfish_path: str, options: Optional[Dict[str, Any]] = None):
         self.engine = chess.engine.SimpleEngine.popen_uci(stockfish_path)
         self.options = options or {"Threads": 1, "Hash": 16}
-        self.engine.configure(self.options)
-    
+        try:
+            self.engine.configure(self.options)
+        except Exception:
+            self.engine.quit()
+            raise
+
     def get_name(self) -> str:
         return self.engine.id.get("name", "Stockfish")
 
@@ -49,7 +53,7 @@ class StockfishAdapter(EngineAdapter):
 
         limit = chess.engine.Limit(**limit_args)
         result = self.engine.analyse(board, limit)
-        
+
         # We must preserve the score from the root perspective.
         # But this function just returns the raw pov score of the side to move for the given board.
         # We'll normalize it in the main harness.
@@ -57,7 +61,7 @@ class StockfishAdapter(EngineAdapter):
             "score": result["score"], # this is a PovScore
             "pv": [move.uci() for move in result.get("pv", [])]
         }
-        
+
     def close(self):
         self.engine.quit()
 
@@ -73,10 +77,10 @@ def analyze(fen: str, adapter: EngineAdapter, budget_type: str, budget_value: in
     board = chess.Board(fen)
     if not board.is_valid():
         raise ValueError("Invalid FEN position")
-    
+
     root_color = board.turn
     root_side_str = "white" if root_color == chess.WHITE else "black"
-    
+
     comp_color = root_color
     if comparison_perspective:
         comp_color = chess.WHITE if comparison_perspective == "white" else chess.BLACK
@@ -91,7 +95,7 @@ def analyze(fen: str, adapter: EngineAdapter, budget_type: str, budget_value: in
     for move in board.legal_moves:
         is_capture = board.is_capture(move)
         is_en_passant = board.is_en_passant(move)
-        
+
         captured_square = None
         if is_capture:
             if is_en_passant:
@@ -99,30 +103,30 @@ def analyze(fen: str, adapter: EngineAdapter, budget_type: str, budget_value: in
                 captured_square = chess.square_name(chess.square(chess.square_file(move.to_square), chess.square_rank(move.from_square)))
             else:
                 captured_square = chess.square_name(move.to_square)
-        
+
         is_castling = board.is_castling(move)
-        
+
         san = board.san(move)
-        
+
         # Apply move
         board.push(move)
         resulting_fen = board.fen()
-        
+
         # Analyze resulting position
         result = adapter.analyze_position(board, budget_type, budget_value)
         move_score = _convert_pov_score(result["score"], comp_color)
-        
+
         board.pop()
-        
+
         # Parse PV
         parsed_pv = []
         current_board = board.copy()
-        
+
         # Ply 1 is the root move
         cap_sq = captured_square
         r = [SquareEffectRole.ORIGIN, SquareEffectRole.DESTINATION]
         if cap_sq: r.append(SquareEffectRole.CAPTURE)
-        
+
         parsed_pv.append(PlyObservation(
             ply_number=1,
             uci=move.uci(),
@@ -132,15 +136,15 @@ def analyze(fen: str, adapter: EngineAdapter, budget_type: str, budget_value: in
             roles=r
         ))
         current_board.push(move)
-        
+
         pv_uci = result.get("pv", [])
-        
+
         # In multi-pv responses from Stockfish via python-chess, the first move in the PV list
-        # is the root move itself. We must avoid duplicating it since we manually inserted the 
+        # is the root move itself. We must avoid duplicating it since we manually inserted the
         # root move at ply_number=1 above.
         if pv_uci and pv_uci[0] == move.uci():
             pv_uci = pv_uci[1:]
-            
+
         for i, move_uci in enumerate(pv_uci):
             ply_num = i + 2
             try:
@@ -153,10 +157,10 @@ def analyze(fen: str, adapter: EngineAdapter, budget_type: str, budget_value: in
                         c_sq = chess.square_name(chess.square(chess.square_file(m.to_square), chess.square_rank(m.from_square)))
                     else:
                         c_sq = chess.square_name(m.to_square)
-                
+
                 r2 = [SquareEffectRole.ORIGIN, SquareEffectRole.DESTINATION]
                 if c_sq: r2.append(SquareEffectRole.CAPTURE)
-                
+
                 parsed_pv.append(PlyObservation(
                     ply_number=ply_num,
                     uci=move_uci,
@@ -168,7 +172,7 @@ def analyze(fen: str, adapter: EngineAdapter, budget_type: str, budget_value: in
                 current_board.push(m)
             except Exception:
                 break
-                
+
         obs = MoveObservation(
             uci=move.uci(),
             san=san,

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ChessHeat Diagnostic Viewer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>ChessHeat Diagnostic Viewer</h1>
+    <div class="controls">
+      <input type="file" id="file-upload" accept=".json">
+
+      <label for="mode-select">Mode:</label>
+      <select id="mode-select">
+        <option value="before">Before</option>
+        <option value="after">After</option>
+        <option value="delta">Delta</option>
+        <option value="recurrence">Recurrence</option>
+      </select>
+
+      <label for="role-select">Role:</label>
+      <select id="role-select">
+        <option value="all">All Direct</option>
+        <option value="origin">Origin</option>
+        <option value="destination">Destination</option>
+        <option value="capture">Capture</option>
+        <option value="en_passant_capture">En Passant Capture</option>
+      </select>
+
+      <label for="metric-select">Metric:</label>
+      <select id="metric-select">
+        <option value="move_count">Move Count</option>
+        <option value="best_cp">Best CP Outcome</option>
+        <option value="worst_cp">Worst CP Outcome</option>
+        <option value="mean_cp">Mean CP Outcome</option>
+        <option value="min_cp_regret">Min CP Regret</option>
+        <option value="max_cp_regret">Max CP Regret</option>
+        <option value="mean_cp_regret">Mean CP Regret</option>
+        <option value="mate_count">Mate Occurrence Count</option>
+        <option value="distinct_line_count">Distinct Line Count (Recurrence)</option>
+        <option value="line_fraction">Line Fraction (Recurrence)</option>
+        <option value="visit_count">Visit Count (Recurrence)</option>
+        <option value="earliest_ply">Earliest Ply (Recurrence)</option>
+      </select>
+    </div>
+  </header>
+
+  <main>
+    <div class="board-container">
+      <div class="ranks-labels">
+        <div>8</div><div>7</div><div>6</div><div>5</div><div>4</div><div>3</div><div>2</div><div>1</div>
+      </div>
+      <div id="board" class="board"></div>
+      <div class="files-labels">
+        <div>a</div><div>b</div><div>c</div><div>d</div><div>e</div><div>f</div><div>g</div><div>h</div>
+      </div>
+    </div>
+
+    <aside class="inspector">
+      <h2>Inspector</h2>
+      <div id="inspector-content">
+        <p class="placeholder">Click a square to inspect evidence.</p>
+      </div>
+
+      <div class="provenance">
+        <h3>Provenance</h3>
+        <div id="provenance-content"></div>
+      </div>
+    </aside>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

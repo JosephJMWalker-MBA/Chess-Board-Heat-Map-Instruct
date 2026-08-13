@@ -1,0 +1,354 @@
+{
+  "F1_Tactical_Fork": {
+    "model_A": {
+      "nonzero": 5,
+      "precision": 0.0,
+      "false_positive_area": 5,
+      "cov": 0.0
+    },
+    "model_B": {
+      "nonzero": 35,
+      "precision": 0.1875,
+      "false_positive_area": 13,
+      "cov": 0.75
+    },
+    "model_C": {
+      "nonzero": 42,
+      "precision": 0.125,
+      "false_positive_area": 14,
+      "cov": 0.5
+    },
+    "model_D": {
+      "nonzero": 35,
+      "precision": 0.1875,
+      "false_positive_area": 13,
+      "cov": 0.75
+    },
+    "model_E": {
+      "nonzero": 42,
+      "precision": 0.125,
+      "false_positive_area": 14,
+      "cov": 0.5
+    },
+    "model_F": {
+      "nonzero": 48,
+      "precision": 0.1875,
+      "false_positive_area": 13,
+      "cov": 0.75
+    },
+    "model_G": {
+      "nonzero": 48,
+      "precision": 0.1875,
+      "false_positive_area": 13,
+      "cov": 0.75
+    }
+  },
+  "F2_Poisoned_Destination": {
+    "model_A": {
+      "nonzero": 27,
+      "precision": 0.0625,
+      "false_positive_area": 15,
+      "cov": 1.0
+    },
+    "model_B": {
+      "nonzero": 49,
+      "precision": 0.0625,
+      "false_positive_area": 15,
+      "cov": 1.0
+    },
+    "model_C": {
+      "nonzero": 63,
+      "precision": 0.0625,
+      "false_positive_area": 15,
+      "cov": 1.0
+    },
+    "model_D": {
+      "nonzero": 49,
+      "precision": 0.0625,
+      "false_positive_area": 15,
+      "cov": 1.0
+    },
+    "model_E": {
+      "nonzero": 63,
+      "precision": 0.0625,
+      "false_positive_area": 15,
+      "cov": 1.0
+    },
+    "model_F": {
+      "nonzero": 63,
+      "precision": 0.0625,
+      "false_positive_area": 15,
+      "cov": 1.0
+    },
+    "model_G": {
+      "nonzero": 63,
+      "precision": 0.0625,
+      "false_positive_area": 15,
+      "cov": 1.0
+    }
+  },
+  "F3_Soft_Pin": {
+    "model_A": {
+      "nonzero": 23,
+      "precision": 0.1875,
+      "false_positive_area": 13,
+      "cov": 0.6
+    },
+    "model_B": {
+      "nonzero": 52,
+      "precision": 0.3125,
+      "false_positive_area": 11,
+      "cov": 1.0
+    },
+    "model_C": {
+      "nonzero": 63,
+      "precision": 0.125,
+      "false_positive_area": 14,
+      "cov": 0.4
+    },
+    "model_D": {
+      "nonzero": 52,
+      "precision": 0.1875,
+      "false_positive_area": 13,
+      "cov": 0.6
+    },
+    "model_E": {
+      "nonzero": 63,
+      "precision": 0.125,
+      "false_positive_area": 14,
+      "cov": 0.4
+    },
+    "model_F": {
+      "nonzero": 64,
+      "precision": 0.3125,
+      "false_positive_area": 11,
+      "cov": 1.0
+    },
+    "model_G": {
+      "nonzero": 64,
+      "precision": 0.1875,
+      "false_positive_area": 13,
+      "cov": 0.6
+    }
+  },
+  "F5_Central_Pawn_Break": {
+    "model_A": {
+      "nonzero": 34,
+      "precision": 0.125,
+      "false_positive_area": 14,
+      "cov": 0.3333333333333333
+    },
+    "model_B": {
+      "nonzero": 58,
+      "precision": 0.25,
+      "false_positive_area": 12,
+      "cov": 0.6666666666666666
+    },
+    "model_C": {
+      "nonzero": 63,
+      "precision": 0.25,
+      "false_positive_area": 12,
+      "cov": 0.6666666666666666
+    },
+    "model_D": {
+      "nonzero": 58,
+      "precision": 0.0625,
+      "false_positive_area": 15,
+      "cov": 0.16666666666666666
+    },
+    "model_E": {
+      "nonzero": 63,
+      "precision": 0.125,
+      "false_positive_area": 14,
+      "cov": 0.3333333333333333
+    },
+    "model_F": {
+      "nonzero": 63,
+      "precision": 0.25,
+      "false_positive_area": 12,
+      "cov": 0.6666666666666666
+    },
+    "model_G": {
+      "nonzero": 63,
+      "precision": 0.125,
+      "false_positive_area": 14,
+      "cov": 0.3333333333333333
+    }
+  },
+  "F6_Discovered_Attack": {
+    "model_A": {
+      "nonzero": 21,
+      "precision": 0.125,
+      "false_positive_area": 14,
+      "cov": 0.6666666666666666
+    },
+    "model_B": {
+      "nonzero": 51,
+      "precision": 0.1875,
+      "false_positive_area": 13,
+      "cov": 1.0
+    },
+    "model_C": {
+      "nonzero": 60,
+      "precision": 0.125,
+      "false_positive_area": 14,
+      "cov": 0.6666666666666666
+    },
+    "model_D": {
+      "nonzero": 51,
+      "precision": 0.1875,
+      "false_positive_area": 13,
+      "cov": 1.0
+    },
+    "model_E": {
+      "nonzero": 60,
+      "precision": 0.125,
+      "false_positive_area": 14,
+      "cov": 0.6666666666666666
+    },
+    "model_F": {
+      "nonzero": 63,
+      "precision": 0.1875,
+      "false_positive_area": 13,
+      "cov": 1.0
+    },
+    "model_G": {
+      "nonzero": 63,
+      "precision": 0.1875,
+      "false_positive_area": 13,
+      "cov": 1.0
+    }
+  },
+  "F7_Quiet_Positional_Move": {
+    "model_A": {
+      "nonzero": 32,
+      "precision": 0.1875,
+      "false_positive_area": 13,
+      "cov": 0.75
+    },
+    "model_B": {
+      "nonzero": 63,
+      "precision": 0.0,
+      "false_positive_area": 16,
+      "cov": 0.0
+    },
+    "model_C": {
+      "nonzero": 62,
+      "precision": 0.1875,
+      "false_positive_area": 13,
+      "cov": 0.75
+    },
+    "model_D": {
+      "nonzero": 64,
+      "precision": 0.125,
+      "false_positive_area": 14,
+      "cov": 0.5
+    },
+    "model_E": {
+      "nonzero": 62,
+      "precision": 0.1875,
+      "false_positive_area": 13,
+      "cov": 0.75
+    },
+    "model_F": {
+      "nonzero": 64,
+      "precision": 0.0625,
+      "false_positive_area": 15,
+      "cov": 0.25
+    },
+    "model_G": {
+      "nonzero": 64,
+      "precision": 0.1875,
+      "false_positive_area": 13,
+      "cov": 0.75
+    }
+  },
+  "F8_Negative_Control": {
+    "model_A": {
+      "nonzero": 8,
+      "precision": 0.0,
+      "false_positive_area": 8,
+      "cov": 0.0
+    },
+    "model_B": {
+      "nonzero": 32,
+      "precision": 0.0,
+      "false_positive_area": 16,
+      "cov": 0.0
+    },
+    "model_C": {
+      "nonzero": 28,
+      "precision": 0.0,
+      "false_positive_area": 16,
+      "cov": 0.0
+    },
+    "model_D": {
+      "nonzero": 32,
+      "precision": 0.0,
+      "false_positive_area": 16,
+      "cov": 0.0
+    },
+    "model_E": {
+      "nonzero": 28,
+      "precision": 0.0,
+      "false_positive_area": 16,
+      "cov": 0.0
+    },
+    "model_F": {
+      "nonzero": 40,
+      "precision": 0.0,
+      "false_positive_area": 16,
+      "cov": 0.0
+    },
+    "model_G": {
+      "nonzero": 40,
+      "precision": 0.0,
+      "false_positive_area": 16,
+      "cov": 0.0
+    }
+  },
+  "F9_Overloaded_Defender": {
+    "model_A": {
+      "nonzero": 6,
+      "precision": 0.16666666666666666,
+      "false_positive_area": 5,
+      "cov": 0.2
+    },
+    "model_B": {
+      "nonzero": 36,
+      "precision": 0.3125,
+      "false_positive_area": 11,
+      "cov": 1.0
+    },
+    "model_C": {
+      "nonzero": 57,
+      "precision": 0.3125,
+      "false_positive_area": 11,
+      "cov": 1.0
+    },
+    "model_D": {
+      "nonzero": 36,
+      "precision": 0.3125,
+      "false_positive_area": 11,
+      "cov": 1.0
+    },
+    "model_E": {
+      "nonzero": 57,
+      "precision": 0.3125,
+      "false_positive_area": 11,
+      "cov": 1.0
+    },
+    "model_F": {
+      "nonzero": 59,
+      "precision": 0.3125,
+      "false_positive_area": 11,
+      "cov": 1.0
+    },
+    "model_G": {
+      "nonzero": 59,
+      "precision": 0.3125,
+      "false_positive_area": 11,
+      "cov": 1.0
+    }
+  }
+}

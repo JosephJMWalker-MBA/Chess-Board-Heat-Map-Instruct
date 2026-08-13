@@ -1,0 +1,90 @@
+{
+  "V1_Ordinary_CP_Dispersion": {
+    "Acp": 434.20000000000005,
+    "Amate": {
+      "legal_move_count": 27,
+      "best_outcome_type": "cp",
+      "moves_preserving_favorable_mate": 0,
+      "moves_forfeiting_favorable_mate": 0,
+      "moves_allowing_forced_mate_against": 0,
+      "high_mate_leverage": false
+    }
+  },
+  "V2_Forced_Single_Move": {
+    "Acp": 0.0,
+    "Amate": {
+      "legal_move_count": 1,
+      "best_outcome_type": "cp",
+      "moves_preserving_favorable_mate": 0,
+      "moves_forfeiting_favorable_mate": 0,
+      "moves_allowing_forced_mate_against": 0,
+      "high_mate_leverage": false
+    }
+  },
+  "V3_Favorable_Mate_Preserved": {
+    "Acp": 0.0,
+    "Amate": {
+      "legal_move_count": 30,
+      "best_outcome_type": "mate",
+      "moves_preserving_favorable_mate": 21,
+      "moves_forfeiting_favorable_mate": 9,
+      "moves_allowing_forced_mate_against": 0,
+      "high_mate_leverage": true
+    }
+  },
+  "V4_Favorable_Mate_Forfeited": {
+    "Acp": 0.0,
+    "Amate": {
+      "legal_move_count": 28,
+      "best_outcome_type": "mate",
+      "moves_preserving_favorable_mate": 22,
+      "moves_forfeiting_favorable_mate": 6,
+      "moves_allowing_forced_mate_against": 0,
+      "high_mate_leverage": true
+    }
+  },
+  "V5_Allowing_Forced_Mate_Against": {
+    "Acp": 74.00000000000001,
+    "Amate": {
+      "legal_move_count": 8,
+      "best_outcome_type": "cp",
+      "moves_preserving_favorable_mate": 0,
+      "moves_forfeiting_favorable_mate": 0,
+      "moves_allowing_forced_mate_against": 1,
+      "high_mate_leverage": true
+    }
+  },
+  "V6_Flat_Negative_Control": {
+    "Acp": 0.0,
+    "Amate": {
+      "legal_move_count": 8,
+      "best_outcome_type": "cp",
+      "moves_preserving_favorable_mate": 0,
+      "moves_forfeiting_favorable_mate": 0,
+      "moves_allowing_forced_mate_against": 0,
+      "high_mate_leverage": false
+    }
+  },
+  "V7_Recurring_Low_Consequence": {
+    "Acp": 807.2,
+    "Amate": {
+      "legal_move_count": 5,
+      "best_outcome_type": "cp",
+      "moves_preserving_favorable_mate": 0,
+      "moves_forfeiting_favorable_mate": 0,
+      "moves_allowing_forced_mate_against": 0,
+      "high_mate_leverage": false
+    }
+  },
+  "V8_Quiet_Positional": {
+    "Acp": 254.40000000000012,
+    "Amate": {
+      "legal_move_count": 39,
+      "best_outcome_type": "cp",
+      "moves_preserving_favorable_mate": 0,
+      "moves_forfeiting_favorable_mate": 0,
+      "moves_allowing_forced_mate_against": 0,
+      "high_mate_leverage": false
+    }
+  }
+}

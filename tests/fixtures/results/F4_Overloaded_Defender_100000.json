@@ -1,0 +1,1489 @@
+{
+  "schema_version": "1.0",
+  "fen": "4k3/8/5n2/3p4/8/3B4/1R6/4K3 w - - 0 1",
+  "root_side": "white",
+  "engine_name": "Stockfish 18",
+  "engine_options": {
+    "Threads": 1,
+    "Hash": 16
+  },
+  "search_budget_type": "nodes",
+  "search_budget_value": 100000,
+  "baseline_observation": {
+    "type": "cp",
+    "value": 380,
+    "perspective": "white"
+  },
+  "attributions": {
+    "d3": {
+      "square": "d3",
+      "move_count": 11,
+      "as_origin": 11,
+      "as_destination": 0,
+      "as_capture": 0,
+      "best_move": "d3f5",
+      "worst_move": "d3e4",
+      "best_outcome_cp": 351,
+      "worst_outcome_cp": 0,
+      "mean_cp_outcome": 233.0909090909091,
+      "min_cp_regret": 56,
+      "max_cp_regret": 407,
+      "mean_cp_regret": 173.9090909090909,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d3h7",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 1,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 406,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "d3g6",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 288,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 119,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "d3a6",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 309,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 98,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "d3f5",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 351,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 56,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "d3b5",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 299,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 108,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "d3e4",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 0,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 407,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "d3c4",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 4,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 403,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "d3e2",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 322,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 85,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "d3c2",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 325,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 82,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "d3f1",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 342,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 65,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "d3b1",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 323,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 84,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "h7": {
+      "square": "h7",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "d3h7",
+      "worst_move": "d3h7",
+      "best_outcome_cp": 1,
+      "worst_outcome_cp": 1,
+      "mean_cp_outcome": 1.0,
+      "min_cp_regret": 406,
+      "max_cp_regret": 406,
+      "mean_cp_regret": 406.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d3h7",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 1,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 406,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "g6": {
+      "square": "g6",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "d3g6",
+      "worst_move": "d3g6",
+      "best_outcome_cp": 288,
+      "worst_outcome_cp": 288,
+      "mean_cp_outcome": 288.0,
+      "min_cp_regret": 119,
+      "max_cp_regret": 119,
+      "mean_cp_regret": 119.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d3g6",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 288,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 119,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "a6": {
+      "square": "a6",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "d3a6",
+      "worst_move": "d3a6",
+      "best_outcome_cp": 309,
+      "worst_outcome_cp": 309,
+      "mean_cp_outcome": 309.0,
+      "min_cp_regret": 98,
+      "max_cp_regret": 98,
+      "mean_cp_regret": 98.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d3a6",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 309,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 98,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "f5": {
+      "square": "f5",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "d3f5",
+      "worst_move": "d3f5",
+      "best_outcome_cp": 351,
+      "worst_outcome_cp": 351,
+      "mean_cp_outcome": 351.0,
+      "min_cp_regret": 56,
+      "max_cp_regret": 56,
+      "mean_cp_regret": 56.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d3f5",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 351,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 56,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "b5": {
+      "square": "b5",
+      "move_count": 2,
+      "as_origin": 0,
+      "as_destination": 2,
+      "as_capture": 0,
+      "best_move": "b2b5",
+      "worst_move": "d3b5",
+      "best_outcome_cp": 327,
+      "worst_outcome_cp": 299,
+      "mean_cp_outcome": 313.0,
+      "min_cp_regret": 80,
+      "max_cp_regret": 108,
+      "mean_cp_regret": 94.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d3b5",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 299,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 108,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "b2b5",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 327,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 80,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "e4": {
+      "square": "e4",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "d3e4",
+      "worst_move": "d3e4",
+      "best_outcome_cp": 0,
+      "worst_outcome_cp": 0,
+      "mean_cp_outcome": 0.0,
+      "min_cp_regret": 407,
+      "max_cp_regret": 407,
+      "mean_cp_regret": 407.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d3e4",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 0,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 407,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "c4": {
+      "square": "c4",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "d3c4",
+      "worst_move": "d3c4",
+      "best_outcome_cp": 4,
+      "worst_outcome_cp": 4,
+      "mean_cp_outcome": 4.0,
+      "min_cp_regret": 403,
+      "max_cp_regret": 403,
+      "mean_cp_regret": 403.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d3c4",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 4,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 403,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "e2": {
+      "square": "e2",
+      "move_count": 3,
+      "as_origin": 0,
+      "as_destination": 3,
+      "as_capture": 0,
+      "best_move": "b2e2",
+      "worst_move": "d3e2",
+      "best_outcome_cp": 366,
+      "worst_outcome_cp": 322,
+      "mean_cp_outcome": 341.3333333333333,
+      "min_cp_regret": 41,
+      "max_cp_regret": 85,
+      "mean_cp_regret": 65.66666666666667,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d3e2",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 322,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 85,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "b2e2",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 366,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 41,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "e1e2",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 336,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 71,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "c2": {
+      "square": "c2",
+      "move_count": 2,
+      "as_origin": 0,
+      "as_destination": 2,
+      "as_capture": 0,
+      "best_move": "d3c2",
+      "worst_move": "b2c2",
+      "best_outcome_cp": 325,
+      "worst_outcome_cp": 257,
+      "mean_cp_outcome": 291.0,
+      "min_cp_regret": 82,
+      "max_cp_regret": 150,
+      "mean_cp_regret": 116.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d3c2",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 325,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 82,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "b2c2",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 257,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 150,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "f1": {
+      "square": "f1",
+      "move_count": 2,
+      "as_origin": 0,
+      "as_destination": 2,
+      "as_capture": 0,
+      "best_move": "d3f1",
+      "worst_move": "d3f1",
+      "best_outcome_cp": 342,
+      "worst_outcome_cp": 342,
+      "mean_cp_outcome": 342.0,
+      "min_cp_regret": 65,
+      "max_cp_regret": 65,
+      "mean_cp_regret": 65.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d3f1",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 342,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 65,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "e1f1",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 342,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 65,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "b1": {
+      "square": "b1",
+      "move_count": 2,
+      "as_origin": 0,
+      "as_destination": 2,
+      "as_capture": 0,
+      "best_move": "b2b1",
+      "worst_move": "d3b1",
+      "best_outcome_cp": 344,
+      "worst_outcome_cp": 323,
+      "mean_cp_outcome": 333.5,
+      "min_cp_regret": 63,
+      "max_cp_regret": 84,
+      "mean_cp_regret": 73.5,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "d3b1",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 323,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 84,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "b2b1",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 344,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 63,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "b2": {
+      "square": "b2",
+      "move_count": 14,
+      "as_origin": 14,
+      "as_destination": 0,
+      "as_capture": 0,
+      "best_move": "b2b7",
+      "worst_move": "b2d2",
+      "best_outcome_cp": 407,
+      "worst_outcome_cp": 250,
+      "mean_cp_outcome": 320.92857142857144,
+      "min_cp_regret": 0,
+      "max_cp_regret": 157,
+      "mean_cp_regret": 86.07142857142857,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "b2b8",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 341,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 66,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "b2b7",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 407,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 0,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "b2b6",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 357,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 50,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "b2b5",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 327,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 80,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "b2b4",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 334,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 73,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "b2b3",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 342,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 65,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "b2h2",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 295,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 112,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "b2g2",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 266,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 141,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "b2f2",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 277,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 130,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "b2e2",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 366,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 41,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "b2d2",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 250,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 157,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "b2c2",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 257,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 150,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "b2a2",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 330,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 77,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "b2b1",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 344,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 63,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "b8": {
+      "square": "b8",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "b2b8",
+      "worst_move": "b2b8",
+      "best_outcome_cp": 341,
+      "worst_outcome_cp": 341,
+      "mean_cp_outcome": 341.0,
+      "min_cp_regret": 66,
+      "max_cp_regret": 66,
+      "mean_cp_regret": 66.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "b2b8",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 341,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 66,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "b7": {
+      "square": "b7",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "b2b7",
+      "worst_move": "b2b7",
+      "best_outcome_cp": 407,
+      "worst_outcome_cp": 407,
+      "mean_cp_outcome": 407.0,
+      "min_cp_regret": 0,
+      "max_cp_regret": 0,
+      "mean_cp_regret": 0.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "b2b7",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 407,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 0,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "b6": {
+      "square": "b6",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "b2b6",
+      "worst_move": "b2b6",
+      "best_outcome_cp": 357,
+      "worst_outcome_cp": 357,
+      "mean_cp_outcome": 357.0,
+      "min_cp_regret": 50,
+      "max_cp_regret": 50,
+      "mean_cp_regret": 50.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "b2b6",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 357,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 50,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "b4": {
+      "square": "b4",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "b2b4",
+      "worst_move": "b2b4",
+      "best_outcome_cp": 334,
+      "worst_outcome_cp": 334,
+      "mean_cp_outcome": 334.0,
+      "min_cp_regret": 73,
+      "max_cp_regret": 73,
+      "mean_cp_regret": 73.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "b2b4",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 334,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 73,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "b3": {
+      "square": "b3",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "b2b3",
+      "worst_move": "b2b3",
+      "best_outcome_cp": 342,
+      "worst_outcome_cp": 342,
+      "mean_cp_outcome": 342.0,
+      "min_cp_regret": 65,
+      "max_cp_regret": 65,
+      "mean_cp_regret": 65.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "b2b3",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 342,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 65,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "h2": {
+      "square": "h2",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "b2h2",
+      "worst_move": "b2h2",
+      "best_outcome_cp": 295,
+      "worst_outcome_cp": 295,
+      "mean_cp_outcome": 295.0,
+      "min_cp_regret": 112,
+      "max_cp_regret": 112,
+      "mean_cp_regret": 112.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "b2h2",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 295,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 112,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "g2": {
+      "square": "g2",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "b2g2",
+      "worst_move": "b2g2",
+      "best_outcome_cp": 266,
+      "worst_outcome_cp": 266,
+      "mean_cp_outcome": 266.0,
+      "min_cp_regret": 141,
+      "max_cp_regret": 141,
+      "mean_cp_regret": 141.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "b2g2",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 266,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 141,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "f2": {
+      "square": "f2",
+      "move_count": 2,
+      "as_origin": 0,
+      "as_destination": 2,
+      "as_capture": 0,
+      "best_move": "e1f2",
+      "worst_move": "b2f2",
+      "best_outcome_cp": 336,
+      "worst_outcome_cp": 277,
+      "mean_cp_outcome": 306.5,
+      "min_cp_regret": 71,
+      "max_cp_regret": 130,
+      "mean_cp_regret": 100.5,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "b2f2",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 277,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 130,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "e1f2",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 336,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 71,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "d2": {
+      "square": "d2",
+      "move_count": 2,
+      "as_origin": 0,
+      "as_destination": 2,
+      "as_capture": 0,
+      "best_move": "e1d2",
+      "worst_move": "b2d2",
+      "best_outcome_cp": 337,
+      "worst_outcome_cp": 250,
+      "mean_cp_outcome": 293.5,
+      "min_cp_regret": 70,
+      "max_cp_regret": 157,
+      "mean_cp_regret": 113.5,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "b2d2",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 250,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 157,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "e1d2",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 337,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 70,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "a2": {
+      "square": "a2",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "b2a2",
+      "worst_move": "b2a2",
+      "best_outcome_cp": 330,
+      "worst_outcome_cp": 330,
+      "mean_cp_outcome": 330.0,
+      "min_cp_regret": 77,
+      "max_cp_regret": 77,
+      "mean_cp_regret": 77.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "b2a2",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 330,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 77,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "e1": {
+      "square": "e1",
+      "move_count": 5,
+      "as_origin": 5,
+      "as_destination": 0,
+      "as_capture": 0,
+      "best_move": "e1d1",
+      "worst_move": "e1f2",
+      "best_outcome_cp": 349,
+      "worst_outcome_cp": 336,
+      "mean_cp_outcome": 340.0,
+      "min_cp_regret": 58,
+      "max_cp_regret": 71,
+      "mean_cp_regret": 67.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "e1f2",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 336,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 71,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "e1e2",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 336,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 71,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "e1d2",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 337,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 70,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "e1f1",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 342,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 65,
+            "perspective": "white"
+          },
+          "promotion": null
+        },
+        {
+          "uci": "e1d1",
+          "roles": [
+            "origin"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 349,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 58,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    },
+    "d1": {
+      "square": "d1",
+      "move_count": 1,
+      "as_origin": 0,
+      "as_destination": 1,
+      "as_capture": 0,
+      "best_move": "e1d1",
+      "worst_move": "e1d1",
+      "best_outcome_cp": 349,
+      "worst_outcome_cp": 349,
+      "mean_cp_outcome": 349.0,
+      "min_cp_regret": 58,
+      "max_cp_regret": 58,
+      "mean_cp_regret": 58.0,
+      "mate_outcomes": 0,
+      "implicated_moves": [
+        {
+          "uci": "e1d1",
+          "roles": [
+            "destination"
+          ],
+          "outcome": {
+            "type": "cp",
+            "value": 349,
+            "perspective": "white"
+          },
+          "regret": {
+            "type": "cp",
+            "value": 58,
+            "perspective": "white"
+          },
+          "promotion": null
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,963 @@
+{
+  "F1_Tactical_Fork": {
+    "baseline_H": {
+      "model_name": "baseline_H",
+      "expected_ranks": {
+        "d6": 2,
+        "f6": 26,
+        "e8": 34,
+        "d7": 30
+      },
+      "coverage": 0.25,
+      "specificity": 0.75,
+      "hotspots_count": 7,
+      "top_1_share": 0.03125000000000001,
+      "top_5_share": 0.15128968253968256
+    },
+    "baseline_I": {
+      "model_name": "baseline_I",
+      "expected_ranks": {
+        "d6": 44,
+        "f6": 46,
+        "e8": 61,
+        "d7": 52
+      },
+      "coverage": 0.0,
+      "specificity": 0.7333333333333334,
+      "hotspots_count": 1,
+      "top_1_share": 0.5000000000000001,
+      "top_5_share": 1.0000000000000002
+    },
+    "model_A": {
+      "model_name": "model_A",
+      "expected_ranks": {
+        "d6": 44,
+        "f6": 46,
+        "e8": 61,
+        "d7": 52
+      },
+      "coverage": 0.0,
+      "specificity": 0.7333333333333334,
+      "hotspots_count": 1,
+      "top_1_share": 0.3333333333333333,
+      "top_5_share": 1.0
+    },
+    "model_B": {
+      "model_name": "model_B",
+      "expected_ranks": {
+        "d6": 14,
+        "f6": 55,
+        "e8": 3,
+        "d7": 1
+      },
+      "coverage": 0.75,
+      "specificity": 0.7833333333333333,
+      "hotspots_count": 4,
+      "top_1_share": 0.05555555555555559,
+      "top_5_share": 0.2619047619047621
+    },
+    "model_C": {
+      "model_name": "model_C",
+      "expected_ranks": {
+        "d6": 12,
+        "f6": 41,
+        "e8": 21,
+        "d7": 13
+      },
+      "coverage": 0.5,
+      "specificity": 0.7666666666666666,
+      "hotspots_count": 5,
+      "top_1_share": 0.046511627906976744,
+      "top_5_share": 0.22148394241417496
+    },
+    "model_D": {
+      "model_name": "model_D",
+      "expected_ranks": {
+        "d6": 11,
+        "f6": 55,
+        "e8": 2,
+        "d7": 1
+      },
+      "coverage": 0.75,
+      "specificity": 0.7833333333333333,
+      "hotspots_count": 3,
+      "top_1_share": 0.059021922428330535,
+      "top_5_share": 0.2706576728499157
+    },
+    "model_E": {
+      "model_name": "model_E",
+      "expected_ranks": {
+        "d6": 9,
+        "f6": 41,
+        "e8": 19,
+        "d7": 11
+      },
+      "coverage": 0.5,
+      "specificity": 0.7666666666666666,
+      "hotspots_count": 2,
+      "top_1_share": 0.04792518994739919,
+      "top_5_share": 0.2218585622443016
+    },
+    "model_F": {
+      "model_name": "model_F",
+      "expected_ranks": {
+        "d6": 14,
+        "f6": 47,
+        "e8": 12,
+        "d7": 5
+      },
+      "coverage": 0.75,
+      "specificity": 0.7833333333333333,
+      "hotspots_count": 4,
+      "top_1_share": 0.04332810047095763,
+      "top_5_share": 0.20146520146520153
+    },
+    "model_G": {
+      "model_name": "model_G",
+      "expected_ranks": {
+        "d6": 11,
+        "f6": 47,
+        "e8": 9,
+        "d7": 4
+      },
+      "coverage": 0.75,
+      "specificity": 0.7833333333333333,
+      "hotspots_count": 3,
+      "top_1_share": 0.04252865277877893,
+      "top_5_share": 0.2010379874576516
+    }
+  },
+  "F2_Poisoned_Destination": {
+    "baseline_H": {
+      "model_name": "baseline_H",
+      "expected_ranks": {
+        "d5": 7
+      },
+      "coverage": 1.0,
+      "specificity": 0.7619047619047619,
+      "hotspots_count": 7,
+      "top_1_share": 0.03125000000000001,
+      "top_5_share": 0.15128968253968256
+    },
+    "baseline_I": {
+      "model_name": "baseline_I",
+      "expected_ranks": {
+        "d5": 5
+      },
+      "coverage": 1.0,
+      "specificity": 0.7619047619047619,
+      "hotspots_count": 3,
+      "top_1_share": 0.07692307692307694,
+      "top_5_share": 0.3538461538461539
+    },
+    "model_A": {
+      "model_name": "model_A",
+      "expected_ranks": {
+        "d5": 5
+      },
+      "coverage": 1.0,
+      "specificity": 0.7619047619047619,
+      "hotspots_count": 3,
+      "top_1_share": 0.07142857142857145,
+      "top_5_share": 0.3306878306878308
+    },
+    "model_B": {
+      "model_name": "model_B",
+      "expected_ranks": {
+        "d5": 5
+      },
+      "coverage": 1.0,
+      "specificity": 0.7619047619047619,
+      "hotspots_count": 5,
+      "top_1_share": 0.039999999999999994,
+      "top_5_share": 0.19183673469387752
+    },
+    "model_C": {
+      "model_name": "model_C",
+      "expected_ranks": {
+        "d5": 14
+      },
+      "coverage": 1.0,
+      "specificity": 0.7619047619047619,
+      "hotspots_count": 7,
+      "top_1_share": 0.03125000000000001,
+      "top_5_share": 0.15128968253968256
+    },
+    "model_D": {
+      "model_name": "model_D",
+      "expected_ranks": {
+        "d5": 4
+      },
+      "coverage": 1.0,
+      "specificity": 0.7619047619047619,
+      "hotspots_count": 3,
+      "top_1_share": 0.03998334027488546,
+      "top_5_share": 0.1844756043006772
+    },
+    "model_E": {
+      "model_name": "model_E",
+      "expected_ranks": {
+        "d5": 5
+      },
+      "coverage": 1.0,
+      "specificity": 0.7619047619047619,
+      "hotspots_count": 1,
+      "top_1_share": 0.03316326530612248,
+      "top_5_share": 0.15495086923658366
+    },
+    "model_F": {
+      "model_name": "model_F",
+      "expected_ranks": {
+        "d5": 4
+      },
+      "coverage": 1.0,
+      "specificity": 0.7619047619047619,
+      "hotspots_count": 3,
+      "top_1_share": 0.032852564102564125,
+      "top_5_share": 0.15357905982905995
+    },
+    "model_G": {
+      "model_name": "model_G",
+      "expected_ranks": {
+        "d5": 3
+      },
+      "coverage": 1.0,
+      "specificity": 0.7619047619047619,
+      "hotspots_count": 0,
+      "top_1_share": 0.031585292344786034,
+      "top_5_share": 0.152059473578461
+    }
+  },
+  "F3_Soft_Pin": {
+    "baseline_H": {
+      "model_name": "baseline_H",
+      "expected_ranks": {
+        "e1": 38,
+        "e2": 23,
+        "e3": 27,
+        "e4": 7,
+        "e7": 34
+      },
+      "coverage": 0.2,
+      "specificity": 0.7457627118644068,
+      "hotspots_count": 7,
+      "top_1_share": 0.03125000000000001,
+      "top_5_share": 0.15128968253968256
+    },
+    "baseline_I": {
+      "model_name": "baseline_I",
+      "expected_ranks": {
+        "e1": 21,
+        "e2": 13,
+        "e3": 14,
+        "e4": 35,
+        "e7": 53
+      },
+      "coverage": 0.4,
+      "specificity": 0.7627118644067796,
+      "hotspots_count": 2,
+      "top_1_share": 0.09523809523809523,
+      "top_5_share": 0.42857142857142855
+    },
+    "model_A": {
+      "model_name": "model_A",
+      "expected_ranks": {
+        "e1": 9,
+        "e2": 16,
+        "e3": 17,
+        "e4": 3,
+        "e7": 53
+      },
+      "coverage": 0.6,
+      "specificity": 0.7796610169491526,
+      "hotspots_count": 3,
+      "top_1_share": 0.08333333333333331,
+      "top_5_share": 0.38043478260869557
+    },
+    "model_B": {
+      "model_name": "model_B",
+      "expected_ranks": {
+        "e1": 2,
+        "e2": 10,
+        "e3": 11,
+        "e4": 3,
+        "e7": 1
+      },
+      "coverage": 1.0,
+      "specificity": 0.8135593220338984,
+      "hotspots_count": 6,
+      "top_1_share": 0.037735849056603765,
+      "top_5_share": 0.18142235123367195
+    },
+    "model_C": {
+      "model_name": "model_C",
+      "expected_ranks": {
+        "e1": 18,
+        "e2": 19,
+        "e3": 20,
+        "e4": 1,
+        "e7": 5
+      },
+      "coverage": 0.4,
+      "specificity": 0.7627118644067796,
+      "hotspots_count": 7,
+      "top_1_share": 0.03125000000000001,
+      "top_5_share": 0.15128968253968256
+    },
+    "model_D": {
+      "model_name": "model_D",
+      "expected_ranks": {
+        "e1": 6,
+        "e2": 20,
+        "e3": 22,
+        "e4": 2,
+        "e7": 1
+      },
+      "coverage": 0.6,
+      "specificity": 0.7796610169491526,
+      "hotspots_count": 3,
+      "top_1_share": 0.039453717754172994,
+      "top_5_share": 0.18189615359239958
+    },
+    "model_E": {
+      "model_name": "model_E",
+      "expected_ranks": {
+        "e1": 17,
+        "e2": 29,
+        "e3": 31,
+        "e4": 2,
+        "e7": 4
+      },
+      "coverage": 0.4,
+      "specificity": 0.7627118644067796,
+      "hotspots_count": 7,
+      "top_1_share": 0.03179487179487181,
+      "top_5_share": 0.15346711259754742
+    },
+    "model_F": {
+      "model_name": "model_F",
+      "expected_ranks": {
+        "e1": 4,
+        "e2": 12,
+        "e3": 14,
+        "e4": 1,
+        "e7": 2
+      },
+      "coverage": 1.0,
+      "specificity": 0.8135593220338984,
+      "hotspots_count": 2,
+      "top_1_share": 0.031006629802263982,
+      "top_5_share": 0.14355403723111668
+    },
+    "model_G": {
+      "model_name": "model_G",
+      "expected_ranks": {
+        "e1": 10,
+        "e2": 19,
+        "e3": 24,
+        "e4": 2,
+        "e7": 1
+      },
+      "coverage": 0.6,
+      "specificity": 0.7796610169491526,
+      "hotspots_count": 2,
+      "top_1_share": 0.031337989903081453,
+      "top_5_share": 0.14636952362297798
+    }
+  },
+  "F4_Overloaded_Defender": {
+    "baseline_H": {
+      "model_name": "baseline_H",
+      "expected_ranks": {
+        "f6": 57,
+        "d5": 19,
+        "h7": 11
+      },
+      "coverage": 0.3333333333333333,
+      "specificity": 0.7540983606557377,
+      "hotspots_count": 7,
+      "top_1_share": 0.03125000000000001,
+      "top_5_share": 0.15128968253968256
+    },
+    "baseline_I": {
+      "model_name": "baseline_I",
+      "expected_ranks": {
+        "f6": 49,
+        "d5": 42,
+        "h7": 2
+      },
+      "coverage": 0.3333333333333333,
+      "specificity": 0.7540983606557377,
+      "hotspots_count": 3,
+      "top_1_share": 0.09090909090909091,
+      "top_5_share": 0.41125541125541126
+    },
+    "model_A": {
+      "model_name": "model_A",
+      "expected_ranks": {
+        "f6": 49,
+        "d5": 42,
+        "h7": 2
+      },
+      "coverage": 0.3333333333333333,
+      "specificity": 0.7540983606557377,
+      "hotspots_count": 3,
+      "top_1_share": 0.08,
+      "top_5_share": 0.36666666666666664
+    },
+    "model_B": {
+      "model_name": "model_B",
+      "expected_ranks": {
+        "f6": 2,
+        "d5": 7,
+        "h7": 63
+      },
+      "coverage": 0.6666666666666666,
+      "specificity": 0.7704918032786885,
+      "hotspots_count": 6,
+      "top_1_share": 0.03389830508474576,
+      "top_5_share": 0.16364699006428987
+    },
+    "model_C": {
+      "model_name": "model_C",
+      "expected_ranks": {
+        "f6": 9,
+        "d5": 10,
+        "h7": 8
+      },
+      "coverage": 1.0,
+      "specificity": 0.7868852459016393,
+      "hotspots_count": 7,
+      "top_1_share": 0.03125000000000001,
+      "top_5_share": 0.15128968253968256
+    },
+    "model_D": {
+      "model_name": "model_D",
+      "expected_ranks": {
+        "f6": 1,
+        "d5": 5,
+        "h7": 33
+      },
+      "coverage": 0.6666666666666666,
+      "specificity": 0.7704918032786885,
+      "hotspots_count": 4,
+      "top_1_share": 0.03344089175711351,
+      "top_5_share": 0.15921091229099438
+    },
+    "model_E": {
+      "model_name": "model_E",
+      "expected_ranks": {
+        "f6": 5,
+        "d5": 7,
+        "h7": 2
+      },
+      "coverage": 1.0,
+      "specificity": 0.7868852459016393,
+      "hotspots_count": 3,
+      "top_1_share": 0.03305118903667877,
+      "top_5_share": 0.1547762998790811
+    },
+    "model_F": {
+      "model_name": "model_F",
+      "expected_ranks": {
+        "f6": 2,
+        "d5": 4,
+        "h7": 39
+      },
+      "coverage": 0.6666666666666666,
+      "specificity": 0.7704918032786885,
+      "hotspots_count": 3,
+      "top_1_share": 0.030430270065416893,
+      "top_5_share": 0.1422806768215742
+    },
+    "model_G": {
+      "model_name": "model_G",
+      "expected_ranks": {
+        "f6": 2,
+        "d5": 3,
+        "h7": 19
+      },
+      "coverage": 0.6666666666666666,
+      "specificity": 0.7704918032786885,
+      "hotspots_count": 2,
+      "top_1_share": 0.030284856022815623,
+      "top_5_share": 0.14073203586409178
+    }
+  },
+  "F5_Central_Pawn_Break": {
+    "baseline_H": {
+      "model_name": "baseline_H",
+      "expected_ranks": {
+        "c4": 27,
+        "c5": 30,
+        "d4": 1,
+        "d5": 2,
+        "e4": 6,
+        "e5": 7
+      },
+      "coverage": 0.6666666666666666,
+      "specificity": 0.7931034482758621,
+      "hotspots_count": 7,
+      "top_1_share": 0.03125000000000001,
+      "top_5_share": 0.15128968253968256
+    },
+    "baseline_I": {
+      "model_name": "baseline_I",
+      "expected_ranks": {
+        "c4": 34,
+        "c5": 38,
+        "d4": 35,
+        "d5": 19,
+        "e4": 1,
+        "e5": 11
+      },
+      "coverage": 0.3333333333333333,
+      "specificity": 0.7586206896551724,
+      "hotspots_count": 2,
+      "top_1_share": 0.10000000000000002,
+      "top_5_share": 0.4473684210526317
+    },
+    "model_A": {
+      "model_name": "model_A",
+      "expected_ranks": {
+        "c4": 33,
+        "c5": 38,
+        "d4": 34,
+        "d5": 5,
+        "e4": 1,
+        "e5": 23
+      },
+      "coverage": 0.3333333333333333,
+      "specificity": 0.7586206896551724,
+      "hotspots_count": 4,
+      "top_1_share": 0.057142857142857134,
+      "top_5_share": 0.26890756302521
+    },
+    "model_B": {
+      "model_name": "model_B",
+      "expected_ranks": {
+        "c4": 6,
+        "c5": 2,
+        "d4": 1,
+        "d5": 3,
+        "e4": 31,
+        "e5": 30
+      },
+      "coverage": 0.6666666666666666,
+      "specificity": 0.7931034482758621,
+      "hotspots_count": 6,
+      "top_1_share": 0.034482758620689655,
+      "top_5_share": 0.16636418632788869
+    },
+    "model_C": {
+      "model_name": "model_C",
+      "expected_ranks": {
+        "c4": 13,
+        "c5": 2,
+        "d4": 33,
+        "d5": 4,
+        "e4": 6,
+        "e5": 42
+      },
+      "coverage": 0.6666666666666666,
+      "specificity": 0.7931034482758621,
+      "hotspots_count": 7,
+      "top_1_share": 0.03125000000000001,
+      "top_5_share": 0.15128968253968256
+    },
+    "model_D": {
+      "model_name": "model_D",
+      "expected_ranks": {
+        "c4": 30,
+        "c5": 29,
+        "d4": 24,
+        "d5": 4,
+        "e4": 9,
+        "e5": 34
+      },
+      "coverage": 0.3333333333333333,
+      "specificity": 0.7586206896551724,
+      "hotspots_count": 4,
+      "top_1_share": 0.03369209171736079,
+      "top_5_share": 0.16302861809206604
+    },
+    "model_E": {
+      "model_name": "model_E",
+      "expected_ranks": {
+        "c4": 37,
+        "c5": 33,
+        "d4": 48,
+        "d5": 4,
+        "e4": 1,
+        "e5": 41
+      },
+      "coverage": 0.3333333333333333,
+      "specificity": 0.7586206896551724,
+      "hotspots_count": 5,
+      "top_1_share": 0.030784887418903457,
+      "top_5_share": 0.14986119113718513
+    },
+    "model_F": {
+      "model_name": "model_F",
+      "expected_ranks": {
+        "c4": 4,
+        "c5": 1,
+        "d4": 7,
+        "d5": 2,
+        "e4": 14,
+        "e5": 38
+      },
+      "coverage": 0.8333333333333334,
+      "specificity": 0.8103448275862069,
+      "hotspots_count": 3,
+      "top_1_share": 0.031341952148268466,
+      "top_5_share": 0.14400788208822077
+    },
+    "model_G": {
+      "model_name": "model_G",
+      "expected_ranks": {
+        "c4": 25,
+        "c5": 15,
+        "d4": 30,
+        "d5": 1,
+        "e4": 4,
+        "e5": 42
+      },
+      "coverage": 0.5,
+      "specificity": 0.7758620689655172,
+      "hotspots_count": 2,
+      "top_1_share": 0.030288739893784722,
+      "top_5_share": 0.13868010848015602
+    }
+  },
+  "F6_Discovered_Attack": {
+    "baseline_H": {
+      "model_name": "baseline_H",
+      "expected_ranks": {
+        "d1": 45,
+        "d4": 7,
+        "d5": 56
+      },
+      "coverage": 0.3333333333333333,
+      "specificity": 0.7540983606557377,
+      "hotspots_count": 7,
+      "top_1_share": 0.03125000000000001,
+      "top_5_share": 0.15128968253968256
+    },
+    "baseline_I": {
+      "model_name": "baseline_I",
+      "expected_ranks": {
+        "d1": 19,
+        "d4": 35,
+        "d5": 42
+      },
+      "coverage": 0.0,
+      "specificity": 0.7377049180327868,
+      "hotspots_count": 2,
+      "top_1_share": 0.10526315789473684,
+      "top_5_share": 0.46783625730994155
+    },
+    "model_A": {
+      "model_name": "model_A",
+      "expected_ranks": {
+        "d1": 5,
+        "d4": 6,
+        "d5": 42
+      },
+      "coverage": 0.6666666666666666,
+      "specificity": 0.7704918032786885,
+      "hotspots_count": 3,
+      "top_1_share": 0.09090909090909091,
+      "top_5_share": 0.41125541125541126
+    },
+    "model_B": {
+      "model_name": "model_B",
+      "expected_ranks": {
+        "d1": 2,
+        "d4": 5,
+        "d5": 1
+      },
+      "coverage": 1.0,
+      "specificity": 0.7868852459016393,
+      "hotspots_count": 6,
+      "top_1_share": 0.03846153846153848,
+      "top_5_share": 0.18476621417797895
+    },
+    "model_C": {
+      "model_name": "model_C",
+      "expected_ranks": {
+        "d1": 12,
+        "d4": 5,
+        "d5": 36
+      },
+      "coverage": 0.6666666666666666,
+      "specificity": 0.7704918032786885,
+      "hotspots_count": 6,
+      "top_1_share": 0.032786885245901634,
+      "top_5_share": 0.15846994535519124
+    },
+    "model_D": {
+      "model_name": "model_D",
+      "expected_ranks": {
+        "d1": 3,
+        "d4": 6,
+        "d5": 1
+      },
+      "coverage": 1.0,
+      "specificity": 0.7868852459016393,
+      "hotspots_count": 2,
+      "top_1_share": 0.039170506912442435,
+      "top_5_share": 0.17791310072416078
+    },
+    "model_E": {
+      "model_name": "model_E",
+      "expected_ranks": {
+        "d1": 7,
+        "d4": 6,
+        "d5": 33
+      },
+      "coverage": 0.6666666666666666,
+      "specificity": 0.7704918032786885,
+      "hotspots_count": 3,
+      "top_1_share": 0.03529062870699881,
+      "top_5_share": 0.16365870191492968
+    },
+    "model_F": {
+      "model_name": "model_F",
+      "expected_ranks": {
+        "d1": 2,
+        "d4": 1,
+        "d5": 12
+      },
+      "coverage": 1.0,
+      "specificity": 0.7868852459016393,
+      "hotspots_count": 1,
+      "top_1_share": 0.029395314150767512,
+      "top_5_share": 0.13740600335591324
+    },
+    "model_G": {
+      "model_name": "model_G",
+      "expected_ranks": {
+        "d1": 2,
+        "d4": 1,
+        "d5": 9
+      },
+      "coverage": 1.0,
+      "specificity": 0.7868852459016393,
+      "hotspots_count": 0,
+      "top_1_share": 0.02851100063174664,
+      "top_5_share": 0.13501982219536535
+    }
+  },
+  "F7_Quiet_Positional_Move": {
+    "baseline_H": {
+      "model_name": "baseline_H",
+      "expected_ranks": {
+        "d4": 2,
+        "e5": 28,
+        "f4": 26,
+        "c5": 54
+      },
+      "coverage": 0.25,
+      "specificity": 0.75,
+      "hotspots_count": 7,
+      "top_1_share": 0.03125000000000001,
+      "top_5_share": 0.15128968253968256
+    },
+    "baseline_I": {
+      "model_name": "baseline_I",
+      "expected_ranks": {
+        "d4": 18,
+        "e5": 3,
+        "f4": 2,
+        "c5": 39
+      },
+      "coverage": 0.5,
+      "specificity": 0.7666666666666666,
+      "hotspots_count": 2,
+      "top_1_share": 0.10000000000000002,
+      "top_5_share": 0.4473684210526317
+    },
+    "model_A": {
+      "model_name": "model_A",
+      "expected_ranks": {
+        "d4": 4,
+        "e5": 3,
+        "f4": 2,
+        "c5": 38
+      },
+      "coverage": 0.75,
+      "specificity": 0.7833333333333333,
+      "hotspots_count": 4,
+      "top_1_share": 0.06060606060606061,
+      "top_5_share": 0.2840909090909091
+    },
+    "model_B": {
+      "model_name": "model_B",
+      "expected_ranks": {
+        "d4": 29,
+        "e5": 18,
+        "f4": 36,
+        "c5": 49
+      },
+      "coverage": 0.0,
+      "specificity": 0.7333333333333334,
+      "hotspots_count": 7,
+      "top_1_share": 0.03225806451612904,
+      "top_5_share": 0.15600211528291913
+    },
+    "model_C": {
+      "model_name": "model_C",
+      "expected_ranks": {
+        "d4": 6,
+        "e5": 7,
+        "f4": 15,
+        "c5": 55
+      },
+      "coverage": 0.75,
+      "specificity": 0.7833333333333333,
+      "hotspots_count": 7,
+      "top_1_share": 0.031746031746031744,
+      "top_5_share": 0.15360983102918588
+    },
+    "model_D": {
+      "model_name": "model_D",
+      "expected_ranks": {
+        "d4": 12,
+        "e5": 5,
+        "f4": 13,
+        "c5": 56
+      },
+      "coverage": 0.75,
+      "specificity": 0.7833333333333333,
+      "hotspots_count": 1,
+      "top_1_share": 0.031835963847295284,
+      "top_5_share": 0.14359065155807363
+    },
+    "model_E": {
+      "model_name": "model_E",
+      "expected_ranks": {
+        "d4": 4,
+        "e5": 3,
+        "f4": 6,
+        "c5": 55
+      },
+      "coverage": 0.75,
+      "specificity": 0.7833333333333333,
+      "hotspots_count": 4,
+      "top_1_share": 0.033152173913043474,
+      "top_5_share": 0.15633491847826084
+    },
+    "model_F": {
+      "model_name": "model_F",
+      "expected_ranks": {
+        "d4": 14,
+        "e5": 8,
+        "f4": 26,
+        "c5": 57
+      },
+      "coverage": 0.5,
+      "specificity": 0.7666666666666666,
+      "hotspots_count": 0,
+      "top_1_share": 0.02768307422998374,
+      "top_5_share": 0.13328470803984493
+    },
+    "model_G": {
+      "model_name": "model_G",
+      "expected_ranks": {
+        "d4": 5,
+        "e5": 1,
+        "f4": 11,
+        "c5": 58
+      },
+      "coverage": 0.75,
+      "specificity": 0.7833333333333333,
+      "hotspots_count": 0,
+      "top_1_share": 0.02763241758790172,
+      "top_5_share": 0.1353741428699757
+    }
+  },
+  "F8_Negative_Control": {
+    "baseline_H": {
+      "model_name": "baseline_H",
+      "expected_ranks": {},
+      "coverage": 0.0,
+      "specificity": 0.75,
+      "hotspots_count": 7,
+      "top_1_share": 0.03125000000000001,
+      "top_5_share": 0.15128968253968256
+    },
+    "baseline_I": {
+      "model_name": "baseline_I",
+      "expected_ranks": {},
+      "coverage": 0.0,
+      "specificity": 0.75,
+      "hotspots_count": 1,
+      "top_1_share": 0.25,
+      "top_5_share": 0.8928571428571428
+    },
+    "model_A": {
+      "model_name": "model_A",
+      "expected_ranks": {},
+      "coverage": 0.0,
+      "specificity": 0.75,
+      "hotspots_count": 1,
+      "top_1_share": 0.2222222222222222,
+      "top_5_share": 0.8333333333333334
+    },
+    "model_B": {
+      "model_name": "model_B",
+      "expected_ranks": {},
+      "coverage": 0.0,
+      "specificity": 0.75,
+      "hotspots_count": 4,
+      "top_1_share": 0.05882352941176469,
+      "top_5_share": 0.2762923351158645
+    },
+    "model_C": {
+      "model_name": "model_C",
+      "expected_ranks": {},
+      "coverage": 0.0,
+      "specificity": 0.75,
+      "hotspots_count": 3,
+      "top_1_share": 0.06896551724137931,
+      "top_5_share": 0.3201970443349754
+    },
+    "model_D": {
+      "model_name": "model_D",
+      "expected_ranks": {},
+      "coverage": 0.0,
+      "specificity": 0.75,
+      "hotspots_count": 2,
+      "top_1_share": 0.057117358322177576,
+      "top_5_share": 0.2675145024542614
+    },
+    "model_E": {
+      "model_name": "model_E",
+      "expected_ranks": {},
+      "coverage": 0.0,
+      "specificity": 0.75,
+      "hotspots_count": 2,
+      "top_1_share": 0.07066666666666667,
+      "top_5_share": 0.32866666666666666
+    },
+    "model_F": {
+      "model_name": "model_F",
+      "expected_ranks": {},
+      "coverage": 0.0,
+      "specificity": 0.75,
+      "hotspots_count": 3,
+      "top_1_share": 0.05140472878998608,
+      "top_5_share": 0.2367176634214186
+    },
+    "model_G": {
+      "model_name": "model_G",
+      "expected_ranks": {},
+      "coverage": 0.0,
+      "specificity": 0.75,
+      "hotspots_count": 2,
+      "top_1_share": 0.04948847412113991,
+      "top_5_share": 0.23389308069060716
+    }
+  }
+}

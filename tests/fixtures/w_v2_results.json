@@ -1,0 +1,741 @@
+{
+  "W1_Deep_PV": {
+    "expected_regions": [
+      {
+        "id": "deep_mate_square",
+        "squares": [
+          "a2",
+          "b1",
+          "a1"
+        ],
+        "rationale": "Squares involved in the mate net which is 4+ plies deep.",
+        "type": "localized_square_set"
+      }
+    ],
+    "selected_squares": [
+      "a1",
+      "c2",
+      "h2",
+      "c4",
+      "b4",
+      "g2",
+      "b1",
+      "b7",
+      "b3",
+      "a3",
+      "a2",
+      "c3",
+      "b8",
+      "a4",
+      "b2",
+      "d2",
+      "b5",
+      "e2",
+      "b6",
+      "f2"
+    ],
+    "rejected_count": 41,
+    "rejection_reasons": {
+      "bundle_producing_moves < 3": 41
+    },
+    "channel_sources": {
+      "a1": "recurrence",
+      "c2": "recurrence",
+      "h2": "bundle",
+      "c4": "bundle",
+      "b4": "bundle",
+      "g2": "bundle",
+      "b1": "recurrence",
+      "b7": "bundle",
+      "b3": "direct",
+      "a3": "bundle",
+      "a2": "recurrence",
+      "c3": "bundle",
+      "b8": "bundle",
+      "a4": "bundle",
+      "b2": "direct",
+      "d2": "bundle",
+      "b5": "bundle",
+      "e2": "bundle",
+      "b6": "bundle",
+      "f2": "bundle"
+    },
+    "a_cp": 0.0,
+    "a_mate": true,
+    "zero_optionality": false
+  },
+  "W2_Two_Line_Recurrence": {
+    "expected_regions": [
+      {
+        "id": "critical_fork",
+        "squares": [
+          "e6",
+          "d8",
+          "c7"
+        ],
+        "rationale": "Squares supporting the two main forks.",
+        "type": "relationship_complex"
+      }
+    ],
+    "selected_squares": [
+      "c6",
+      "c2",
+      "f5",
+      "h2",
+      "h4",
+      "g1",
+      "g5",
+      "h3",
+      "g2",
+      "f6",
+      "b3",
+      "g4",
+      "g7",
+      "f3",
+      "f7",
+      "f1",
+      "g8",
+      "g6",
+      "e6",
+      "f8",
+      "b5",
+      "e2",
+      "g3",
+      "f4",
+      "f2",
+      "d4"
+    ],
+    "rejected_count": 26,
+    "rejection_reasons": {
+      "bundle_producing_moves < 3": 19,
+      "bundle_region_size > 15": 4,
+      "recurrence_earliest_ply > 2": 3
+    },
+    "channel_sources": {
+      "c6": "bundle",
+      "c2": "bundle",
+      "f5": "recurrence",
+      "h2": "recurrence",
+      "h4": "recurrence",
+      "g1": "recurrence",
+      "g5": "recurrence",
+      "h3": "recurrence",
+      "g2": "recurrence",
+      "f6": "recurrence",
+      "b3": "bundle",
+      "g4": "recurrence",
+      "g7": "recurrence",
+      "f3": "recurrence",
+      "f7": "recurrence",
+      "f1": "recurrence",
+      "g8": "recurrence",
+      "g6": "recurrence",
+      "e6": "recurrence",
+      "f8": "recurrence",
+      "b5": "bundle",
+      "e2": "recurrence",
+      "g3": "recurrence",
+      "f4": "recurrence",
+      "f2": "recurrence",
+      "d4": "direct"
+    },
+    "a_cp": 479.0,
+    "a_mate": false,
+    "zero_optionality": false
+  },
+  "W3_Single_Consequential_Move": {
+    "expected_regions": [
+      {
+        "id": "back_rank_corridor",
+        "squares": [
+          "e8",
+          "f8",
+          "g8"
+        ],
+        "rationale": "The back rank squares that enable the immediate mate.",
+        "type": "path"
+      }
+    ],
+    "selected_squares": [
+      "a1",
+      "h2",
+      "e5",
+      "g1",
+      "h3",
+      "g2",
+      "g4",
+      "g7",
+      "f7",
+      "h7",
+      "e7",
+      "c8",
+      "g6",
+      "f8",
+      "a8",
+      "e1",
+      "f4",
+      "f2"
+    ],
+    "rejected_count": 46,
+    "rejection_reasons": {
+      "bundle_producing_moves < 3": 41,
+      "bundle_region_size > 15": 5
+    },
+    "channel_sources": {
+      "a1": "recurrence",
+      "h2": "recurrence",
+      "e5": "recurrence",
+      "g1": "recurrence",
+      "h3": "recurrence",
+      "g2": "recurrence",
+      "g4": "recurrence",
+      "g7": "recurrence",
+      "f7": "recurrence",
+      "h7": "recurrence",
+      "e7": "recurrence",
+      "c8": "recurrence",
+      "g6": "recurrence",
+      "f8": "recurrence",
+      "a8": "recurrence",
+      "e1": "direct",
+      "f4": "recurrence",
+      "f2": "recurrence"
+    },
+    "a_cp": 630.0,
+    "a_mate": false,
+    "zero_optionality": false
+  },
+  "W4_Legitimate_Broad_Bundle": {
+    "expected_regions": [
+      {
+        "id": "queen_radiance",
+        "squares": [
+          "c4",
+          "c5",
+          "c6",
+          "c7",
+          "c8",
+          "d4",
+          "e4",
+          "f4",
+          "g4",
+          "h4",
+          "b4",
+          "a4",
+          "b5",
+          "a6",
+          "d5",
+          "e6",
+          "f7",
+          "g8"
+        ],
+        "rationale": "The massive set of squares influenced by the centralized Queen.",
+        "type": "diffuse_region"
+      }
+    ],
+    "selected_squares": [
+      "h8",
+      "c2",
+      "h5",
+      "c1",
+      "c4",
+      "h4",
+      "b4",
+      "g1",
+      "h2",
+      "g5",
+      "h3",
+      "g2",
+      "d3",
+      "b3",
+      "h6",
+      "g4",
+      "g7",
+      "b8",
+      "f3",
+      "f7",
+      "f1",
+      "h7",
+      "b2",
+      "c8",
+      "g8",
+      "e8",
+      "e6",
+      "f8",
+      "a8",
+      "b5",
+      "e2",
+      "f4",
+      "g3",
+      "b6",
+      "f2",
+      "d8"
+    ],
+    "rejected_count": 28,
+    "rejection_reasons": {
+      "bundle_producing_moves < 3": 26,
+      "bundle_region_size > 15": 2
+    },
+    "channel_sources": {
+      "h8": "bundle",
+      "c2": "recurrence",
+      "h5": "recurrence",
+      "c1": "recurrence",
+      "c4": "direct",
+      "h4": "recurrence",
+      "b4": "recurrence",
+      "g1": "recurrence",
+      "h2": "recurrence",
+      "g5": "bundle",
+      "h3": "recurrence",
+      "g2": "recurrence",
+      "d3": "recurrence",
+      "b3": "recurrence",
+      "h6": "bundle",
+      "g4": "recurrence",
+      "g7": "bundle",
+      "b8": "bundle",
+      "f3": "recurrence",
+      "f7": "recurrence",
+      "f1": "recurrence",
+      "h7": "recurrence",
+      "b2": "recurrence",
+      "c8": "recurrence",
+      "g8": "recurrence",
+      "e8": "bundle",
+      "e6": "recurrence",
+      "f8": "bundle",
+      "a8": "bundle",
+      "b5": "recurrence",
+      "e2": "recurrence",
+      "f4": "recurrence",
+      "g3": "recurrence",
+      "b6": "recurrence",
+      "f2": "recurrence",
+      "d8": "bundle"
+    },
+    "a_cp": 0.0,
+    "a_mate": true,
+    "zero_optionality": false
+  },
+  "W5_Quiet_Positional": {
+    "expected_regions": [
+      {
+        "id": "opposition_squares",
+        "squares": [
+          "c4",
+          "c5",
+          "d4",
+          "d5"
+        ],
+        "rationale": "Squares involved in gaining the King opposition.",
+        "type": "relationship_complex"
+      }
+    ],
+    "selected_squares": [
+      "c7",
+      "c6",
+      "c2",
+      "c4",
+      "b4",
+      "d5",
+      "d3",
+      "b7",
+      "b3",
+      "c5",
+      "c3",
+      "b2",
+      "d2",
+      "d6",
+      "b5",
+      "b6",
+      "d4",
+      "d7"
+    ],
+    "rejected_count": 26,
+    "rejection_reasons": {
+      "bundle_producing_moves < 3": 13,
+      "recurrence_earliest_ply > 2": 13
+    },
+    "channel_sources": {
+      "c7": "bundle",
+      "c6": "recurrence",
+      "c2": "recurrence",
+      "c4": "recurrence",
+      "b4": "recurrence",
+      "d5": "recurrence",
+      "d3": "recurrence",
+      "b7": "bundle",
+      "b3": "recurrence",
+      "c5": "recurrence",
+      "c3": "direct",
+      "b2": "bundle",
+      "d2": "recurrence",
+      "d6": "recurrence",
+      "b5": "recurrence",
+      "b6": "recurrence",
+      "d4": "recurrence",
+      "d7": "bundle"
+    },
+    "a_cp": 1.0,
+    "a_mate": false,
+    "zero_optionality": false
+  },
+  "W6_Recurring_Negligible_Consequence": {
+    "expected_regions": [
+      {
+        "id": "king_oscillation",
+        "squares": [
+          "e1",
+          "d1",
+          "f1",
+          "d2",
+          "e2",
+          "f2"
+        ],
+        "rationale": "The central squares the kings shuffle between in a drawn position.",
+        "type": "localized_square_set"
+      }
+    ],
+    "selected_squares": [
+      "f5",
+      "e5",
+      "e4",
+      "d5",
+      "d3",
+      "f3",
+      "f1",
+      "d2",
+      "e1",
+      "e2",
+      "f4",
+      "f2",
+      "d1",
+      "d4"
+    ],
+    "rejected_count": 11,
+    "rejection_reasons": {
+      "bundle_producing_moves < 3": 7,
+      "recurrence_earliest_ply > 2": 4
+    },
+    "channel_sources": {
+      "f5": "bundle",
+      "e5": "bundle",
+      "e4": "recurrence",
+      "d5": "bundle",
+      "d3": "bundle",
+      "f3": "bundle",
+      "f1": "direct",
+      "d2": "direct",
+      "e1": "direct",
+      "e2": "direct",
+      "f4": "bundle",
+      "f2": "direct",
+      "d1": "direct",
+      "d4": "recurrence"
+    },
+    "a_cp": 0.0,
+    "a_mate": false,
+    "zero_optionality": false
+  },
+  "W7_Balanced_Negative_Control": {
+    "expected_regions": [
+      {
+        "id": "center_control",
+        "squares": [
+          "d4",
+          "e4",
+          "d5",
+          "e5"
+        ],
+        "rationale": "The heavily contested central squares.",
+        "type": "relationship_complex"
+      }
+    ],
+    "selected_squares": [
+      "a6",
+      "c6",
+      "c4",
+      "e5",
+      "g5",
+      "h4",
+      "g1",
+      "h2",
+      "b4",
+      "h3",
+      "d5",
+      "e4",
+      "d3",
+      "f6",
+      "b7",
+      "b3",
+      "a3",
+      "c5",
+      "g4",
+      "g7",
+      "a2",
+      "c3",
+      "a7",
+      "f3",
+      "f7",
+      "f1",
+      "a4",
+      "b2",
+      "g8",
+      "d2",
+      "e7",
+      "e8",
+      "e6",
+      "h1",
+      "d6",
+      "b5",
+      "e1",
+      "e2",
+      "g3",
+      "f2",
+      "d1",
+      "d4",
+      "d7"
+    ],
+    "rejected_count": 21,
+    "rejection_reasons": {
+      "bundle_producing_moves < 3": 15,
+      "bundle_region_size > 15": 5,
+      "recurrence_earliest_ply > 2": 1
+    },
+    "channel_sources": {
+      "a6": "recurrence",
+      "c6": "recurrence",
+      "c4": "direct",
+      "e5": "recurrence",
+      "g5": "recurrence",
+      "h4": "recurrence",
+      "g1": "recurrence",
+      "h2": "recurrence",
+      "b4": "recurrence",
+      "h3": "recurrence",
+      "d5": "recurrence",
+      "e4": "recurrence",
+      "d3": "recurrence",
+      "f6": "recurrence",
+      "b7": "recurrence",
+      "b3": "recurrence",
+      "a3": "recurrence",
+      "c5": "recurrence",
+      "g4": "recurrence",
+      "g7": "bundle",
+      "a2": "recurrence",
+      "c3": "recurrence",
+      "a7": "recurrence",
+      "f3": "recurrence",
+      "f7": "recurrence",
+      "f1": "recurrence",
+      "a4": "recurrence",
+      "b2": "recurrence",
+      "g8": "recurrence",
+      "d2": "recurrence",
+      "e7": "bundle",
+      "e8": "recurrence",
+      "e6": "recurrence",
+      "h1": "recurrence",
+      "d6": "recurrence",
+      "b5": "recurrence",
+      "e1": "recurrence",
+      "e2": "recurrence",
+      "g3": "recurrence",
+      "f2": "recurrence",
+      "d1": "recurrence",
+      "d4": "recurrence",
+      "d7": "recurrence"
+    },
+    "a_cp": 509.0,
+    "a_mate": false,
+    "zero_optionality": false
+  },
+  "W8_Mate_Sensitive": {
+    "expected_regions": [
+      {
+        "id": "stalemate_trap",
+        "squares": [
+          "b7",
+          "b8",
+          "a8",
+          "c8"
+        ],
+        "rationale": "Squares critical to allowing or denying stalemate/mate.",
+        "type": "localized_square_set"
+      }
+    ],
+    "selected_squares": [
+      "c7",
+      "a6",
+      "c6",
+      "b7",
+      "c5",
+      "a7",
+      "b8",
+      "a5",
+      "b5",
+      "b6"
+    ],
+    "rejected_count": 22,
+    "rejection_reasons": {
+      "recurrence_earliest_ply > 2": 15,
+      "bundle_producing_moves < 3": 7
+    },
+    "channel_sources": {
+      "c7": "recurrence",
+      "a6": "direct",
+      "c6": "direct",
+      "b7": "recurrence",
+      "c5": "direct",
+      "a7": "bundle",
+      "b8": "recurrence",
+      "a5": "direct",
+      "b5": "direct",
+      "b6": "direct"
+    },
+    "a_cp": 0.0,
+    "a_mate": true,
+    "zero_optionality": false
+  },
+  "W9_Zero_Optionality_Severe": {
+    "expected_regions": [
+      {
+        "id": "forced_move_squares",
+        "squares": [
+          "a1",
+          "b1",
+          "a2"
+        ],
+        "rationale": "The single path available to the King.",
+        "type": "path"
+      }
+    ],
+    "selected_squares": [
+      "a1",
+      "a2"
+    ],
+    "rejected_count": 13,
+    "rejection_reasons": {
+      "bundle_producing_moves < 3": 11,
+      "recurrence_earliest_ply > 2": 2
+    },
+    "channel_sources": {
+      "a1": "direct",
+      "a2": "direct"
+    },
+    "a_cp": 0.0,
+    "a_mate": false,
+    "zero_optionality": true
+  },
+  "W10_Genuine_Overloaded_Defender": {
+    "status": "INVALID",
+    "expected_regions": [
+      {
+        "id": "overloaded_obligations",
+        "squares": [
+          "d3",
+          "c3",
+          "e3"
+        ],
+        "rationale": "The defender and the two squares it must defend.",
+        "type": "relationship_complex"
+      }
+    ],
+    "selected_squares": [],
+    "rejected_count": 0,
+    "rejection_reasons": {},
+    "channel_sources": {},
+    "a_cp": null,
+    "a_mate": null,
+    "zero_optionality": null
+  },
+  "W11_Long_Corridor": {
+    "status": "INVALID",
+    "expected_regions": [
+      {
+        "id": "skewer_corridor",
+        "squares": [
+          "d5",
+          "e4",
+          "f3",
+          "g2",
+          "h1"
+        ],
+        "rationale": "The entire long diagonal of the skewer.",
+        "type": "path"
+      }
+    ],
+    "selected_squares": [],
+    "rejected_count": 0,
+    "rejection_reasons": {},
+    "channel_sources": {},
+    "a_cp": null,
+    "a_mate": null,
+    "zero_optionality": null
+  },
+  "W12_Disjoint_Regions": {
+    "expected_regions": [
+      {
+        "id": "back_rank_mate",
+        "squares": [
+          "e8",
+          "f8",
+          "g8"
+        ],
+        "rationale": "The immediate mating threat on the kingside.",
+        "type": "path"
+      },
+      {
+        "id": "queenside_action",
+        "squares": [
+          "a8",
+          "a7",
+          "b8"
+        ],
+        "rationale": "A secondary tactical skirmish on the queenside (abstracted here).",
+        "type": "localized_square_set"
+      }
+    ],
+    "selected_squares": [
+      "a1",
+      "h5",
+      "h2",
+      "e5",
+      "g1",
+      "g2",
+      "g7",
+      "f3",
+      "h7",
+      "g6",
+      "a8",
+      "e1",
+      "g3",
+      "f2"
+    ],
+    "rejected_count": 50,
+    "rejection_reasons": {
+      "bundle_producing_moves < 3": 50
+    },
+    "channel_sources": {
+      "a1": "recurrence",
+      "h5": "recurrence",
+      "h2": "recurrence",
+      "e5": "recurrence",
+      "g1": "recurrence",
+      "g2": "recurrence",
+      "g7": "recurrence",
+      "f3": "recurrence",
+      "h7": "recurrence",
+      "g6": "recurrence",
+      "a8": "recurrence",
+      "e1": "direct",
+      "g3": "recurrence",
+      "f2": "recurrence"
+    },
+    "a_cp": 0.0,
+    "a_mate": true,
+    "zero_optionality": false
+  }
+}

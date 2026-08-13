@@ -1,0 +1,68 @@
+{
+  "fixtures": [
+    {
+      "fixture_id": "V1_Ordinary_CP_Dispersion",
+      "fen": "r1bq1rk1/1pp1bppp/p1np1n2/4p3/B3P3/2P2N2/PP1P1PPP/RNBQR1K1 w - - 0 1",
+      "side_to_move": "white",
+      "hypothesis": "Position offers multiple CP-evaluable paths with meaningful dispersion",
+      "expected_amplitude": "Acp > 0, Amate shows no high leverage",
+      "expected_region": []
+    },
+    {
+      "fixture_id": "V2_Forced_Single_Move",
+      "fen": "8/8/8/8/8/8/1q1k4/K7 w - - 0 1",
+      "side_to_move": "white",
+      "hypothesis": "With exactly 1 legal move, decision leverage is zero",
+      "expected_amplitude": "Acp = 0, Amate shows 0 optionality",
+      "expected_region": []
+    },
+    {
+      "fixture_id": "V3_Favorable_Mate_Preserved",
+      "fen": "8/8/8/3Q4/4K3/8/p7/k7 w - - 0 1",
+      "side_to_move": "white",
+      "hypothesis": "Overwhelmingly winning, many moves preserve mate",
+      "expected_amplitude": "moves_preserving_favorable_mate is high",
+      "expected_region": []
+    },
+    {
+      "fixture_id": "V4_Favorable_Mate_Forfeited",
+      "fen": "k7/8/1K6/2Q5/8/8/8/8 w - - 0 1",
+      "side_to_move": "white",
+      "hypothesis": "High mate leverage because wrong choice (stalemate) forfeits win",
+      "expected_amplitude": "moves_forfeiting_favorable_mate > 0, high_mate_leverage = True",
+      "expected_region": []
+    },
+    {
+      "fixture_id": "V5_Allowing_Forced_Mate_Against",
+      "fen": "6k1/5ppp/8/8/8/8/8/4R1K1 b - - 0 1",
+      "side_to_move": "black",
+      "hypothesis": "Playing non-pawn move blunders back-rank mate",
+      "expected_amplitude": "moves_allowing_forced_mate_against > 0, high_mate_leverage = True",
+      "expected_region": []
+    },
+    {
+      "fixture_id": "V6_Flat_Negative_Control",
+      "fen": "8/4k3/8/8/8/8/4K3/8 w - - 0 1",
+      "side_to_move": "white",
+      "hypothesis": "Perfectly flat CP distribution",
+      "expected_amplitude": "Acp = 0",
+      "expected_region": []
+    },
+    {
+      "fixture_id": "V7_Recurring_Low_Consequence",
+      "fen": "6k1/1q4p1/6Q1/8/8/8/8/7K w - - 0 1",
+      "side_to_move": "white",
+      "hypothesis": "Spatial shape recurs sharply but outcome is fixed to 0.00",
+      "expected_amplitude": "Acp approx 0",
+      "expected_region": []
+    },
+    {
+      "fixture_id": "V8_Quiet_Positional",
+      "fen": "rnbq1rk1/ppp1bppp/4pn2/3p2B1/2PP4/2N2N2/PP2PPPP/R2QKB1R w KQ - 0 1",
+      "side_to_move": "white",
+      "hypothesis": "High distribution of quiet consequence, low immediate tactical spikes",
+      "expected_amplitude": "Moderate Acp, no mate leverage",
+      "expected_region": []
+    }
+  ]
+}

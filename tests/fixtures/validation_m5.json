@@ -1,0 +1,151 @@
+[
+  {
+    "fixture_id": "F1_Tactical_Fork",
+    "fen": "4k3/3q4/8/8/4N3/8/8/3K4 w - - 0 1",
+    "side_to_move": "white",
+    "hypothesis": {
+      "expected_hot_region": [
+        "f6"
+      ],
+      "expected_quiet_region": [
+        "h1",
+        "a1"
+      ],
+      "chess_reason": "Nf6+ forks the king and queen.",
+      "expected_best_layer": "destination + min_cp_regret",
+      "expected_direct_model_limitations": "Targets (e8, d7) may not show up if uncaptured."
+    },
+    "results": {}
+  },
+  {
+    "fixture_id": "F2_Poisoned_Destination",
+    "fen": "8/8/2k5/3p4/3Q4/8/8/4K3 w - - 0 1",
+    "side_to_move": "white",
+    "hypothesis": {
+      "expected_hot_region": [
+        "d5"
+      ],
+      "expected_quiet_region": [
+        "e4",
+        "d3"
+      ],
+      "chess_reason": "d5 looks grabbable but loses the Queen.",
+      "expected_best_layer": "destination + mean_cp_regret",
+      "expected_direct_model_limitations": "None."
+    },
+    "results": {}
+  },
+  {
+    "fixture_id": "F3_Soft_Pin",
+    "fen": "4k3/4q3/8/8/4N3/8/8/4Q1K1 w - - 0 1",
+    "side_to_move": "white",
+    "hypothesis": {
+      "expected_hot_region": [
+        "e4"
+      ],
+      "expected_quiet_region": [
+        "h8",
+        "a8"
+      ],
+      "chess_reason": "e4 Knight is pinned. Moving it loses the Queen on e1.",
+      "expected_best_layer": "origin + mean_cp_regret",
+      "expected_direct_model_limitations": "e1 and e7 may not show up because the Knight's legal moves end elsewhere."
+    },
+    "results": {}
+  },
+  {
+    "fixture_id": "F4_Overloaded_Defender",
+    "fen": "4k3/8/5n2/3p4/8/3B4/1R6/4K3 w - - 0 1",
+    "side_to_move": "white",
+    "hypothesis": {
+      "expected_hot_region": [
+        "d5",
+        "b7"
+      ],
+      "expected_quiet_region": [
+        "f6"
+      ],
+      "chess_reason": "Black Knight on f6 defends d5 and b7. White can attack them.",
+      "expected_best_layer": "destination + best_cp",
+      "expected_direct_model_limitations": "The f6 square (defender's origin) will likely not highlight because the defender isn't moving."
+    },
+    "results": {}
+  },
+  {
+    "fixture_id": "F5_Central_Pawn_Break",
+    "fen": "r1bqk2r/pp2bppp/2n1pn2/2pp4/2PP4/2N1PN2/PP3PPP/R1BQKB1R w KQkq - 0 7",
+    "side_to_move": "white",
+    "transition_move": "e3e4",
+    "hypothesis": {
+      "expected_hot_region": [
+        "e4",
+        "d5",
+        "d4"
+      ],
+      "expected_quiet_region": [
+        "h2",
+        "a7"
+      ],
+      "chess_reason": "The break radically changes central space and control.",
+      "expected_best_layer": "delta outcome",
+      "expected_direct_model_limitations": "It may highlight pieces rather than the empty space controlled."
+    },
+    "results": {}
+  },
+  {
+    "fixture_id": "F6_Discovered_Attack",
+    "fen": "4k3/8/8/3q4/3B4/8/8/3R2K1 w - - 0 1",
+    "side_to_move": "white",
+    "hypothesis": {
+      "expected_hot_region": [
+        "d1",
+        "d5"
+      ],
+      "expected_quiet_region": [
+        "h8"
+      ],
+      "chess_reason": "Bishop moves, discovering an attack on the Queen.",
+      "expected_best_layer": "None",
+      "expected_direct_model_limitations": "The heat will erroneously attribute to the Bishop's varied destinations (f6, c3) instead of the d1-d5 ray."
+    },
+    "results": {}
+  },
+  {
+    "fixture_id": "F7_Quiet_Positional_Move",
+    "fen": "r1bq1rk1/ppp1bppp/2n2n2/3pp3/4P3/2PP1N2/PP2BPPP/RNBQ1RK1 w - - 0 8",
+    "side_to_move": "white",
+    "hypothesis": {
+      "expected_hot_region": [],
+      "expected_quiet_region": [
+        "a1",
+        "h8"
+      ],
+      "chess_reason": "Prophylaxis/developing move. No single glowing tactical square.",
+      "expected_best_layer": "origin + min_cp_regret (should be dispersed)",
+      "expected_direct_model_limitations": "May still try to find a 'hot' tactical square if CP differences are magnified."
+    },
+    "results": {}
+  },
+  {
+    "fixture_id": "F8_Negative_Control",
+    "fen": "8/5k2/8/3p4/3P4/8/2K5/8 w - - 0 1",
+    "side_to_move": "white",
+    "hypothesis": {
+      "expected_hot_region": [],
+      "expected_quiet_region": [
+        "a1",
+        "h8"
+      ],
+      "chess_reason": "Symmetrical drawn endgame.",
+      "expected_best_layer": "all",
+      "expected_direct_model_limitations": "May amplify noise and highlight trivial centipawn differences."
+    },
+    "results": {}
+  },
+  {
+    "fixture_id": "F9_Overloaded_Defender",
+    "fen": "4k3/4q3/3n1r2/8/3Q1R2/8/8/4K3 w - - 0 1",
+    "side_to_move": "white",
+    "notes": "Black Queen on e7 defends Knight on d6 and Rook on f6. White Queen on d4 attacks d6. White Rook on f4 attacks f6."
+  }
+]

@@ -1,0 +1,522 @@
+{
+  "F1_Tactical_Fork": {
+    "amplitude": {
+      "regret_range": 143.0,
+      "regret_iqr": 48.5,
+      "regret_spread_90_10": 105.20000000000003,
+      "median_regret": 20.5,
+      "best_to_median": 20.5
+    },
+    "projected_models": {
+      "baseline_H": {
+        "rank": 23.0,
+        "cov": 0.25,
+        "max_projected_amplitude": 105.20000000000003,
+        "projected_hotspots_50cp": 34
+      },
+      "baseline_I": {
+        "rank": 50.75,
+        "cov": 0.0,
+        "max_projected_amplitude": 105.20000000000003,
+        "projected_hotspots_50cp": 2
+      },
+      "model_A": {
+        "rank": 50.75,
+        "cov": 0.0,
+        "max_projected_amplitude": 105.20000000000003,
+        "projected_hotspots_50cp": 3
+      },
+      "model_B": {
+        "rank": 18.25,
+        "cov": 0.75,
+        "max_projected_amplitude": 105.20000000000003,
+        "projected_hotspots_50cp": 19
+      },
+      "model_C": {
+        "rank": 21.75,
+        "cov": 0.5,
+        "max_projected_amplitude": 105.20000000000003,
+        "projected_hotspots_50cp": 23
+      },
+      "model_D": {
+        "rank": 17.25,
+        "cov": 0.75,
+        "max_projected_amplitude": 105.20000000000003,
+        "projected_hotspots_50cp": 18
+      },
+      "model_E": {
+        "rank": 20.0,
+        "cov": 0.5,
+        "max_projected_amplitude": 102.69523809523812,
+        "projected_hotspots_50cp": 22
+      },
+      "model_F": {
+        "rank": 19.5,
+        "cov": 0.75,
+        "max_projected_amplitude": 103.6971428571429,
+        "projected_hotspots_50cp": 20
+      },
+      "model_G": {
+        "rank": 17.75,
+        "cov": 0.75,
+        "max_projected_amplitude": 98.52063492063493,
+        "projected_hotspots_50cp": 20
+      }
+    }
+  },
+  "F2_Poisoned_Destination": {
+    "amplitude": {
+      "regret_range": 8115.0,
+      "regret_iqr": 4882.0,
+      "regret_spread_90_10": 6877.2,
+      "median_regret": 5117.0,
+      "best_to_median": 5117.0
+    },
+    "projected_models": {
+      "baseline_H": {
+        "rank": 7.0,
+        "cov": 1.0,
+        "max_projected_amplitude": 6877.2,
+        "projected_hotspots_50cp": 63
+      },
+      "baseline_I": {
+        "rank": 5.0,
+        "cov": 1.0,
+        "max_projected_amplitude": 6877.2,
+        "projected_hotspots_50cp": 25
+      },
+      "model_A": {
+        "rank": 5.0,
+        "cov": 1.0,
+        "max_projected_amplitude": 6877.2,
+        "projected_hotspots_50cp": 27
+      },
+      "model_B": {
+        "rank": 5.0,
+        "cov": 1.0,
+        "max_projected_amplitude": 6877.2,
+        "projected_hotspots_50cp": 49
+      },
+      "model_C": {
+        "rank": 14.0,
+        "cov": 1.0,
+        "max_projected_amplitude": 6877.2,
+        "projected_hotspots_50cp": 63
+      },
+      "model_D": {
+        "rank": 4.0,
+        "cov": 1.0,
+        "max_projected_amplitude": 6736.848979591837,
+        "projected_hotspots_50cp": 49
+      },
+      "model_E": {
+        "rank": 5.0,
+        "cov": 1.0,
+        "max_projected_amplitude": 6385.971428571429,
+        "projected_hotspots_50cp": 63
+      },
+      "model_F": {
+        "rank": 4.0,
+        "cov": 1.0,
+        "max_projected_amplitude": 6713.457142857143,
+        "projected_hotspots_50cp": 63
+      },
+      "model_G": {
+        "rank": 3.0,
+        "cov": 1.0,
+        "max_projected_amplitude": 6128.661224489796,
+        "projected_hotspots_50cp": 63
+      }
+    }
+  },
+  "F3_Soft_Pin": {
+    "amplitude": {
+      "regret_range": 840.0,
+      "regret_iqr": 317.0,
+      "regret_spread_90_10": 613.5,
+      "median_regret": 37.0,
+      "best_to_median": 37.0
+    },
+    "projected_models": {
+      "baseline_H": {
+        "rank": 25.8,
+        "cov": 0.2,
+        "max_projected_amplitude": 613.5,
+        "projected_hotspots_50cp": 58
+      },
+      "baseline_I": {
+        "rank": 27.2,
+        "cov": 0.4,
+        "max_projected_amplitude": 613.5,
+        "projected_hotspots_50cp": 19
+      },
+      "model_A": {
+        "rank": 19.6,
+        "cov": 0.6,
+        "max_projected_amplitude": 613.5,
+        "projected_hotspots_50cp": 22
+      },
+      "model_B": {
+        "rank": 5.4,
+        "cov": 1.0,
+        "max_projected_amplitude": 613.5,
+        "projected_hotspots_50cp": 48
+      },
+      "model_C": {
+        "rank": 12.6,
+        "cov": 0.4,
+        "max_projected_amplitude": 613.5,
+        "projected_hotspots_50cp": 58
+      },
+      "model_D": {
+        "rank": 10.2,
+        "cov": 0.6,
+        "max_projected_amplitude": 613.5,
+        "projected_hotspots_50cp": 49
+      },
+      "model_E": {
+        "rank": 16.6,
+        "cov": 0.4,
+        "max_projected_amplitude": 603.7619047619048,
+        "projected_hotspots_50cp": 58
+      },
+      "model_F": {
+        "rank": 6.6,
+        "cov": 1.0,
+        "max_projected_amplitude": 601.7019230769231,
+        "projected_hotspots_50cp": 63
+      },
+      "model_G": {
+        "rank": 11.2,
+        "cov": 0.6,
+        "max_projected_amplitude": 594.0238095238095,
+        "projected_hotspots_50cp": 63
+      }
+    }
+  },
+  "F5_Central_Pawn_Break": {
+    "amplitude": {
+      "regret_range": 498.0,
+      "regret_iqr": 46.5,
+      "regret_spread_90_10": 152.40000000000006,
+      "median_regret": 76.0,
+      "best_to_median": 76.0
+    },
+    "projected_models": {
+      "baseline_H": {
+        "rank": 12.166666666666666,
+        "cov": 0.6666666666666666,
+        "max_projected_amplitude": 152.40000000000006,
+        "projected_hotspots_50cp": 43
+      },
+      "baseline_I": {
+        "rank": 23.166666666666668,
+        "cov": 0.3333333333333333,
+        "max_projected_amplitude": 152.40000000000006,
+        "projected_hotspots_50cp": 13
+      },
+      "model_A": {
+        "rank": 22.333333333333332,
+        "cov": 0.3333333333333333,
+        "max_projected_amplitude": 152.40000000000006,
+        "projected_hotspots_50cp": 23
+      },
+      "model_B": {
+        "rank": 14.333333333333334,
+        "cov": 0.6666666666666666,
+        "max_projected_amplitude": 152.40000000000006,
+        "projected_hotspots_50cp": 39
+      },
+      "model_C": {
+        "rank": 17.333333333333332,
+        "cov": 0.6666666666666666,
+        "max_projected_amplitude": 152.40000000000006,
+        "projected_hotspots_50cp": 43
+      },
+      "model_D": {
+        "rank": 23.166666666666668,
+        "cov": 0.16666666666666666,
+        "max_projected_amplitude": 145.29006085192702,
+        "projected_hotspots_50cp": 43
+      },
+      "model_E": {
+        "rank": 27.833333333333332,
+        "cov": 0.3333333333333333,
+        "max_projected_amplitude": 146.352380952381,
+        "projected_hotspots_50cp": 42
+      },
+      "model_F": {
+        "rank": 12.833333333333334,
+        "cov": 0.6666666666666666,
+        "max_projected_amplitude": 151.19047619047626,
+        "projected_hotspots_50cp": 49
+      },
+      "model_G": {
+        "rank": 20.333333333333332,
+        "cov": 0.3333333333333333,
+        "max_projected_amplitude": 145.24099294890377,
+        "projected_hotspots_50cp": 51
+      }
+    }
+  },
+  "F6_Discovered_Attack": {
+    "amplitude": {
+      "regret_range": 7291.0,
+      "regret_iqr": 408.25,
+      "regret_spread_90_10": 1877.3000000000018,
+      "median_regret": 583.5,
+      "best_to_median": 583.5
+    },
+    "projected_models": {
+      "baseline_H": {
+        "rank": 36.0,
+        "cov": 0.3333333333333333,
+        "max_projected_amplitude": 1877.3000000000018,
+        "projected_hotspots_50cp": 62
+      },
+      "baseline_I": {
+        "rank": 32.0,
+        "cov": 0.0,
+        "max_projected_amplitude": 1877.3000000000018,
+        "projected_hotspots_50cp": 18
+      },
+      "model_A": {
+        "rank": 17.333333333333332,
+        "cov": 0.6666666666666666,
+        "max_projected_amplitude": 1877.3000000000018,
+        "projected_hotspots_50cp": 21
+      },
+      "model_B": {
+        "rank": 2.0,
+        "cov": 1.0,
+        "max_projected_amplitude": 1877.3000000000018,
+        "projected_hotspots_50cp": 50
+      },
+      "model_C": {
+        "rank": 15.0,
+        "cov": 0.6666666666666666,
+        "max_projected_amplitude": 1877.3000000000018,
+        "projected_hotspots_50cp": 59
+      },
+      "model_D": {
+        "rank": 3.0,
+        "cov": 1.0,
+        "max_projected_amplitude": 1803.6803921568644,
+        "projected_hotspots_50cp": 50
+      },
+      "model_E": {
+        "rank": 12.0,
+        "cov": 0.6666666666666666,
+        "max_projected_amplitude": 1877.3000000000018,
+        "projected_hotspots_50cp": 59
+      },
+      "model_F": {
+        "rank": 3.6666666666666665,
+        "cov": 1.0,
+        "max_projected_amplitude": 1783.4350000000015,
+        "projected_hotspots_50cp": 63
+      },
+      "model_G": {
+        "rank": 3.3333333333333335,
+        "cov": 1.0,
+        "max_projected_amplitude": 1755.1265079365094,
+        "projected_hotspots_50cp": 63
+      }
+    }
+  },
+  "F7_Quiet_Positional_Move": {
+    "amplitude": {
+      "regret_range": 502.0,
+      "regret_iqr": 92.0,
+      "regret_spread_90_10": 250.0,
+      "median_regret": 152.0,
+      "best_to_median": 152.0
+    },
+    "projected_models": {
+      "baseline_H": {
+        "rank": 27.5,
+        "cov": 0.25,
+        "max_projected_amplitude": 250.0,
+        "projected_hotspots_50cp": 51
+      },
+      "baseline_I": {
+        "rank": 15.25,
+        "cov": 0.5,
+        "max_projected_amplitude": 250.0,
+        "projected_hotspots_50cp": 16
+      },
+      "model_A": {
+        "rank": 11.75,
+        "cov": 0.75,
+        "max_projected_amplitude": 250.0,
+        "projected_hotspots_50cp": 26
+      },
+      "model_B": {
+        "rank": 41.0,
+        "cov": 0.0,
+        "max_projected_amplitude": 250.0,
+        "projected_hotspots_50cp": 51
+      },
+      "model_C": {
+        "rank": 19.5,
+        "cov": 0.75,
+        "max_projected_amplitude": 250.0,
+        "projected_hotspots_50cp": 50
+      },
+      "model_D": {
+        "rank": 24.75,
+        "cov": 0.5,
+        "max_projected_amplitude": 242.06349206349208,
+        "projected_hotspots_50cp": 57
+      },
+      "model_E": {
+        "rank": 15.75,
+        "cov": 0.75,
+        "max_projected_amplitude": 245.96774193548387,
+        "projected_hotspots_50cp": 50
+      },
+      "model_F": {
+        "rank": 30.25,
+        "cov": 0.25,
+        "max_projected_amplitude": 214.02969790066564,
+        "projected_hotspots_50cp": 56
+      },
+      "model_G": {
+        "rank": 22.0,
+        "cov": 0.75,
+        "max_projected_amplitude": 214.21637651476362,
+        "projected_hotspots_50cp": 57
+      }
+    }
+  },
+  "F8_Negative_Control": {
+    "amplitude": {
+      "regret_range": 0.0,
+      "regret_iqr": 0.0,
+      "regret_spread_90_10": 0.0,
+      "median_regret": 0.0,
+      "best_to_median": 0.0
+    },
+    "projected_models": {
+      "baseline_H": {
+        "rank": 0,
+        "cov": 0.0,
+        "max_projected_amplitude": 0.0,
+        "projected_hotspots_50cp": 0
+      },
+      "baseline_I": {
+        "rank": 0,
+        "cov": 0.0,
+        "max_projected_amplitude": 0.0,
+        "projected_hotspots_50cp": 0
+      },
+      "model_A": {
+        "rank": 0,
+        "cov": 0.0,
+        "max_projected_amplitude": 0.0,
+        "projected_hotspots_50cp": 0
+      },
+      "model_B": {
+        "rank": 0,
+        "cov": 0.0,
+        "max_projected_amplitude": 0.0,
+        "projected_hotspots_50cp": 0
+      },
+      "model_C": {
+        "rank": 0,
+        "cov": 0.0,
+        "max_projected_amplitude": 0.0,
+        "projected_hotspots_50cp": 0
+      },
+      "model_D": {
+        "rank": 0,
+        "cov": 0.0,
+        "max_projected_amplitude": 0.0,
+        "projected_hotspots_50cp": 0
+      },
+      "model_E": {
+        "rank": 0,
+        "cov": 0.0,
+        "max_projected_amplitude": 0.0,
+        "projected_hotspots_50cp": 0
+      },
+      "model_F": {
+        "rank": 0,
+        "cov": 0.0,
+        "max_projected_amplitude": 0.0,
+        "projected_hotspots_50cp": 0
+      },
+      "model_G": {
+        "rank": 0,
+        "cov": 0.0,
+        "max_projected_amplitude": 0.0,
+        "projected_hotspots_50cp": 0
+      }
+    }
+  },
+  "F9_Overloaded_Defender": {
+    "amplitude": {
+      "regret_range": 560.0,
+      "regret_iqr": 63.0,
+      "regret_spread_90_10": 361.20000000000005,
+      "median_regret": 3.0,
+      "best_to_median": 3.0
+    },
+    "projected_models": {
+      "baseline_H": {
+        "rank": 19.4,
+        "cov": 0.6,
+        "max_projected_amplitude": 361.20000000000005,
+        "projected_hotspots_50cp": 55
+      },
+      "baseline_I": {
+        "rank": 40.4,
+        "cov": 0.0,
+        "max_projected_amplitude": 361.20000000000005,
+        "projected_hotspots_50cp": 4
+      },
+      "model_A": {
+        "rank": 34.8,
+        "cov": 0.2,
+        "max_projected_amplitude": 361.20000000000005,
+        "projected_hotspots_50cp": 6
+      },
+      "model_B": {
+        "rank": 4.8,
+        "cov": 1.0,
+        "max_projected_amplitude": 361.20000000000005,
+        "projected_hotspots_50cp": 32
+      },
+      "model_C": {
+        "rank": 7.6,
+        "cov": 1.0,
+        "max_projected_amplitude": 361.20000000000005,
+        "projected_hotspots_50cp": 50
+      },
+      "model_D": {
+        "rank": 3.8,
+        "cov": 1.0,
+        "max_projected_amplitude": 351.1666666666667,
+        "projected_hotspots_50cp": 32
+      },
+      "model_E": {
+        "rank": 5.6,
+        "cov": 1.0,
+        "max_projected_amplitude": 361.20000000000005,
+        "projected_hotspots_50cp": 50
+      },
+      "model_F": {
+        "rank": 5.4,
+        "cov": 1.0,
+        "max_projected_amplitude": 356.1833333333334,
+        "projected_hotspots_50cp": 51
+      },
+      "model_G": {
+        "rank": 4.2,
+        "cov": 1.0,
+        "max_projected_amplitude": 356.1833333333334,
+        "projected_hotspots_50cp": 51
+      }
+    }
+  }
+}
