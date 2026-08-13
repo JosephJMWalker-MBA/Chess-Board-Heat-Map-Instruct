@@ -1,6 +1,6 @@
 # ChessHeat Decision Log
 
-This file records consequential product, measurement, and architecture decisions so future implementation work does not silently redefine the project.
+This file records consequential product, measurement, architecture, and research-integrity decisions so future implementation work does not silently redefine the project.
 
 ## D-001 — ChessHeat models consequence structure, not weighted control
 
@@ -50,25 +50,25 @@ The product's value lies in exposing spatial consequence structure, not in repro
 
 **Decision:**
 
-Move-level engine results, square attribution records, and search metadata must remain inspectable. No final heat color or scalar may be the only stored result.
+Move-level engine results, square attribution records, search metadata, geometry events, candidate provenance, and rejected spatial evidence must remain inspectable. No final heat color or scalar may be the only stored result.
 
 **Reason:**
 
-The heat model is a research hypothesis. Preserving raw evidence allows formulas to be revised, compared, and falsified without rerunning every conceptual assumption through opaque transformations.
+The heat model is a research hypothesis. Preserving raw evidence allows formulas to be revised, compared, and falsified without rewriting the experimental record.
 
 ---
 
 ## D-005 — No composite pivotality formula in the initial prototype
 
-**Status:** Accepted
+**Status:** Accepted and reinforced by M8
 
 **Decision:**
 
-The first prototype will expose separate raw and derived signals instead of combining them into a single pivotality number.
+Expose separate raw and derived signals until a composite demonstrably adds value over its strongest individual component.
 
 **Reason:**
 
-A visually persuasive composite could hide a bad model. Individual signals should demonstrate value before weighting is introduced.
+M8 ablation did not establish a fixed Direct/Recurrence/Bundle fusion that universally dominated. A visually persuasive composite could hide a bad model.
 
 ---
 
@@ -84,13 +84,13 @@ The system must label indirect causal attribution as unsupported until a validat
 
 **Reason:**
 
-Many strong chess moves create their important effect elsewhere on the board. Pretending destination-square attribution fully explains the move would recreate the conceptual error the project is trying to escape.
+Many strong chess moves create their important effect elsewhere on the board. Development fixtures confirmed that direct attribution systematically misses important pathways and structural enablers.
 
 ---
 
-## D-007 — Heat delta is a first-class future primitive
+## D-007 — Heat delta is a first-class primitive
 
-**Status:** Accepted
+**Status:** Accepted and implemented experimentally
 
 **Decision:**
 
@@ -104,7 +104,7 @@ The future teaching experience depends on answering: "What did that move change?
 
 ## D-008 — Opening instruction should teach strategic reconstruction, not database conformity
 
-**Status:** Accepted
+**Status:** Accepted; implementation deferred
 
 **Decision:**
 
@@ -132,56 +132,208 @@ ChessHeat should remain reproducible and inspectable at the measurement layer.
 
 ## D-010 — Python analysis core with a versioned evidence boundary
 
+**Status:** Accepted and implemented
+
+**Decision:**
+
+ChessHeat uses a Python-first analysis core that communicates with Stockfish through a narrow engine adapter and emits versioned, structured measurement records. The analysis core must be runnable and testable without any web interface.
+
+The web visualization layer consumes those records. It must not own engine execution, score normalization, legal move generation, square attribution, leverage calculation, hazard calculation, or other measurement semantics.
+
+**Reference flow:**
+
+`legal chess position -> Python analysis core -> Stockfish adapter -> raw engine evidence -> ChessHeat measurement records -> spatial evidence -> web visualization`
+
+**Reason:**
+
+The core research claim concerns measurement, not rendering. Separating the analysis instrument from the interface makes the measurement model independently testable, reproducible, inspectable, and replaceable.
+
+---
+
+## D-011 — Regret is opportunity cost, not causal position delta
+
 **Status:** Accepted
 
 **Decision:**
 
-ChessHeat will use a Python-first analysis core that communicates with Stockfish through a narrow engine adapter and emits versioned, structured measurement records. The analysis core must be runnable and testable without any web interface.
+For centipawn-comparable root moves, define decision regret relative to the best legal root choice:
 
-The web visualization layer will consume those records. It must not own engine execution, score normalization, legal move generation, square attribution, leverage calculation, hazard calculation, or other measurement semantics.
+`R(m) = E* - E(m)`
 
-For the initial prototype, Stockfish should run as a native engine process adjacent to the Python analysis core. Browser-side WebAssembly engine execution may be considered later as a deployment optimization, but it is not the reference measurement implementation.
+where all outcomes share the same comparison perspective.
 
-The frontend framework remains intentionally undecided until the measurement pipeline is proven.
-
-**Reference flow:**
-
-`legal chess position -> Python analysis core -> Stockfish adapter -> raw engine evidence -> ChessHeat measurement records -> web visualization`
+Do not describe baseline-to-child evaluation difference as the consequence caused by a move when the baseline already assumes optimal continuation.
 
 **Reason:**
 
-The core research claim concerns measurement, not rendering. Separating the analysis instrument from the interface makes the measurement model independently testable, reproducible, inspectable, and replaceable. It also prevents UI convenience from quietly changing chess semantics.
+The engine baseline is itself an optimal-search quantity. Regret is the cleaner interpretation of root-choice sensitivity.
+
+---
+
+## D-012 — Mate evidence remains typed
+
+**Status:** Accepted
+
+**Decision:**
+
+Do not normalize mate outcomes into fake centipawn values. Preserve CP and mate-sensitive evidence as separate typed channels, including zero-optionality state.
+
+**Reason:**
+
+Mate distance and centipawn evaluation are not one linear scale. Converting them into a single fabricated scalar would destroy semantics.
+
+---
+
+## D-013 — Structural geometry is descriptive; association is not causality
+
+**Status:** Accepted
+
+**Decision:**
+
+Represent deterministic geometry changes such as attacks, defenses, rays, blockers, paths, and mobility. When move outcomes differ between moves with and without a geometry event, describe that as association unless the design actually isolates causality.
+
+Perfectly co-occurring structural events may be grouped into event bundles while constituent provenance remains preserved.
+
+**Reason:**
+
+M7 development showed that seemingly meaningful geometry events were often inseparable from other simultaneous changes produced by the same move subset.
+
+---
+
+## D-014 — Spatial shape and position-level amplitude are separate quantities
+
+**Status:** Accepted as architecture; final formulas unresolved
+
+**Decision:**
+
+Keep the question "where is leverage?" separate from "how much leverage exists?"
+
+Represent the conceptual decomposition as:
+
+`S(s | P)` — spatial shape / localization
+
+`A(P)` — position-level decision-leverage amplitude
+
+A future renderer may combine them, but the decomposition must remain inspectable.
+
+**Reason:**
+
+Within-position rank normalization can manufacture relative hotspots in positions whose absolute decision spread is negligible.
+
+---
+
+## D-015 — Severity and decision leverage are different
+
+**Status:** Accepted
+
+**Decision:**
+
+A severe position with at most one legal move has zero root-choice optionality for the purpose of decision-leverage amplitude. Do not equate objectively bad evaluation with high decision leverage.
+
+**Reason:**
+
+Decision leverage measures sensitivity to available choice, not merely how good or bad the position is.
+
+---
+
+## D-016 — ShapeSelectivity-v1 is a frozen development policy, not a chess law
+
+**Status:** Accepted with semantic audit pending
+
+**Decision:**
+
+Preserve the frozen development predicates:
+
+- Direct: `candidate_fraction >= 0.15`
+- Recurrence: `earliest_ply <= 2 AND distinct_line_count >= 3`
+- Bundle: `producing_move_count >= 3 AND implicated_region_size <= 15`
+
+Do not retune these thresholds on W-suite hostile evidence. Rejected evidence remains raw evidence rather than being deleted.
+
+**Reason:**
+
+The thresholds were selected after observing development fixtures and therefore cannot be treated as untouched discoveries.
+
+**Implementation note:**
+
+The current helper is an ordered first-pass selector and returns one prioritized source / rejection reason rather than a complete independent per-channel state record. M8.6.4 must audit this semantic gap before further modeling.
+
+---
+
+## D-017 — Experimental invalidity must remain visible
+
+**Status:** Accepted
+
+**Decision:**
+
+Do not silently repair, rename, or rewrite invalid fixtures, contaminated holdouts, failed seals, or falsified hypotheses into cleaner-looking evidence.
+
+Mark them accurately and preserve the original artifacts.
+
+**Reason:**
+
+F4, prior holdout attempts, W-v2 execution, W10/W11 legality failures, and W7's falsified negative-control hypothesis all materially changed the research interpretation.
+
+---
+
+## D-018 — History is a separate research layer until proven otherwise
+
+**Status:** Proposed research constraint
+
+**Decision:**
+
+A future Temporal Ledger may measure historical investment, constraint, conversion, and persistence, but it must not contaminate objective current-state ChessHeat semantics.
+
+For two histories that arrive at the same complete legal state, current-state evidence should agree while historical ledgers may differ.
+
+**Reason:**
+
+This gives the history research a falsifiable boundary and prevents narrative path dependence from changing a state-based measurement without rule-state justification.
 
 ---
 
 ## Open decisions
 
-The following remain intentionally unresolved:
+### O-002 — Reference engine budget
 
-### O-002 — Engine budget
+Development work has used fixed node budgets and commonly compared 50k, 100k, and 250k nodes with `Threads=1` and small fixed hash settings. A final production/reference budget remains open.
 
-Need to define a reproducible comparison budget such as fixed depth, nodes, or another controlled mode.
+### O-003 — Mixed CP / mate amplitude
 
-### O-003 — Score normalization
-
-Need a documented method for comparing centipawn and mate evaluations while preserving perspective.
+Perspective semantics and type separation are established, but the final mate-sensitive amplitude representation remains unresolved.
 
 ### O-004 — Direct square aggregation
 
-Need to compare statistics such as maximum consequence, distribution, downside, upside, and frequency before choosing a visualization mapping.
+Need to determine which direct statistics are useful for presentation without over-rewarding catastrophic singleton blunders.
 
 ### O-005 — Hazard definition
 
-Need to determine what qualifies a square as "lava" rather than merely unfavorable or contested.
+Need to determine what qualifies a square as "lava" rather than merely unfavorable, recurring, or contested.
 
 ### O-006 — Pivotality evidence
 
-Need to validate which combination, if any, of consequence magnitude, PV recurrence, persistence, structural change, and indirect attribution deserves the term pivotality.
+No fixed composite has yet satisfied the requirement to outperform its strongest individual component across representative positions.
 
 ### O-007 — Validation method
 
-Need to define human/chess-expert and fixture-based methods for determining whether ChessHeat surfaces genuinely useful positional structure.
+Need a genuinely untouched validation protocol with legal preflight, multi-square / corridor / disjoint-region ground truth, object-level provenance, and clear separation of fixture invalidity from model failure.
 
 ### O-008 — Web visualization stack
 
-Choose the frontend framework, board component strategy, and deployment shape only after the analysis core produces stable versioned measurement records. The UI must remain a consumer of measurement semantics, not their owner.
+The diagnostic viewer exists, but product stack and deployment shape remain intentionally secondary to measurement integrity.
+
+### O-009 — Geographic relevance
+
+What transforms raw geographic evidence into relevance without discarding legitimate rare, deep, broad, or multi-focal leverage?
+
+### O-010 — Consequence-coupled recurrence
+
+Should recurrence be weighted or filtered by how strongly passage through a square distinguishes materially different root outcomes rather than by frequency alone?
+
+### O-011 — Regional representation
+
+Should files, diagonals, corridors, king zones, pawn complexes, and disjoint tactical regions remain first-class objects before projection to squares?
+
+### O-012 — Temporal Ledger
+
+Can move history provide a distinct measurable description of investment, constraint, conversion, and persistence while preserving current-state invariance under true transpositions?
