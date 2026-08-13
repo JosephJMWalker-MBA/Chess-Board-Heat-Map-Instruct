@@ -117,7 +117,7 @@ Geometry can partition outcomes without proving isolated causality. Perfectly co
 
 ## Milestone 8 — Pivotality research
 
-**Status: Active; exit condition not satisfied**
+**Status: Frozen** (as of M8.6.8 Candidate-Set Sensitivity Characterization)
 
 Completed research work includes:
 
@@ -139,22 +139,9 @@ Completed research work includes:
 - severity != decision leverage;
 - recurrence remains a major source of spatial diffuseness;
 - rigid selectivity rules predictably lose rare, deep, broad, and multi-focal legitimate evidence;
-- W-v2 is hostile validation / development evidence, not pristine one-shot final validation.
-
-### M8.6.4 — Recurrence & Selectivity Semantic Integrity Audit
-
-**Status: Next**
-
-Before any retuning:
-
-- reconstruct W2/W3/W4/W12 expected-square provenance channel by channel;
-- distinguish not observed / observed-rejected / observed-selected;
-- assert `distinct_line_count <= admitted_candidate_count` mechanically;
-- resolve historical recurrence counts larger than the admitted candidate set;
-- distinguish legal roots, admitted candidates, PV length, distinct lines, and visits;
-- audit the current ordered first-pass `ShapeSelectivity-v1` implementation and its prioritized rejection reason;
-- add invariant tests;
-- stop without tuning thresholds.
+- W-v2 is hostile validation / development evidence, not pristine one-shot final validation;
+- **recurrence is conditional on the future set;**
+- **specificity and spatial coverage trade against one another.**
 
 ### M8 exit condition
 
@@ -163,6 +150,8 @@ Still unmet:
 > A composite pivotality model must add measurable value over its strongest individual component on a valid, preregistered, untouched evaluation protocol.
 
 Until then, separate evidence layers remain the scientifically preferred representation.
+
+*Update (M8 Freeze):* The first major research phase for this milestone has concluded and is now frozen. We established the critical mathematical distinctions above rather than tuning arbitrary thresholds. Future work must treat candidate-universe design as a fundamental research question. No further tuning of ShapeSelectivity-v1 or derivation of v2 is authorized in this phase.
 
 ---
 
@@ -217,6 +206,17 @@ Investigate whether recurrence relevance should depend on how strongly passage t
 Do not begin by simply tightening `ShapeSelectivity-v1` thresholds.
 
 ---
+
+*Update (M8 Freeze):* The first major research phase for this milestone has concluded and is now frozen. We established critical mathematical distinctions rather than tuning arbitrary thresholds:
+- control != importance
+- regret != causal delta
+- association != causality
+- shape != amplitude
+- severity != decision leverage
+- recurrence is conditional on the future set
+- specificity and spatial coverage trade against one another
+
+Future work must treat candidate-universe design as a fundamental research question. No further tuning of ShapeSelectivity-v1 or derivation of v2 is authorized in this phase.
 
 ## Milestone 9 — Opening teacher prototype
 

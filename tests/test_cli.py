@@ -17,6 +17,7 @@ def test_cli_attribution_schema(mock_analyze, mock_adapter, capsys):
     mock_record = AnalysisRecord(
         fen="start_fen",
         root_side="white",
+        comparison_perspective="white",
         engine_name="test_engine",
         search_budget_type="nodes",
         search_budget_value=1000,

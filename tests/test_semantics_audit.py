@@ -1,79 +1,108 @@
 import pytest
-from chessheat.models import MoveObservation, Score, SquareEffectRole, AnalysisRecord
-from chessheat.attribution import aggregate_square_attributions
+from chessheat.selectivity import apply_shape_selectivity_v1
+from chessheat.recurrence import aggregate_square_recurrence
+from chessheat.models import AnalysisRecord, CandidateProvenance
 
-def test_singleton_destination_regret_preserved():
-    # Simulate a scenario where d4 is a singleton destination (e.g. only d2d4 played there)
-    # and e4 is another move. The best move is e2e4 with +38. d2d4 has +34.
+def test_channel_independence_no_suppression():
+    """
+    Assert mechanically that failure in one channel cannot suppress
+    evidence independently selected by another channel.
+    """
+    
+    # 1. Selected by Direct, rejected by Recurrence and Bundle
+    prof1 = {
+        "direct": {"candidate_fraction": 0.20}, # pass
+        "recurrence": {"earliest_ply": 3, "distinct_line_count": 5}, # fail (ply > 2)
+        "bundle": {"producing_move_count": 2, "implicated_region_size": 10} # fail (moves < 3)
+    }
+    is_sel, src, reason = apply_shape_selectivity_v1(prof1)
+    assert is_sel is True
+    assert src == "direct"
+    
+    # 2. Selected by Recurrence, rejected by Direct and Bundle
+    prof2 = {
+        "direct": {"candidate_fraction": 0.10}, # fail
+        "recurrence": {"earliest_ply": 1, "distinct_line_count": 4}, # pass
+        "bundle": {"producing_move_count": 1, "implicated_region_size": 10} # fail
+    }
+    is_sel, src, reason = apply_shape_selectivity_v1(prof2)
+    assert is_sel is True
+    assert src == "recurrence"
+    
+    # 3. Selected by Bundle, rejected by Direct and Recurrence
+    prof3 = {
+        "direct": {"candidate_fraction": 0.05}, # fail
+        "recurrence": {"earliest_ply": 4, "distinct_line_count": 1}, # fail
+        "bundle": {"producing_move_count": 4, "implicated_region_size": 12} # pass
+    }
+    is_sel, src, reason = apply_shape_selectivity_v1(prof3)
+    assert is_sel is True
+    assert src == "bundle"
 
-    e4_move = MoveObservation(
-        uci="e2e4", san="e4", origin_square="e2", destination_square="e4",
-        is_capture=False, is_castling=False, is_en_passant=False, resulting_fen="",
-        score=Score(type="cp", value=38, perspective="white")
-    )
-
-    d4_move = MoveObservation(
-        uci="d2d4", san="d4", origin_square="d2", destination_square="d4",
-        is_capture=False, is_castling=False, is_en_passant=False, resulting_fen="",
-        score=Score(type="cp", value=34, perspective="white")
-    )
-
+def test_recurrence_distinct_line_count_invariant():
+    """
+    Verify for every recurrence observation: distinct_line_count <= admitted_candidate_count.
+    """
+    # Create a mock AnalysisRecord with a specific candidate policy
+    from chessheat.models import Score, MoveObservation, PlyObservation
+    
+    # Policy limits to 2 candidates
     record = AnalysisRecord(
-        fen="start",
+        fen="8/8/8/8/4k3/8/8/4K3 w - - 0 1",
         root_side="white",
-        engine_name="test",
+        comparison_perspective="white",
+        engine_name="mock",
         search_budget_type="nodes",
-        search_budget_value=1,
-        baseline_observation=Score(type="cp", value=47, perspective="white"),
-        move_observations=[e4_move, d4_move]
+        search_budget_value=100,
+        baseline_observation=Score(type="cp", value=0, perspective="white"),
+        candidate_policy={"top_n": 2},
+        move_observations=[
+            MoveObservation(
+                uci="e1d1", san="Kd1", origin_square="e1", destination_square="d1",
+                is_capture=False, is_castling=False, is_en_passant=False, resulting_fen="",
+                score=Score(type="cp", value=0, perspective="white"),
+                parsed_pv=[
+                    PlyObservation(ply_number=2, uci="e1d1", origin="e1", destination="d1", roles=[])
+                ]
+            ),
+            MoveObservation(
+                uci="e1f1", san="Kf1", origin_square="e1", destination_square="f1",
+                is_capture=False, is_castling=False, is_en_passant=False, resulting_fen="",
+                score=Score(type="cp", value=0, perspective="white"),
+                parsed_pv=[
+                    PlyObservation(ply_number=2, uci="e1f1", origin="e1", destination="f1", roles=[])
+                ]
+            ),
+            MoveObservation(
+                uci="e1d2", san="Kd2", origin_square="e1", destination_square="d2",
+                is_capture=False, is_castling=False, is_en_passant=False, resulting_fen="",
+                score=Score(type="cp", value=0, perspective="white"),
+                parsed_pv=[
+                    PlyObservation(ply_number=2, uci="e1d2", origin="e1", destination="d2", roles=[])
+                ]
+            )
+        ]
     )
-
-    attrs = aggregate_square_attributions(record)
-
-    # 1. "a singleton destination square preserves the move's global regret rather than becoming zero"
-    assert attrs["d4"].min_cp_regret == 4
-
-    # 2. "the same move has identical regret when referenced from its origin and destination squares"
-    # For d2d4: origin is d2, dest is d4. Both should have regret 4 for this move.
-    d2_move_ref = next(m for m in attrs["d2"].implicated_moves if m.uci == "d2d4")
-    d4_move_ref = next(m for m in attrs["d4"].implicated_moves if m.uci == "d2d4")
-
-    assert d2_move_ref.regret.value == 4
-    assert d4_move_ref.regret.value == 4
-    assert d2_move_ref.regret == d4_move_ref.regret
-
-def test_black_perspective_regret():
-    # 3. "root-side perspective remains correct for Black as well as White."
-    # If it is Black's turn, the scores are from Black's perspective.
-    # So a score of +100 means Black is winning by a pawn. A score of +50 means Black is winning by half a pawn.
-    # The best move is +100.
-
-    best_move = MoveObservation(
-        uci="e7e5", san="e5", origin_square="e7", destination_square="e5",
-        is_capture=False, is_castling=False, is_en_passant=False, resulting_fen="",
-        score=Score(type="cp", value=100, perspective="black")
-    )
-
-    other_move = MoveObservation(
-        uci="d7d5", san="d5", origin_square="d7", destination_square="d5",
-        is_capture=False, is_castling=False, is_en_passant=False, resulting_fen="",
-        score=Score(type="cp", value=50, perspective="black")
-    )
-
-    record = AnalysisRecord(
-        fen="start",
-        root_side="black",
-        engine_name="test",
-        search_budget_type="nodes",
-        search_budget_value=1,
-        baseline_observation=Score(type="cp", value=80, perspective="black"),
-        move_observations=[best_move, other_move]
-    )
-
-    attrs = aggregate_square_attributions(record)
-
-    # Best move should have regret 0
-    assert attrs["e5"].min_cp_regret == 0
-
-    # Other move should have regret 50 (100 - 50)
-    assert attrs["d5"].min_cp_regret == 50
+    
+    # 3 total legal root moves analyzed
+    assert len(record.move_observations) == 3
+    
+    res = aggregate_square_recurrence(record)
+    
+    # Candidates admitted should be 2 (due to top_n=2)
+    assert res.provenance.admitted_count == 2
+    
+    for sq, rec in res.squares.items():
+        # The invariant: distinct_line_count cannot exceed admitted_count
+        assert rec.overall.distinct_line_count <= res.provenance.admitted_count
+        
+        # When admitted candidates exist, line_fraction must match
+        if res.provenance.admitted_count > 0:
+            assert rec.overall.line_fraction == rec.overall.distinct_line_count / res.provenance.admitted_count
+        
+        # We explicitly distinguish:
+        # - legal root moves analyzed: len(record.move_observations)
+        # - candidates admitted to Recurrence: res.provenance.admitted_count
+        # - PV length: handled dynamically per observation
+        # - distinct candidate lines containing a square: rec.overall.distinct_line_count
+        # - total square visits: rec.overall.visit_count

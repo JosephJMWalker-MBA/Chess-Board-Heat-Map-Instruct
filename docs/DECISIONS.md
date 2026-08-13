@@ -292,6 +292,20 @@ This gives the history research a falsifiable boundary and prevents narrative pa
 
 ---
 
+## D-016 — Candidate-universe definition is part of Recurrence semantics
+
+**Status:** Accepted (M8 Freeze)
+
+**Decision:**
+
+The choice of the candidate universe (e.g., top-5 versus all legal roots) is an intrinsic part of the measurement definition, not merely a performance optimization. `top_n=5` is a frozen development policy for this phase, not an established optimum or universal chess law. Future work must treat candidate-universe design as a fundamental research question.
+
+**Reason:**
+
+Constraining the future set induces a measurable specificity-coverage tradeoff. As demonstrated in the M8 W-v2-R analysis, restricting recurrence to the top 5 candidates suppressed a substantial amount of non-target benchmark geography but also altered the sensitivity to expected targets.
+
+---
+
 ## Open decisions
 
 ### O-002 — Reference engine budget

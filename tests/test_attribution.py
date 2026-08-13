@@ -103,6 +103,7 @@ def test_aggregate_square_attributions():
     record = AnalysisRecord(
         fen="start",
         root_side="white",
+        comparison_perspective="white",
         engine_name="test",
         search_budget_type="nodes",
         search_budget_value=1,
