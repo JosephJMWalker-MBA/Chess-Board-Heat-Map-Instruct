@@ -2,238 +2,441 @@
 
 ## Status
 
-This document defines the first measurement hypotheses for ChessHeat. It is intentionally provisional.
+This document describes the current measurement architecture after Milestones 1–8.
 
-The goal is not to declare a final heat formula. The goal is to make each candidate signal explicit, inspectable, and testable.
+It is still provisional. ChessHeat does **not** have an authorized universal pivotality formula.
 
-## Design principle
+The governing rule is:
 
-A square score should be derived from evidence about how the position changes, not from color assignment or attack counts alone.
+> **The mathematics needs to earn the color.**
 
-ChessHeat should preserve the raw measurements used to construct any composite score.
+See [`RESEARCH_REPORT_M1_M8.md`](RESEARCH_REPORT_M1_M8.md) for the experimental history and falsification record.
 
-## Position baseline
+---
 
-For a legal position `P`, obtain a stable engine evaluation from the perspective of the side being analyzed.
+## 1. Core separation
 
-Represent the baseline as:
-
-`E(P)`
-
-The implementation must normalize mate scores and centipawn scores into a documented representation before comparing values.
-
-The exact normalization scheme is not yet fixed.
-
-## Candidate signal A — direct move consequence
-
-For each legal move `m` from position `P`:
-
-1. apply `m` to create `P_m`,
-2. evaluate `P_m`,
-3. calculate the change relative to the baseline,
-4. preserve the engine search metadata used to obtain the value.
-
-Conceptually:
-
-`Delta(m) = E(P_m) - E(P)`
-
-This signal measures move consequence, not square importance by itself.
-
-### Initial square attribution
-
-For a first prototype, attribute evidence to:
-
-- the move's origin square,
-- the move's destination square,
-- the captured square when distinct,
-- castling rook origin/destination where applicable,
-- en-passant captured square where applicable.
-
-Do not assume equal attribution is correct. Preserve the move-level record so attribution rules can later change.
-
-## Candidate signal B — consequence magnitude by square
-
-For square `s`, aggregate the magnitude of consequential legal moves that directly involve `s`.
-
-A simple research statistic might include:
-
-- maximum absolute evaluation change,
-- mean absolute evaluation change,
-- median absolute evaluation change,
-- number of consequential moves involving the square,
-- positive and negative consequences separated by side.
-
-Do not collapse these into one score until the distributions have been inspected.
-
-## Candidate signal C — principal-variation recurrence
-
-A square may be pivotal if it repeatedly appears across strong continuations.
-
-For multiple engine candidate lines, record:
-
-- squares occupied by moves in each principal variation,
-- captures on each square,
-- repeated contested squares,
-- recurrence depth,
-- recurrence across independent candidate moves.
-
-A square that appears in many strong lines may carry strategic importance even when the immediate move consequence is modest.
-
-This signal must distinguish repetition caused by forced tactics from broad strategic centrality.
-
-## Candidate signal D — local state transition
-
-Compare structural properties of each square before and after a legal move.
-
-Possible raw properties include:
-
-- attacking side counts,
-- defending side counts,
-- attacking piece identities,
-- defending piece identities,
-- occupancy,
-- legal accessibility,
-- x-ray lines opened or closed,
-- pinned or overloaded defenders associated with the square,
-- king-zone membership,
-- passed-pawn or promotion relevance.
-
-These are explanatory signals. They should not automatically become weights in the heat score.
-
-## Candidate signal E — indirect impact
-
-A move can create its primary consequence away from its origin and destination.
-
-Example categories:
-
-- opening a file,
-- opening or closing a diagonal,
-- removing a defender,
-- creating a discovered attack,
-- changing king safety,
-- enabling a pawn break,
-- changing access to an outpost.
-
-This is the hardest attribution problem in the project and should not be faked in v1.
-
-The first prototype may explicitly report:
-
-`indirect attribution: unsupported`
-
-rather than pretending destination-square attribution explains the whole move.
-
-## Working concepts
+ChessHeat now treats several quantities as distinct rather than collapsing them into one heat score.
 
 ### Control
 
-Control is a geometric description of attacks and defenses.
+Geometric attack / defense information.
 
-Possible representation:
+Control is evidence, not importance.
 
-`Control(s) = {white_attackers, white_defenders, black_attackers, black_defenders}`
+### Decision consequence
 
-Do not reduce this immediately to a weighted scalar.
+How much value is surrendered by choosing one legal root move instead of a better legal root move.
 
-### Leverage
+### Spatial evidence
 
-Working hypothesis:
+Where direct moves, future continuations, and structural geometry implicate squares or regions.
 
-> A square has high leverage when meaningful legal changes involving or depending on it are associated with large downstream changes in position value or structure.
+### Amplitude
 
-Initial v1 approximation may use direct legal-move consequence plus recurrence evidence.
+How much decision leverage exists in the position as a whole.
 
-### Hazard
+### Shape
 
-Working hypothesis:
+Where spatial evidence is concentrated, separately from amplitude.
 
-> A square has high hazard for a side when plausible interactions with it have strongly asymmetric downside for that side.
+### Temporal provenance
 
-Hazard must be side-specific and should preserve best-case and worst-case outcomes separately.
+A proposed future layer describing how the present structure was formed. It is not part of current-state pivotality yet.
 
-Potential descriptive statistics:
+---
 
-- worst legal consequence involving the square,
-- proportion of interactions that fall below a loss threshold,
-- tactical forcing-response depth,
-- volatility across candidate continuations.
+## 2. Root-move outcome and regret
 
-### Pivotality
+For legal position `P`, analyze legal root moves under the same declared engine budget and comparison perspective.
 
-Working hypothesis:
+For legal move `m`:
 
-> A square is pivotal when it is repeatedly implicated in high-consequence changes across plausible strong futures.
+```text
+E(m) = typed engine outcome after choosing m
+```
 
-Potential evidence:
+For centipawn-comparable outcomes:
 
-- leverage magnitude,
-- recurrence across principal variations,
-- persistence across search depths,
-- structural centrality,
-- sensitivity across neighboring board states.
+```text
+E*   = best root outcome
+R(m) = E* - E(m)
+```
 
-No composite formula is authorized yet.
+`R(m)` is **regret / opportunity cost**, not a causal estimate of how much the move changed the position.
 
-## Heat delta
+The original provisional model used:
 
-For consecutive legal positions `P_a` and `P_b`, compute the same raw square measurements for each and compare them.
+```text
+E(P after m) - E(P)
+```
 
-The system should preserve:
+as a candidate consequence quantity. That interpretation was rejected because the baseline engine value already assumes optimal continuation.
 
-- previous square evidence,
-- current square evidence,
-- signed change,
-- absolute change,
-- explanation metadata.
+### Perspective
 
-Heat delta is likely to be more useful pedagogically than a static heat value because it answers:
+All compared outcomes must use the same declared comparison perspective.
 
-> **What did that move change?**
+### Mate semantics
 
-## V1 research algorithm
+Mate outcomes remain typed. Do not convert mate values into fake centipawn scores.
 
-The first implementation should remain deliberately narrow:
+Mixed CP / mate positions require typed amplitude and outcome records rather than one fabricated scalar.
 
-1. Parse and validate a legal FEN.
-2. Generate all legal moves.
-3. Obtain a baseline engine evaluation.
-4. Evaluate every legal move under a fixed engine budget.
-5. Record origin, destination, captures, promotion, castling, and evaluation change.
-6. Aggregate move-consequence evidence by directly involved square.
-7. Render an inspectable board overlay.
-8. Allow the user to inspect the raw evidence behind any square.
-9. Compare the map before and after a move.
+---
 
-This is a measurement prototype, not yet the final ChessHeat model.
+## 3. Direct spatial attribution
 
-## Required experiment controls
+For each root move, preserve the squares directly implicated by the move.
 
-Engine-derived comparisons are only meaningful if search settings are controlled.
+Possible roles include:
 
-Each measurement record should preserve at least:
+- origin;
+- destination;
+- capture square;
+- en-passant capture square;
+- king origin / destination in castling;
+- rook origin / destination in castling;
+- promotion-related state.
 
-- engine version,
-- analysis mode,
-- depth or node/time budget,
-- MultiPV setting if used,
-- side to move,
-- FEN,
-- evaluation perspective,
-- timestamp or run identifier,
-- score normalization version.
+For square `s`:
 
-Deterministic or near-deterministic repeatability is preferred for experiments.
+```text
+D(s) = {m : s is directly implicated by m}
+```
 
-## Falsification questions
+Direct attribution is explicitly an approximation. It does not imply that the move's important strategic consequence occurs only on those squares.
 
-The project should actively test whether its visualization corresponds to useful chess structure.
+Useful direct descriptive statistics may include:
 
-Potential falsifiers include:
+- move count;
+- candidate fraction;
+- min / max / mean / median CP regret where defined;
+- origin / destination / capture role counts;
+- full implicated-move provenance.
 
-- high-heat squares consistently failing to match known tactical or strategic pivots,
-- trivial attack-count maps performing just as well as the proposed model,
-- severe instability under small changes in engine depth,
-- maps that merely visualize legal move destinations,
-- players learning to chase heat colors rather than understanding positions,
-- opening instruction that rewards database conformity without transferable understanding.
+Do not use direct attribution as a causal explanation for indirect effects.
 
-If a simpler model explains the same phenomena equally well, prefer the simpler model.
+---
+
+## 4. Principal-variation recurrence
+
+Recurrence describes future-path geography across an admitted candidate set.
+
+Candidate policy is applied before recurrence aggregation. The implementation preserves:
+
+- total legal root moves;
+- candidate policy;
+- admitted candidate count;
+- admitted root moves;
+- candidate scores;
+- candidate regrets;
+- number of admitted PVs with parsed content.
+
+For square `s`:
+
+```text
+distinct_line_count(s)
+  = number of admitted candidate PVs containing s
+
+line_fraction(s)
+  = distinct_line_count(s) / admitted_candidate_count
+```
+
+Also preserve:
+
+- `visit_count`;
+- `earliest_ply`;
+- role-specific recurrence.
+
+Required invariant:
+
+```text
+distinct_line_count(s) <= admitted_candidate_count
+```
+
+Repeated visits in one candidate PV may increase `visit_count`, but they do not increase `distinct_line_count` beyond one for that candidate line.
+
+### Interpretation
+
+Recurrence proves that a square appears in plausible admitted continuations. It does **not** prove the square is consequentially important.
+
+> **Future frequency != leverage.**
+
+---
+
+## 5. Structural geometry
+
+Define deterministic board geometry `G(P)` from chess rules rather than engine evaluation.
+
+Current structural evidence includes:
+
+- attacks;
+- defenses;
+- sliding rays;
+- path squares;
+- blockers;
+- legal / pseudo-legal mobility changes.
+
+For legal move `m`:
+
+```text
+Delta_G(P, m) = G(P after m) - G(P)
+```
+
+This allows ChessHeat to represent structural effects away from the move's origin and destination.
+
+Examples include opened files, exposed rays, lost defenses, and mobility changes.
+
+Geometry delta is descriptive. It does not establish why an engine score changed.
+
+---
+
+## 6. Geometry / outcome association
+
+For structural event `e`, compare root-move outcome or regret distributions between moves that produce the event and moves that do not.
+
+Example descriptive quantity:
+
+```text
+Delta_R(e)
+  = median R(m | e)
+    - median R(m | not e)
+```
+
+Positive or negative association does not imply isolated causality.
+
+If multiple geometry events have exactly the same producing-move set, preserve them as an **event bundle** rather than pretending the experiment distinguishes their independent causal effects.
+
+Bundle records should preserve:
+
+- constituent events;
+- producing moves;
+- non-producing moves;
+- implicated squares / paths;
+- outcome / regret distributions;
+- association statistics;
+- confounding status.
+
+---
+
+## 7. Evidence families used in M8
+
+The main experimental spatial channels are:
+
+### A — Direct
+
+Square evidence derived from directly implicated root moves.
+
+### B — Recurrence
+
+Square evidence derived from appearance across admitted candidate PVs.
+
+### C — Bundle
+
+Square / region evidence derived from event-bundle implication and associated root-move outcome separation.
+
+Baselines include:
+
+- attack density;
+- destination regret.
+
+M8 compared individual channels, pairwise combinations, and all-channel fusion.
+
+No fixed fusion has yet demonstrated universal superiority over its strongest individual component.
+
+---
+
+## 8. Rank normalization warning
+
+The current experimental fusion code converts within-position values into ranks in `[0, 1]` before averaging available channels.
+
+This is useful for ablation because the channels have different native units.
+
+It is **not** sufficient as a final heat magnitude because relative ranking creates a hottest square whenever there is any variation.
+
+Therefore:
+
+> **Where is leverage? != How much leverage exists?**
+
+---
+
+## 9. Shape and amplitude
+
+Current architecture separates:
+
+```text
+S(s | P) = spatial shape / localization evidence
+A(P)     = position-level decision-leverage amplitude
+```
+
+A future visualization may eventually use a composition such as:
+
+```text
+H(s | P) = A(P) * S(s | P)
+```
+
+but that is a conceptual decomposition, not an authorized final formula.
+
+### Typed amplitude
+
+The sealed helper preserves:
+
+```text
+A(P) = {A_cp, A_mate, zero_optionality}
+```
+
+If the position has at most one legal move:
+
+```text
+zero_optionality = true
+A_cp = 0
+```
+
+This expresses decision leverage, not objective severity.
+
+> **Severity != decision leverage.**
+
+The final CP spread statistic and detailed mate-sensitive amplitude representation remain open research questions.
+
+---
+
+## 10. ShapeSelectivity-v1
+
+The first frozen development attention policy uses:
+
+```text
+Direct:
+  candidate_fraction >= 0.15
+
+Recurrence:
+  earliest_ply <= 2
+  AND distinct_line_count >= 3
+
+Bundle:
+  producing_move_count >= 3
+  AND implicated_region_size <= 15
+```
+
+These thresholds were tuned using development evidence and are not universal chess principles.
+
+Rejected evidence remains preserved as raw evidence.
+
+### Important implementation caveat
+
+The current helper checks channels in order:
+
+```text
+Direct -> Recurrence -> Bundle
+```
+
+and returns the first passing channel as the selected source.
+
+If nothing passes, its rejection-reason fallback prioritizes Bundle when Bundle evidence exists, then Recurrence, then Direct.
+
+Therefore the current helper does **not** represent a complete independent per-channel selection state.
+
+M8.6.4 must audit and clarify these semantics before further tuning.
+
+---
+
+## 11. Heat delta
+
+For consecutive positions `P_a` and `P_b`, compute comparable evidence from the same perspective and preserve state transitions.
+
+Do not treat missing evidence as numeric zero.
+
+Useful states include:
+
+- persisted;
+- appeared;
+- disappeared;
+- absent in both.
+
+Heat delta remains pedagogically important because it supports the question:
+
+> **What did that move change, and where?**
+
+---
+
+## 12. Regional evidence
+
+M7–M8 showed that some legitimate structure is naturally regional rather than square-local.
+
+Candidate first-class regional objects include:
+
+- files;
+- diagonals;
+- rays / corridors;
+- king zones;
+- pawn complexes;
+- disjoint simultaneous tactical regions.
+
+Do not assume projection to 64 independent squares preserves all relevant structure.
+
+This is an open research track.
+
+---
+
+## 13. Experimental controls
+
+Each engine-derived experiment should preserve at least:
+
+- exact FEN;
+- board legality / `Board.is_valid()` preflight;
+- side to move;
+- comparison perspective;
+- engine executable / version;
+- threads;
+- hash setting;
+- budget type and value;
+- candidate policy;
+- legal root count;
+- admitted candidate count;
+- fixture manifest identity / hash where sealed;
+- evaluator / implementation identity where sealed;
+- typed score evidence;
+- raw spatial provenance.
+
+A FEN that parses is not automatically a legal board state, and a legal board state is not automatically a valid experimental fixture for the stated hypothesis.
+
+---
+
+## 14. Validation principles
+
+### Preserve falsification
+
+If a human fixture hypothesis is wrong, mark the hypothesis falsified rather than forcing the model to agree with intuition.
+
+### Preserve invalid experiments
+
+Do not silently repair invalid fixtures or contaminated holdouts after viewing results.
+
+### Avoid one-number accuracy claims on adversarial suites
+
+A hostile suite designed to attack known assumptions should be interpreted by failure mode, not marketed as a representative accuracy percentage.
+
+### Separate failure types
+
+Useful taxonomy:
+
+1. **Representation failure** — expected geography is not observed by any evidence layer.
+2. **Selectivity failure** — evidence exists but is rejected by attention policy.
+3. **Projection / fusion failure** — selected evidence exists but final ranking / rendering represents it poorly.
+4. **Fixture failure** — the chess hypothesis or board state is invalid.
+5. **Protocol failure** — the experimental seal or execution procedure does not meet its declared standard.
+
+---
+
+## 15. Current research boundary
+
+Before changing thresholds or proposing a new composite, complete M8.6.4:
+
+- reconstruct channel-by-channel provenance on hostile failures;
+- verify recurrence invariants mechanically;
+- resolve historical terminology drift around `distinct_line_count` versus `visit_count`;
+- make selectivity state semantics explicit;
+- add invariant tests;
+- do not retune `ShapeSelectivity-v1` during the audit.
+
+Only after semantic integrity is restored should the project study consequence-coupled recurrence, richer regional representation, or a new pivotality model.
