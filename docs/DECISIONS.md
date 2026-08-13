@@ -238,7 +238,7 @@ Decision leverage measures sensitivity to available choice, not merely how good 
 
 ## D-016 — ShapeSelectivity-v1 is a frozen development policy, not a chess law
 
-**Status:** Accepted with semantic audit pending
+**Status:** Accepted (M8 Freeze)
 
 **Decision:**
 
@@ -256,7 +256,7 @@ The thresholds were selected after observing development fixtures and therefore 
 
 **Implementation note:**
 
-The current helper is an ordered first-pass selector and returns one prioritized source / rejection reason rather than a complete independent per-channel state record. M8.6.4 must audit this semantic gap before further modeling.
+The current helper is an ordered first-success selector and returns one prioritized source / rejection reason rather than a complete independent per-channel state record. M8.6.4 audited this behavior; M8.6.5 corrected earlier forensic wording that had implied stronger channel independence than the helper itself exposes.
 
 ---
 
@@ -292,7 +292,7 @@ This gives the history research a falsifiable boundary and prevents narrative pa
 
 ---
 
-## D-016 — Candidate-universe definition is part of Recurrence semantics
+## D-019 — Candidate-universe definition is part of Recurrence semantics
 
 **Status:** Accepted (M8 Freeze)
 
@@ -302,7 +302,7 @@ The choice of the candidate universe (e.g., top-5 versus all legal roots) is an 
 
 **Reason:**
 
-Constraining the future set induces a measurable specificity-coverage tradeoff. As demonstrated in the M8 W-v2-R analysis, restricting recurrence to the top 5 candidates suppressed a substantial amount of non-target benchmark geography but also altered the sensitivity to expected targets.
+On the hostile W development corpus, constraining the future set produced a measurable specificity-coverage tradeoff: it suppressed substantial non-target benchmark geography while also removing some expected benchmark-target geography. That result establishes dependence on the candidate universe, not the optimality of any particular universe.
 
 ---
 
