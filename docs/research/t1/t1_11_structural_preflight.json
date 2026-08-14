@@ -12,7 +12,8 @@
         "structural_partition",
         "consequence_cp"
       ],
-      "status": "PASS",
+      "eligibility_status": "PASS",
+      "dimension_preflight_status": "PASS",
       "error_msg": null,
       "m_11": [
         "e4"
@@ -40,7 +41,8 @@
         "c4",
         "b4",
         "a4"
-      ]
+      ],
+      "dimension_evidence": {}
     },
     {
       "fixture_id": "Q2",
@@ -52,7 +54,8 @@
       "required_evidence_families": [
         "structural_partition"
       ],
-      "status": "PASS",
+      "eligibility_status": "PASS",
+      "dimension_preflight_status": "PASS",
       "error_msg": null,
       "m_11": [
         "Nbc3"
@@ -85,7 +88,8 @@
         "c4",
         "b4",
         "a4"
-      ]
+      ],
+      "dimension_evidence": {}
     },
     {
       "fixture_id": "Q3",
@@ -97,7 +101,8 @@
       "required_evidence_families": [
         "structural_partition"
       ],
-      "status": "PASS",
+      "eligibility_status": "PASS",
+      "dimension_preflight_status": "PASS",
       "error_msg": null,
       "m_11": [
         "c4"
@@ -125,7 +130,8 @@
         "d4",
         "b4",
         "a4"
-      ]
+      ],
+      "dimension_evidence": {}
     },
     {
       "fixture_id": "Q4",
@@ -138,7 +144,8 @@
         "structural_partition",
         "consequence_cp"
       ],
-      "status": "PASS",
+      "eligibility_status": "PASS",
+      "dimension_preflight_status": "PASS",
       "error_msg": null,
       "m_11": [
         "Nbc3"
@@ -171,7 +178,8 @@
         "c4",
         "b4",
         "a4"
-      ]
+      ],
+      "dimension_evidence": {}
     },
     {
       "fixture_id": "Q5",
@@ -184,7 +192,8 @@
         "structural_partition",
         "temporal"
       ],
-      "status": "PASS",
+      "eligibility_status": "PASS",
+      "dimension_preflight_status": "PASS",
       "error_msg": null,
       "m_11": [
         "d4"
@@ -221,35 +230,33 @@
         "c4",
         "b4",
         "a4"
-      ]
+      ],
+      "dimension_evidence": {}
     },
     {
       "fixture_id": "Q6",
-      "hypothesis": "The king is trapped, so the knight must move. All legal moves remove the knight's original attacks, meaning n01 and n00 are 0.",
-      "pre_move_fen": "4r1r1/8/8/8/8/4k3/4N3/4K3 w - - 0 1",
-      "played_move_san": "Nc3",
-      "e_str": "attacker=PieceRef(square='e2', symbol='N') target_square='d4' target_piece=None is_defense=False",
-      "f_str": "attacker=PieceRef(square='c3', symbol='N') target_square='d5' target_piece=None is_defense=False",
+      "hypothesis": "The black King is in check and MUST move. Every legal move causes the King to leave e8, thus removing its attack on f7. Therefore, n01 and n00 are both exactly 0, but multiple legal roots exist.",
+      "pre_move_fen": "4k3/8/8/8/8/8/8/K3R3 b - - 0 1",
+      "played_move_san": "Kf7",
+      "e_str": "attacker=PieceRef(square='e8', symbol='k') target_square='f7' target_piece=None is_defense=False",
+      "f_str": "attacker=PieceRef(square='f7', symbol='k') target_square='g6' target_piece=None is_defense=False",
       "required_evidence_families": [
         "structural_partition"
       ],
-      "status": "PASS",
+      "eligibility_status": "PASS",
+      "dimension_preflight_status": "PASS",
       "error_msg": null,
       "m_11": [
-        "Nc3"
+        "Kf7"
       ],
       "m_10": [
-        "Nf4",
-        "Nd4",
-        "Ng3",
-        "Ng1",
-        "Nc1"
+        "Kf8",
+        "Kd8",
+        "Kd7"
       ],
       "m_01": [],
-      "m_00": [
-        "Kf1",
-        "Kd1"
-      ]
+      "m_00": [],
+      "dimension_evidence": {}
     },
     {
       "fixture_id": "Q7",
@@ -261,7 +268,8 @@
       "required_evidence_families": [
         "bundle"
       ],
-      "status": "PASS",
+      "eligibility_status": "PASS",
+      "dimension_preflight_status": "PASS",
       "error_msg": null,
       "m_11": [
         "Bc5"
@@ -297,7 +305,11 @@
         "c4",
         "b4",
         "a4"
-      ]
+      ],
+      "dimension_evidence": {
+        "constituent_pairs_count": 2,
+        "bundle_equality": "EXACT_PARTITION_MATCH_VERIFIED"
+      }
     },
     {
       "fixture_id": "Q8",
@@ -310,7 +322,8 @@
         "structural_partition",
         "spatial_overlap"
       ],
-      "status": "PASS",
+      "eligibility_status": "PASS",
+      "dimension_preflight_status": "PASS",
       "error_msg": null,
       "m_11": [
         "Qh5"
@@ -356,7 +369,20 @@
         "c4",
         "b4",
         "a4"
-      ]
+      ],
+      "dimension_evidence": {
+        "implicated_squares_e": [
+          "d1",
+          "d5"
+        ],
+        "implicated_squares_f": [
+          "h5",
+          "d5"
+        ],
+        "intersection": [
+          "d5"
+        ]
+      }
     },
     {
       "fixture_id": "Q9",
@@ -369,7 +395,8 @@
         "structural_partition",
         "spatial_overlap"
       ],
-      "status": "PASS",
+      "eligibility_status": "PASS",
+      "dimension_preflight_status": "PASS",
       "error_msg": null,
       "m_11": [
         "e4"
@@ -397,11 +424,22 @@
         "c4",
         "b4",
         "a4"
-      ]
+      ],
+      "dimension_evidence": {
+        "implicated_squares_e": [
+          "e2",
+          "d3"
+        ],
+        "implicated_squares_f": [
+          "e4",
+          "d5"
+        ],
+        "intersection": []
+      }
     },
     {
       "fixture_id": "Q10",
-      "hypothesis": "The attack f3-e5 is born, removed by Ng1, and born again by Nf3, demonstrating reappearance.",
+      "hypothesis": "The attack f3-e5 is born, removed by Nd4, and born again by Nf3, demonstrating reappearance without the target e5 ever becoming occupied.",
       "pre_move_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
       "played_move_san": "Nf3",
       "e_str": "attacker=PieceRef(square='g1', symbol='N') target_square='f3' target_piece=None is_defense=False",
@@ -411,7 +449,8 @@
         "temporal",
         "reappearance"
       ],
-      "status": "PASS",
+      "eligibility_status": "PASS",
+      "dimension_preflight_status": "PASS",
       "error_msg": null,
       "m_11": [
         "Nf3"
@@ -439,7 +478,14 @@
         "c4",
         "b4",
         "a4"
-      ]
+      ],
+      "dimension_evidence": {
+        "episode_intervals": [
+          "1-3",
+          "5-ongoing"
+        ],
+        "reappearance_boolean": true
+      }
     },
     {
       "fixture_id": "Q11",
@@ -452,7 +498,8 @@
         "structural_partition",
         "consequence_mate"
       ],
-      "status": "PASS",
+      "eligibility_status": "PASS",
+      "dimension_preflight_status": "PASS",
       "error_msg": null,
       "m_11": [
         "Qh4#"
@@ -490,7 +537,8 @@
         "c5",
         "b5",
         "a5"
-      ]
+      ],
+      "dimension_evidence": {}
     },
     {
       "fixture_id": "Q12",
@@ -502,67 +550,29 @@
       "required_evidence_families": [
         "structural_partition"
       ],
-      "status": "PASS",
+      "eligibility_status": "PASS",
+      "dimension_preflight_status": "PASS",
       "error_msg": null,
       "m_11": [
         "Kh7"
       ],
       "m_10": [],
       "m_01": [],
-      "m_00": []
+      "m_00": [],
+      "dimension_evidence": {}
     },
     {
       "fixture_id": "Q13",
-      "hypothesis": "Two histories arrive at the identical FEN but possess different temporal ledgers (e.g. one history moved the knight out and back, the other did not).",
-      "pre_move_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
-      "played_move_san": "Nf3",
-      "e_str": "attacker=PieceRef(square='g1', symbol='N') target_square='f3' target_piece=None is_defense=False",
-      "f_str": "attacker=PieceRef(square='f3', symbol='N') target_square='e5' target_piece=None is_defense=False",
-      "required_evidence_families": [
-        "paired_history"
-      ],
-      "status": "PASS",
-      "error_msg": null,
-      "m_11": [
-        "Nf3"
-      ],
-      "m_10": [
-        "Nh3",
-        "f3"
-      ],
-      "m_01": [],
-      "m_00": [
-        "Nc3",
-        "Na3",
-        "h3",
-        "g3",
-        "e3",
-        "d3",
-        "c3",
-        "b3",
-        "a3",
-        "h4",
-        "g4",
-        "f4",
-        "e4",
-        "d4",
-        "c4",
-        "b4",
-        "a4"
-      ]
-    },
-    {
-      "fixture_id": "Q14",
-      "hypothesis": "Symmetric pawn moves (e4 and d4) produce structurally matched partitions (e.g., n11=1, n00=17, n01=0) but have different consequence landscapes.",
+      "hypothesis": "Two equal-length commuting histories arrive at the identical exact FEN but possess different temporal ledgers (the d4 pawn attack on c5 has duration 3 plies in A and 1 ply in B).",
       "pre_move_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
       "played_move_san": "d4",
       "e_str": "attacker=PieceRef(square='d2', symbol='P') target_square='c3' target_piece=None is_defense=False",
       "f_str": "attacker=PieceRef(square='d4', symbol='P') target_square='c5' target_piece=None is_defense=False",
       "required_evidence_families": [
-        "structural_partition",
-        "consequence_cp"
+        "paired_history"
       ],
-      "status": "PASS",
+      "eligibility_status": "PASS",
+      "dimension_preflight_status": "PASS",
       "error_msg": null,
       "m_11": [
         "d4"
@@ -590,11 +600,67 @@
         "c4",
         "b4",
         "a4"
-      ]
+      ],
+      "dimension_evidence": {
+        "fen_a": "rnbqkb1r/ppp1pppp/5n2/3p4/3P4/5N2/PPP1PPPP/RNBQKB1R w KQkq - 2 3",
+        "fen_b": "rnbqkb1r/ppp1pppp/5n2/3p4/3P4/5N2/PPP1PPPP/RNBQKB1R w KQkq - 2 3",
+        "lifecycle_differences": "History A: d4 attack duration 3 plies. History B: d4 attack duration 1 ply."
+      }
+    },
+    {
+      "fixture_id": "Q14",
+      "hypothesis": "Symmetric pawn moves (a3 and h3) produce structurally identical partitions via explicit x-axis reflection bijection, but have different median regret consequence landscapes.",
+      "pre_move_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "played_move_san": "a3",
+      "e_str": "attacker=PieceRef(square='a2', symbol='P') target_square='b3' target_piece=None is_defense=False",
+      "f_str": "attacker=PieceRef(square='a3', symbol='P') target_square='b4' target_piece=None is_defense=False",
+      "required_evidence_families": [
+        "structural_partition",
+        "consequence_cp"
+      ],
+      "eligibility_status": "PASS",
+      "dimension_preflight_status": "PASS",
+      "error_msg": null,
+      "m_11": [
+        "a3"
+      ],
+      "m_10": [
+        "b3",
+        "a4"
+      ],
+      "m_01": [],
+      "m_00": [
+        "Nh3",
+        "Nf3",
+        "Nc3",
+        "Na3",
+        "h3",
+        "g3",
+        "f3",
+        "e3",
+        "d3",
+        "c3",
+        "h4",
+        "g4",
+        "f4",
+        "e4",
+        "d4",
+        "c4",
+        "b4"
+      ],
+      "dimension_evidence": {
+        "explicit_structural_mapping": "X-axis reflection bijection (a-file to h-file)",
+        "mapped_partitions": {
+          "n11": 1,
+          "n10": 2,
+          "n01": 0,
+          "n00": 17
+        }
+      }
     },
     {
       "fixture_id": "Q15",
-      "hypothesis": "Mobility objects exist across the board for both players, but generate_legal_moves is turn-conditioned. A turn handoff causes pseudo-legal vs legal mobility events to shift merely because the side to move changed.",
+      "hypothesis": "The frozen legal-mobility representation can produce event births solely because actionability transfers to the opposing side.",
       "pre_move_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
       "played_move_san": "e4",
       "e_str": "attacker=PieceRef(square='e2', symbol='P') target_square='f3' target_piece=None is_defense=False",
@@ -602,7 +668,8 @@
       "required_evidence_families": [
         "structural_partition"
       ],
-      "status": "PASS",
+      "eligibility_status": "PASS",
+      "dimension_preflight_status": "PASS",
       "error_msg": null,
       "m_11": [
         "Nf3",
@@ -629,7 +696,13 @@
         "b4",
         "a4"
       ],
-      "m_00": []
+      "m_00": [],
+      "dimension_evidence": {
+        "turn_conditioned_mobility": {
+          "tuple_present_when_white_to_move": false,
+          "tuple_present_when_black_to_move": true
+        }
+      }
     }
   ]
 }

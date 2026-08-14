@@ -41,6 +41,31 @@ During the generation of Q1–Q15, several initial hypotheses and FEN setups wer
      - Alternative move: `d4` (does NOT remove `e` but still births `f`, making it `m_01`).
    *Status:* REJECTED `PieceMobility` string representation, REPAIRED using `AttackRelationship` and `(PieceRef, str)` tuple.
 
+## Pre-Seal Fixture Review Corrections
+
+During the pre-seal review, several fixtures were rejected and required revision due to failing their preregistered prose requirements without Stockfish contamination.
+
+1. **Q6 (Missing-Preserving Comparison) - Rejected at Pre-Seal Review**:
+   *Issue:* The mechanical preflight falsified the fixture. Its support condition required `n01 + n00 == 0`, but the root had multiple moves that preserved `e` (e.g., King moves), resulting in `n01 + n00 = 2`. The preflight incorrectly labeled it PASS.
+   *Resolution:* Replaced with a fresh position (`4k3/8/8/8/8/8/8/4R3 b - - 0 1`) where the Black King is in check and MUST move. Since `e` is the Black King's attack from its root square, *every* legal move (all King moves) removes `e`, strictly guaranteeing `n01 + n00 == 0` with multiple legal roots.
+
+2. **Q10 (Temporal Ledger Reappearance) - Rejected at Pre-Seal Review**:
+   *Issue:* The targeted reappearance event `Nf3->e5` had its target square (`e5`) become occupied by a Black pawn during the first episode. This changed the target-piece identity of the `AttackRelationship`, making it a structurally distinct event rather than a true reappearance.
+   *Resolution:* Repaired the history to `Nf3, h6, Nd4, a6, Nf3`. Black plays harmless waiting moves so the target square `e5` remains completely empty, preserving exact `AttackRelationship` identity.
+
+3. **Q13 (Same Endpoint / Different History) - Rejected at Pre-Seal Review**:
+   *Issue:* The two histories (`Nf3 Nf6 Ng1 Ng8 Nf3` vs `Nf3`) reached the same piece placement but different complete FENs because the halfmove/fullmove clocks differed (5 plies vs 1 ply).
+   *Resolution:* Replaced with two equal-length commuting histories (`d4, d5, Nf3, Nf6` vs `Nf3, Nf6, d4, d5`). Both reach the exact same full FEN (`rnbqkb1r/ppp1pppp/5n2/3p4/3P4/5N2/PPP1PPPP/RNBQKB1R w KQkq - 2 3`) but have different temporal lifecycle timings for the `d4->c5` attack.
+
+4. **Q14 (Matched Structural Partitions) - Rejected at Pre-Seal Review**:
+   *Issue:* The fixtures (`e4` vs `d4`) were merely similar, not explicitly matched. The isomorphism criterion was underspecified.
+   *Resolution:* Constructed two strictly symmetric fixtures (`a3` vs `h3`). An explicit x-axis reflection bijection guarantees exact partition membership counts. The consequence prediction was formalized to `medianR(M11_a) != medianR(M11_b)`.
+
+5. **Q4/Q14 Underspecification - Repaired at Pre-Seal Review**:
+   *Issue:* "Consequence association" and "different consequence landscapes" lacked directional or strictly observable observables.
+   *Resolution:* Q4 now requires `medianR(m11) < medianR(m10)` with CP-comparable observations. Q14 now requires `medianR(m11_a) != medianR(m11_b)`.
+
 ## Summary
 Total rejected physical setups / signatures during debugging: **5**.
+Total rejected setups at Pre-Seal Review: **4**.
 Corpus status: **FROZEN PENDING T1.11.2 EXECUTION SEAL**.
