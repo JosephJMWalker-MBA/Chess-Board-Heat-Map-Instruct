@@ -31,3 +31,29 @@ def test_run_preflight(tmp_path):
         
     assert "fixtures" in data
     assert len(data["fixtures"]) > 0
+    
+    # Assert zero FAIL states
+    for f in data["fixtures"]:
+        assert f.get("eligibility_status") != "FAIL", f"Fixture {f['fixture_id']} eligibility failed"
+        for dim in f.get("dimensions", []):
+            assert dim.get("dimension_preflight_status") != "FAIL", f"Fixture {f['fixture_id']} dim {dim['name']} failed"
+            
+            # Additional assertions based on dimensions
+            if dim["name"] == "bundle":
+                ev = dim.get("dimension_evidence", {})
+                assert len(ev.get("constituent_pairs", [])) >= 2, "Q7 needs at least 2 constituents"
+                
+            if dim["name"] == "temporal":
+                ev = dim.get("dimension_evidence", {})
+                assert "intervals" in ev, "Temporal evidence needs intervals"
+                
+            if dim["name"] == "paired_history":
+                ev = dim.get("dimension_evidence", {})
+                assert "fen_a" in ev and "fen_b" in ev, "Q13 needs literal fens"
+                assert ev["fen_a"] == ev["fen_b"], "Q13 FENs must match"
+                assert ev.get("geometry_equality") is True, "Q13 geometry must match"
+                assert ev.get("legal_root_equality") is True, "Q13 legal roots must match"
+                
+            if f["id"] == "Q14" and dim["name"] == "structural_partition":
+                ev = dim.get("dimension_evidence", {})
+                assert "mapped_partitions_from_primary" in ev, "Q14 needs mapped partitions"

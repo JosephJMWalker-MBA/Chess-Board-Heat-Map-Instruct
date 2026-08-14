@@ -89,7 +89,7 @@ def test_lifecycle_cleanup_on_exception():
     with patch("chess.engine.SimpleEngine.popen_uci", return_value=fake):
         try:
             with h:
-                h.evaluate_move(chess.Board(), list(chess.Board().legal_moves)[0])
+                h.evaluate_move(chess.Board(), list(chess.Board().legal_moves)[0], resolved_perspective="white")
         except RuntimeError as e:
             assert str(e) == "Engine crashed mid-analysis!"
             

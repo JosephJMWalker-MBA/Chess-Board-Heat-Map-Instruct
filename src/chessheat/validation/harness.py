@@ -20,7 +20,7 @@ def extract_all_signatures(board: chess.Board) -> Set[Any]:
     return sigs
 
 class ValidationHarness:
-    def __init__(self, engine_path: str = "stockfish", budget_nodes: int = 500000, threads: int = 1, hash_mb: int = 16, comparison_perspective: str = "white"):
+    def __init__(self, engine_path: str = "stockfish", budget_nodes: int = 500000, threads: int = 1, hash_mb: int = 16, comparison_perspective: str = "root_side"):
         self.engine_path = engine_path
         self.budget_nodes = budget_nodes
         self.threads = threads
@@ -256,6 +256,8 @@ class ValidationHarness:
 
         return {
             "fen": fen,
+            "comparison_perspective_policy": self.comparison_perspective,
+            "resolved_comparison_perspective": resolved_perspective,
             "played_move": played_move_san,
             "predecessor": str(predecessor_sig),
             "successor": str(successor_sig),

@@ -91,8 +91,6 @@
     "requires_consequence_evidence": false,
     "mate_sensitive": false,
     "history": [
-      "e4",
-      "e5",
       "d4",
       "exd4"
     ],
@@ -253,7 +251,7 @@
     "required_evidence_families": [
       "paired_history"
     ],
-    "human_hypothesis": "Two equal-length commuting histories ending in irreversible moves arrive at the exact same FEN but possess different temporal ledgers.",
+    "human_hypothesis": "Two equal-length commuting histories ending in equal-length reversible knight-move histories arrive at the exact same FEN but possess different temporal ledgers.",
     "mechanical_support_condition": "fen_a == fen_b and ledger_a != ledger_b",
     "mechanical_falsifier": "fen_a != fen_b or ledger_a == ledger_b",
     "mechanical_ambiguous": "invalid geometry",

@@ -47,3 +47,33 @@ def test_comparison_perspective_black_cp():
         assert regrets["Nc6"]["value"] == 50
         assert regrets["Bc5"]["value"] == 120
         assert regrets["Qh4"]["value"] == 200 # -100 vs +100 -> regret 200
+
+import shutil
+import platform
+def test_comparison_perspective_black_cp_native():
+    sf_path = shutil.which("stockfish")
+    if not sf_path:
+        pytest.skip("Stockfish not found")
+        
+    # A simple black-to-move position where one move is obviously best
+    # "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 2" (after 1.e4 e5)
+    # We'll just run process_position to ensure it returns cleanly without crashing.
+    fen = "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 2"
+    harness = ValidationHarness(engine_path=sf_path, budget_nodes=10000, comparison_perspective="root_side")
+    
+    with patch.object(ValidationHarness, "preflight_fixture") as mock_preflight:
+        mock_preflight.return_value = ([], [], [], [])
+        
+        with harness:
+            result = harness.process_position(fen, "Nf6", "dummy_e", "dummy_f")
+            
+        assert result["comparison_perspective_policy"] == "root_side"
+        assert result["resolved_comparison_perspective"] == "black"
+        
+        # We don't care exactly about the regret value here, just that it ran natively and evaluated for black
+        regrets = result["regrets"]
+        assert len(regrets) > 0
+        
+        # Best move should have regret 0
+        min_regret = min(r["value"] for r in regrets.values() if r["type"] == "cp")
+        assert min_regret == 0

@@ -11,7 +11,7 @@ def get_sig_from_fen(fen, sig_str, san=None):
         b.push_san(san)
     sigs = extract_all_signatures(b)
     for sig in sigs:
-        if str(sig) == sig_str:
+        if sig_str in str(sig):
             return sig
     return None
 
@@ -87,12 +87,14 @@ def run_preflight():
                 else:
                     result["dimension_preflight_status"] = "PRECONDITIONS_PASS_PENDING_ENGINE"
             elif q_id == "Q5":
-                pgn = make_pgn("rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2", item["history"])
+                # Start fen is the position before the moves
+                fen_base = "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2"
+                pgn = make_pgn(fen_base, item["history"])
                 ledger = build_temporal_ledger_from_pgn(pgn)
                 evt = None
-                for k, v in ledger.events.items():
-                    if str(k) == item["successor_signature"]:
-                        evt = v
+                for e in ledger.events:
+                    if str(e.event_identity) == item["successor_signature"]:
+                        evt = e
                         break
                 if evt:
                     intervals = evt.active_intervals
@@ -100,8 +102,12 @@ def run_preflight():
                     result["dimension_evidence"] = {
                         "intervals": [f"{s}-{e if e else 'ongoing'}" for s, e in intervals],
                         "computed_duration": duration,
-                        "right_censored": evt.is_right_censored
+                        "right_censored": evt.is_right_censored()
                     }
+                    if duration == 1 and not evt.is_right_censored():
+                        result["dimension_preflight_status"] = "PASS"
+                    else:
+                        result["dimension_preflight_status"] = "FAIL"
                 else:
                     result["dimension_preflight_status"] = "FAIL"
             elif q_id == "Q6":
@@ -109,15 +115,34 @@ def run_preflight():
                     result["dimension_preflight_status"] = "FAIL"
             elif q_id == "Q7":
                 b = chess.Board(fen)
-                sig_e = get_sig_from_fen(fen, item["predecessor_signature"])
-                sig_f = get_sig_from_fen(fen, item["successor_signature"], played_move_san)
-                c_m11, c_m10, c_m01, c_m00 = ValidationHarness.preflight_fixture(fen, played_move_san, sig_e, sig_f)
+                sig_e1 = get_sig_from_fen(fen, item["predecessor_signature"])
+                sig_f1 = get_sig_from_fen(fen, item["successor_signature"], played_move_san)
+                c_m11, c_m10, c_m01, c_m00 = ValidationHarness.preflight_fixture(fen, played_move_san, sig_e1, sig_f1)
+                
+                sig_e2 = get_sig_from_fen(fen, item["bundle_second_pair"]["e_str_part"])
+                sig_f2 = get_sig_from_fen(fen, item["bundle_second_pair"]["f_str_part"], played_move_san)
+                c2_m11, c2_m10, c2_m01, c2_m00 = ValidationHarness.preflight_fixture(fen, played_move_san, sig_e2, sig_f2)
+                
                 result["dimension_evidence"] = {
-                    "constituent_pairs": [{"e": item["predecessor_signature"], "f": item["successor_signature"]}],
-                    "bundle_equality": {
+                    "constituent_pairs": [
+                        {"e": item["predecessor_signature"], "f": item["successor_signature"]},
+                        {"e": item["bundle_second_pair"]["e_str_part"], "f": item["bundle_second_pair"]["f_str_part"]}
+                    ],
+                    "bundle_equality_1": {
                         "m11": c_m11, "m10": c_m10, "m01": c_m01, "m00": c_m00
+                    },
+                    "bundle_equality_2": {
+                        "m11": c2_m11, "m10": c2_m10, "m01": c2_m01, "m00": c2_m00
                     }
                 }
+                
+                if (set(c_m11) == set(c2_m11) and 
+                    set(c_m10) == set(c2_m10) and 
+                    set(c_m01) == set(c2_m01) and 
+                    set(c_m00) == set(c2_m00)):
+                    result["dimension_preflight_status"] = "PASS"
+                else:
+                    result["dimension_preflight_status"] = "FAIL"
             elif q_id in ["Q8", "Q9"]:
                 pred_sqs = [pred_sig.attacker.square, pred_sig.target_square]
                 succ_sqs = [succ_sig.attacker.square, succ_sig.target_square]
@@ -133,9 +158,9 @@ def run_preflight():
                 pgn = make_pgn("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", item["history"])
                 ledger = build_temporal_ledger_from_pgn(pgn)
                 evt = None
-                for k, v in ledger.events.items():
-                    if str(k) == item["successor_signature"]:
-                        evt = v
+                for e in ledger.events:
+                    if str(e.event_identity) == item["successor_signature"]:
+                        evt = e
                         break
                 if evt:
                     intervals = evt.active_intervals
@@ -149,33 +174,43 @@ def run_preflight():
                 result["dimension_preflight_status"] = "PRECONDITIONS_PASS_PENDING_ENGINE"
             elif q_id == "Q13":
                 fen_base = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
-                pgn_a = make_pgn(fen_base, item["twin_history"]["moves_a"])
-                pgn_b = make_pgn(fen_base, item["twin_history"]["moves_b"])
+                pgn_a = make_pgn(fen_base, item["history"]["moves_a"])
+                pgn_b = make_pgn(fen_base, item["history"]["moves_b"])
                 b_a = chess.Board(fen_base)
-                for m in item["twin_history"]["moves_a"]: b_a.push_san(m)
+                for m in item["history"]["moves_a"]: b_a.push_san(m)
                 b_b = chess.Board(fen_base)
-                for m in item["twin_history"]["moves_b"]: b_b.push_san(m)
+                for m in item["history"]["moves_b"]: b_b.push_san(m)
                 
                 la = build_temporal_ledger_from_pgn(pgn_a)
                 lb = build_temporal_ledger_from_pgn(pgn_b)
                 
                 evt_a = None
-                for k, v in la.events.items():
-                    if str(k) == item["successor_signature"]:
-                        evt_a = v
+                for e in la.events:
+                    if str(e.event_identity) == item["successor_signature"]:
+                        evt_a = e
                         break
                 evt_b = None
-                for k, v in lb.events.items():
-                    if str(k) == item["successor_signature"]:
-                        evt_b = v
+                for e in lb.events:
+                    if str(e.event_identity) == item["successor_signature"]:
+                        evt_b = e
                         break
                         
+                geom_a = [str(x) for x in extract_all_signatures(b_a)]
+                geom_b = [str(x) for x in extract_all_signatures(b_b)]
+                
                 result["dimension_evidence"] = {
                     "fen_a": b_a.fen(),
                     "fen_b": b_b.fen(),
+                    "legal_root_equality": set(b_a.legal_moves) == set(b_b.legal_moves),
+                    "geometry_equality": set(geom_a) == set(geom_b),
                     "lifecycle_differences": f"History A: {len(evt_a.active_intervals) if evt_a else 0} intervals. History B: {len(evt_b.active_intervals) if evt_b else 0} intervals."
                 }
-                if b_a.fen() != b_b.fen():
+                
+                if (b_a.fen() != b_b.fen() or 
+                    not result["dimension_evidence"]["legal_root_equality"] or 
+                    not result["dimension_evidence"]["geometry_equality"] or 
+                    not evt_a or not evt_b or
+                    evt_a.active_intervals == evt_b.active_intervals):
                     result["dimension_preflight_status"] = "FAIL"
             elif q_id == "Q14":
                 twin = item["twin_fixture"]
@@ -183,24 +218,35 @@ def run_preflight():
                 succ_twin = get_sig_from_fen(twin["fen"], twin["f_str_part"], twin["played_move_san"])
                 tm11, tm10, tm01, tm00 = ValidationHarness.preflight_fixture(twin["fen"], twin["played_move_san"], pred_twin, succ_twin)
                 
-                def reflect_san(san):
-                    import re
-                    # very naive mapping for this specific fixture
-                    for c1, c2 in [('a','h'), ('b','g'), ('c','f'), ('d','e')]:
-                        if c1 in san: return san.replace(c1, c2)
-                        if c2 in san: return san.replace(c2, c1)
-                    return san
+                b_primary = chess.Board(fen)
+                b_twin = chess.Board(twin["fen"])
+                
+                def reflect_san(san, board_orig, board_dest):
+                    m = board_orig.parse_san(san)
+                    from_sq = chess.square(7 - chess.square_file(m.from_square), chess.square_rank(m.from_square))
+                    to_sq = chess.square(7 - chess.square_file(m.to_square), chess.square_rank(m.to_square))
+                    reflected_m = chess.Move(from_sq, to_sq, m.promotion)
+                    return board_dest.san(reflected_m)
+                    
+                mapped_m11 = sorted([reflect_san(m, b_primary, b_twin) for m in m11])
+                mapped_m10 = sorted([reflect_san(m, b_primary, b_twin) for m in m10])
+                mapped_m01 = sorted([reflect_san(m, b_primary, b_twin) for m in m01])
+                mapped_m00 = sorted([reflect_san(m, b_primary, b_twin) for m in m00])
                 
                 result["dimension_evidence"] = {
-                    "mapped_partitions": {
+                    "mapped_partitions_from_primary": {
+                        "m11": mapped_m11, "m10": mapped_m10, "m01": mapped_m01, "m00": mapped_m00
+                    },
+                    "twin_partitions": {
                         "m11": tm11, "m10": tm10, "m01": tm01, "m00": tm00
                     },
-                    "mapping": "X-axis reflection"
+                    "mapping": "UCI file reflection"
                 }
-                if len(m11) != len(tm11) or len(m10) != len(tm10):
-                    result["dimension_preflight_status"] = "FAIL"
-                else:
+                
+                if (mapped_m11 == tm11 and mapped_m10 == tm10 and mapped_m01 == tm01 and mapped_m00 == tm00):
                     result["dimension_preflight_status"] = "PRECONDITIONS_PASS_PENDING_ENGINE"
+                else:
+                    result["dimension_preflight_status"] = "FAIL"
             elif q_id == "Q15":
                 b1 = chess.Board(fen)
                 b1.turn = chess.BLACK
