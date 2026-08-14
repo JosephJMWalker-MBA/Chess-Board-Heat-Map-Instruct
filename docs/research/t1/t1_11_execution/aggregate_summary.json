@@ -1,0 +1,8 @@
+{
+  "total_fixtures": 15,
+  "classifications": {
+    "SUPPORTED": 14,
+    "FALSIFIED": 1,
+    "AMBIGUOUS": 0
+  }
+}

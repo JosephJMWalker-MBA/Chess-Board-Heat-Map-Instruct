@@ -1,0 +1,15 @@
+{
+  "git_commit_sha": "c840337595580c2c013d58ccc578b3fd4bc12f0a",
+  "harness_identity": "427ef36418bd5facd53d8edc392a4c384a64fce62c713034c8f3cb89e41f2591",
+  "runner_identity": "8d9024f22f2a7011cefe5e9049d55c785dd068311b1032d5c374be733903284e",
+  "manifest_hash": "8410996a93196baae3bfb290124fed44156d6446c2727605742e824d1d8a371c",
+  "protocol_hash": "754353bfefccc2d4b3ebfe1f3e63f83914044120e7a946013be876a518ecfacf",
+  "preflight_hash": "b1a95dd41650f4f6b06116a0da6d61333a7efd698711d4999bc59315f5db6820",
+  "engine_path": "/opt/homebrew/bin/stockfish",
+  "engine_version": "Stockfish 18",
+  "engine_threads": 1,
+  "engine_hash_mb": 16,
+  "engine_node_budget": 500000,
+  "comparison_perspective": "root_side",
+  "output_directory_identity": "/Users/josephjmwalker-mba/.gemini/antigravity/brain/26efe2e2-9972-489d-8885-11e47c116bc1/scratch/chessheat_execution_t1_11_2"
+}

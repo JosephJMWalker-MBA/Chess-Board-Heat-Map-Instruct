@@ -1,0 +1,93 @@
+{
+  "fixture_id": "Q9",
+  "hypothesis": "The pawn's attack on d3 is removed and attack on d5 is born. They share no structurally implicated squares.",
+  "classification": "SUPPORTED",
+  "criterion_applied": "len(shared_squares) == 0",
+  "structural_evidence": {
+    "fixture_id": "Q9",
+    "hypothesis": "The pawn's attack on d3 is removed and attack on d5 is born. They share no structurally implicated squares.",
+    "pre_move_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+    "played_move_san": "e4",
+    "e_str": "attacker=PieceRef(square='e2', symbol='P') target_square='d3' target_piece=None is_defense=False",
+    "f_str": "attacker=PieceRef(square='e4', symbol='P') target_square='d5' target_piece=None is_defense=False",
+    "required_evidence_families": [
+      "structural_partition",
+      "spatial_overlap"
+    ],
+    "eligibility_status": "PASS",
+    "dimension_preflight_status": "PASS",
+    "error_msg": null,
+    "m_11": [
+      "e4"
+    ],
+    "m_10": [
+      "e3",
+      "d3"
+    ],
+    "m_01": [],
+    "m_00": [
+      "Nh3",
+      "Nf3",
+      "Nc3",
+      "Na3",
+      "h3",
+      "g3",
+      "f3",
+      "c3",
+      "b3",
+      "a3",
+      "h4",
+      "g4",
+      "f4",
+      "d4",
+      "c4",
+      "b4",
+      "a4"
+    ],
+    "dimension_evidence": {
+      "implicated_squares_e": [
+        "e2",
+        "d3"
+      ],
+      "implicated_squares_f": [
+        "e4",
+        "d5"
+      ],
+      "intersection": []
+    }
+  },
+  "raw_typed_scores": {},
+  "typed_regrets": {},
+  "partition_summaries": {
+    "m_11": [
+      "e4"
+    ],
+    "m_10": [
+      "e3",
+      "d3"
+    ],
+    "m_01": [],
+    "m_00": [
+      "Nh3",
+      "Nf3",
+      "Nc3",
+      "Na3",
+      "h3",
+      "g3",
+      "f3",
+      "c3",
+      "b3",
+      "a3",
+      "h4",
+      "g4",
+      "f4",
+      "d4",
+      "c4",
+      "b4",
+      "a4"
+    ]
+  },
+  "comparison_perspective": "root_side",
+  "engine_invoked": false,
+  "engine_provenance": {}
+}

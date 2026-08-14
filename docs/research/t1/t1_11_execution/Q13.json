@@ -1,0 +1,99 @@
+{
+  "fixture_id": "Q13",
+  "hypothesis": "Two equal-length commuting histories ending in equal-length reversible knight-move histories arrive at the exact same FEN but possess different temporal ledgers.",
+  "classification": "SUPPORTED",
+  "criterion_applied": "fen_a == fen_b and ledger_a != ledger_b",
+  "structural_evidence": {
+    "fixture_id": "Q13",
+    "hypothesis": "Two equal-length commuting histories ending in equal-length reversible knight-move histories arrive at the exact same FEN but possess different temporal ledgers.",
+    "pre_move_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+    "played_move_san": "Na3",
+    "e_str": "attacker=PieceRef(square='b1', symbol='N') target_square='a3' target_piece=None is_defense=False",
+    "f_str": "attacker=PieceRef(square='a3', symbol='N') target_square='b5' target_piece=None is_defense=False",
+    "required_evidence_families": [
+      "paired_history"
+    ],
+    "eligibility_status": "PASS",
+    "dimension_preflight_status": "PASS",
+    "error_msg": null,
+    "m_11": [
+      "Na3"
+    ],
+    "m_10": [
+      "Nc3",
+      "a3"
+    ],
+    "m_01": [],
+    "m_00": [
+      "Nh3",
+      "Nf3",
+      "h3",
+      "g3",
+      "f3",
+      "e3",
+      "d3",
+      "c3",
+      "b3",
+      "h4",
+      "g4",
+      "f4",
+      "e4",
+      "d4",
+      "c4",
+      "b4",
+      "a4"
+    ],
+    "dimension_evidence": {
+      "fen_a": "r1bqkb1r/pppppppp/n6n/8/8/N6N/PPPPPPPP/R1BQKB1R w KQkq - 4 3",
+      "fen_b": "r1bqkb1r/pppppppp/n6n/8/8/N6N/PPPPPPPP/R1BQKB1R w KQkq - 4 3",
+      "geometry_equality": true,
+      "legal_root_equality": true,
+      "intervals_a": [
+        [
+          0,
+          1
+        ]
+      ],
+      "intervals_b": [
+        [
+          0,
+          3
+        ]
+      ]
+    }
+  },
+  "raw_typed_scores": {},
+  "typed_regrets": {},
+  "partition_summaries": {
+    "m_11": [
+      "Na3"
+    ],
+    "m_10": [
+      "Nc3",
+      "a3"
+    ],
+    "m_01": [],
+    "m_00": [
+      "Nh3",
+      "Nf3",
+      "h3",
+      "g3",
+      "f3",
+      "e3",
+      "d3",
+      "c3",
+      "b3",
+      "h4",
+      "g4",
+      "f4",
+      "e4",
+      "d4",
+      "c4",
+      "b4",
+      "a4"
+    ]
+  },
+  "comparison_perspective": "root_side",
+  "engine_invoked": false,
+  "engine_provenance": {}
+}

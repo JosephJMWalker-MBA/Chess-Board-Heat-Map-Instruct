@@ -1,0 +1,85 @@
+{
+  "fixture_id": "Q15",
+  "hypothesis": "The frozen legal-mobility representation can produce event births solely because actionability transfers to the opposing side.",
+  "classification": "SUPPORTED",
+  "criterion_applied": "same-placement opposite-turn control shows mobility tuple changes without physical piece movement",
+  "structural_evidence": {
+    "fixture_id": "Q15",
+    "hypothesis": "The frozen legal-mobility representation can produce event births solely because actionability transfers to the opposing side.",
+    "pre_move_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+    "played_move_san": "e4",
+    "e_str": "attacker=PieceRef(square='e2', symbol='P') target_square='f3' target_piece=None is_defense=False",
+    "f_str": "(PieceRef(square='g8', symbol='n'), 'f6')",
+    "required_evidence_families": [
+      "structural_partition"
+    ],
+    "eligibility_status": "PASS",
+    "dimension_preflight_status": "PASS",
+    "error_msg": null,
+    "m_11": [
+      "Nf3",
+      "f3",
+      "e3",
+      "e4"
+    ],
+    "m_10": [],
+    "m_01": [
+      "Nh3",
+      "Nc3",
+      "Na3",
+      "h3",
+      "g3",
+      "d3",
+      "c3",
+      "b3",
+      "a3",
+      "h4",
+      "g4",
+      "f4",
+      "d4",
+      "c4",
+      "b4",
+      "a4"
+    ],
+    "m_00": [],
+    "dimension_evidence": {
+      "fen_white_to_move": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "fen_black_to_move": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1",
+      "tuple_present_when_white_to_move": false,
+      "tuple_present_when_black_to_move": true
+    }
+  },
+  "raw_typed_scores": {},
+  "typed_regrets": {},
+  "partition_summaries": {
+    "m_11": [
+      "Nf3",
+      "f3",
+      "e3",
+      "e4"
+    ],
+    "m_10": [],
+    "m_01": [
+      "Nh3",
+      "Nc3",
+      "Na3",
+      "h3",
+      "g3",
+      "d3",
+      "c3",
+      "b3",
+      "a3",
+      "h4",
+      "g4",
+      "f4",
+      "d4",
+      "c4",
+      "b4",
+      "a4"
+    ],
+    "m_00": []
+  },
+  "comparison_perspective": "root_side",
+  "engine_invoked": false,
+  "engine_provenance": {}
+}

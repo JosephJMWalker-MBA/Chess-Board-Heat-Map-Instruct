@@ -1,0 +1,183 @@
+{
+  "fixture_id": "Q7",
+  "hypothesis": "Moving the bishop from d4 to c5 simultaneously removes its attacks on e5 and c5, and births attacks on d6 and b6, creating two structurally confounded pairs.",
+  "classification": "SUPPORTED",
+  "criterion_applied": "bundle constituents >= 2 and exact partition equality",
+  "structural_evidence": {
+    "fixture_id": "Q7",
+    "hypothesis": "Moving the bishop from d4 to c5 simultaneously removes its attacks on e5 and c5, and births attacks on d6 and b6, creating two structurally confounded pairs.",
+    "pre_move_fen": "rnbqkbnr/pppppppp/8/8/3B4/8/PPPPPPPP/RN1QKBNR w KQkq - 0 1",
+    "played_move_san": "Bc5",
+    "e_str": "attacker=PieceRef(square='d4', symbol='B') target_square='e5' target_piece=None is_defense=False",
+    "f_str": "attacker=PieceRef(square='c5', symbol='B') target_square='d6' target_piece=None is_defense=False",
+    "required_evidence_families": [
+      "bundle"
+    ],
+    "eligibility_status": "PASS",
+    "dimension_preflight_status": "PASS",
+    "error_msg": null,
+    "m_11": [
+      "Bc5"
+    ],
+    "m_10": [
+      "Bxg7",
+      "Bxa7",
+      "Bf6",
+      "Bb6",
+      "Be5",
+      "Be3",
+      "Bc3"
+    ],
+    "m_01": [],
+    "m_00": [
+      "Nh3",
+      "Nf3",
+      "Qc1",
+      "Nc3",
+      "Na3",
+      "h3",
+      "g3",
+      "f3",
+      "e3",
+      "d3",
+      "c3",
+      "b3",
+      "a3",
+      "h4",
+      "g4",
+      "f4",
+      "e4",
+      "c4",
+      "b4",
+      "a4"
+    ],
+    "dimension_evidence": {
+      "constituent_pairs": [
+        {
+          "e": "attacker=PieceRef(square='d4', symbol='B') target_square='e5' target_piece=None is_defense=False",
+          "f": "attacker=PieceRef(square='c5', symbol='B') target_square='d6' target_piece=None is_defense=False"
+        },
+        {
+          "e": "attacker=PieceRef(square='d4', symbol='B') target_square='c5' target_piece=None is_defense=False",
+          "f": "attacker=PieceRef(square='c5', symbol='B') target_square='b6' target_piece=None is_defense=False"
+        }
+      ],
+      "bundle_equality_1": {
+        "m11": [
+          "Bc5"
+        ],
+        "m10": [
+          "Bxg7",
+          "Bxa7",
+          "Bf6",
+          "Bb6",
+          "Be5",
+          "Be3",
+          "Bc3"
+        ],
+        "m01": [],
+        "m00": [
+          "Nh3",
+          "Nf3",
+          "Qc1",
+          "Nc3",
+          "Na3",
+          "h3",
+          "g3",
+          "f3",
+          "e3",
+          "d3",
+          "c3",
+          "b3",
+          "a3",
+          "h4",
+          "g4",
+          "f4",
+          "e4",
+          "c4",
+          "b4",
+          "a4"
+        ]
+      },
+      "bundle_equality_2": {
+        "m11": [
+          "Bc5"
+        ],
+        "m10": [
+          "Bxg7",
+          "Bxa7",
+          "Bf6",
+          "Bb6",
+          "Be5",
+          "Be3",
+          "Bc3"
+        ],
+        "m01": [],
+        "m00": [
+          "Nh3",
+          "Nf3",
+          "Qc1",
+          "Nc3",
+          "Na3",
+          "h3",
+          "g3",
+          "f3",
+          "e3",
+          "d3",
+          "c3",
+          "b3",
+          "a3",
+          "h4",
+          "g4",
+          "f4",
+          "e4",
+          "c4",
+          "b4",
+          "a4"
+        ]
+      }
+    }
+  },
+  "raw_typed_scores": {},
+  "typed_regrets": {},
+  "partition_summaries": {
+    "m_11": [
+      "Bc5"
+    ],
+    "m_10": [
+      "Bxg7",
+      "Bxa7",
+      "Bf6",
+      "Bb6",
+      "Be5",
+      "Be3",
+      "Bc3"
+    ],
+    "m_01": [],
+    "m_00": [
+      "Nh3",
+      "Nf3",
+      "Qc1",
+      "Nc3",
+      "Na3",
+      "h3",
+      "g3",
+      "f3",
+      "e3",
+      "d3",
+      "c3",
+      "b3",
+      "a3",
+      "h4",
+      "g4",
+      "f4",
+      "e4",
+      "c4",
+      "b4",
+      "a4"
+    ]
+  },
+  "comparison_perspective": "root_side",
+  "engine_invoked": false,
+  "engine_provenance": {}
+}

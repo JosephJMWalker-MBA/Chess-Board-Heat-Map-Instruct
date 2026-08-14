@@ -1,0 +1,349 @@
+{
+  "fixture_id": "Q11",
+  "hypothesis": "A mate-in-1 is available in the root, forcing consequence layer to evaluate a mate-typed outcome without converting it to fake CP.",
+  "classification": "SUPPORTED",
+  "criterion_applied": "mate_count > 0 in any partition",
+  "structural_evidence": {
+    "fixture_id": "Q11",
+    "hypothesis": "A mate-in-1 is available in the root, forcing consequence layer to evaluate a mate-typed outcome without converting it to fake CP.",
+    "pre_move_fen": "rnbqkbnr/pppp1ppp/8/4p3/6P1/5P2/PPPPP2P/RNBQKBNR b KQkq - 0 2",
+    "played_move_san": "Qh4#",
+    "e_str": "attacker=PieceRef(square='d8', symbol='q') target_square='h4' target_piece=None is_defense=False",
+    "f_str": "attacker=PieceRef(square='h4', symbol='q') target_square='e1' target_piece=PieceRef(square='e1', symbol='K') is_defense=False",
+    "required_evidence_families": [
+      "structural_partition",
+      "consequence_mate"
+    ],
+    "eligibility_status": "PASS",
+    "dimension_preflight_status": "PRECONDITIONS_PASS_PENDING_ENGINE",
+    "error_msg": null,
+    "m_11": [
+      "Qh4#"
+    ],
+    "m_10": [
+      "Ne7",
+      "Nf6",
+      "Be7",
+      "Ke7",
+      "Qe7",
+      "Qf6",
+      "Qg5",
+      "f6",
+      "g5"
+    ],
+    "m_01": [],
+    "m_00": [
+      "Nh6",
+      "Bd6",
+      "Bc5",
+      "Bb4",
+      "Ba3",
+      "Nc6",
+      "Na6",
+      "h6",
+      "g6",
+      "d6",
+      "c6",
+      "b6",
+      "a6",
+      "e4",
+      "h5",
+      "f5",
+      "d5",
+      "c5",
+      "b5",
+      "a5"
+    ],
+    "dimension_evidence": {}
+  },
+  "raw_typed_scores": {
+    "Ne7": {
+      "type": "cp",
+      "value": 149
+    },
+    "Nh6": {
+      "type": "cp",
+      "value": 163
+    },
+    "Nf6": {
+      "type": "cp",
+      "value": 126
+    },
+    "Be7": {
+      "type": "cp",
+      "value": 211
+    },
+    "Bd6": {
+      "type": "cp",
+      "value": 156
+    },
+    "Bc5": {
+      "type": "cp",
+      "value": 202
+    },
+    "Bb4": {
+      "type": "cp",
+      "value": 172
+    },
+    "Ba3": {
+      "type": "cp",
+      "value": 122
+    },
+    "Ke7": {
+      "type": "cp",
+      "value": 42
+    },
+    "Qe7": {
+      "type": "cp",
+      "value": 133
+    },
+    "Qf6": {
+      "type": "cp",
+      "value": 113
+    },
+    "Qg5": {
+      "type": "cp",
+      "value": 55
+    },
+    "Qh4#": {
+      "type": "mate",
+      "value": 0
+    },
+    "Nc6": {
+      "type": "cp",
+      "value": 221
+    },
+    "Na6": {
+      "type": "cp",
+      "value": 151
+    },
+    "h6": {
+      "type": "cp",
+      "value": 183
+    },
+    "g6": {
+      "type": "cp",
+      "value": 158
+    },
+    "f6": {
+      "type": "cp",
+      "value": 119
+    },
+    "d6": {
+      "type": "cp",
+      "value": 187
+    },
+    "c6": {
+      "type": "cp",
+      "value": 155
+    },
+    "b6": {
+      "type": "cp",
+      "value": 154
+    },
+    "a6": {
+      "type": "cp",
+      "value": 179
+    },
+    "e4": {
+      "type": "cp",
+      "value": 116
+    },
+    "h5": {
+      "type": "cp",
+      "value": 249
+    },
+    "g5": {
+      "type": "cp",
+      "value": 5
+    },
+    "f5": {
+      "type": "cp",
+      "value": 199
+    },
+    "d5": {
+      "type": "cp",
+      "value": 229
+    },
+    "c5": {
+      "type": "cp",
+      "value": 169
+    },
+    "b5": {
+      "type": "cp",
+      "value": 145
+    },
+    "a5": {
+      "type": "cp",
+      "value": 183
+    }
+  },
+  "typed_regrets": {
+    "Ne7": {
+      "type": "cp",
+      "value": 100
+    },
+    "Nh6": {
+      "type": "cp",
+      "value": 86
+    },
+    "Nf6": {
+      "type": "cp",
+      "value": 123
+    },
+    "Be7": {
+      "type": "cp",
+      "value": 38
+    },
+    "Bd6": {
+      "type": "cp",
+      "value": 93
+    },
+    "Bc5": {
+      "type": "cp",
+      "value": 47
+    },
+    "Bb4": {
+      "type": "cp",
+      "value": 77
+    },
+    "Ba3": {
+      "type": "cp",
+      "value": 127
+    },
+    "Ke7": {
+      "type": "cp",
+      "value": 207
+    },
+    "Qe7": {
+      "type": "cp",
+      "value": 116
+    },
+    "Qf6": {
+      "type": "cp",
+      "value": 136
+    },
+    "Qg5": {
+      "type": "cp",
+      "value": 194
+    },
+    "Qh4#": {
+      "type": "mate",
+      "value": 0
+    },
+    "Nc6": {
+      "type": "cp",
+      "value": 28
+    },
+    "Na6": {
+      "type": "cp",
+      "value": 98
+    },
+    "h6": {
+      "type": "cp",
+      "value": 66
+    },
+    "g6": {
+      "type": "cp",
+      "value": 91
+    },
+    "f6": {
+      "type": "cp",
+      "value": 130
+    },
+    "d6": {
+      "type": "cp",
+      "value": 62
+    },
+    "c6": {
+      "type": "cp",
+      "value": 94
+    },
+    "b6": {
+      "type": "cp",
+      "value": 95
+    },
+    "a6": {
+      "type": "cp",
+      "value": 70
+    },
+    "e4": {
+      "type": "cp",
+      "value": 133
+    },
+    "h5": {
+      "type": "cp",
+      "value": 0
+    },
+    "g5": {
+      "type": "cp",
+      "value": 244
+    },
+    "f5": {
+      "type": "cp",
+      "value": 50
+    },
+    "d5": {
+      "type": "cp",
+      "value": 20
+    },
+    "c5": {
+      "type": "cp",
+      "value": 80
+    },
+    "b5": {
+      "type": "cp",
+      "value": 104
+    },
+    "a5": {
+      "type": "cp",
+      "value": 66
+    }
+  },
+  "partition_summaries": {
+    "m_11": [
+      "Qh4#"
+    ],
+    "m_10": [
+      "Ne7",
+      "Nf6",
+      "Be7",
+      "Ke7",
+      "Qe7",
+      "Qf6",
+      "Qg5",
+      "f6",
+      "g5"
+    ],
+    "m_01": [],
+    "m_00": [
+      "Nh6",
+      "Bd6",
+      "Bc5",
+      "Bb4",
+      "Ba3",
+      "Nc6",
+      "Na6",
+      "h6",
+      "g6",
+      "d6",
+      "c6",
+      "b6",
+      "a6",
+      "e4",
+      "h5",
+      "f5",
+      "d5",
+      "c5",
+      "b5",
+      "a5"
+    ]
+  },
+  "comparison_perspective": "root_side",
+  "engine_invoked": true,
+  "engine_provenance": {
+    "threads": 1,
+    "hash_mb": 16,
+    "nodes": 500000
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "fixture_id": "Q2",
+  "hypothesis": "Moving the b1 knight to c3 (Nbc3) removes its attack on a3 and births an attack on d5. Moving the e2 knight to c3 (Nec3) also births the attack on d5 but preserves the b1 knight's attack on a3, placing Nec3 in m01.",
+  "classification": "SUPPORTED",
+  "criterion_applied": "n01 > 0",
+  "structural_evidence": {
+    "fixture_id": "Q2",
+    "hypothesis": "Moving the b1 knight to c3 (Nbc3) removes its attack on a3 and births an attack on d5. Moving the e2 knight to c3 (Nec3) also births the attack on d5 but preserves the b1 knight's attack on a3, placing Nec3 in m01.",
+    "pre_move_fen": "r1bqkbnr/pppppppp/8/8/8/8/PPPPNPPP/RN1QKBNR w KQkq - 0 2",
+    "played_move_san": "Nbc3",
+    "e_str": "attacker=PieceRef(square='b1', symbol='N') target_square='a3' target_piece=None is_defense=False",
+    "f_str": "attacker=PieceRef(square='c3', symbol='N') target_square='d5' target_piece=None is_defense=False",
+    "required_evidence_families": [
+      "structural_partition"
+    ],
+    "eligibility_status": "PASS",
+    "dimension_preflight_status": "PASS",
+    "error_msg": null,
+    "m_11": [
+      "Nbc3"
+    ],
+    "m_10": [
+      "Na3",
+      "a3"
+    ],
+    "m_01": [
+      "Nec3"
+    ],
+    "m_00": [
+      "Nf4",
+      "Nd4",
+      "Ng3",
+      "Nc1",
+      "Nh3",
+      "Nf3",
+      "Qc1",
+      "h3",
+      "g3",
+      "f3",
+      "d3",
+      "c3",
+      "b3",
+      "h4",
+      "g4",
+      "f4",
+      "d4",
+      "c4",
+      "b4",
+      "a4"
+    ],
+    "dimension_evidence": {}
+  },
+  "raw_typed_scores": {},
+  "typed_regrets": {},
+  "partition_summaries": {
+    "m_11": [
+      "Nbc3"
+    ],
+    "m_10": [
+      "Na3",
+      "a3"
+    ],
+    "m_01": [
+      "Nec3"
+    ],
+    "m_00": [
+      "Nf4",
+      "Nd4",
+      "Ng3",
+      "Nc1",
+      "Nh3",
+      "Nf3",
+      "Qc1",
+      "h3",
+      "g3",
+      "f3",
+      "d3",
+      "c3",
+      "b3",
+      "h4",
+      "g4",
+      "f4",
+      "d4",
+      "c4",
+      "b4",
+      "a4"
+    ]
+  },
+  "comparison_perspective": "root_side",
+  "engine_invoked": false,
+  "engine_provenance": {}
+}

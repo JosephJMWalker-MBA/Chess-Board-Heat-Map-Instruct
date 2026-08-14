@@ -1,0 +1,477 @@
+{
+  "fixture_id": "Q14",
+  "hypothesis": "Symmetric pawn moves (a3 and h3) produce structurally identical partitions via explicit x-axis reflection bijection, but have different median regret consequence landscapes.",
+  "classification": "SUPPORTED",
+  "criterion_applied": "partitions match explicit bijection and medianR(m11_a) != medianR(m11_b) with CP-comparable observations",
+  "structural_evidence": {
+    "fixture_id": "Q14",
+    "hypothesis": "Symmetric pawn moves (a3 and h3) produce structurally identical partitions via explicit x-axis reflection bijection, but have different median regret consequence landscapes.",
+    "pre_move_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+    "played_move_san": "a3",
+    "e_str": "attacker=PieceRef(square='a2', symbol='P') target_square='b3' target_piece=None is_defense=False",
+    "f_str": "attacker=PieceRef(square='a3', symbol='P') target_square='b4' target_piece=None is_defense=False",
+    "required_evidence_families": [
+      "structural_partition",
+      "consequence_cp"
+    ],
+    "eligibility_status": "PASS",
+    "dimension_preflight_status": "PRECONDITIONS_PASS_PENDING_ENGINE",
+    "error_msg": null,
+    "m_11": [
+      "a3"
+    ],
+    "m_10": [
+      "b3",
+      "a4"
+    ],
+    "m_01": [],
+    "m_00": [
+      "Nh3",
+      "Nf3",
+      "Nc3",
+      "Na3",
+      "h3",
+      "g3",
+      "f3",
+      "e3",
+      "d3",
+      "c3",
+      "h4",
+      "g4",
+      "f4",
+      "e4",
+      "d4",
+      "c4",
+      "b4"
+    ],
+    "dimension_evidence": {
+      "mapped_partitions_from_primary": {
+        "m11": [
+          "h3"
+        ],
+        "m10": [
+          "g3",
+          "h4"
+        ],
+        "m01": [],
+        "m00": [
+          "Na3",
+          "Nc3",
+          "Nf3",
+          "Nh3",
+          "a3",
+          "a4",
+          "b3",
+          "b4",
+          "c3",
+          "c4",
+          "d3",
+          "d4",
+          "e3",
+          "e4",
+          "f3",
+          "f4",
+          "g4"
+        ]
+      },
+      "twin_partitions": {
+        "m11": [
+          "h3"
+        ],
+        "m10": [
+          "g3",
+          "h4"
+        ],
+        "m01": [],
+        "m00": [
+          "Na3",
+          "Nc3",
+          "Nf3",
+          "Nh3",
+          "a3",
+          "a4",
+          "b3",
+          "b4",
+          "c3",
+          "c4",
+          "d3",
+          "d4",
+          "e3",
+          "e4",
+          "f3",
+          "f4",
+          "g4"
+        ]
+      },
+      "mapping": "UCI file reflection"
+    }
+  },
+  "raw_typed_scores": {
+    "primary": {
+      "Nh3": {
+        "type": "cp",
+        "value": -63
+      },
+      "Nf3": {
+        "type": "cp",
+        "value": 28
+      },
+      "Nc3": {
+        "type": "cp",
+        "value": -10
+      },
+      "Na3": {
+        "type": "cp",
+        "value": -77
+      },
+      "h3": {
+        "type": "cp",
+        "value": -22
+      },
+      "g3": {
+        "type": "cp",
+        "value": 25
+      },
+      "f3": {
+        "type": "cp",
+        "value": -79
+      },
+      "e3": {
+        "type": "cp",
+        "value": 16
+      },
+      "d3": {
+        "type": "cp",
+        "value": -9
+      },
+      "c3": {
+        "type": "cp",
+        "value": 14
+      },
+      "b3": {
+        "type": "cp",
+        "value": -15
+      },
+      "a3": {
+        "type": "cp",
+        "value": -3
+      },
+      "h4": {
+        "type": "cp",
+        "value": -45
+      },
+      "g4": {
+        "type": "cp",
+        "value": -116
+      },
+      "f4": {
+        "type": "cp",
+        "value": -30
+      },
+      "e4": {
+        "type": "cp",
+        "value": 26
+      },
+      "d4": {
+        "type": "cp",
+        "value": 29
+      },
+      "c4": {
+        "type": "cp",
+        "value": 27
+      },
+      "b4": {
+        "type": "cp",
+        "value": -38
+      },
+      "a4": {
+        "type": "cp",
+        "value": -23
+      }
+    },
+    "twin": {
+      "Nh3": {
+        "type": "cp",
+        "value": -64
+      },
+      "Nf3": {
+        "type": "cp",
+        "value": 29
+      },
+      "Nc3": {
+        "type": "cp",
+        "value": -2
+      },
+      "Na3": {
+        "type": "cp",
+        "value": -62
+      },
+      "h3": {
+        "type": "cp",
+        "value": -19
+      },
+      "g3": {
+        "type": "cp",
+        "value": 25
+      },
+      "f3": {
+        "type": "cp",
+        "value": -77
+      },
+      "e3": {
+        "type": "cp",
+        "value": 17
+      },
+      "d3": {
+        "type": "cp",
+        "value": -8
+      },
+      "c3": {
+        "type": "cp",
+        "value": 14
+      },
+      "b3": {
+        "type": "cp",
+        "value": -15
+      },
+      "a3": {
+        "type": "cp",
+        "value": 1
+      },
+      "h4": {
+        "type": "cp",
+        "value": -42
+      },
+      "g4": {
+        "type": "cp",
+        "value": -115
+      },
+      "f4": {
+        "type": "cp",
+        "value": -29
+      },
+      "e4": {
+        "type": "cp",
+        "value": 39
+      },
+      "d4": {
+        "type": "cp",
+        "value": 30
+      },
+      "c4": {
+        "type": "cp",
+        "value": 27
+      },
+      "b4": {
+        "type": "cp",
+        "value": -42
+      },
+      "a4": {
+        "type": "cp",
+        "value": -26
+      }
+    }
+  },
+  "typed_regrets": {
+    "primary": {
+      "Nh3": {
+        "type": "cp",
+        "value": 92
+      },
+      "Nf3": {
+        "type": "cp",
+        "value": 1
+      },
+      "Nc3": {
+        "type": "cp",
+        "value": 39
+      },
+      "Na3": {
+        "type": "cp",
+        "value": 106
+      },
+      "h3": {
+        "type": "cp",
+        "value": 51
+      },
+      "g3": {
+        "type": "cp",
+        "value": 4
+      },
+      "f3": {
+        "type": "cp",
+        "value": 108
+      },
+      "e3": {
+        "type": "cp",
+        "value": 13
+      },
+      "d3": {
+        "type": "cp",
+        "value": 38
+      },
+      "c3": {
+        "type": "cp",
+        "value": 15
+      },
+      "b3": {
+        "type": "cp",
+        "value": 44
+      },
+      "a3": {
+        "type": "cp",
+        "value": 32
+      },
+      "h4": {
+        "type": "cp",
+        "value": 74
+      },
+      "g4": {
+        "type": "cp",
+        "value": 145
+      },
+      "f4": {
+        "type": "cp",
+        "value": 59
+      },
+      "e4": {
+        "type": "cp",
+        "value": 3
+      },
+      "d4": {
+        "type": "cp",
+        "value": 0
+      },
+      "c4": {
+        "type": "cp",
+        "value": 2
+      },
+      "b4": {
+        "type": "cp",
+        "value": 67
+      },
+      "a4": {
+        "type": "cp",
+        "value": 52
+      }
+    },
+    "twin": {
+      "Nh3": {
+        "type": "cp",
+        "value": 103
+      },
+      "Nf3": {
+        "type": "cp",
+        "value": 10
+      },
+      "Nc3": {
+        "type": "cp",
+        "value": 41
+      },
+      "Na3": {
+        "type": "cp",
+        "value": 101
+      },
+      "h3": {
+        "type": "cp",
+        "value": 58
+      },
+      "g3": {
+        "type": "cp",
+        "value": 14
+      },
+      "f3": {
+        "type": "cp",
+        "value": 116
+      },
+      "e3": {
+        "type": "cp",
+        "value": 22
+      },
+      "d3": {
+        "type": "cp",
+        "value": 47
+      },
+      "c3": {
+        "type": "cp",
+        "value": 25
+      },
+      "b3": {
+        "type": "cp",
+        "value": 54
+      },
+      "a3": {
+        "type": "cp",
+        "value": 38
+      },
+      "h4": {
+        "type": "cp",
+        "value": 81
+      },
+      "g4": {
+        "type": "cp",
+        "value": 154
+      },
+      "f4": {
+        "type": "cp",
+        "value": 68
+      },
+      "e4": {
+        "type": "cp",
+        "value": 0
+      },
+      "d4": {
+        "type": "cp",
+        "value": 9
+      },
+      "c4": {
+        "type": "cp",
+        "value": 12
+      },
+      "b4": {
+        "type": "cp",
+        "value": 81
+      },
+      "a4": {
+        "type": "cp",
+        "value": 65
+      }
+    }
+  },
+  "partition_summaries": {
+    "m_11": [
+      "a3"
+    ],
+    "m_10": [
+      "b3",
+      "a4"
+    ],
+    "m_01": [],
+    "m_00": [
+      "Nh3",
+      "Nf3",
+      "Nc3",
+      "Na3",
+      "h3",
+      "g3",
+      "f3",
+      "e3",
+      "d3",
+      "c3",
+      "h4",
+      "g4",
+      "f4",
+      "e4",
+      "d4",
+      "c4",
+      "b4"
+    ]
+  },
+  "comparison_perspective": "root_side",
+  "engine_invoked": true,
+  "engine_provenance": {
+    "threads": 1,
+    "hash_mb": 16,
+    "nodes": 500000
+  }
+}

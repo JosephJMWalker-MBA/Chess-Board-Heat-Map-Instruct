@@ -1,0 +1,291 @@
+{
+  "fixture_id": "Q4",
+  "hypothesis": "The birth of the c3 Knight's attack on d5 has consequence implications despite not exclusively replacing the b1 knight's attack on a3.",
+  "classification": "FALSIFIED",
+  "criterion_applied": "n01 > 0 and medianR(m11) < medianR(m10) with CP-comparable observations",
+  "structural_evidence": {
+    "fixture_id": "Q4",
+    "hypothesis": "The birth of the c3 Knight's attack on d5 has consequence implications despite not exclusively replacing the b1 knight's attack on a3.",
+    "pre_move_fen": "r1bqkbnr/pppppppp/8/8/8/8/PPPPNPPP/RN1QKBNR w KQkq - 0 2",
+    "played_move_san": "Nbc3",
+    "e_str": "attacker=PieceRef(square='b1', symbol='N') target_square='a3' target_piece=None is_defense=False",
+    "f_str": "attacker=PieceRef(square='c3', symbol='N') target_square='d5' target_piece=None is_defense=False",
+    "required_evidence_families": [
+      "structural_partition",
+      "consequence_cp"
+    ],
+    "eligibility_status": "PASS",
+    "dimension_preflight_status": "PRECONDITIONS_PASS_PENDING_ENGINE",
+    "error_msg": null,
+    "m_11": [
+      "Nbc3"
+    ],
+    "m_10": [
+      "Na3",
+      "a3"
+    ],
+    "m_01": [
+      "Nec3"
+    ],
+    "m_00": [
+      "Nf4",
+      "Nd4",
+      "Ng3",
+      "Nc1",
+      "Nh3",
+      "Nf3",
+      "Qc1",
+      "h3",
+      "g3",
+      "f3",
+      "d3",
+      "c3",
+      "b3",
+      "h4",
+      "g4",
+      "f4",
+      "d4",
+      "c4",
+      "b4",
+      "a4"
+    ],
+    "dimension_evidence": {}
+  },
+  "raw_typed_scores": {
+    "Nf4": {
+      "type": "cp",
+      "value": 235
+    },
+    "Nd4": {
+      "type": "cp",
+      "value": 231
+    },
+    "Ng3": {
+      "type": "cp",
+      "value": 293
+    },
+    "Nec3": {
+      "type": "cp",
+      "value": 261
+    },
+    "Nc1": {
+      "type": "cp",
+      "value": 271
+    },
+    "Nh3": {
+      "type": "cp",
+      "value": 239
+    },
+    "Nf3": {
+      "type": "cp",
+      "value": 314
+    },
+    "Qc1": {
+      "type": "cp",
+      "value": 252
+    },
+    "Nbc3": {
+      "type": "cp",
+      "value": 271
+    },
+    "Na3": {
+      "type": "cp",
+      "value": 269
+    },
+    "h3": {
+      "type": "cp",
+      "value": 277
+    },
+    "g3": {
+      "type": "cp",
+      "value": 292
+    },
+    "f3": {
+      "type": "cp",
+      "value": 204
+    },
+    "d3": {
+      "type": "cp",
+      "value": 269
+    },
+    "c3": {
+      "type": "cp",
+      "value": 266
+    },
+    "b3": {
+      "type": "cp",
+      "value": 219
+    },
+    "a3": {
+      "type": "cp",
+      "value": 277
+    },
+    "h4": {
+      "type": "cp",
+      "value": 280
+    },
+    "g4": {
+      "type": "cp",
+      "value": 226
+    },
+    "f4": {
+      "type": "cp",
+      "value": 238
+    },
+    "d4": {
+      "type": "cp",
+      "value": 321
+    },
+    "c4": {
+      "type": "cp",
+      "value": 303
+    },
+    "b4": {
+      "type": "cp",
+      "value": 197
+    },
+    "a4": {
+      "type": "cp",
+      "value": 257
+    }
+  },
+  "typed_regrets": {
+    "Nf4": {
+      "type": "cp",
+      "value": 86
+    },
+    "Nd4": {
+      "type": "cp",
+      "value": 90
+    },
+    "Ng3": {
+      "type": "cp",
+      "value": 28
+    },
+    "Nec3": {
+      "type": "cp",
+      "value": 60
+    },
+    "Nc1": {
+      "type": "cp",
+      "value": 50
+    },
+    "Nh3": {
+      "type": "cp",
+      "value": 82
+    },
+    "Nf3": {
+      "type": "cp",
+      "value": 7
+    },
+    "Qc1": {
+      "type": "cp",
+      "value": 69
+    },
+    "Nbc3": {
+      "type": "cp",
+      "value": 50
+    },
+    "Na3": {
+      "type": "cp",
+      "value": 52
+    },
+    "h3": {
+      "type": "cp",
+      "value": 44
+    },
+    "g3": {
+      "type": "cp",
+      "value": 29
+    },
+    "f3": {
+      "type": "cp",
+      "value": 117
+    },
+    "d3": {
+      "type": "cp",
+      "value": 52
+    },
+    "c3": {
+      "type": "cp",
+      "value": 55
+    },
+    "b3": {
+      "type": "cp",
+      "value": 102
+    },
+    "a3": {
+      "type": "cp",
+      "value": 44
+    },
+    "h4": {
+      "type": "cp",
+      "value": 41
+    },
+    "g4": {
+      "type": "cp",
+      "value": 95
+    },
+    "f4": {
+      "type": "cp",
+      "value": 83
+    },
+    "d4": {
+      "type": "cp",
+      "value": 0
+    },
+    "c4": {
+      "type": "cp",
+      "value": 18
+    },
+    "b4": {
+      "type": "cp",
+      "value": 124
+    },
+    "a4": {
+      "type": "cp",
+      "value": 64
+    }
+  },
+  "partition_summaries": {
+    "m_11": [
+      "Nbc3"
+    ],
+    "m_10": [
+      "Na3",
+      "a3"
+    ],
+    "m_01": [
+      "Nec3"
+    ],
+    "m_00": [
+      "Nf4",
+      "Nd4",
+      "Ng3",
+      "Nc1",
+      "Nh3",
+      "Nf3",
+      "Qc1",
+      "h3",
+      "g3",
+      "f3",
+      "d3",
+      "c3",
+      "b3",
+      "h4",
+      "g4",
+      "f4",
+      "d4",
+      "c4",
+      "b4",
+      "a4"
+    ]
+  },
+  "comparison_perspective": "root_side",
+  "engine_invoked": true,
+  "engine_provenance": {
+    "threads": 1,
+    "hash_mb": 16,
+    "nodes": 500000
+  }
+}

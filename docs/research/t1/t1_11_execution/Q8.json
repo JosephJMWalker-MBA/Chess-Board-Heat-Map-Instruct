@@ -1,0 +1,131 @@
+{
+  "fixture_id": "Q8",
+  "hypothesis": "The Queen moves from d1 to h5, removing one attack on d5 and birthing another on d5, creating spatial overlap at d5.",
+  "classification": "SUPPORTED",
+  "criterion_applied": "len(shared_squares) > 0",
+  "structural_evidence": {
+    "fixture_id": "Q8",
+    "hypothesis": "The Queen moves from d1 to h5, removing one attack on d5 and birthing another on d5, creating spatial overlap at d5.",
+    "pre_move_fen": "rnbqkbnr/ppp1pppp/8/3p4/8/8/PPP2PPP/RNBQKBNR w KQkq - 0 1",
+    "played_move_san": "Qh5",
+    "e_str": "attacker=PieceRef(square='d1', symbol='Q') target_square='d5' target_piece=PieceRef(square='d5', symbol='p') is_defense=False",
+    "f_str": "attacker=PieceRef(square='h5', symbol='Q') target_square='d5' target_piece=PieceRef(square='d5', symbol='p') is_defense=False",
+    "required_evidence_families": [
+      "structural_partition",
+      "spatial_overlap"
+    ],
+    "eligibility_status": "PASS",
+    "dimension_preflight_status": "PASS",
+    "error_msg": null,
+    "m_11": [
+      "Qh5"
+    ],
+    "m_10": [
+      "Bd3",
+      "Kd2",
+      "Qxd5",
+      "Qg4",
+      "Qd4",
+      "Qf3",
+      "Qd3",
+      "Qe2",
+      "Qd2",
+      "Bd2",
+      "Nd2"
+    ],
+    "m_01": [],
+    "m_00": [
+      "Nh3",
+      "Nf3",
+      "Ne2",
+      "Ba6",
+      "Bb5+",
+      "Bc4",
+      "Be2",
+      "Ke2",
+      "Bh6",
+      "Bg5",
+      "Bf4",
+      "Be3",
+      "Nc3",
+      "Na3",
+      "h3",
+      "g3",
+      "f3",
+      "c3",
+      "b3",
+      "a3",
+      "h4",
+      "g4",
+      "f4",
+      "c4",
+      "b4",
+      "a4"
+    ],
+    "dimension_evidence": {
+      "implicated_squares_e": [
+        "d1",
+        "d5"
+      ],
+      "implicated_squares_f": [
+        "h5",
+        "d5"
+      ],
+      "intersection": [
+        "d5"
+      ]
+    }
+  },
+  "raw_typed_scores": {},
+  "typed_regrets": {},
+  "partition_summaries": {
+    "m_11": [
+      "Qh5"
+    ],
+    "m_10": [
+      "Bd3",
+      "Kd2",
+      "Qxd5",
+      "Qg4",
+      "Qd4",
+      "Qf3",
+      "Qd3",
+      "Qe2",
+      "Qd2",
+      "Bd2",
+      "Nd2"
+    ],
+    "m_01": [],
+    "m_00": [
+      "Nh3",
+      "Nf3",
+      "Ne2",
+      "Ba6",
+      "Bb5+",
+      "Bc4",
+      "Be2",
+      "Ke2",
+      "Bh6",
+      "Bg5",
+      "Bf4",
+      "Be3",
+      "Nc3",
+      "Na3",
+      "h3",
+      "g3",
+      "f3",
+      "c3",
+      "b3",
+      "a3",
+      "h4",
+      "g4",
+      "f4",
+      "c4",
+      "b4",
+      "a4"
+    ]
+  },
+  "comparison_perspective": "root_side",
+  "engine_invoked": false,
+  "engine_provenance": {}
+}

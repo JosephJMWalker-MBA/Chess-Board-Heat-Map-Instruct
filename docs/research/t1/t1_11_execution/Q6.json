@@ -1,0 +1,48 @@
+{
+  "fixture_id": "Q6",
+  "hypothesis": "The black King is in check and MUST move. Every legal move causes the King to leave e8, thus removing its attack on f7. Therefore, n01 and n00 are both exactly 0, but multiple legal roots exist.",
+  "classification": "SUPPORTED",
+  "criterion_applied": "n01 + n00 == 0 and legal_root_count > 1",
+  "structural_evidence": {
+    "fixture_id": "Q6",
+    "hypothesis": "The black King is in check and MUST move. Every legal move causes the King to leave e8, thus removing its attack on f7. Therefore, n01 and n00 are both exactly 0, but multiple legal roots exist.",
+    "pre_move_fen": "4k3/8/8/8/8/8/8/K3R3 b - - 0 1",
+    "played_move_san": "Kf7",
+    "e_str": "attacker=PieceRef(square='e8', symbol='k') target_square='f7' target_piece=None is_defense=False",
+    "f_str": "attacker=PieceRef(square='f7', symbol='k') target_square='g6' target_piece=None is_defense=False",
+    "required_evidence_families": [
+      "structural_partition"
+    ],
+    "eligibility_status": "PASS",
+    "dimension_preflight_status": "PASS",
+    "error_msg": null,
+    "m_11": [
+      "Kf7"
+    ],
+    "m_10": [
+      "Kf8",
+      "Kd8",
+      "Kd7"
+    ],
+    "m_01": [],
+    "m_00": [],
+    "dimension_evidence": {}
+  },
+  "raw_typed_scores": {},
+  "typed_regrets": {},
+  "partition_summaries": {
+    "m_11": [
+      "Kf7"
+    ],
+    "m_10": [
+      "Kf8",
+      "Kd8",
+      "Kd7"
+    ],
+    "m_01": [],
+    "m_00": []
+  },
+  "comparison_perspective": "root_side",
+  "engine_invoked": false,
+  "engine_provenance": {}
+}

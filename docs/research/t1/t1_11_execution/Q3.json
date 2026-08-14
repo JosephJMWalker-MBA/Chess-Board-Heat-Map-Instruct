@@ -1,0 +1,82 @@
+{
+  "fixture_id": "Q3",
+  "hypothesis": "The only way to birth c4's attack on b5 is to move the c2 pawn, which removes its attack on b3. Thus n01=0 and n00>0.",
+  "classification": "SUPPORTED",
+  "criterion_applied": "n01 == 0 and n00 > 0",
+  "structural_evidence": {
+    "fixture_id": "Q3",
+    "hypothesis": "The only way to birth c4's attack on b5 is to move the c2 pawn, which removes its attack on b3. Thus n01=0 and n00>0.",
+    "pre_move_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+    "played_move_san": "c4",
+    "e_str": "attacker=PieceRef(square='c2', symbol='P') target_square='b3' target_piece=None is_defense=False",
+    "f_str": "attacker=PieceRef(square='c4', symbol='P') target_square='b5' target_piece=None is_defense=False",
+    "required_evidence_families": [
+      "structural_partition"
+    ],
+    "eligibility_status": "PASS",
+    "dimension_preflight_status": "PASS",
+    "error_msg": null,
+    "m_11": [
+      "c4"
+    ],
+    "m_10": [
+      "c3",
+      "b3"
+    ],
+    "m_01": [],
+    "m_00": [
+      "Nh3",
+      "Nf3",
+      "Nc3",
+      "Na3",
+      "h3",
+      "g3",
+      "f3",
+      "e3",
+      "d3",
+      "a3",
+      "h4",
+      "g4",
+      "f4",
+      "e4",
+      "d4",
+      "b4",
+      "a4"
+    ],
+    "dimension_evidence": {}
+  },
+  "raw_typed_scores": {},
+  "typed_regrets": {},
+  "partition_summaries": {
+    "m_11": [
+      "c4"
+    ],
+    "m_10": [
+      "c3",
+      "b3"
+    ],
+    "m_01": [],
+    "m_00": [
+      "Nh3",
+      "Nf3",
+      "Nc3",
+      "Na3",
+      "h3",
+      "g3",
+      "f3",
+      "e3",
+      "d3",
+      "a3",
+      "h4",
+      "g4",
+      "f4",
+      "e4",
+      "d4",
+      "b4",
+      "a4"
+    ]
+  },
+  "comparison_perspective": "root_side",
+  "engine_invoked": false,
+  "engine_provenance": {}
+}
