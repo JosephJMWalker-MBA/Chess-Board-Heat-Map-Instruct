@@ -115,6 +115,22 @@ class ValidationHarness:
         finally:
             board.pop()
 
+    def evaluate_root_position(self, board: chess.Board) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+        """Evaluates all legal moves from the root position and returns (scores, regrets) keyed by SAN string."""
+        if self.comparison_perspective == "root_side":
+            resolved_perspective = "white" if board.turn == chess.WHITE else "black"
+        else:
+            resolved_perspective = self.comparison_perspective
+            
+        legal_moves = list(board.legal_moves)
+        scores = {}
+        for m in legal_moves:
+            m_san = board.san(m)
+            scores[m_san] = self.evaluate_move(board, m, resolved_perspective=resolved_perspective)
+            
+        regrets = compute_regrets(scores)
+        return scores, regrets
+
     @staticmethod
     def preflight_fixture(fen: str, played_move_san: str, predecessor_sig: Any, successor_sig: Any):
         try:
