@@ -1,0 +1,635 @@
+{
+  "corpus_status": "FROZEN PENDING T1.11.2 EXECUTION SEAL",
+  "fixtures": [
+    {
+      "fixture_id": "Q1",
+      "hypothesis": "Moving the e2 pawn establishes a canonical succession where e2's attack on d3 is removed and e4's attack on d5 is born.",
+      "pre_move_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "played_move_san": "e4",
+      "e_str": "attacker=PieceRef(square='e2', symbol='P') target_square='d3' target_piece=None is_defense=False",
+      "f_str": "attacker=PieceRef(square='e4', symbol='P') target_square='d5' target_piece=None is_defense=False",
+      "required_evidence_families": [
+        "structural_partition",
+        "consequence_cp"
+      ],
+      "status": "PASS",
+      "error_msg": null,
+      "m_11": [
+        "e4"
+      ],
+      "m_10": [
+        "e3",
+        "d3"
+      ],
+      "m_01": [],
+      "m_00": [
+        "Nh3",
+        "Nf3",
+        "Nc3",
+        "Na3",
+        "h3",
+        "g3",
+        "f3",
+        "c3",
+        "b3",
+        "a3",
+        "h4",
+        "g4",
+        "f4",
+        "d4",
+        "c4",
+        "b4",
+        "a4"
+      ]
+    },
+    {
+      "fixture_id": "Q2",
+      "hypothesis": "Moving the b1 knight to c3 (Nbc3) removes its attack on a3 and births an attack on d5. Moving the e2 knight to c3 (Nec3) also births the attack on d5 but preserves the b1 knight's attack on a3, placing Nec3 in m01.",
+      "pre_move_fen": "r1bqkbnr/pppppppp/8/8/8/8/PPPPNPPP/RN1QKBNR w KQkq - 0 2",
+      "played_move_san": "Nbc3",
+      "e_str": "attacker=PieceRef(square='b1', symbol='N') target_square='a3' target_piece=None is_defense=False",
+      "f_str": "attacker=PieceRef(square='c3', symbol='N') target_square='d5' target_piece=None is_defense=False",
+      "required_evidence_families": [
+        "structural_partition"
+      ],
+      "status": "PASS",
+      "error_msg": null,
+      "m_11": [
+        "Nbc3"
+      ],
+      "m_10": [
+        "Na3",
+        "a3"
+      ],
+      "m_01": [
+        "Nec3"
+      ],
+      "m_00": [
+        "Nf4",
+        "Nd4",
+        "Ng3",
+        "Nc1",
+        "Nh3",
+        "Nf3",
+        "Qc1",
+        "h3",
+        "g3",
+        "f3",
+        "d3",
+        "c3",
+        "b3",
+        "h4",
+        "g4",
+        "f4",
+        "d4",
+        "c4",
+        "b4",
+        "a4"
+      ]
+    },
+    {
+      "fixture_id": "Q3",
+      "hypothesis": "The only way to birth c4's attack on b5 is to move the c2 pawn, which removes its attack on b3. Thus n01=0 and n00>0.",
+      "pre_move_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "played_move_san": "c4",
+      "e_str": "attacker=PieceRef(square='c2', symbol='P') target_square='b3' target_piece=None is_defense=False",
+      "f_str": "attacker=PieceRef(square='c4', symbol='P') target_square='b5' target_piece=None is_defense=False",
+      "required_evidence_families": [
+        "structural_partition"
+      ],
+      "status": "PASS",
+      "error_msg": null,
+      "m_11": [
+        "c4"
+      ],
+      "m_10": [
+        "c3",
+        "b3"
+      ],
+      "m_01": [],
+      "m_00": [
+        "Nh3",
+        "Nf3",
+        "Nc3",
+        "Na3",
+        "h3",
+        "g3",
+        "f3",
+        "e3",
+        "d3",
+        "a3",
+        "h4",
+        "g4",
+        "f4",
+        "e4",
+        "d4",
+        "b4",
+        "a4"
+      ]
+    },
+    {
+      "fixture_id": "Q4",
+      "hypothesis": "The birth of the c3 Knight's attack on d5 has consequence implications despite not exclusively replacing the b1 knight's attack on a3.",
+      "pre_move_fen": "r1bqkbnr/pppppppp/8/8/8/8/PPPPNPPP/RN1QKBNR w KQkq - 0 2",
+      "played_move_san": "Nbc3",
+      "e_str": "attacker=PieceRef(square='b1', symbol='N') target_square='a3' target_piece=None is_defense=False",
+      "f_str": "attacker=PieceRef(square='c3', symbol='N') target_square='d5' target_piece=None is_defense=False",
+      "required_evidence_families": [
+        "structural_partition",
+        "consequence_cp"
+      ],
+      "status": "PASS",
+      "error_msg": null,
+      "m_11": [
+        "Nbc3"
+      ],
+      "m_10": [
+        "Na3",
+        "a3"
+      ],
+      "m_01": [
+        "Nec3"
+      ],
+      "m_00": [
+        "Nf4",
+        "Nd4",
+        "Ng3",
+        "Nc1",
+        "Nh3",
+        "Nf3",
+        "Qc1",
+        "h3",
+        "g3",
+        "f3",
+        "d3",
+        "c3",
+        "b3",
+        "h4",
+        "g4",
+        "f4",
+        "d4",
+        "c4",
+        "b4",
+        "a4"
+      ]
+    },
+    {
+      "fixture_id": "Q5",
+      "hypothesis": "The d4 pawn attacks e5 but is immediately captured, giving it an ephemeral duration of 1 ply.",
+      "pre_move_fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+      "played_move_san": "d4",
+      "e_str": "attacker=PieceRef(square='d2', symbol='P') target_square='c3' target_piece=None is_defense=False",
+      "f_str": "attacker=PieceRef(square='d4', symbol='P') target_square='e5' target_piece=PieceRef(square='e5', symbol='p') is_defense=False",
+      "required_evidence_families": [
+        "structural_partition",
+        "temporal"
+      ],
+      "status": "PASS",
+      "error_msg": null,
+      "m_11": [
+        "d4"
+      ],
+      "m_10": [
+        "Nc3",
+        "d3",
+        "c3"
+      ],
+      "m_01": [],
+      "m_00": [
+        "Nh3",
+        "Nf3",
+        "Ne2",
+        "Ba6",
+        "Bb5",
+        "Bc4",
+        "Bd3",
+        "Be2",
+        "Ke2",
+        "Qh5",
+        "Qg4",
+        "Qf3",
+        "Qe2",
+        "Na3",
+        "h3",
+        "g3",
+        "f3",
+        "b3",
+        "a3",
+        "h4",
+        "g4",
+        "f4",
+        "c4",
+        "b4",
+        "a4"
+      ]
+    },
+    {
+      "fixture_id": "Q6",
+      "hypothesis": "The king is trapped, so the knight must move. All legal moves remove the knight's original attacks, meaning n01 and n00 are 0.",
+      "pre_move_fen": "4r1r1/8/8/8/8/4k3/4N3/4K3 w - - 0 1",
+      "played_move_san": "Nc3",
+      "e_str": "attacker=PieceRef(square='e2', symbol='N') target_square='d4' target_piece=None is_defense=False",
+      "f_str": "attacker=PieceRef(square='c3', symbol='N') target_square='d5' target_piece=None is_defense=False",
+      "required_evidence_families": [
+        "structural_partition"
+      ],
+      "status": "PASS",
+      "error_msg": null,
+      "m_11": [
+        "Nc3"
+      ],
+      "m_10": [
+        "Nf4",
+        "Nd4",
+        "Ng3",
+        "Ng1",
+        "Nc1"
+      ],
+      "m_01": [],
+      "m_00": [
+        "Kf1",
+        "Kd1"
+      ]
+    },
+    {
+      "fixture_id": "Q7",
+      "hypothesis": "Moving the bishop from d4 to c5 simultaneously removes its attacks on e5 and c5, and births attacks on d6 and b6, creating two structurally confounded pairs.",
+      "pre_move_fen": "rnbqkbnr/pppppppp/8/8/3B4/8/PPPPPPPP/RN1QKBNR w KQkq - 0 1",
+      "played_move_san": "Bc5",
+      "e_str": "attacker=PieceRef(square='d4', symbol='B') target_square='e5' target_piece=None is_defense=False",
+      "f_str": "attacker=PieceRef(square='c5', symbol='B') target_square='d6' target_piece=None is_defense=False",
+      "required_evidence_families": [
+        "bundle"
+      ],
+      "status": "PASS",
+      "error_msg": null,
+      "m_11": [
+        "Bc5"
+      ],
+      "m_10": [
+        "Bxg7",
+        "Bxa7",
+        "Bf6",
+        "Bb6",
+        "Be5",
+        "Be3",
+        "Bc3"
+      ],
+      "m_01": [],
+      "m_00": [
+        "Nh3",
+        "Nf3",
+        "Qc1",
+        "Nc3",
+        "Na3",
+        "h3",
+        "g3",
+        "f3",
+        "e3",
+        "d3",
+        "c3",
+        "b3",
+        "a3",
+        "h4",
+        "g4",
+        "f4",
+        "e4",
+        "c4",
+        "b4",
+        "a4"
+      ]
+    },
+    {
+      "fixture_id": "Q8",
+      "hypothesis": "The Queen moves from d1 to h5, removing one attack on d5 and birthing another on d5, creating spatial overlap at d5.",
+      "pre_move_fen": "rnbqkbnr/ppp1pppp/8/3p4/8/8/PPP2PPP/RNBQKBNR w KQkq - 0 1",
+      "played_move_san": "Qh5",
+      "e_str": "attacker=PieceRef(square='d1', symbol='Q') target_square='d5' target_piece=PieceRef(square='d5', symbol='p') is_defense=False",
+      "f_str": "attacker=PieceRef(square='h5', symbol='Q') target_square='d5' target_piece=PieceRef(square='d5', symbol='p') is_defense=False",
+      "required_evidence_families": [
+        "structural_partition",
+        "spatial_overlap"
+      ],
+      "status": "PASS",
+      "error_msg": null,
+      "m_11": [
+        "Qh5"
+      ],
+      "m_10": [
+        "Bd3",
+        "Kd2",
+        "Qxd5",
+        "Qg4",
+        "Qd4",
+        "Qf3",
+        "Qd3",
+        "Qe2",
+        "Qd2",
+        "Bd2",
+        "Nd2"
+      ],
+      "m_01": [],
+      "m_00": [
+        "Nh3",
+        "Nf3",
+        "Ne2",
+        "Ba6",
+        "Bb5+",
+        "Bc4",
+        "Be2",
+        "Ke2",
+        "Bh6",
+        "Bg5",
+        "Bf4",
+        "Be3",
+        "Nc3",
+        "Na3",
+        "h3",
+        "g3",
+        "f3",
+        "c3",
+        "b3",
+        "a3",
+        "h4",
+        "g4",
+        "f4",
+        "c4",
+        "b4",
+        "a4"
+      ]
+    },
+    {
+      "fixture_id": "Q9",
+      "hypothesis": "The pawn's attack on d3 is removed and attack on d5 is born. They share no structurally implicated squares.",
+      "pre_move_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "played_move_san": "e4",
+      "e_str": "attacker=PieceRef(square='e2', symbol='P') target_square='d3' target_piece=None is_defense=False",
+      "f_str": "attacker=PieceRef(square='e4', symbol='P') target_square='d5' target_piece=None is_defense=False",
+      "required_evidence_families": [
+        "structural_partition",
+        "spatial_overlap"
+      ],
+      "status": "PASS",
+      "error_msg": null,
+      "m_11": [
+        "e4"
+      ],
+      "m_10": [
+        "e3",
+        "d3"
+      ],
+      "m_01": [],
+      "m_00": [
+        "Nh3",
+        "Nf3",
+        "Nc3",
+        "Na3",
+        "h3",
+        "g3",
+        "f3",
+        "c3",
+        "b3",
+        "a3",
+        "h4",
+        "g4",
+        "f4",
+        "d4",
+        "c4",
+        "b4",
+        "a4"
+      ]
+    },
+    {
+      "fixture_id": "Q10",
+      "hypothesis": "The attack f3-e5 is born, removed by Ng1, and born again by Nf3, demonstrating reappearance.",
+      "pre_move_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "played_move_san": "Nf3",
+      "e_str": "attacker=PieceRef(square='g1', symbol='N') target_square='f3' target_piece=None is_defense=False",
+      "f_str": "attacker=PieceRef(square='f3', symbol='N') target_square='e5' target_piece=None is_defense=False",
+      "required_evidence_families": [
+        "structural_partition",
+        "temporal",
+        "reappearance"
+      ],
+      "status": "PASS",
+      "error_msg": null,
+      "m_11": [
+        "Nf3"
+      ],
+      "m_10": [
+        "Nh3",
+        "f3"
+      ],
+      "m_01": [],
+      "m_00": [
+        "Nc3",
+        "Na3",
+        "h3",
+        "g3",
+        "e3",
+        "d3",
+        "c3",
+        "b3",
+        "a3",
+        "h4",
+        "g4",
+        "f4",
+        "e4",
+        "d4",
+        "c4",
+        "b4",
+        "a4"
+      ]
+    },
+    {
+      "fixture_id": "Q11",
+      "hypothesis": "A mate-in-1 is available in the root, forcing consequence layer to evaluate a mate-typed outcome without converting it to fake CP.",
+      "pre_move_fen": "rnbqkbnr/pppp1ppp/8/4p3/6P1/5P2/PPPPP2P/RNBQKBNR b KQkq - 0 2",
+      "played_move_san": "Qh4#",
+      "e_str": "attacker=PieceRef(square='d8', symbol='q') target_square='h4' target_piece=None is_defense=False",
+      "f_str": "attacker=PieceRef(square='h4', symbol='q') target_square='e1' target_piece=PieceRef(square='e1', symbol='K') is_defense=False",
+      "required_evidence_families": [
+        "structural_partition",
+        "consequence_mate"
+      ],
+      "status": "PASS",
+      "error_msg": null,
+      "m_11": [
+        "Qh4#"
+      ],
+      "m_10": [
+        "Ne7",
+        "Nf6",
+        "Be7",
+        "Ke7",
+        "Qe7",
+        "Qf6",
+        "Qg5",
+        "f6",
+        "g5"
+      ],
+      "m_01": [],
+      "m_00": [
+        "Nh6",
+        "Bd6",
+        "Bc5",
+        "Bb4",
+        "Ba3",
+        "Nc6",
+        "Na6",
+        "h6",
+        "g6",
+        "d6",
+        "c6",
+        "b6",
+        "a6",
+        "e4",
+        "h5",
+        "f5",
+        "d5",
+        "c5",
+        "b5",
+        "a5"
+      ]
+    },
+    {
+      "fixture_id": "Q12",
+      "hypothesis": "There is exactly one legal move in the root position, so all partitions except m11 (and possibly m10 depending on e and f definitions) are empty.",
+      "pre_move_fen": "7k/5K2/8/8/8/8/8/8 b - - 0 1",
+      "played_move_san": "Kh7",
+      "e_str": "attacker=PieceRef(square='h8', symbol='k') target_square='g8' target_piece=None is_defense=False",
+      "f_str": "attacker=PieceRef(square='h7', symbol='k') target_square='g6' target_piece=None is_defense=False",
+      "required_evidence_families": [
+        "structural_partition"
+      ],
+      "status": "PASS",
+      "error_msg": null,
+      "m_11": [
+        "Kh7"
+      ],
+      "m_10": [],
+      "m_01": [],
+      "m_00": []
+    },
+    {
+      "fixture_id": "Q13",
+      "hypothesis": "Two histories arrive at the identical FEN but possess different temporal ledgers (e.g. one history moved the knight out and back, the other did not).",
+      "pre_move_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "played_move_san": "Nf3",
+      "e_str": "attacker=PieceRef(square='g1', symbol='N') target_square='f3' target_piece=None is_defense=False",
+      "f_str": "attacker=PieceRef(square='f3', symbol='N') target_square='e5' target_piece=None is_defense=False",
+      "required_evidence_families": [
+        "paired_history"
+      ],
+      "status": "PASS",
+      "error_msg": null,
+      "m_11": [
+        "Nf3"
+      ],
+      "m_10": [
+        "Nh3",
+        "f3"
+      ],
+      "m_01": [],
+      "m_00": [
+        "Nc3",
+        "Na3",
+        "h3",
+        "g3",
+        "e3",
+        "d3",
+        "c3",
+        "b3",
+        "a3",
+        "h4",
+        "g4",
+        "f4",
+        "e4",
+        "d4",
+        "c4",
+        "b4",
+        "a4"
+      ]
+    },
+    {
+      "fixture_id": "Q14",
+      "hypothesis": "Symmetric pawn moves (e4 and d4) produce structurally matched partitions (e.g., n11=1, n00=17, n01=0) but have different consequence landscapes.",
+      "pre_move_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "played_move_san": "d4",
+      "e_str": "attacker=PieceRef(square='d2', symbol='P') target_square='c3' target_piece=None is_defense=False",
+      "f_str": "attacker=PieceRef(square='d4', symbol='P') target_square='c5' target_piece=None is_defense=False",
+      "required_evidence_families": [
+        "structural_partition",
+        "consequence_cp"
+      ],
+      "status": "PASS",
+      "error_msg": null,
+      "m_11": [
+        "d4"
+      ],
+      "m_10": [
+        "Nc3",
+        "d3",
+        "c3"
+      ],
+      "m_01": [],
+      "m_00": [
+        "Nh3",
+        "Nf3",
+        "Na3",
+        "h3",
+        "g3",
+        "f3",
+        "e3",
+        "b3",
+        "a3",
+        "h4",
+        "g4",
+        "f4",
+        "e4",
+        "c4",
+        "b4",
+        "a4"
+      ]
+    },
+    {
+      "fixture_id": "Q15",
+      "hypothesis": "Mobility objects exist across the board for both players, but generate_legal_moves is turn-conditioned. A turn handoff causes pseudo-legal vs legal mobility events to shift merely because the side to move changed.",
+      "pre_move_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "played_move_san": "e4",
+      "e_str": "attacker=PieceRef(square='e2', symbol='P') target_square='f3' target_piece=None is_defense=False",
+      "f_str": "(PieceRef(square='g8', symbol='n'), 'f6')",
+      "required_evidence_families": [
+        "structural_partition"
+      ],
+      "status": "PASS",
+      "error_msg": null,
+      "m_11": [
+        "Nf3",
+        "f3",
+        "e3",
+        "e4"
+      ],
+      "m_10": [],
+      "m_01": [
+        "Nh3",
+        "Nc3",
+        "Na3",
+        "h3",
+        "g3",
+        "d3",
+        "c3",
+        "b3",
+        "a3",
+        "h4",
+        "g4",
+        "f4",
+        "d4",
+        "c4",
+        "b4",
+        "a4"
+      ],
+      "m_00": []
+    }
+  ]
+}
