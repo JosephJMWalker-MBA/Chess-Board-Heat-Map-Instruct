@@ -215,7 +215,7 @@ class ValidationHarness:
         
         sq_pred = extract_implicated_squares(predecessor_sig)
         sq_succ = extract_implicated_squares(successor_sig)
-        shared_squares = list(sq_pred & sq_succ)
+        shared_squares = sorted(list(sq_pred & sq_succ))
 
         bundle_ev = None
         if bundle:
@@ -225,11 +225,14 @@ class ValidationHarness:
                 candidates_data.append({
                     "predecessor": str(c.structural_evidence.predecessor_signature),
                     "successor": str(c.structural_evidence.successor_signature),
-                    "m11": c.structural_evidence.m_11,
-                    "m10": c.structural_evidence.m_10,
-                    "m01": c.structural_evidence.m_01,
-                    "m00": c.structural_evidence.m_00,
+                    "m11": sorted(c.structural_evidence.m_11),
+                    "m10": sorted(c.structural_evidence.m_10),
+                    "m01": sorted(c.structural_evidence.m_01),
+                    "m00": sorted(c.structural_evidence.m_00),
                 })
+            
+            # Sort candidates array to make bundle serialization invariant to list order
+            candidates_data.sort(key=lambda x: (x["predecessor"], x["successor"]))
             
             # Deterministic canonical serialization + SHA-256
             import json

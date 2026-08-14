@@ -290,6 +290,7 @@ def test_conversion_bundle_serialization():
     )
     
     bundle = ConversionEvidenceBundle(candidates=[c1, c2])
+    bundle_reversed = ConversionEvidenceBundle(candidates=[c2, c1])
     
     h = ValidationHarness("fake_path")
     
@@ -301,6 +302,7 @@ def test_conversion_bundle_serialization():
     with patch.object(h, "evaluate_move", return_value=Score(type="cp", value=10, perspective="white")), \
          patch.object(ValidationHarness, "preflight_fixture", return_value=(["e4"], ["d4"], ["c4"], ["Nf3"])):
         res = h.process_position(chess.STARTING_FEN, "e4", "dummy_pred_1", "dummy_succ_1", bundle=bundle)
+        res_reversed = h.process_position(chess.STARTING_FEN, "e4", "dummy_pred_1", "dummy_succ_1", bundle=bundle_reversed)
         
         # Verify no attribute error and correct data
         b_ev = res["bundle_evidence"]
@@ -311,11 +313,14 @@ def test_conversion_bundle_serialization():
         pairs = b_ev["bundle_constituent_candidate_pairs"]
         assert len(pairs) == 2
         
-        # Verify memberships preserved
+        # Verify memberships preserved and sorted order
         assert pairs[0]["predecessor"] == "dummy_pred_1"
         assert pairs[0]["m11"] == ["e4"]
         assert pairs[1]["predecessor"] == "dummy_pred_2"
         assert pairs[1]["m11"] == ["e4"]
+        
+        # Invariant to input candidate list order
+        assert res["bundle_evidence"]["bundle_identity"] == res_reversed["bundle_evidence"]["bundle_identity"]
         
         # Repeated serialization produces the same SHA-256 ID
         res2 = h.process_position(chess.STARTING_FEN, "e4", "dummy_pred_1", "dummy_succ_1", bundle=bundle)
