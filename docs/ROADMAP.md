@@ -178,6 +178,27 @@ Temporal Ledger must first prove it measures something distinct before any fusio
 
 ---
 
+
+### T1.11 — Temporal Ledger Hostile Validation Corpus
+**Status: COMPLETED / IMMUTABLY ARCHIVED** (commit `89d056609b1bfa6fd93c2e3c2f1970e905841c2d`)
+
+T1.11 is the first Temporal Ledger hostile-validation corpus in this research line to complete the full preregistration → preflight → seal → one-shot execution → immutable archive chain.
+
+Key Findings:
+- Q4 was FALSIFIED under its preregistered directional criterion: `medianR(M11)=50`, `medianR(M10)=48`.
+- Q11 SUPPORTED preservation of mate typing.
+- Q14 SUPPORTED fixture-specific divergence in consequence under the nominated locally matched structural partitions: 32 versus 58 CP regret.
+- 14/15 SUPPORTED must not be reported as an accuracy/success percentage.
+- No causal inference follows from consequence association.
+
+**Methodological Lesson:**
+A validation artifact is not trustworthy merely because tests pass; the evidence-generation path itself must be tracked, reproducible, mechanically checked, and frozen before consequence observation.
+
+### Future Research (T1.12)
+**T1.12 — Engine-State & Evaluation-Order Robustness**
+*Question:* Are CP regret relationships stable to root-evaluation ordering and transposition-table state?
+*(Do not design fixtures or execute this yet.)*
+
 ## Research Track T2 — Regional representation
 
 **Status: Open**

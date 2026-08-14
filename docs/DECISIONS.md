@@ -353,3 +353,17 @@ Should files, diagonals, corridors, king zones, pawn complexes, and disjoint tac
 Can move history provide a distinct measurable description of investment, optionality, conversion, and persistence while preserving current-state invariance under true transpositions?
 
 **Status (T1.10a):** The core Temporal Ledger architecture and consequence primitives have been implemented and secured under a strict semantic protocol. It correctly measures historical reappearance and counterfactual outcomes without contaminating current-state amplitude logic.
+
+### D-030 — T1.11 Methodology and Interpretation Limits
+
+**Status:** Accepted
+
+**Decision:**
+T1.11 is closed and immutably archived at commit `89d056609b1bfa6fd93c2e3c2f1970e905841c2d`. Its 14/15 SUPPORTED result must NOT be reported as an accuracy or success percentage. The raw JSON outputs must remain exactly as emitted during the sealed one-shot execution.
+
+**Reason:**
+A validation artifact is not trustworthy merely because tests pass; the evidence-generation path itself must be tracked, reproducible, mechanically checked, and frozen before consequence observation. The fixtures in T1.11 are not interchangeable trials; they exercise distinct boundaries (e.g. Q4 falsifying a directional prediction, Q11 preserving mate typing, and Q14 proving local structural matches can yield divergent consequence).
+
+### O-013 — Engine-State & Evaluation-Order Robustness (T1.12)
+
+Are CP regret relationships stable to root-evaluation ordering and transposition-table state?
