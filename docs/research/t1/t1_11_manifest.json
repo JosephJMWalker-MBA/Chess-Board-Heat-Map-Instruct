@@ -1,0 +1,322 @@
+[
+  {
+    "fixture_id": "Q1",
+    "dimension": "Canonical structural succession",
+    "pre_move_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+    "played_move_san": "e4",
+    "predecessor_signature": "attacker=PieceRef(square='e2', symbol='P') target_square='d3' target_piece=None is_defense=False",
+    "successor_signature": "attacker=PieceRef(square='e4', symbol='P') target_square='d5' target_piece=None is_defense=False",
+    "required_evidence_families": [
+      "structural_partition",
+      "consequence_cp"
+    ],
+    "human_hypothesis": "Moving the e2 pawn establishes a canonical succession where e2's attack on d3 is removed and e4's attack on d5 is born.",
+    "mechanical_support_condition": "n11 > 0 and (n10 > 0 or n01 > 0)",
+    "mechanical_falsifier": "n11 == 0",
+    "ambiguous_condition": "n10 == 0 and n01 == 0 and n00 == 0",
+    "invalid_condition": "predecessor does not exist in root",
+    "requires_consequence_evidence": true,
+    "mate_sensitive": false
+  },
+  {
+    "fixture_id": "Q2",
+    "dimension": "Independent successor birth",
+    "pre_move_fen": "r1bqkbnr/pppppppp/8/8/8/8/PPPPNPPP/RN1QKBNR w KQkq - 0 2",
+    "played_move_san": "Nbc3",
+    "predecessor_signature": "attacker=PieceRef(square='b1', symbol='N') target_square='a3' target_piece=None is_defense=False",
+    "successor_signature": "attacker=PieceRef(square='c3', symbol='N') target_square='d5' target_piece=None is_defense=False",
+    "required_evidence_families": [
+      "structural_partition"
+    ],
+    "human_hypothesis": "Moving the b1 knight to c3 (Nbc3) removes its attack on a3 and births an attack on d5. Moving the e2 knight to c3 (Nec3) also births the attack on d5 but preserves the b1 knight's attack on a3, placing Nec3 in m01.",
+    "mechanical_support_condition": "n01 > 0",
+    "mechanical_falsifier": "n01 == 0",
+    "ambiguous_condition": "n01 == 0 and n00 == 0",
+    "invalid_condition": "f is not born by played move",
+    "requires_consequence_evidence": true,
+    "mate_sensitive": false
+  },
+  {
+    "fixture_id": "Q3",
+    "dimension": "Structural exclusivity",
+    "pre_move_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+    "played_move_san": "c4",
+    "predecessor_signature": "attacker=PieceRef(square='c2', symbol='P') target_square='b3' target_piece=None is_defense=False",
+    "successor_signature": "attacker=PieceRef(square='c4', symbol='P') target_square='b5' target_piece=None is_defense=False",
+    "required_evidence_families": [
+      "structural_partition"
+    ],
+    "human_hypothesis": "The only way to birth c4's attack on b5 is to move the c2 pawn, which removes its attack on b3. Thus n01=0 and n00>0.",
+    "mechanical_support_condition": "n01 == 0 and n00 > 0",
+    "mechanical_falsifier": "n01 > 0",
+    "ambiguous_condition": "n00 == 0",
+    "invalid_condition": "e is not removed by played move",
+    "requires_consequence_evidence": true,
+    "mate_sensitive": false
+  },
+  {
+    "fixture_id": "Q4",
+    "dimension": "Consequence association without structural exclusivity",
+    "pre_move_fen": "r1bqkbnr/pppppppp/8/8/8/8/PPPPNPPP/RN1QKBNR w KQkq - 0 2",
+    "played_move_san": "Nbc3",
+    "predecessor_signature": "attacker=PieceRef(square='b1', symbol='N') target_square='a3' target_piece=None is_defense=False",
+    "successor_signature": "attacker=PieceRef(square='c3', symbol='N') target_square='d5' target_piece=None is_defense=False",
+    "required_evidence_families": [
+      "structural_partition",
+      "consequence_cp"
+    ],
+    "human_hypothesis": "The birth of the c3 Knight's attack on d5 has consequence implications despite not exclusively replacing the b1 knight's attack on a3.",
+    "mechanical_support_condition": "n01 > 0",
+    "mechanical_falsifier": "n01 == 0",
+    "ambiguous_condition": "n00 == 0",
+    "invalid_condition": "e is not preserved in m01",
+    "requires_consequence_evidence": true,
+    "mate_sensitive": false
+  },
+  {
+    "fixture_id": "Q5",
+    "dimension": "Ephemeral successor",
+    "pre_move_fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+    "played_move_san": "d4",
+    "predecessor_signature": "attacker=PieceRef(square='d2', symbol='P') target_square='c3' target_piece=None is_defense=False",
+    "successor_signature": "attacker=PieceRef(square='d4', symbol='P') target_square='e5' target_piece=PieceRef(square='e5', symbol='p') is_defense=False",
+    "required_evidence_families": [
+      "structural_partition",
+      "temporal"
+    ],
+    "human_hypothesis": "The d4 pawn attacks e5 but is immediately captured, giving it an ephemeral duration of 1 ply.",
+    "mechanical_support_condition": "duration == 1 and not right_censored",
+    "mechanical_falsifier": "duration > 1",
+    "ambiguous_condition": "right_censored == True",
+    "invalid_condition": "episode not found",
+    "requires_consequence_evidence": true,
+    "mate_sensitive": false,
+    "history": [
+      "e4",
+      "e5",
+      "d4",
+      "exd4"
+    ],
+    "observed_age_of_removed_episode": 1,
+    "observed_duration_of_born_episode": 1
+  },
+  {
+    "fixture_id": "Q6",
+    "dimension": "Missing predecessor-preserving comparison class",
+    "pre_move_fen": "4r1r1/8/8/8/8/4k3/4N3/4K3 w - - 0 1",
+    "played_move_san": "Nc3",
+    "predecessor_signature": "attacker=PieceRef(square='e2', symbol='N') target_square='d4' target_piece=None is_defense=False",
+    "successor_signature": "attacker=PieceRef(square='c3', symbol='N') target_square='d5' target_piece=None is_defense=False",
+    "required_evidence_families": [
+      "structural_partition"
+    ],
+    "human_hypothesis": "The king is trapped, so the knight must move. All legal moves remove the knight's original attacks, meaning n01 and n00 are 0.",
+    "mechanical_support_condition": "n01 + n00 == 0 and legal_root_count > 1",
+    "mechanical_falsifier": "n01 + n00 > 0",
+    "ambiguous_condition": "legal_root_count == 1",
+    "invalid_condition": "e is preserved",
+    "requires_consequence_evidence": true,
+    "mate_sensitive": false
+  },
+  {
+    "fixture_id": "Q7",
+    "dimension": "Confounded conversion bundle",
+    "pre_move_fen": "rnbqkbnr/pppppppp/8/8/3B4/8/PPPPPPPP/RN1QKBNR w KQkq - 0 1",
+    "played_move_san": "Bc5",
+    "predecessor_signature": "attacker=PieceRef(square='d4', symbol='B') target_square='e5' target_piece=None is_defense=False",
+    "successor_signature": "attacker=PieceRef(square='c5', symbol='B') target_square='d6' target_piece=None is_defense=False",
+    "required_evidence_families": [
+      "bundle"
+    ],
+    "human_hypothesis": "Moving the bishop from d4 to c5 simultaneously removes its attacks on e5 and c5, and births attacks on d6 and b6, creating two structurally confounded pairs.",
+    "mechanical_support_condition": "bundle constituents >= 2 and exact partition equality",
+    "mechanical_falsifier": "partitions differ",
+    "ambiguous_condition": "fewer than 2 constituents",
+    "invalid_condition": "invalid geometry",
+    "requires_consequence_evidence": true,
+    "mate_sensitive": false,
+    "bundle_second_pair": {
+      "e_str_part": "attacker=PieceRef(square='d4', symbol='B') target_square='c5'",
+      "f_str_part": "attacker=PieceRef(square='c5', symbol='B') target_square='b6'"
+    }
+  },
+  {
+    "fixture_id": "Q8",
+    "dimension": "Spatial overlap control",
+    "pre_move_fen": "rnbqkbnr/ppp1pppp/8/3p4/8/8/PPP2PPP/RNBQKBNR w KQkq - 0 1",
+    "played_move_san": "Qh5",
+    "predecessor_signature": "attacker=PieceRef(square='d1', symbol='Q') target_square='d5' target_piece=PieceRef(square='d5', symbol='p') is_defense=False",
+    "successor_signature": "attacker=PieceRef(square='h5', symbol='Q') target_square='d5' target_piece=PieceRef(square='d5', symbol='p') is_defense=False",
+    "required_evidence_families": [
+      "structural_partition",
+      "spatial_overlap"
+    ],
+    "human_hypothesis": "The Queen moves from d1 to h5, removing one attack on d5 and birthing another on d5, creating spatial overlap at d5.",
+    "mechanical_support_condition": "len(shared_squares) > 0",
+    "mechanical_falsifier": "len(shared_squares) == 0",
+    "ambiguous_condition": "invalid geometry",
+    "invalid_condition": "invalid geometry",
+    "requires_consequence_evidence": true,
+    "mate_sensitive": false
+  },
+  {
+    "fixture_id": "Q9",
+    "dimension": "Spatially disjoint control",
+    "pre_move_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+    "played_move_san": "e4",
+    "predecessor_signature": "attacker=PieceRef(square='e2', symbol='P') target_square='d3' target_piece=None is_defense=False",
+    "successor_signature": "attacker=PieceRef(square='e4', symbol='P') target_square='d5' target_piece=None is_defense=False",
+    "required_evidence_families": [
+      "structural_partition",
+      "spatial_overlap"
+    ],
+    "human_hypothesis": "The pawn's attack on d3 is removed and attack on d5 is born. They share no structurally implicated squares.",
+    "mechanical_support_condition": "len(shared_squares) == 0",
+    "mechanical_falsifier": "len(shared_squares) > 0",
+    "ambiguous_condition": "invalid geometry",
+    "invalid_condition": "invalid geometry",
+    "requires_consequence_evidence": true,
+    "mate_sensitive": false
+  },
+  {
+    "fixture_id": "Q10",
+    "dimension": "Reappearance",
+    "pre_move_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+    "played_move_san": "Nf3",
+    "predecessor_signature": "attacker=PieceRef(square='g1', symbol='N') target_square='f3' target_piece=None is_defense=False",
+    "successor_signature": "attacker=PieceRef(square='f3', symbol='N') target_square='e5' target_piece=None is_defense=False",
+    "required_evidence_families": [
+      "structural_partition",
+      "temporal",
+      "reappearance"
+    ],
+    "human_hypothesis": "The attack f3-e5 is born, removed by Ng1, and born again by Nf3, demonstrating reappearance.",
+    "mechanical_support_condition": "is_born_reappearance == True",
+    "mechanical_falsifier": "is_born_reappearance == False",
+    "ambiguous_condition": "episode not found",
+    "invalid_condition": "invalid geometry",
+    "requires_consequence_evidence": true,
+    "mate_sensitive": false,
+    "history": [
+      "Nf3",
+      "e5",
+      "Ng1",
+      "d5",
+      "Nf3"
+    ],
+    "observed_age_of_removed_episode": 1,
+    "observed_duration_of_born_episode": 1
+  },
+  {
+    "fixture_id": "Q11",
+    "dimension": "Mate-sensitive consequence boundary",
+    "pre_move_fen": "rnbqkbnr/pppp1ppp/8/4p3/6P1/5P2/PPPPP2P/RNBQKBNR b KQkq - 0 2",
+    "played_move_san": "Qh4#",
+    "predecessor_signature": "attacker=PieceRef(square='d8', symbol='q') target_square='h4' target_piece=None is_defense=False",
+    "successor_signature": "attacker=PieceRef(square='h4', symbol='q') target_square='e1' target_piece=PieceRef(square='e1', symbol='K') is_defense=False",
+    "required_evidence_families": [
+      "structural_partition",
+      "consequence_mate"
+    ],
+    "human_hypothesis": "A mate-in-1 is available in the root, forcing consequence layer to evaluate a mate-typed outcome without converting it to fake CP.",
+    "mechanical_support_condition": "mate_count > 0 in any partition",
+    "mechanical_falsifier": "mate_count == 0",
+    "ambiguous_condition": "no consequence evidence",
+    "invalid_condition": "invalid geometry",
+    "requires_consequence_evidence": true,
+    "mate_sensitive": true
+  },
+  {
+    "fixture_id": "Q12",
+    "dimension": "One-root zero optionality",
+    "pre_move_fen": "7k/5K2/8/8/8/8/8/8 b - - 0 1",
+    "played_move_san": "Kh7",
+    "predecessor_signature": "attacker=PieceRef(square='h8', symbol='k') target_square='g8' target_piece=None is_defense=False",
+    "successor_signature": "attacker=PieceRef(square='h7', symbol='k') target_square='g6' target_piece=None is_defense=False",
+    "required_evidence_families": [
+      "structural_partition"
+    ],
+    "human_hypothesis": "There is exactly one legal move in the root position, so all partitions except m11 (and possibly m10 depending on e and f definitions) are empty.",
+    "mechanical_support_condition": "legal_root_count == 1",
+    "mechanical_falsifier": "legal_root_count > 1",
+    "ambiguous_condition": "legal_root_count == 0",
+    "invalid_condition": "invalid geometry",
+    "requires_consequence_evidence": true,
+    "mate_sensitive": false
+  },
+  {
+    "fixture_id": "Q13",
+    "dimension": "Same endpoint / different history",
+    "pre_move_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+    "played_move_san": "Nf3",
+    "predecessor_signature": "attacker=PieceRef(square='g1', symbol='N') target_square='f3' target_piece=None is_defense=False",
+    "successor_signature": "attacker=PieceRef(square='f3', symbol='N') target_square='e5' target_piece=None is_defense=False",
+    "required_evidence_families": [
+      "paired_history"
+    ],
+    "human_hypothesis": "Two histories arrive at the identical FEN but possess different temporal ledgers (e.g. one history moved the knight out and back, the other did not).",
+    "mechanical_support_condition": "fen_a == fen_b and ledger_a != ledger_b",
+    "mechanical_falsifier": "fen_a != fen_b or ledger_a == ledger_b",
+    "ambiguous_condition": "invalid geometry",
+    "invalid_condition": "invalid geometry",
+    "requires_consequence_evidence": true,
+    "mate_sensitive": false,
+    "history": {
+      "moves_a": [
+        "Nf3",
+        "Nf6",
+        "Ng1",
+        "Ng8",
+        "Nf3"
+      ],
+      "moves_b": [
+        "Nf3"
+      ]
+    },
+    "observed_age_of_removed_episode": 1,
+    "observed_duration_of_born_episode": 1
+  },
+  {
+    "fixture_id": "Q14",
+    "dimension": "Matched structural partitions / different consequence landscapes",
+    "pre_move_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+    "played_move_san": "d4",
+    "predecessor_signature": "attacker=PieceRef(square='d2', symbol='P') target_square='c3' target_piece=None is_defense=False",
+    "successor_signature": "attacker=PieceRef(square='d4', symbol='P') target_square='c5' target_piece=None is_defense=False",
+    "required_evidence_families": [
+      "structural_partition",
+      "consequence_cp"
+    ],
+    "human_hypothesis": "Symmetric pawn moves (e4 and d4) produce structurally matched partitions (e.g., n11=1, n00=17, n01=0) but have different consequence landscapes.",
+    "mechanical_support_condition": "partitions match isomorphism criterion (e.g., identical counts)",
+    "mechanical_falsifier": "partitions do not match",
+    "ambiguous_condition": "invalid geometry",
+    "invalid_condition": "invalid geometry",
+    "requires_consequence_evidence": true,
+    "mate_sensitive": false,
+    "twin_fixture": {
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "played_move_san": "e4",
+      "e_str_part": "attacker=PieceRef(square='e2', symbol='P') target_square='d3'",
+      "f_str_part": "attacker=PieceRef(square='e4', symbol='P') target_square='d5'"
+    }
+  },
+  {
+    "fixture_id": "Q15",
+    "dimension": "Turn-conditioned mobility control",
+    "pre_move_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+    "played_move_san": "e4",
+    "predecessor_signature": "attacker=PieceRef(square='e2', symbol='P') target_square='f3' target_piece=None is_defense=False",
+    "successor_signature": "(PieceRef(square='g8', symbol='n'), 'f6')",
+    "required_evidence_families": [
+      "structural_partition"
+    ],
+    "human_hypothesis": "Mobility objects exist across the board for both players, but generate_legal_moves is turn-conditioned. A turn handoff causes pseudo-legal vs legal mobility events to shift merely because the side to move changed.",
+    "mechanical_support_condition": "side_to_move changes cause measurable mobility event birth/death unrelated to piece movement",
+    "mechanical_falsifier": "no mobility events change due to turn change",
+    "ambiguous_condition": "invalid geometry",
+    "invalid_condition": "invalid geometry",
+    "requires_consequence_evidence": true,
+    "mate_sensitive": false
+  }
+]
