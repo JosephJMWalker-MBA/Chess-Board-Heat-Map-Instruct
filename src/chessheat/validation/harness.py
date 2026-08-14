@@ -57,7 +57,12 @@ class ValidationHarness:
             raise RuntimeError(f"Seal broken: Working tree is not clean.\n{result.stdout}")
             
         sha_result = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True)
+        if sha_result.returncode != 0:
+            raise RuntimeError(f"Seal broken: Failed to resolve HEAD SHA.\n{sha_result.stderr}")
         commit_sha = sha_result.stdout.strip()
+        
+        if getattr(self, 'engine_version', 'Unknown') == 'Unknown':
+            raise RuntimeError("Seal broken: Engine must be successfully initialized to obtain its true version.")
         
         # Hash harness itself for identity
         harness_hash = hashlib.sha256(open(__file__, "rb").read()).hexdigest()
@@ -65,7 +70,7 @@ class ValidationHarness:
         # Hash inputs
         def file_sha256(path: str) -> str:
             if not os.path.exists(path):
-                return f"MISSING_{path}"
+                raise RuntimeError(f"Seal broken: Required file missing: {path}")
             return hashlib.sha256(open(path, "rb").read()).hexdigest()
             
         manifest_hash = file_sha256(manifest_path)
@@ -99,9 +104,9 @@ class ValidationHarness:
                 s = info["score"].black()
                 
             if s.is_mate():
-                return Score(type='mate', value=s.mate(), perspective='white' if played_color == chess.WHITE else 'black')
+                return Score(type='mate', value=s.mate(), perspective=self.comparison_perspective)
             else:
-                return Score(type='cp', value=s.score(), perspective='white' if played_color == chess.WHITE else 'black')
+                return Score(type='cp', value=s.score(), perspective=self.comparison_perspective)
         finally:
             board.pop()
 
@@ -161,8 +166,18 @@ class ValidationHarness:
         predecessor_sig: Any, 
         successor_sig: Any,
         transition_evidence: Any = None,
-        bundle: Any = None
+        bundle: Any = None,
+        required_evidence_families: List[str] = None
     ) -> Dict[str, Any]:
+        if required_evidence_families is None:
+            required_evidence_families = []
+            
+        if "temporal" in required_evidence_families and not transition_evidence:
+            raise ValueError("Preflight failed: Hypothesis requires temporal evidence, but none was provided.")
+            
+        if "bundle" in required_evidence_families and not bundle:
+            raise ValueError("Preflight failed: Hypothesis requires bundle evidence, but none was provided.")
+            
         # Engine-free preflight before doing any expensive engine work
         m_11, m_10, m_01, m_00 = self.preflight_fixture(fen, played_move_san, predecessor_sig, successor_sig)
         
@@ -196,7 +211,11 @@ class ValidationHarness:
                 "median_cp_regret": median_cp
             }
 
-        shared_squares = transition_evidence.shared_squares if hasattr(transition_evidence, 'shared_squares') else []
+        from chessheat.temporal import extract_implicated_squares
+        
+        sq_pred = extract_implicated_squares(predecessor_sig)
+        sq_succ = extract_implicated_squares(successor_sig)
+        shared_squares = list(sq_pred & sq_succ)
 
         bundle_ev = None
         if bundle:
@@ -204,8 +223,8 @@ class ValidationHarness:
             candidates_data = []
             for c in bundle.candidates:
                 candidates_data.append({
-                    "predecessor": str(c.structural_evidence.predecessor),
-                    "successor": str(c.structural_evidence.successor),
+                    "predecessor": str(c.structural_evidence.predecessor_signature),
+                    "successor": str(c.structural_evidence.successor_signature),
                     "m11": c.structural_evidence.m_11,
                     "m10": c.structural_evidence.m_10,
                     "m01": c.structural_evidence.m_01,
@@ -277,8 +296,43 @@ class ValidationHarness:
         legal_roots_a = set(board_a.legal_moves)
         legal_roots_b = set(board_b.legal_moves)
         
-        # Temporal Ledger differences could be derived from full TemporalLedger evaluation.
-        # For validation harness purposes, we just record the structural invariants.
+        from chessheat.temporal import build_temporal_ledger_from_pgn
+        import chess as python_chess
+        import chess.pgn as python_chess_pgn
+        
+        def make_pgn(moves: List[str], fen: str) -> str:
+            game = python_chess_pgn.Game()
+            game.setup(python_chess.Board(fen))
+            node = game
+            board = python_chess.Board(fen)
+            for m in moves:
+                move = board.parse_san(m)
+                node = node.add_variation(move)
+                board.push(move)
+            return str(game)
+            
+        pgn_a = make_pgn(moves_a, initial_fen)
+        pgn_b = make_pgn(moves_b, initial_fen)
+        
+        ledger_a = build_temporal_ledger_from_pgn(pgn_a)
+        ledger_b = build_temporal_ledger_from_pgn(pgn_b)
+        
+        # Compare actual ledger events
+        events_a = {str(e.event_identity): e for e in ledger_a.events}
+        events_b = {str(e.event_identity): e for e in ledger_b.events}
+        
+        ledger_inequality_evidence = {}
+        for ev_id, ev_a in events_a.items():
+            ev_b = events_b.get(ev_id)
+            if not ev_b:
+                ledger_inequality_evidence[ev_id] = {"a": ev_a.active_intervals, "b": None}
+            elif ev_a.active_intervals != ev_b.active_intervals:
+                ledger_inequality_evidence[ev_id] = {"a": ev_a.active_intervals, "b": ev_b.active_intervals}
+                
+        for ev_id, ev_b in events_b.items():
+            if ev_id not in events_a:
+                ledger_inequality_evidence[ev_id] = {"a": None, "b": ev_b.active_intervals}
+        
         return {
             "history_a": moves_a,
             "history_b": moves_b,
@@ -287,5 +341,5 @@ class ValidationHarness:
             "terminal_fen_equality": fen_a == fen_b,
             "geometry_equality": geom_a == geom_b,
             "legal_root_equality": legal_roots_a == legal_roots_b,
-            "temporal_ledger_inequality": moves_a != moves_b # Simplified representation of different historical paths
+            "temporal_ledger_differences": ledger_inequality_evidence
         }

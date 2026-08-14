@@ -95,6 +95,64 @@ def test_lifecycle_cleanup_on_exception():
             
         assert fake.quit_called == True
 
+def test_evaluate_move_success():
+    class FakeCPScore:
+        def __init__(self, val):
+            self.val = val
+        def white(self): return self
+        def black(self): return self
+        def is_mate(self): return False
+        def score(self): return self.val
+        def mate(self): return None
+
+    class FakeMateScore:
+        def __init__(self, val):
+            self.val = val
+        def white(self): return self
+        def black(self): return self
+        def is_mate(self): return True
+        def score(self): return None
+        def mate(self): return self.val
+
+    class FakeEngine:
+        def __init__(self):
+            self.id = {"name": "Fake Engine"}
+            self.score_obj = FakeCPScore(15)
+        def configure(self, opts): pass
+        def quit(self): pass
+        def analyse(self, board, limit):
+            return {"score": self.score_obj}
+            
+    h = ValidationHarness("fake_path", comparison_perspective="white")
+    fake = FakeEngine()
+    board = chess.Board()
+    move = list(board.legal_moves)[0]
+    
+    with patch("chess.engine.SimpleEngine.popen_uci", return_value=fake):
+        with h:
+            # 1. successful CP evaluation from white perspective
+            score = h.evaluate_move(board, move)
+            assert score.type == "cp"
+            assert score.value == 15
+            assert score.perspective == "white"
+            
+            # 4. board state restored after successful evaluation
+            assert len(board.move_stack) == 0
+            
+            # 2. successful CP evaluation from black perspective
+            h.comparison_perspective = "black"
+            score = h.evaluate_move(board, move)
+            assert score.type == "cp"
+            assert score.value == 15
+            assert score.perspective == "black"
+            
+            # 3. successful mate evaluation
+            fake.score_obj = FakeMateScore(2)
+            score = h.evaluate_move(board, move)
+            assert score.type == "mate"
+            assert score.value == 2
+            assert score.perspective == "black"
+
 def test_evidence_completeness_contract():
     from chessheat.geometry import PieceRef
     from unittest.mock import patch
@@ -167,7 +225,137 @@ def test_paired_history_evidence():
     assert res["terminal_fen_equality"] is True
     assert res["geometry_equality"] is True
     assert res["legal_root_equality"] is True
-    assert res["temporal_ledger_inequality"] is True
+    assert "temporal_ledger_differences" in res
+    assert len(res["temporal_ledger_differences"]) > 0
+
+def test_conversion_bundle_serialization():
+    from chessheat.consequence import ConversionEvidenceBundle, ConversionCandidateEvidence, SuccessionCounterfactualEvidence
+    
+    # Create a mock bundle with two candidate pairs with identical support partitions
+    c1_struct = SuccessionCounterfactualEvidence(
+        predecessor_signature="dummy_pred_1",
+        successor_signature="dummy_succ_1",
+        m_11=["e4"], m_10=["d4"], m_01=["c4"], m_00=["Nf3"],
+        n_11=1, n_10=1, n_01=1, n_00=1,
+        fen_before="dummy_fen", side_to_move="white", legal_root_count=4, played_move_san="e4", played_move_is_joint=True,
+        spatial_overlap=True,
+        observed_age_of_removed_episode=1,
+        observed_duration_of_born_episode=1,
+        is_removed_left_censored=False,
+        is_born_right_censored=False,
+        is_born_reappearance=False,
+        p_b_given_d=0.5,
+        p_b_given_not_d=0.5,
+        delta_assoc=0.0
+    )
+    from chessheat.engine import Score
+    dummy_score = Score(type="cp", value=10, perspective="white")
+    dummy_analysis = {
+        "fen": "dummy_fen",
+        "root_side": "white",
+        "comparison_perspective": "white",
+        "engine_name": "dummy",
+        "search_budget_type": "nodes",
+        "search_budget_value": 1,
+        "baseline_observation": dummy_score,
+        "move_observations": [],
+        "root_regret": dummy_score,
+        "is_valid": True
+    }
+    
+    c1 = ConversionCandidateEvidence(
+        structural_evidence=c1_struct,
+        analysis_record=dummy_analysis
+    )
+    
+    c2_struct = SuccessionCounterfactualEvidence(
+        predecessor_signature="dummy_pred_2",
+        successor_signature="dummy_succ_2",
+        m_11=["e4"], m_10=["d4"], m_01=["c4"], m_00=["Nf3"], # Identical partitions
+        n_11=1, n_10=1, n_01=1, n_00=1,
+        fen_before="dummy_fen", side_to_move="white", legal_root_count=4, played_move_san="e4", played_move_is_joint=True,
+        spatial_overlap=True,
+        observed_age_of_removed_episode=1,
+        observed_duration_of_born_episode=1,
+        is_removed_left_censored=False,
+        is_born_right_censored=False,
+        is_born_reappearance=False,
+        p_b_given_d=0.5,
+        p_b_given_not_d=0.5,
+        delta_assoc=0.0
+    )
+    c2 = ConversionCandidateEvidence(
+        structural_evidence=c2_struct,
+        analysis_record=dummy_analysis
+    )
+    
+    bundle = ConversionEvidenceBundle(candidates=[c1, c2])
+    
+    h = ValidationHarness("fake_path")
+    
+    from chessheat.engine import Score
+    from unittest.mock import patch
+    
+    # Run through process_position to trigger serialization
+    # We can mock preflight_fixture and evaluate_move
+    with patch.object(h, "evaluate_move", return_value=Score(type="cp", value=10, perspective="white")), \
+         patch.object(ValidationHarness, "preflight_fixture", return_value=(["e4"], ["d4"], ["c4"], ["Nf3"])):
+        res = h.process_position(chess.STARTING_FEN, "e4", "dummy_pred_1", "dummy_succ_1", bundle=bundle)
+        
+        # Verify no attribute error and correct data
+        b_ev = res["bundle_evidence"]
+        assert b_ev is not None
+        assert "bundle_identity" in b_ev
+        assert "bundle_constituent_candidate_pairs" in b_ev
+        
+        pairs = b_ev["bundle_constituent_candidate_pairs"]
+        assert len(pairs) == 2
+        
+        # Verify memberships preserved
+        assert pairs[0]["predecessor"] == "dummy_pred_1"
+        assert pairs[0]["m11"] == ["e4"]
+        assert pairs[1]["predecessor"] == "dummy_pred_2"
+        assert pairs[1]["m11"] == ["e4"]
+        
+        # Repeated serialization produces the same SHA-256 ID
+        res2 = h.process_position(chess.STARTING_FEN, "e4", "dummy_pred_1", "dummy_succ_1", bundle=bundle)
+        assert res["bundle_evidence"]["bundle_identity"] == res2["bundle_evidence"]["bundle_identity"]
+
+def test_shared_squares_provenance():
+    from chessheat.geometry import PieceRef, AttackRelationship
+    h = ValidationHarness("fake_path")
+    
+    # 1. Overlapping case (Pawn e2 -> e4, attacks d5)
+    e = (PieceRef(square='e2', symbol='P'), 'e4')
+    f = AttackRelationship(attacker=PieceRef(square='e4', symbol='P'), target_square='d5', target_piece=None, is_defense=False)
+    
+    from chessheat.engine import Score
+    from unittest.mock import patch
+    with patch.object(h, "evaluate_move", return_value=Score(type="cp", value=10, perspective="white")), \
+         patch.object(ValidationHarness, "preflight_fixture", return_value=(["e4"], [], [], [])):
+        res_overlap = h.process_position(chess.STARTING_FEN, "e4", e, f)
+        assert set(res_overlap["temporal_evidence"]["shared_squares"]) == {"e4"}
+        
+    # 2. Disjoint case (Pawn e2 -> e4, Knight g1 -> f3)
+    e_disjoint = (PieceRef(square='e2', symbol='P'), 'e4')
+    f_disjoint = (PieceRef(square='g1', symbol='N'), 'f3')
+    
+    with patch.object(h, "evaluate_move", return_value=Score(type="cp", value=10, perspective="white")), \
+         patch.object(ValidationHarness, "preflight_fixture", return_value=(["e4"], [], [], [])):
+        res_disjoint = h.process_position(chess.STARTING_FEN, "e4", e_disjoint, f_disjoint)
+        assert len(res_disjoint["temporal_evidence"]["shared_squares"]) == 0
+
+def test_required_evidence_enforcement():
+    from chessheat.geometry import PieceRef
+    h = ValidationHarness("fake_path")
+    e = (PieceRef(square='e2', symbol='P'), 'e4')
+    f = (PieceRef(square='e7', symbol='p'), 'e5')
+    
+    with pytest.raises(ValueError, match="requires temporal evidence"):
+        h.process_position(chess.STARTING_FEN, "e4", e, f, required_evidence_families=["temporal"])
+        
+    with pytest.raises(ValueError, match="requires bundle evidence"):
+        h.process_position(chess.STARTING_FEN, "e4", e, f, transition_evidence="dummy", required_evidence_families=["bundle"])
 
 def test_preflight_invalid_fen():
     with pytest.raises(ValueError, match="is not a valid chess state"):
@@ -226,6 +414,45 @@ def test_create_seal(tmp_path):
         assert "protocol_hash" in seal
         import os
         assert os.path.exists(str(out_dir))
+
+def test_strict_seal_failures(tmp_path):
+    from unittest.mock import patch, MagicMock
+    import pytest
+    h = ValidationHarness("fake_path")
+    
+    # 1. Unknown engine version
+    with patch("subprocess.run") as mock_run:
+        mock_run.side_effect = [
+            MagicMock(returncode=0, stdout=""),
+            MagicMock(returncode=0, stdout="abc1234\n")
+        ]
+        with pytest.raises(RuntimeError, match="Engine must be successfully initialized"):
+            h.create_seal("dummy", "dummy", str(tmp_path))
+        
+    h.engine_version = "RealEngine 1.0"
+    
+    # 2. Missing manifest
+    with patch("subprocess.run") as mock_run:
+        mock_run.side_effect = [
+            MagicMock(returncode=0, stdout=""),
+            MagicMock(returncode=0, stdout="abc1234\n")
+        ]
+        with pytest.raises(RuntimeError, match="Required file missing"):
+            h.create_seal(str(tmp_path / "missing.txt"), "dummy", str(tmp_path))
+            
+    # 3. Failed rev-parse
+    manifest = tmp_path / "manifest.txt"
+    manifest.write_text("dummy")
+    protocol = tmp_path / "protocol.txt"
+    protocol.write_text("dummy")
+    
+    with patch("subprocess.run") as mock_run:
+        mock_run.side_effect = [
+            MagicMock(returncode=0, stdout=""),
+            MagicMock(returncode=1, stderr="fatal: not a git repo")
+        ]
+        with pytest.raises(RuntimeError, match="Failed to resolve HEAD SHA"):
+            h.create_seal(str(manifest), str(protocol), str(tmp_path))
 
 def test_preflight_played_move_not_in_m11():
     from chessheat.geometry import PieceRef
