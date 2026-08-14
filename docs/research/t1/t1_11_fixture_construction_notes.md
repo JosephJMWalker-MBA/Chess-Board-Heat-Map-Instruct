@@ -56,6 +56,8 @@ During the pre-seal review, several fixtures were rejected and required revision
 3. **Q13 (Same Endpoint / Different History) - Rejected at Pre-Seal Review**:
    *Issue:* The two histories (`Nf3 Nf6 Ng1 Ng8 Nf3` vs `Nf3`) reached the same piece placement but different complete FENs because the halfmove/fullmove clocks differed (5 plies vs 1 ply).
    *Resolution:* Replaced with two equal-length commuting histories (`d4, d5, Nf3, Nf6` vs `Nf3, Nf6, d4, d5`). Both reach the exact same full FEN (`rnbqkb1r/ppp1pppp/5n2/3p4/3P4/5N2/PPP1PPPP/RNBQKB1R w KQkq - 2 3`) but have different temporal lifecycle timings for the `d4->c5` attack.
+   *Second Issue:* The second attempt (`d4, d5, Nf3, Nf6` vs `Nf3, Nf6, d4, d5`) also failed literal equality. In history A, the final two knight moves advance the halfmove clock to 2. In history B, the final two moves are pawn moves, which reset the halfmove clock to 0. Piece placement was identical, but complete FEN was not.
+   *Second Resolution:* Replaced with an equal-length, irreversible-move clock-matching control (`Na3 Na6 Nh3 Nh6` vs `Nh3 Nh6 Na3 Na6`). Both histories end on knight moves, meaning the halfmove clock is fully identical (4), preserving identical full FENs.
 
 4. **Q14 (Matched Structural Partitions) - Rejected at Pre-Seal Review**:
    *Issue:* The fixtures (`e4` vs `d4`) were merely similar, not explicitly matched. The isomorphism criterion was underspecified.

@@ -9,8 +9,7 @@
       "e_str": "attacker=PieceRef(square='e2', symbol='P') target_square='d3' target_piece=None is_defense=False",
       "f_str": "attacker=PieceRef(square='e4', symbol='P') target_square='d5' target_piece=None is_defense=False",
       "required_evidence_families": [
-        "structural_partition",
-        "consequence_cp"
+        "structural_partition"
       ],
       "eligibility_status": "PASS",
       "dimension_preflight_status": "PASS",
@@ -145,7 +144,7 @@
         "consequence_cp"
       ],
       "eligibility_status": "PASS",
-      "dimension_preflight_status": "PASS",
+      "dimension_preflight_status": "PRECONDITIONS_PASS_PENDING_ENGINE",
       "error_msg": null,
       "m_11": [
         "Nbc3"
@@ -192,9 +191,9 @@
         "structural_partition",
         "temporal"
       ],
-      "eligibility_status": "PASS",
-      "dimension_preflight_status": "PASS",
-      "error_msg": null,
+      "eligibility_status": "FAIL",
+      "dimension_preflight_status": "FAIL",
+      "error_msg": "illegal san: 'e4' in rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
       "m_11": [
         "d4"
       ],
@@ -307,8 +306,49 @@
         "a4"
       ],
       "dimension_evidence": {
-        "constituent_pairs_count": 2,
-        "bundle_equality": "EXACT_PARTITION_MATCH_VERIFIED"
+        "constituent_pairs": [
+          {
+            "e": "attacker=PieceRef(square='d4', symbol='B') target_square='e5' target_piece=None is_defense=False",
+            "f": "attacker=PieceRef(square='c5', symbol='B') target_square='d6' target_piece=None is_defense=False"
+          }
+        ],
+        "bundle_equality": {
+          "m11": [
+            "Bc5"
+          ],
+          "m10": [
+            "Bxg7",
+            "Bxa7",
+            "Bf6",
+            "Bb6",
+            "Be5",
+            "Be3",
+            "Bc3"
+          ],
+          "m01": [],
+          "m00": [
+            "Nh3",
+            "Nf3",
+            "Qc1",
+            "Nc3",
+            "Na3",
+            "h3",
+            "g3",
+            "f3",
+            "e3",
+            "d3",
+            "c3",
+            "b3",
+            "a3",
+            "h4",
+            "g4",
+            "f4",
+            "e4",
+            "c4",
+            "b4",
+            "a4"
+          ]
+        }
       }
     },
     {
@@ -449,9 +489,9 @@
         "temporal",
         "reappearance"
       ],
-      "eligibility_status": "PASS",
-      "dimension_preflight_status": "PASS",
-      "error_msg": null,
+      "eligibility_status": "FAIL",
+      "dimension_preflight_status": "FAIL",
+      "error_msg": "'list' object has no attribute 'items'",
       "m_11": [
         "Nf3"
       ],
@@ -479,13 +519,7 @@
         "b4",
         "a4"
       ],
-      "dimension_evidence": {
-        "episode_intervals": [
-          "1-3",
-          "5-ongoing"
-        ],
-        "reappearance_boolean": true
-      }
+      "dimension_evidence": {}
     },
     {
       "fixture_id": "Q11",
@@ -499,7 +533,7 @@
         "consequence_mate"
       ],
       "eligibility_status": "PASS",
-      "dimension_preflight_status": "PASS",
+      "dimension_preflight_status": "PRECONDITIONS_PASS_PENDING_ENGINE",
       "error_msg": null,
       "m_11": [
         "Qh4#"
@@ -563,49 +597,45 @@
     },
     {
       "fixture_id": "Q13",
-      "hypothesis": "Two equal-length commuting histories arrive at the identical exact FEN but possess different temporal ledgers (the d4 pawn attack on c5 has duration 3 plies in A and 1 ply in B).",
+      "hypothesis": "Two equal-length commuting histories ending in irreversible moves arrive at the exact same FEN but possess different temporal ledgers.",
       "pre_move_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
-      "played_move_san": "d4",
-      "e_str": "attacker=PieceRef(square='d2', symbol='P') target_square='c3' target_piece=None is_defense=False",
-      "f_str": "attacker=PieceRef(square='d4', symbol='P') target_square='c5' target_piece=None is_defense=False",
+      "played_move_san": "Na3",
+      "e_str": "attacker=PieceRef(square='b1', symbol='N') target_square='a3' target_piece=None is_defense=False",
+      "f_str": "attacker=PieceRef(square='a3', symbol='N') target_square='b5' target_piece=None is_defense=False",
       "required_evidence_families": [
         "paired_history"
       ],
-      "eligibility_status": "PASS",
-      "dimension_preflight_status": "PASS",
-      "error_msg": null,
+      "eligibility_status": "FAIL",
+      "dimension_preflight_status": "FAIL",
+      "error_msg": "'twin_history'",
       "m_11": [
-        "d4"
+        "Na3"
       ],
       "m_10": [
         "Nc3",
-        "d3",
-        "c3"
+        "a3"
       ],
       "m_01": [],
       "m_00": [
         "Nh3",
         "Nf3",
-        "Na3",
         "h3",
         "g3",
         "f3",
         "e3",
+        "d3",
+        "c3",
         "b3",
-        "a3",
         "h4",
         "g4",
         "f4",
         "e4",
+        "d4",
         "c4",
         "b4",
         "a4"
       ],
-      "dimension_evidence": {
-        "fen_a": "rnbqkb1r/ppp1pppp/5n2/3p4/3P4/5N2/PPP1PPPP/RNBQKB1R w KQkq - 2 3",
-        "fen_b": "rnbqkb1r/ppp1pppp/5n2/3p4/3P4/5N2/PPP1PPPP/RNBQKB1R w KQkq - 2 3",
-        "lifecycle_differences": "History A: d4 attack duration 3 plies. History B: d4 attack duration 1 ply."
-      }
+      "dimension_evidence": {}
     },
     {
       "fixture_id": "Q14",
@@ -618,9 +648,9 @@
         "structural_partition",
         "consequence_cp"
       ],
-      "eligibility_status": "PASS",
-      "dimension_preflight_status": "PASS",
-      "error_msg": null,
+      "eligibility_status": "FAIL",
+      "dimension_preflight_status": "FAIL",
+      "error_msg": "Preflight failed: Predecessor signature None not present in root.",
       "m_11": [
         "a3"
       ],
@@ -648,15 +678,7 @@
         "c4",
         "b4"
       ],
-      "dimension_evidence": {
-        "explicit_structural_mapping": "X-axis reflection bijection (a-file to h-file)",
-        "mapped_partitions": {
-          "n11": 1,
-          "n10": 2,
-          "n01": 0,
-          "n00": 17
-        }
-      }
+      "dimension_evidence": {}
     },
     {
       "fixture_id": "Q15",
@@ -698,10 +720,10 @@
       ],
       "m_00": [],
       "dimension_evidence": {
-        "turn_conditioned_mobility": {
-          "tuple_present_when_white_to_move": false,
-          "tuple_present_when_black_to_move": true
-        }
+        "fen_white_to_move": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+        "fen_black_to_move": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1",
+        "tuple_present_when_white_to_move": false,
+        "tuple_present_when_black_to_move": true
       }
     }
   ]

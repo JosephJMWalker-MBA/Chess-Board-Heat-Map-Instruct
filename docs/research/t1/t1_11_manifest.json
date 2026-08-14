@@ -7,15 +7,14 @@
     "predecessor_signature": "attacker=PieceRef(square='e2', symbol='P') target_square='d3' target_piece=None is_defense=False",
     "successor_signature": "attacker=PieceRef(square='e4', symbol='P') target_square='d5' target_piece=None is_defense=False",
     "required_evidence_families": [
-      "structural_partition",
-      "consequence_cp"
+      "structural_partition"
     ],
     "human_hypothesis": "Moving the e2 pawn establishes a canonical succession where e2's attack on d3 is removed and e4's attack on d5 is born.",
     "mechanical_support_condition": "n11 > 0 and (n10 > 0 or n01 > 0)",
     "mechanical_falsifier": "n11 == 0",
-    "mechanical_ambiguous": "n10 == 0 and n01 == 0 and n00 == 0",
-    "mechanical_invalid": "predecessor does not exist in root",
-    "requires_consequence_evidence": true,
+    "mechanical_ambiguous": "n10 == 0 and n01 == 0",
+    "mechanical_invalid": "invalid geometry",
+    "requires_consequence_evidence": false,
     "mate_sensitive": false
   },
   {
@@ -66,7 +65,7 @@
       "consequence_cp"
     ],
     "human_hypothesis": "The birth of the c3 Knight's attack on d5 has consequence implications despite not exclusively replacing the b1 knight's attack on a3.",
-    "mechanical_support_condition": "medianR(m11) < medianR(m10) with CP-comparable observations",
+    "mechanical_support_condition": "n01 > 0 and medianR(m11) < medianR(m10) with CP-comparable observations",
     "mechanical_falsifier": "medianR(m11) >= medianR(m10)",
     "mechanical_ambiguous": "missing CP comparison class",
     "mechanical_invalid": "f is not born by played move",
@@ -248,13 +247,13 @@
     "fixture_id": "Q13",
     "dimension": "Same endpoint / different history",
     "pre_move_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
-    "played_move_san": "d4",
-    "predecessor_signature": "attacker=PieceRef(square='d2', symbol='P') target_square='c3' target_piece=None is_defense=False",
-    "successor_signature": "attacker=PieceRef(square='d4', symbol='P') target_square='c5' target_piece=None is_defense=False",
+    "played_move_san": "Na3",
+    "predecessor_signature": "attacker=PieceRef(square='b1', symbol='N') target_square='a3' target_piece=None is_defense=False",
+    "successor_signature": "attacker=PieceRef(square='a3', symbol='N') target_square='b5' target_piece=None is_defense=False",
     "required_evidence_families": [
       "paired_history"
     ],
-    "human_hypothesis": "Two equal-length commuting histories arrive at the identical exact FEN but possess different temporal ledgers (the d4 pawn attack on c5 has duration 3 plies in A and 1 ply in B).",
+    "human_hypothesis": "Two equal-length commuting histories ending in irreversible moves arrive at the exact same FEN but possess different temporal ledgers.",
     "mechanical_support_condition": "fen_a == fen_b and ledger_a != ledger_b",
     "mechanical_falsifier": "fen_a != fen_b or ledger_a == ledger_b",
     "mechanical_ambiguous": "invalid geometry",
@@ -263,16 +262,16 @@
     "mate_sensitive": false,
     "history": {
       "moves_a": [
-        "d4",
-        "d5",
-        "Nf3",
-        "Nf6"
+        "Na3",
+        "Na6",
+        "Nh3",
+        "Nh6"
       ],
       "moves_b": [
-        "Nf3",
-        "Nf6",
-        "d4",
-        "d5"
+        "Nh3",
+        "Nh6",
+        "Na3",
+        "Na6"
       ]
     },
     "observed_age_of_removed_episode": 1,

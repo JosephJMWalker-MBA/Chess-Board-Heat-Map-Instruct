@@ -25,8 +25,8 @@ class ValidationHarness:
         self.budget_nodes = budget_nodes
         self.threads = threads
         self.hash_mb = hash_mb
-        if comparison_perspective not in ("white", "black"):
-            raise ValueError("comparison_perspective must be 'white' or 'black'")
+        if comparison_perspective not in ("white", "black", "root_side"):
+            raise ValueError("comparison_perspective must be 'white', 'black', or 'root_side'")
         self.comparison_perspective = comparison_perspective
         self.engine = None
         self.engine_version = "Unknown"
@@ -94,19 +94,24 @@ class ValidationHarness:
             "output_directory_identity": os.path.abspath(output_dir)
         }
 
-    def evaluate_move(self, board: chess.Board, move: chess.Move) -> Score:
+    def evaluate_move(self, board: chess.Board, move: chess.Move, resolved_perspective: str = None) -> Score:
+        if resolved_perspective is None:
+            resolved_perspective = self.comparison_perspective
+            if resolved_perspective == "root_side":
+                raise ValueError("evaluate_move requires an explicitly resolved perspective when configured for 'root_side'")
+                
         board.push(move)
         try:
             info = self.engine.analyse(board, chess.engine.Limit(nodes=self.budget_nodes))
-            if self.comparison_perspective == "white":
+            if resolved_perspective == "white":
                 s = info["score"].white()
             else:
                 s = info["score"].black()
                 
             if s.is_mate():
-                return Score(type='mate', value=s.mate(), perspective=self.comparison_perspective)
+                return Score(type='mate', value=s.mate(), perspective=resolved_perspective)
             else:
-                return Score(type='cp', value=s.score(), perspective=self.comparison_perspective)
+                return Score(type='cp', value=s.score(), perspective=resolved_perspective)
         finally:
             board.pop()
 
@@ -184,11 +189,16 @@ class ValidationHarness:
         board = chess.Board(fen)
         legal_moves = list(board.legal_moves)
         
+        if self.comparison_perspective == "root_side":
+            resolved_perspective = "white" if board.turn == chess.WHITE else "black"
+        else:
+            resolved_perspective = self.comparison_perspective
+        
         scores = {}
         
         for m in legal_moves:
             m_san = board.san(m)
-            scores[m_san] = self.evaluate_move(board, m)
+            scores[m_san] = self.evaluate_move(board, m, resolved_perspective=resolved_perspective)
             
         regrets = compute_regrets(scores)
         
