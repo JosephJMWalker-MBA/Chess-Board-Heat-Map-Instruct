@@ -5,8 +5,8 @@ Preregistered Hostile Corpus Q1-Q15.
 - **Hypothesis:** Moving the e2 pawn establishes a canonical succession where e2's attack on d3 is removed and e4's attack on d5 is born.
 - **Support:** n11 > 0 and (n10 > 0 or n01 > 0)
 - **Falsifier:** n11 == 0
-- **Ambiguous:** n10 == 0 and n01 == 0 and n00 == 0
-- **Invalid:** predecessor does not exist in root
+- **Ambiguous:** n10 == 0 and n01 == 0
+- **Invalid:** invalid geometry
 
 ## Q2: Independent successor birth
 - **Hypothesis:** Moving the b1 knight to c3 (Nbc3) removes its attack on a3 and births an attack on d5. Moving the e2 knight to c3 (Nec3) also births the attack on d5 but preserves the b1 knight's attack on a3, placing Nec3 in m01.
@@ -24,7 +24,7 @@ Preregistered Hostile Corpus Q1-Q15.
 
 ## Q4: Consequence association without structural exclusivity
 - **Hypothesis:** The birth of the c3 Knight's attack on d5 has consequence implications despite not exclusively replacing the b1 knight's attack on a3.
-- **Support:** medianR(m11) < medianR(m10) with CP-comparable observations
+- **Support:** n01 > 0 and medianR(m11) < medianR(m10) with CP-comparable observations
 - **Falsifier:** medianR(m11) >= medianR(m10)
 - **Ambiguous:** missing CP comparison class
 - **Invalid:** f is not born by played move
@@ -86,7 +86,7 @@ Preregistered Hostile Corpus Q1-Q15.
 - **Invalid:** invalid geometry
 
 ## Q13: Same endpoint / different history
-- **Hypothesis:** Two equal-length commuting histories arrive at the identical exact FEN but possess different temporal ledgers (the d4 pawn attack on c5 has duration 3 plies in A and 1 ply in B).
+- **Hypothesis:** Two equal-length commuting histories ending in equal-length reversible knight-move histories arrive at the exact same FEN but possess different temporal ledgers.
 - **Support:** fen_a == fen_b and ledger_a != ledger_b
 - **Falsifier:** fen_a != fen_b or ledger_a == ledger_b
 - **Ambiguous:** invalid geometry

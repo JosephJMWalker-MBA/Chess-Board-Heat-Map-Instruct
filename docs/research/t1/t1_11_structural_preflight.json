@@ -318,8 +318,8 @@
             "f": "attacker=PieceRef(square='c5', symbol='B') target_square='d6' target_piece=None is_defense=False"
           },
           {
-            "e": "attacker=PieceRef(square='d4', symbol='B') target_square='c5'",
-            "f": "attacker=PieceRef(square='c5', symbol='B') target_square='b6'"
+            "e": "attacker=PieceRef(square='d4', symbol='B') target_square='c5' target_piece=None is_defense=False",
+            "f": "attacker=PieceRef(square='c5', symbol='B') target_square='b6' target_piece=None is_defense=False"
           }
         ],
         "bundle_equality_1": {
@@ -691,9 +691,20 @@
       "dimension_evidence": {
         "fen_a": "r1bqkb1r/pppppppp/n6n/8/8/N6N/PPPPPPPP/R1BQKB1R w KQkq - 4 3",
         "fen_b": "r1bqkb1r/pppppppp/n6n/8/8/N6N/PPPPPPPP/R1BQKB1R w KQkq - 4 3",
-        "legal_root_equality": true,
         "geometry_equality": true,
-        "lifecycle_differences": "History A: 1 intervals. History B: 1 intervals."
+        "legal_root_equality": true,
+        "intervals_a": [
+          [
+            0,
+            1
+          ]
+        ],
+        "intervals_b": [
+          [
+            0,
+            3
+          ]
+        ]
       }
     },
     {
@@ -708,7 +719,7 @@
         "consequence_cp"
       ],
       "eligibility_status": "PASS",
-      "dimension_preflight_status": "FAIL",
+      "dimension_preflight_status": "PRECONDITIONS_PASS_PENDING_ENGINE",
       "error_msg": null,
       "m_11": [
         "a3"
@@ -777,23 +788,23 @@
           ],
           "m01": [],
           "m00": [
-            "Nh3",
-            "Nf3",
-            "Nc3",
             "Na3",
-            "f3",
-            "e3",
-            "d3",
-            "c3",
-            "b3",
+            "Nc3",
+            "Nf3",
+            "Nh3",
             "a3",
-            "g4",
-            "f4",
-            "e4",
-            "d4",
-            "c4",
+            "a4",
+            "b3",
             "b4",
-            "a4"
+            "c3",
+            "c4",
+            "d3",
+            "d4",
+            "e3",
+            "e4",
+            "f3",
+            "f4",
+            "g4"
           ]
         },
         "mapping": "UCI file reflection"

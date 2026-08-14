@@ -133,8 +133,8 @@
     "requires_consequence_evidence": false,
     "mate_sensitive": false,
     "bundle_second_pair": {
-      "e_str_part": "attacker=PieceRef(square='d4', symbol='B') target_square='c5'",
-      "f_str_part": "attacker=PieceRef(square='c5', symbol='B') target_square='b6'"
+      "e_str": "attacker=PieceRef(square='d4', symbol='B') target_square='c5' target_piece=None is_defense=False",
+      "f_str": "attacker=PieceRef(square='c5', symbol='B') target_square='b6' target_piece=None is_defense=False"
     }
   },
   {
@@ -296,8 +296,8 @@
     "twin_fixture": {
       "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
       "played_move_san": "h3",
-      "e_str_part": "attacker=PieceRef(square='h2', symbol='P') target_square='g3'",
-      "f_str_part": "attacker=PieceRef(square='h3', symbol='P') target_square='g4'"
+      "e_str": "attacker=PieceRef(square='h2', symbol='P') target_square='g3' target_piece=None is_defense=False",
+      "f_str": "attacker=PieceRef(square='h3', symbol='P') target_square='g4' target_piece=None is_defense=False"
     }
   },
   {

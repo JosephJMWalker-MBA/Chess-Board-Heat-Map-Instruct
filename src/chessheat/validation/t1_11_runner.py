@@ -49,6 +49,17 @@ def create_execution_seal(
     output_dir: str
 ) -> Dict[str, Any]:
     
+    # Programmatically verify preflight is free of FAIL states before generation
+    with open(preflight_path, "r") as f:
+        preflight_data = json.load(f)
+        
+    for fix in preflight_data.get("fixtures", []):
+        if fix.get("eligibility_status") == "FAIL":
+            raise ValueError(f"Preflight has FAIL eligibility for {fix.get('fixture_id')}")
+            
+        if fix.get("dimension_preflight_status") == "FAIL":
+            raise ValueError(f"Preflight has FAIL dimension status for {fix.get('fixture_id')}")
+            
     # Verify empty dir
     if os.path.exists(output_dir):
         if len(os.listdir(output_dir)) > 0:
@@ -98,19 +109,23 @@ def run_t1_11_execution(preflight_path: str, manifest_path: str, output_dir: str
     with open(manifest_path, "r") as f:
         manifest_data = json.load(f)
         
-    manifest_dict = {item["id"]: item for item in manifest_data}
+    manifest_dict = {item["fixture_id"]: item for item in manifest_data}
         
     for fix in preflight_data.get("fixtures", []):
         if fix.get("eligibility_status") == "FAIL":
-            raise ValueError(f"Preflight has FAIL for {fix['id']}")
+            raise ValueError(f"Preflight has FAIL for {fix.get('fixture_id')}")
             
-        for dim in fix.get("dimensions", []):
-            if dim.get("dimension_preflight_status") == "FAIL":
-                raise ValueError(f"Preflight has FAIL for {fix['id']} on dimension {dim['name']}")
-                
-    # Harness instantiation would happen here, ensuring root_side and correct engine constraints.
-    # It would evaluate each pending engine condition properly.
-    # Since this is preparing for execution, we just need to ensure the constraints.
+        if fix.get("dimension_preflight_status") == "FAIL":
+            raise ValueError(f"Preflight has FAIL dimension for {fix.get('fixture_id')}")
+            
+        status = fix.get("dimension_preflight_status")
+        # Ensure structural fixtures do not call the engine
+        if status == "PASS":
+            pass # No engine call needed
+        elif status == "PRECONDITIONS_PASS_PENDING_ENGINE":
+            # Harness engine eval would happen here
+            pass
+            
     pass
 
 if __name__ == "__main__":
