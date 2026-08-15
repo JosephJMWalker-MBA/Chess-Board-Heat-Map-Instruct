@@ -1,0 +1,210 @@
+{
+  "suite_identity": "SuiteManifest(kind=MECHANISM_STRESS)",
+  "preregistration_commit": "5a7226f17c5a5716a2d17ed48df176730ec74b2d",
+  "classification": "SUPPORTED",
+  "failure_reason": null,
+  "fen": "4k3/8/1b6/8/3R4/8/8/4K3 w - - 0 1",
+  "event": {
+    "square": "d4",
+    "role": "capture",
+    "ply": 2
+  },
+  "expected_direction": "BAD / HIGHER_REGRET",
+  "engine_identity": "Stockfish 18",
+  "engine_options": {
+    "Threads": 1,
+    "Hash": 16
+  },
+  "search_budget": {
+    "type": "nodes",
+    "value": 100000
+  },
+  "candidate_policy": {},
+  "line_source": "pv",
+  "legal_root_count": 19,
+  "typed_scores": {
+    "d4d8": {
+      "type": "cp",
+      "value": 3
+    },
+    "d4d7": {
+      "type": "cp",
+      "value": 6
+    },
+    "d4d6": {
+      "type": "cp",
+      "value": 21
+    },
+    "d4d5": {
+      "type": "cp",
+      "value": 28
+    },
+    "d4h4": {
+      "type": "cp",
+      "value": 29
+    },
+    "d4g4": {
+      "type": "cp",
+      "value": 24
+    },
+    "d4f4": {
+      "type": "cp",
+      "value": 31
+    },
+    "d4e4": {
+      "type": "cp",
+      "value": 26
+    },
+    "d4c4": {
+      "type": "cp",
+      "value": 29
+    },
+    "d4b4": {
+      "type": "cp",
+      "value": 9
+    },
+    "d4a4": {
+      "type": "cp",
+      "value": 28
+    },
+    "d4d3": {
+      "type": "cp",
+      "value": 32
+    },
+    "d4d2": {
+      "type": "cp",
+      "value": 11
+    },
+    "d4d1": {
+      "type": "cp",
+      "value": 33
+    },
+    "e1f2": {
+      "type": "cp",
+      "value": 0
+    },
+    "e1e2": {
+      "type": "cp",
+      "value": 0
+    },
+    "e1d2": {
+      "type": "cp",
+      "value": 0
+    },
+    "e1f1": {
+      "type": "cp",
+      "value": 0
+    },
+    "e1d1": {
+      "type": "cp",
+      "value": 0
+    }
+  },
+  "typed_regrets": {
+    "d4d1": {
+      "type": "cp",
+      "value": 0
+    },
+    "d4d3": {
+      "type": "cp",
+      "value": 1
+    },
+    "d4f4": {
+      "type": "cp",
+      "value": 2
+    },
+    "d4h4": {
+      "type": "cp",
+      "value": 4
+    },
+    "d4c4": {
+      "type": "cp",
+      "value": 4
+    },
+    "d4d5": {
+      "type": "cp",
+      "value": 5
+    },
+    "d4a4": {
+      "type": "cp",
+      "value": 5
+    },
+    "d4e4": {
+      "type": "cp",
+      "value": 7
+    },
+    "d4g4": {
+      "type": "cp",
+      "value": 9
+    },
+    "d4d6": {
+      "type": "cp",
+      "value": 12
+    },
+    "d4d2": {
+      "type": "cp",
+      "value": 22
+    },
+    "d4b4": {
+      "type": "cp",
+      "value": 24
+    },
+    "d4d7": {
+      "type": "cp",
+      "value": 27
+    },
+    "d4d8": {
+      "type": "cp",
+      "value": 30
+    },
+    "e1f2": {
+      "type": "cp",
+      "value": 33
+    },
+    "e1e2": {
+      "type": "cp",
+      "value": 33
+    },
+    "e1d2": {
+      "type": "cp",
+      "value": 33
+    },
+    "e1f1": {
+      "type": "cp",
+      "value": 33
+    },
+    "e1d1": {
+      "type": "cp",
+      "value": 33
+    }
+  },
+  "evaluable_event_present_roots": [
+    "e1d1",
+    "e1d2",
+    "e1e2",
+    "e1f1",
+    "e1f2"
+  ],
+  "evaluable_event_absent_roots": [
+    "d4a4",
+    "d4b4",
+    "d4c4",
+    "d4d1",
+    "d4d2",
+    "d4d3",
+    "d4d5",
+    "d4d6",
+    "d4d7",
+    "d4d8",
+    "d4e4",
+    "d4f4",
+    "d4g4",
+    "d4h4"
+  ],
+  "unevaluable_roots": [],
+  "D": 27.0,
+  "M": 3,
+  "aggregate_membership_count": 5,
+  "fixture_digest": "ec55f31c873292aaefe2229a8b197458b678e6bb3617d6094b22068b8240a1b1",
+  "semantic_signature_digest": "S0_DIGEST_UNAVAILABLE"
+}
