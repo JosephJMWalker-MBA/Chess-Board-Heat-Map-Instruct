@@ -41,7 +41,14 @@ def evaluate_t3a1(branches: List[FutureBranch]) -> Dict[str, Any]:
             short_roots[b.root_uci] = len(b.future_moves)
             classification = "INCONCLUSIVE"
             failure_reason = "INSUFFICIENT_OBSERVED_PV_LENGTH"
-            # Do not break immediately; we want to gather all short roots and all occurrences
+            
+            # Record partial occurrences if any, but do not append to partitions
+            for ev in b.future_evidence:
+                if 2 <= ev.ply <= 5:
+                    if ev.square == event_sq and ev.role == event_role:
+                        observed_event_occurrence_count += 1
+            
+            continue # DO NOT enter partition_0 or partition_1
             
         x = 0
         for ev in b.future_evidence:
@@ -96,6 +103,7 @@ def evaluate_t3a1(branches: List[FutureBranch]) -> Dict[str, Any]:
         "horizon_plies": [2, 3, 4, 5],
         "short_roots": short_roots,
         "typed_root_regrets": all_regrets,
+        "unevaluable_roots": sorted(list(short_roots.keys())),
         "evaluable_event_present_roots": sorted([b.root_uci for b in partition_1]),
         "evaluable_event_absent_roots": sorted([b.root_uci for b in partition_0]),
         "is_evaluable_set_incomplete": len(short_roots) > 0,
