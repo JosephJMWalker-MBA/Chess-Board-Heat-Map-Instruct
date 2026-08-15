@@ -1,5 +1,7 @@
 import pytest
 import chess
+import hashlib
+import json
 from chessheat.semantics import RelationContainer, ParticipantRole, SubjectKind, CoreRelationState, SufficientPosition
 from chessheat.models import SpatialEvent, FutureBranch, Score
 from chessheat.experiment import ExperimentSpec, ExperimentResult, SuiteManifest, SuiteKind
@@ -18,17 +20,12 @@ def project_relations_to_spatial_events(relations: list[RelationContainer], ply:
                 events.append(SpatialEvent(square=p.subject, role=role_map[p.role], ply=ply))
     return sorted(events, key=lambda e: (e.square, e.role))
 
-
 def test_endpoint_pairing_lemma():
     """
     Endpoint-Pairing Lemma: 
     Projection from relation records to independent SpatialEvent(square, role, ply) events 
     is non-injective because relation pairing/linkage is lost.
     """
-    # Mechanically valid chess setup (e.g. 2 Rooks attacking 2 targets)
-    # White Rooks on a1, c1. Black targets on a3, c3.
-    # Note: This lemma isolates just the relation representation, independent of the board state baseline.
-    
     vertical = [
         RelationContainer(relation_type="ray", participants=[
             ParticipantRole(subject="a1", kind=SubjectKind.SQUARE, role="origin"),
@@ -54,75 +51,119 @@ def test_endpoint_pairing_lemma():
     proj_v = project_relations_to_spatial_events(vertical)
     proj_d = project_relations_to_spatial_events(diagonal)
     
-    # Proof of non-injectivity: the relations differ, but their square projections are identical.
     assert vertical != diagonal
     assert proj_v == proj_d
 
-def test_ray_blocker_strong_falsifier():
+def test_ordinary_pv_reconstruction_lemma():
     """
-    T2 Preflight: Ray/Blocker Information Irreversibility - Strong Falsifier
-    Tests whether the ray/blocker relation distinction can be reconstructed from the
-    sufficient legal position and the actual ChessHeat baseline square events (which include ply).
+    Ordinary-PV Reconstruction Lemma: 
+    For tested ordinary moves whose identity is determined by origin/destination/state, 
+    the square-event PV can be replayed and rule-exact relations reconstructed.
     """
-    # 1. Mechanically Valid Chess Fixture
     fen = "4k3/8/8/8/8/8/4P3/4K2R w K - 0 1"
     board = chess.Board(fen)
     assert board.is_valid()
     
-    # 2. Mechanically derive relations (e.g., ray/blocker for a discovered attack or PV)
-    # Suppose our branch PV is 1. e2e4. 
-    move = chess.Move.from_uci("e2e4")
-    assert move in board.legal_moves
-    
-    # The FutureBranch baseline captures the PV moves as SpatialEvents tagged by ply.
     pv_events = [
         SpatialEvent(square="e2", role="origin", ply=1),
         SpatialEvent(square="e4", role="destination", ply=1)
     ]
     
-    score = Score(type="cp", value=100, perspective="white")
-    branch = FutureBranch(
-        root_uci="e2e4",
-        root_fen=fen,
-        actor="white",
-        line_source="synthetic_pv",
-        producer="rule_exact",
-        score=score,
-        regret=score,
-        is_admitted=True,
-        future_evidence=pv_events
-    )
-    
-    # 3. Mechanically challenge the proof
-    # Can we reconstruct the PV move from the baseline square evidence?
-    # Yes, because ply=1 has exactly one origin and one destination.
-    reconstructed_origin = next(e.square for e in branch.future_evidence if e.ply == 1 and e.role == "origin")
-    reconstructed_dest = next(e.square for e in branch.future_evidence if e.ply == 1 and e.role == "destination")
-    
+    reconstructed_origin = next(e.square for e in pv_events if e.ply == 1 and e.role == "origin")
+    reconstructed_dest = next(e.square for e in pv_events if e.ply == 1 and e.role == "destination")
     reconstructed_move_uci = f"{reconstructed_origin}{reconstructed_dest}"
-    assert reconstructed_move_uci == "e2e4"
     
-    # Since we can reconstruct the move, we can apply it to the sufficient legal position.
-    simulated_board = chess.Board(branch.root_fen)
+    simulated_board = chess.Board(fen)
     simulated_board.push_uci(reconstructed_move_uci)
     
-    # From the simulated board, we can perfectly reconstruct any rule-exact ray/blocker relation.
-    # E.g., extracting the open file for the rook on h1:
     rook_attacks = simulated_board.attacks(chess.H1)
-    assert chess.H8 in rook_attacks  # Ray h1->h8 is unblocked
+    assert chess.H8 in rook_attacks  
+
+def test_promotion_ambiguity_proves_irreversibility():
+    """
+    T2 Preflight: Ray/Blocker Information Irreversibility
+    Proves that for promotion moves, the FutureBranch baseline square evidence
+    (origin and destination squares) is non-injective. Discarding the promotion piece
+    permanently loses branch-conditioned relational semantics, supporting Claim A.
+    """
+    # 1. Test promotion ambiguity in the actual baseline
+    # Board with Black King on a8, White pawn on d7, Black pawn on h4 (target).
+    fen = "k7/3P4/8/8/7p/8/8/4K3 w - - 0 1"
+    board = chess.Board(fen)
+    assert board.is_valid()
     
-    # Conclusion: The square evidence (which includes ply and move roles) + permitted board state
-    # allows deterministic reconstruction of the PV, and therefore deterministic reconstruction
-    # of all board states and all rule-exact ray/blocker relations.
-    # Therefore, the relations are fully reconstructible and the irreversibility hypothesis is FALSIFIED.
+    root_uci = "e1d1"
+    assert chess.Move.from_uci(root_uci) in board.legal_moves
     
-    # 4. Use real S1 identities
+    # We construct two legal PV continuations from this root
+    # PV A: 1... a8a7 (ply 1) 2. d7d8q (ply 2)
+    # PV B: 1... a8a7 (ply 1) 2. d7d8r (ply 2)
+    
+    pv_events = [
+        SpatialEvent(square="a8", role="origin", ply=1),
+        SpatialEvent(square="a7", role="destination", ply=1),
+        SpatialEvent(square="d7", role="origin", ply=2),
+        SpatialEvent(square="d8", role="destination", ply=2)
+    ]
+    
+    # 2. Use the actual FutureBranch information boundary
+    score = Score(type="cp", value=100, perspective="white")
+    branch_Q = FutureBranch(
+        root_uci=root_uci, root_fen=fen, actor="white", line_source="synthetic", producer="engine",
+        score=score, regret=score, is_admitted=True, future_evidence=pv_events
+    )
+    branch_R = FutureBranch(
+        root_uci=root_uci, root_fen=fen, actor="white", line_source="synthetic", producer="engine",
+        score=score, regret=score, is_admitted=True, future_evidence=pv_events
+    )
+    
+    # The FutureBranch baseline evidence is perfectly identical.
+    assert branch_Q.future_evidence == branch_R.future_evidence
+    
+    # Trying to reconstruct from baseline fails to uniquely determine promotion:
+    # Origin is d7, dest is d8. The move is d7d8? -> could be q, r, b, or n.
+    reconstructed_moves = []
+    board_after_ply1 = board.copy()
+    board_after_ply1.push_uci("e1d1")
+    board_after_ply1.push_uci("a8a7")
+    
+    for m in board_after_ply1.legal_moves:
+        if chess.square_name(m.from_square) == "d7" and chess.square_name(m.to_square) == "d8":
+            reconstructed_moves.append(m)
+            
+    assert len(reconstructed_moves) == 4  # All 4 promotions match the baseline square evidence
+    
+    # 3. Test relational consequence of the ambiguity
+    # Replay Q promotion
+    board_Q = board_after_ply1.copy()
+    board_Q.push_uci("d7d8q")
+    attacks_Q = board_Q.attacks(chess.D8)
+    assert chess.H4 in attacks_Q # Queen on d8 attacks h4
+    
+    # Replay R promotion
+    board_R = board_after_ply1.copy()
+    board_R.push_uci("d7d8r")
+    attacks_R = board_R.attacks(chess.D8)
+    assert chess.H4 not in attacks_R # Rook on d8 does NOT attack h4
+    
+    # We have established that the exact same FutureBranch square evidence 
+    # maps to different rule-exact ray relation structure.
+    
+    # 5. Fix S1 fixture identity
+    fixture_content = {
+        "fen": fen,
+        "root_uci": root_uci,
+        "pv_a": ["a8a7", "d7d8q"],
+        "pv_b": ["a8a7", "d7d8r"]
+    }
+    fixture_hash = hashlib.sha256(json.dumps(fixture_content, sort_keys=True).encode()).hexdigest()
+    
     s0_canonical = SemanticSignatureV1.create_canonical()
     
     manifest = SuiteManifest(
-        suite_id="t2_ray_blocker_falsifier",
+        suite_id="t2_ray_blocker_promotion_ambiguity",
         kind=SuiteKind.MECHANISM_STRESS,
-        fixtures={"fixture_1": "mock_fixture_hash"}
+        fixtures={"fixture_1": fixture_hash}
     )
     
     spec = ExperimentSpec(
@@ -131,11 +172,11 @@ def test_ray_blocker_strong_falsifier():
         suite_identity=manifest.suite_id,
         suite_digest=manifest.suite_digest(),
         fixture_identity="fixture_1",
-        fixture_digest="mock_fixture_hash",
+        fixture_digest=fixture_hash,
         sufficient_position=SufficientPosition(
             board_arrangement_fen=fen,
             side_to_move="w",
-            castling_rights="K",
+            castling_rights="-",
             en_passant_square=None,
             halfmove_clock=0,
             fullmove_number=1,
@@ -149,16 +190,20 @@ def test_ray_blocker_strong_falsifier():
         hypothesis_identifier="t2_ray_blocker_irreversibility"
     )
 
+    # 4. Correct the logical classification
     result = ExperimentResult.create(
         spec_digest=spec.spec_digest(),
         data={
-            "outcome": "FALSIFIED",
-            "endpoint_pairing_lemma": "Proved non-injective natively",
-            "conclusion": "Because FutureBranch baseline includes explicit PV moves tagged by ply, "
-                          "the exact sequence of future board states can be reconstructed. "
-                          "Thus, any rule-exact ray/blocker relation can be deterministically "
-                          "reconstructed from the baseline + root state, falsifying irreversibility."
+            "outcome": "SUPPORTED",
+            "endpoint_pairing_lemma": "Preserved: independent square projection loses linkage.",
+            "ordinary_pv_reconstruction_lemma": "Preserved: ordinary non-promotion moves can be reconstructed.",
+            "conclusion": "Because FutureBranch baseline explicitly discards promotion identity, "
+                          "legal PVs differing only by promotion piece produce identical spatial evidence. "
+                          "Since promotions create distinct ray structures (e.g. Queen attacks vs Rook attacks), "
+                          "the baseline irreversibly destroys branch-conditioned ray/blocker relational semantics. "
+                          "Claim A is SUPPORTED."
         }
     )
 
-    assert result.data["outcome"] == "FALSIFIED"
+    assert result.data["outcome"] == "SUPPORTED"
+
