@@ -19,6 +19,8 @@ def test_subject_kind_constraints():
     required_types = {"square", "piece", "move", "relation", "path", "region", "interaction_component", "global_state"}
     enum_values = {e.value for e in SubjectKind}
     # Allow extensibility by asserting subset relationship
+    # UPDATE: SubjectKind is now a closed V1 ontology protected by the SemanticSignatureV1 digest.
+    # The digest will fail if a new top-level kind is added without an explicit version update.
     assert required_types.issubset(enum_values)
 
 def test_evidence_level_ladder():
@@ -32,17 +34,16 @@ def test_evidence_level_ladder():
     enum_values = {e.value for e in EvidenceLevel}
     assert required_levels.issubset(enum_values)
 
-def test_semantic_signature_determinism():
+def test_frozen_semantic_signature_digest():
     """
-    Verify that SemanticSignatureV1 generates a deterministic hash for the same definition.
+    Verify that SemanticSignatureV1 equals the exact expected digest.
+    If this fails, a meaningful semantic definition has changed (e.g. new SubjectKind added,
+    fields altered) and requires an explicit semantic-version bump.
     """
-    sig1 = SemanticSignatureV1.create_canonical()
-    sig2 = SemanticSignatureV1.create_canonical()
+    EXPECTED_DIGEST = "5fa4d57cf43c673fa31874ce5d19e777acf0ea695fd032412b193c2123461080"
     
-    assert sig1.signature_hash() == sig2.signature_hash()
-    
-    # Verify it actually returns a 64-char sha256 hex string
-    assert len(sig1.signature_hash()) == 64
+    sig = SemanticSignatureV1.create_canonical()
+    assert sig.signature_hash() == EXPECTED_DIGEST
 
 def test_semantic_signature_mutation():
     """
@@ -105,3 +106,61 @@ def test_relation_state_extensibility():
         
     with pytest.raises(ValidationError):
         make_container("custom_without_colon")  # Missing namespace delimiter
+
+def test_relation_state_assignment_validation():
+    """
+    Ensure RelationContainer.state validation cannot be bypassed by post-construction assignment.
+    """
+    from chessheat.semantics import RelationContainer, ParticipantRole, SubjectKind
+    from pydantic import ValidationError
+
+    relation = RelationContainer(
+        relation_type="attacks",
+        participants=[ParticipantRole(subject="e2", kind=SubjectKind.SQUARE, role="origin")],
+        state=CoreRelationState.ENABLED.value,
+        provenance="test"
+    )
+
+    with pytest.raises(ValidationError):
+        relation.state = "banana"
+
+def test_history_distinction():
+    """
+    Ensure two otherwise identical sufficient positions with distinct available
+    history identities remain distinguishable.
+    """
+    from chessheat.semantics import SufficientPosition
+    
+    base_kwargs = dict(
+        board_arrangement_fen="fen",
+        side_to_move="w",
+        castling_rights="-",
+        en_passant_square=None,
+        halfmove_clock=0,
+        fullmove_number=1,
+        variant="standard"
+    )
+
+    p1 = SufficientPosition(**base_kwargs, history_available=True, history_identity="hash_A")
+    p2 = SufficientPosition(**base_kwargs, history_available=True, history_identity="hash_B")
+    
+    assert p1.model_dump_json() != p2.model_dump_json()
+
+def test_unavailable_history():
+    """
+    Ensure unavailable history remains explicitly representable.
+    """
+    from chessheat.semantics import SufficientPosition
+    
+    p = SufficientPosition(
+        board_arrangement_fen="fen",
+        side_to_move="w",
+        castling_rights="-",
+        en_passant_square=None,
+        halfmove_clock=0,
+        fullmove_number=1,
+        history_available=False,
+        history_identity=None
+    )
+    assert p.history_available is False
+    assert p.history_identity is None

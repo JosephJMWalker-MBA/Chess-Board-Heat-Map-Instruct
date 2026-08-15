@@ -53,6 +53,7 @@ class SufficientPosition(BaseModel):
     halfmove_clock: int
     fullmove_number: int
     history_available: bool
+    history_identity: Optional[str] = None
     variant: str = "standard"
 
 class ParticipantRole(BaseModel):
@@ -64,6 +65,8 @@ class RelationContainer(BaseModel):
     """
     Semantic container for relations (not strictly pairwise edges).
     """
+    model_config = {"validate_assignment": True}
+
     relation_type: str
     participants: List[ParticipantRole]
     geometry_path: Optional[List[str]] = None
@@ -107,6 +110,9 @@ class SemanticSignatureV1(BaseModel):
     version: str = "1.0"
     position: SufficientPosition
     relation: RelationContainer
+    epistemic_types: List[str]
+    subject_kinds: List[str]
+    evidence_levels: List[str]
     
     @classmethod
     def create_canonical(cls) -> "SemanticSignatureV1":
@@ -131,7 +137,10 @@ class SemanticSignatureV1(BaseModel):
                 geometry_path=["e2", "e3", "e4", "e5", "e6", "e7"],
                 state=CoreRelationState.ENABLED.value,
                 provenance="rule_exact"
-            )
+            ),
+            epistemic_types=sorted([e.value for e in EpistemicGuarantee]),
+            subject_kinds=sorted([s.value for s in SubjectKind]),
+            evidence_levels=sorted([e.value for e in EvidenceLevel])
         )
     
     def signature_hash(self) -> str:
