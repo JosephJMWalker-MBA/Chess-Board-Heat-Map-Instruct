@@ -179,9 +179,11 @@ class EventBundle(BaseModel):
     implicated_squares: List[str]
     is_perfectly_confounded: bool
 
+from .semantics import EpistemicGuarantee, SubjectKind
+
 class EvidenceEnvelope(BaseModel):
-    epistemic_guarantee: str
-    subject_kind: str
+    epistemic_guarantee: EpistemicGuarantee
+    subject_kind: SubjectKind
     producer: str
     history_requirement: bool
     line_source: str

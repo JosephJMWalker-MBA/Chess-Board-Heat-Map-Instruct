@@ -199,32 +199,22 @@ A validation artifact is not trustworthy merely because tests pass; the evidence
 *Question:* Are CP regret relationships stable to root-evaluation ordering and transposition-table state?
 *(Do not design fixtures or execute this yet.)*
 
-## Research Track T2 — Regional representation
+## Research Track T2 — Semantic Chess Structure & Measurement Basis
 
 **Status: Open**
 
-Investigate whether squares are too lossy as the only spatial primitive.
-
-Candidate first-class objects:
-
-- files;
-- diagonals;
-- rays / corridors;
-- king zones;
-- pawn complexes;
-- disjoint simultaneous tactical regions.
-
-Broad- and multi-region hostile fixtures motivate this track.
+- **T2a**: Semantic State and Relations. Define the structures that distinguish between sufficient chess state, subject identity (square, piece, region, global state), and general relations (with support for multiple participants and distinct roles).
+- **T2b**: Measurement-Basis Comparison.
 
 ---
 
-## Research Track T3 — Consequence-coupled recurrence
+## Research Track T3 — Branch-Conditioned Consequence Structure
 
 **Status: Open**
 
-Investigate whether recurrence relevance should depend on how strongly passage through a square distinguishes materially different root outcomes rather than on frequency / early occurrence alone.
+Establish consequence architecture natively conditioned on branch identity rather than aggregate position frequency. 
 
-Do not begin by simply tightening `ShapeSelectivity-v1` thresholds.
+Note: Ordinary square-based recurrence frequency remains exactly one valid hypothesis and evidence channel inside the broader T3 measurement structure, rather than defining the bounds of T3 itself.
 
 ---
 

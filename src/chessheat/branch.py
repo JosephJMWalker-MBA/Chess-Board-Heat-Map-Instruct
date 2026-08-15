@@ -40,7 +40,7 @@ def extract_branches(record: AnalysisRecord) -> BranchUniverse:
     from .models import CandidateProvenance, EvidenceEnvelope
 
     envelope = EvidenceEnvelope(
-        epistemic_guarantee="engine_search",
+        epistemic_guarantee="search_derived",
         subject_kind="square",
         producer=record.engine_name,
         history_requirement=False,

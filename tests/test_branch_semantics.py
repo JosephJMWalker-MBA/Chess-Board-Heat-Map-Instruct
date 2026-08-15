@@ -90,7 +90,7 @@ def test_branch_irreversibility():
     """
     # Universe A: Square e4 is used in a good branch (regret=0) and a bad branch (regret=150)
     universe_a = BranchUniverse(
-        envelope=EvidenceEnvelope(epistemic_guarantee="mock", subject_kind="mock", producer="mock", history_requirement=False, line_source="mock"),
+        envelope=EvidenceEnvelope(epistemic_guarantee="search_derived", subject_kind="square", producer="mock", history_requirement=False, line_source="pv"),
         provenance=CandidateProvenance(
             total_legal_moves=2, candidate_policy={}, admitted_count=2, admitted_root_moves=["a", "b"], 
             candidate_scores={}, candidate_regrets={}, aggregated_pvs=2
@@ -115,7 +115,7 @@ def test_branch_irreversibility():
     
     # Universe B: Square e4 is used only in two identical mediocre branches (regret=75)
     universe_b = BranchUniverse(
-        envelope=EvidenceEnvelope(epistemic_guarantee="mock", subject_kind="mock", producer="mock", history_requirement=False, line_source="mock"),
+        envelope=EvidenceEnvelope(epistemic_guarantee="search_derived", subject_kind="square", producer="mock", history_requirement=False, line_source="pv"),
         provenance=CandidateProvenance(
             total_legal_moves=2, candidate_policy={}, admitted_count=2, admitted_root_moves=["c", "d"], 
             candidate_scores={}, candidate_regrets={}, aggregated_pvs=2
@@ -246,7 +246,7 @@ def test_envelope_and_serialization():
     universe = extract_branches(record)
     
     # Verify Envelope
-    assert universe.envelope.epistemic_guarantee == "engine_search"
+    assert universe.envelope.epistemic_guarantee == "search_derived"
     assert universe.envelope.subject_kind == "square"
     assert universe.envelope.producer == "mock"
     assert universe.envelope.history_requirement is False
@@ -263,7 +263,7 @@ def test_envelope_and_serialization():
     serialized = universe.model_dump_json()
     deserialized = BranchUniverse.model_validate_json(serialized)
     
-    assert deserialized.envelope.epistemic_guarantee == "engine_search"
+    assert deserialized.envelope.epistemic_guarantee == "search_derived"
     assert deserialized.branches[0].actor == "white"
     assert deserialized.branches[0].root_fen == record.fen
     assert deserialized.branches[0].line_source == "pv"
