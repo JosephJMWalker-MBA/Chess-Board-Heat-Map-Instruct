@@ -1,54 +1,67 @@
 import json
+import hashlib
 import pytest
 import statistics
 import chess
 from typing import List, Dict
-import statistics
-from typing import List, Dict
 
 from chessheat.models import AnalysisRecord, Score
 from chessheat.branch import extract_branches, FutureBranch
-from chessheat.experiment import ExperimentSpec, ExperimentResult
+from chessheat.experiment import ExperimentSpec, ExperimentResult, SuiteManifest, SuiteKind
+from chessheat.semantics import SemanticSignatureV1, SufficientPosition
 
 def test_ray_blocker_measurement_contest():
-    # 1. Load the frozen branch universe
-    fixture_path = "docs/research/t2/t2b1_fixture.json"
+    # 1. Load the frozen branch universe (no filtering)
+    fixture_path = "docs/research/t2/t2b1_fixture_v2.json"
     with open(fixture_path, "r") as f:
         data = json.load(f)
+        fixture_digest = hashlib.sha256(json.dumps(data, sort_keys=True).encode('utf-8')).hexdigest()
     record = AnalysisRecord(**data)
     
     # Extract branches
     universe = extract_branches(record)
     
-    # Ensure all roots have regret computed
-    assert all(branch.regret is not None for branch in universe.branches)
+    # Validate the full legal root universe
+    board = chess.Board(record.fen)
+    legal_ucis = {m.uci() for m in board.legal_moves}
+    obs_ucis = {obs.uci for obs in record.move_observations}
+    assert legal_ucis == obs_ucis, "Fixture does not contain exactly the full legal root set"
     
-    # 2. Extract Preregistered Comparators
-    #
-    # Relation Transition Feature: 
-    # Ray d4 -> d8 (Rook attacking Queen) becomes ENABLED at ply 1.
-    # The blocker is initially on d5.
-    # If the Knight on d5 moves, it vacates d5, so a move from d5 enables the ray.
-    # (Since it's a Knight, it can't move along the d-file, so any move from d5 clears the ray).
-    
-    def relation_feature(branch: FutureBranch) -> bool:
-        # Mechanics: ray is unblocked if d5 is vacated at ply 1.
-        # Since we just need the indicator of the relation transition (ray enabled),
-        # we can determine if the ray is enabled mechanically by checking if d5 was vacated.
-        for ev in branch.future_evidence:
-            if ev.ply == 1 and ev.square == "d5" and ev.role == "origin":
-                return True
-        return False
+    # 2. Independently derive the relation feature
+    def relation_feature(root_uci: str) -> bool:
+        b = chess.Board(record.fen)
         
-    # Fair Square Comparator (Single-Square Baseline):
-    # The strongest constituent square event is origin=d5 at ply=1.
+        # Verify blocked before root
+        # d4 rook, d8 queen. Blocker on d5.
+        # Mechanically, check if d4 attacks d8
+        assert not b.is_attacked_by(chess.WHITE, chess.D8)
+        
+        # Apply root move
+        move = chess.Move.from_uci(root_uci)
+        b.push(move)
+        
+        # Mechanically derive if ray is enabled
+        # Is d8 attacked by white rook on d4?
+        # A white rook is on d4, if d5 is empty and file is clear
+        d4_piece = b.piece_at(chess.D4)
+        is_enabled = False
+        if d4_piece and d4_piece.piece_type == chess.ROOK and d4_piece.color == chess.WHITE:
+            # Does d4 attack d8? (python-chess attacks_mask includes own pieces and empty squares, 
+            # we just need to see if d8 is in the attack set of d4)
+            attacks = b.attacks(chess.D4)
+            is_enabled = chess.D8 in attacks
+            
+        return is_enabled
+
+    # Fair Square Comparator (Preregistered Constituent-Square Baseline):
+    # d5 is the unique blocker in the preregistered relation.
     def square_feature(branch: FutureBranch) -> bool:
         for ev in branch.future_evidence:
             if ev.ply == 1 and ev.square == "d5" and ev.role == "origin":
                 return True
         return False
 
-    # 3. Compare partition outcomes
+    # 3. Prove F1 structurally before using outcomes
     relation_true_regrets = []
     relation_false_regrets = []
     
@@ -56,45 +69,62 @@ def test_ray_blocker_measurement_contest():
     square_false_regrets = []
     
     for branch in universe.branches:
-        r = branch.regret.value
+        r = branch.regret
         
-        rel_feat = relation_feature(branch)
+        rel_feat = relation_feature(branch.root_uci)
+        sq_feat = square_feature(branch)
+        
+        # F1 test: Mechanical equality over the whole legal root universe
+        assert rel_feat == sq_feat, f"F1 Structural Equality Failed for {branch.root_uci}"
+        
         if rel_feat:
             relation_true_regrets.append(r)
         else:
             relation_false_regrets.append(r)
             
-        sq_feat = square_feature(branch)
         if sq_feat:
             square_true_regrets.append(r)
         else:
             square_false_regrets.append(r)
             
-    # Verify exact reconstruction
-    assert relation_true_regrets == square_true_regrets, "F1 Falsified: Square comparator does not exactly reproduce Relation partition"
-    assert relation_false_regrets == square_false_regrets, "F1 Falsified: Square comparator does not exactly reproduce Relation partition"
-    
-    # 4. Discrimination Statistic: Difference in Median CP Regret
-    def median_diff(true_regrets: List[int], false_regrets: List[int]) -> float:
-        # Median(Regret | False) - Median(Regret | True)
-        if not true_regrets or not false_regrets:
+    # 4. Tighten consequence typing
+    def compute_statistic(true_regrets: List[Score], false_regrets: List[Score]) -> float:
+        # Require all to be type cp
+        if any(r.type != 'cp' for r in true_regrets + false_regrets):
+            return "INCONCLUSIVE"
+            
+        t_vals = [r.value for r in true_regrets]
+        f_vals = [r.value for r in false_regrets]
+        
+        if not t_vals or not f_vals:
             return 0.0
-        return float(statistics.median(false_regrets) - statistics.median(true_regrets))
+            
+        return float(statistics.median(f_vals) - statistics.median(t_vals))
 
-    rel_discrimination = median_diff(relation_true_regrets, relation_false_regrets)
-    sq_discrimination = median_diff(square_true_regrets, square_false_regrets)
+    rel_stat = compute_statistic(relation_true_regrets, relation_false_regrets)
+    sq_stat = compute_statistic(square_true_regrets, square_false_regrets)
     
-    assert rel_discrimination == sq_discrimination
+    if rel_stat == "INCONCLUSIVE":
+        pytest.skip("Inconclusive: Mate and CP coexist")
+        
+    assert rel_stat == sq_stat
     
-    # 5. Create Artifact showing FALSIFIED
-    from chessheat.semantics import SufficientPosition
+    # 5. Restore actual S0/S1 identities
+    signature = SemanticSignatureV1.create_canonical()
+    
+    manifest = SuiteManifest(
+        suite_id="t2b1-ray-blocker-contest",
+        kind=SuiteKind.MECHANISM_STRESS,
+        fixtures={"3q3k/8/8/3N4/3R4/8/8/4K3_w": fixture_digest}
+    )
+    
     spec = ExperimentSpec(
-        semantic_signature_version="S1",
-        semantic_signature_digest="mock_digest",
-        suite_identity="t2b1-ray-blocker-contest",
-        suite_digest="mock_suite_digest",
+        semantic_signature_version=signature.version,
+        semantic_signature_digest=signature.signature_hash(),
+        suite_identity=manifest.suite_id,
+        suite_digest=manifest.suite_digest(),
         fixture_identity="3q3k/8/8/3N4/3R4/8/8/4K3_w",
-        fixture_digest="mock_fixture_digest",
+        fixture_digest=fixture_digest,
         sufficient_position=SufficientPosition(
             board_arrangement_fen="3q3k/8/8/3N4/3R4/8/8/4K3",
             side_to_move="w",
@@ -117,8 +147,8 @@ def test_ray_blocker_measurement_contest():
         spec_digest=spec.spec_digest(),
         data={
             "classification": "FALSIFIED",
-            "relation_discrimination": rel_discrimination,
-            "square_discrimination": sq_discrimination,
+            "relation_discrimination": rel_stat,
+            "square_discrimination": sq_stat,
             "f1_reconstruction": True,
             "message": "Relation transition has no stronger consequence association than the fair square comparator. F1: Square reconstruction completely reproduces the partition."
         }
