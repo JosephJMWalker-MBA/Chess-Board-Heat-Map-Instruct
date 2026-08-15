@@ -25,6 +25,17 @@ def test_matched_context_alias_breaker():
     universe_a = extract_branches(record_a)
     universe_b = extract_branches(record_b)
     
+    # 1.5 Validate the full legal root universe for both contexts
+    board_a = chess.Board(record_a.fen)
+    legal_ucis_a = {m.uci() for m in board_a.legal_moves}
+    obs_ucis_a = {obs.uci for obs in record_a.move_observations}
+    assert legal_ucis_a == obs_ucis_a, "Context A fixture does not contain exactly the full legal root set"
+    
+    board_b = chess.Board(record_b.fen)
+    legal_ucis_b = {m.uci() for m in board_b.legal_moves}
+    obs_ucis_b = {obs.uci for obs in record_b.move_observations}
+    assert legal_ucis_b == obs_ucis_b, "Context B fixture does not contain exactly the full legal root set"
+    
     # 2. Independently derive features
     def relation_feature(board_fen: str, root_uci: str) -> bool:
         b = chess.Board(board_fen)
@@ -137,28 +148,29 @@ def test_matched_context_alias_breaker():
     # Since H2 reconstructs H1 perfectly, stat_rel should equal stat_comp
     assert stat_rel == stat_comp
     
-    # 5. Restore actual S0/S1 identities and create ExperimentResult
+    # 5. Restore actual S0/S1 identities and create ExperimentResults + ComparisonResult
+    from chessheat.experiment import ComparisonResult
     signature = SemanticSignatureV1.create_canonical()
     
     manifest = SuiteManifest(
         suite_id="t2b2-matched-context-alias-breaker",
         kind=SuiteKind.MECHANISM_STRESS,
         fixtures={
-            "3q3k/8/8/3N4/3R4/8/8/4K3_w": fixture_digest_a,
-            "3q3k/8/3P4/3N4/3R4/8/8/4K3_w": fixture_digest_b
+            record_a.fen.replace(" ", "_"): fixture_digest_a,
+            record_b.fen.replace(" ", "_"): fixture_digest_b
         }
     )
     
-    # We create the result against the suite manifest, not a single fixture.
-    spec = ExperimentSpec(
+    # Create Context A Experiment
+    spec_a = ExperimentSpec(
         semantic_signature_version=signature.version,
         semantic_signature_digest=signature.signature_hash(),
         suite_identity=manifest.suite_id,
         suite_digest=manifest.suite_digest(),
-        fixture_identity="COMBINED_SUITE",
-        fixture_digest=manifest.suite_digest(), # proxy for combined
+        fixture_identity=record_a.fen.replace(" ", "_"),
+        fixture_digest=fixture_digest_a,
         sufficient_position=SufficientPosition(
-            board_arrangement_fen="3q3k/8/8/3N4/3R4/8/8/4K3", # using base board
+            board_arrangement_fen=record_a.fen.split()[0],
             side_to_move="w",
             castling_rights="-",
             en_passant_square=None,
@@ -175,9 +187,48 @@ def test_matched_context_alias_breaker():
         hypothesis_identifier="T2b-2-Matched-Context-Alias-Breaker"
     )
     
-    result = ExperimentResult.create(
-        spec_digest=spec.spec_digest(),
-        data={
+    result_a = ExperimentResult.create(
+        spec_digest=spec_a.spec_digest(),
+        data={"context": "A"}
+    )
+    
+    # Create Context B Experiment
+    spec_b = ExperimentSpec(
+        semantic_signature_version=signature.version,
+        semantic_signature_digest=signature.signature_hash(),
+        suite_identity=manifest.suite_id,
+        suite_digest=manifest.suite_digest(),
+        fixture_identity=record_b.fen.replace(" ", "_"),
+        fixture_digest=fixture_digest_b,
+        sufficient_position=SufficientPosition(
+            board_arrangement_fen=record_b.fen.split()[0],
+            side_to_move="w",
+            castling_rights="-",
+            en_passant_square=None,
+            halfmove_clock=0,
+            fullmove_number=1,
+            history_available=False,
+            variant="standard"
+        ),
+        candidate_policy={},
+        producer_identity=record_b.engine_name,
+        instrument_config=record_b.engine_options,
+        budget_config={"type": record_b.search_budget_type, "value": record_b.search_budget_value},
+        line_source="pv",
+        hypothesis_identifier="T2b-2-Matched-Context-Alias-Breaker"
+    )
+    
+    result_b = ExperimentResult.create(
+        spec_digest=spec_b.spec_digest(),
+        data={"context": "B"}
+    )
+    
+    # Use ComparisonResult to record the matched-context conclusion
+    comparison = ComparisonResult(
+        hypothesis_identifier="T2b-2-Matched-Context-Alias-Breaker",
+        result_digest_a=result_a.artifact_digest,
+        result_digest_b=result_b.artifact_digest,
+        outcome_payload=json.dumps({
             "classification": "WEAK_SUPPORT",
             "relation_discrimination": stat_rel,
             "single_square_discrimination": stat_sq,
@@ -185,7 +236,7 @@ def test_matched_context_alias_breaker():
             "h1_alias_break": True,
             "h2_composite_reconstruction": True,
             "message": "WEAK_SUPPORT: Relation breaks the single-square alias, but the fixed square composite reconstructs the relation partition perfectly."
-        }
+        }, sort_keys=True)
     )
     
-    assert result.data["classification"] == "WEAK_SUPPORT"
+    assert comparison.outcome["classification"] == "WEAK_SUPPORT"
