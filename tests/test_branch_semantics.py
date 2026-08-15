@@ -267,3 +267,20 @@ def test_envelope_and_serialization():
     assert deserialized.branches[0].actor == "white"
     assert deserialized.branches[0].root_fen == record.fen
     assert deserialized.branches[0].line_source == "pv"
+
+def test_extract_branches_rejects_ply1_mismatch():
+    """
+    Tests that a mismatch between root UCI and ply 1 UCI raises a ValueError,
+    ensuring future_moves cannot silently skip or misalign the root move.
+    """
+    obs = MoveObservation(
+        uci="e2e4", san="e4", origin_square="e2", destination_square="e4",
+        is_capture=False, resulting_fen="fen1",
+        score=Score(type="cp", value=50, perspective="white"),
+        regret=Score(type="cp", value=0, perspective="white"),
+        parsed_pv=[PlyObservation(ply_number=1, uci="d2d4", origin="d2", destination="d4", roles=[SquareEffectRole.ORIGIN, SquareEffectRole.DESTINATION])]
+    )
+    record = create_mock_record([obs])
+    
+    with pytest.raises(ValueError, match="must mechanically match the root UCI"):
+        extract_branches(record)
