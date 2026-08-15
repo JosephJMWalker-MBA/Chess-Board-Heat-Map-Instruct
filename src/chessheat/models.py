@@ -202,6 +202,7 @@ class FutureBranch(BaseModel):
     score: Score
     regret: Optional[Score]
     is_admitted: bool
+    future_moves: List[str] = Field(default_factory=list)
     future_evidence: List[SpatialEvent]
 
 class BranchUniverse(BaseModel):

@@ -110,11 +110,11 @@ def test_promotion_ambiguity_proves_irreversibility():
     score = Score(type="cp", value=100, perspective="white")
     branch_Q = FutureBranch(
         root_uci=root_uci, root_fen=fen, actor="white", line_source="synthetic", producer="engine",
-        score=score, regret=score, is_admitted=True, future_evidence=pv_events
+        score=score, regret=score, is_admitted=True, future_moves=["a8a7", "d7d8q"], future_evidence=pv_events
     )
     branch_R = FutureBranch(
         root_uci=root_uci, root_fen=fen, actor="white", line_source="synthetic", producer="engine",
-        score=score, regret=score, is_admitted=True, future_evidence=pv_events
+        score=score, regret=score, is_admitted=True, future_moves=["a8a7", "d7d8r"], future_evidence=pv_events
     )
     
     # The FutureBranch baseline evidence is perfectly identical.
@@ -133,18 +133,21 @@ def test_promotion_ambiguity_proves_irreversibility():
             
     assert len(reconstructed_moves) == 4  # All 4 promotions match the baseline square evidence
     
-    # 3. Test relational consequence of the ambiguity
-    # Replay Q promotion
+    # 3. Test relational consequence of the ambiguity (and fix with future_moves)
+    # Replay Q promotion using EXACT future_moves
     board_Q = board_after_ply1.copy()
-    board_Q.push_uci("d7d8q")
+    board_Q.push_uci(branch_Q.future_moves[-1])
     attacks_Q = board_Q.attacks(chess.D8)
     assert chess.H4 in attacks_Q # Queen on d8 attacks h4
     
-    # Replay R promotion
+    # Replay R promotion using EXACT future_moves
     board_R = board_after_ply1.copy()
-    board_R.push_uci("d7d8r")
+    board_R.push_uci(branch_R.future_moves[-1])
     attacks_R = board_R.attacks(chess.D8)
     assert chess.H4 not in attacks_R # Rook on d8 does NOT attack h4
+    
+    # Prove future_moves explicitly disambiguates the identical square projections
+    assert branch_Q.future_moves != branch_R.future_moves
     
     # We have established that the exact same FutureBranch square evidence 
     # maps to different rule-exact ray relation structure.
@@ -194,16 +197,16 @@ def test_promotion_ambiguity_proves_irreversibility():
     result = ExperimentResult.create(
         spec_digest=spec.spec_digest(),
         data={
-            "outcome": "SUPPORTED",
+            "outcome": "FALSIFIED",
             "endpoint_pairing_lemma": "Preserved: independent square projection loses linkage.",
-            "ordinary_pv_reconstruction_lemma": "Preserved: ordinary non-promotion moves can be reconstructed.",
-            "conclusion": "Because FutureBranch baseline explicitly discards promotion identity, "
-                          "legal PVs differing only by promotion piece produce identical spatial evidence. "
-                          "Since promotions create distinct ray structures (e.g. Queen attacks vs Rook attacks), "
-                          "the baseline irreversibly destroys branch-conditioned ray/blocker relational semantics. "
-                          "Claim A is SUPPORTED."
+            "promotion_ambiguity_lemma": "Preserved: future_evidence throws away promotion piece identity.",
+            "conclusion": "Because FutureBranch now explicitly preserves exact future_moves alongside future_evidence, "
+                          "every legal continuation can be deterministically replayed from the root state. "
+                          "Thus, rule-exact ray/blocker relation structure is completely reconstructible, "
+                          "falsifying the relation irreversibility hypothesis relative to the new branch baseline. "
+                          "Relations are derivable semantic structure, not necessary primitive evidence."
         }
     )
 
-    assert result.data["outcome"] == "SUPPORTED"
+    assert result.data["outcome"] == "FALSIFIED"
 

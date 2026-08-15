@@ -53,10 +53,12 @@ def extract_branches(record: AnalysisRecord) -> BranchUniverse:
         is_admitted = obs.uci in admitted_ucis
         
         events = []
+        future_moves = []
         if obs.parsed_pv and is_admitted:
             aggregated_pvs += 1
             for ply_obs in obs.parsed_pv:
                 ply = ply_obs.ply_number
+                future_moves.append(ply_obs.uci)
                 events.append(SpatialEvent(square=ply_obs.origin, role="origin", ply=ply))
                 events.append(SpatialEvent(square=ply_obs.destination, role="destination", ply=ply))
                 if ply_obs.capture:
@@ -71,6 +73,7 @@ def extract_branches(record: AnalysisRecord) -> BranchUniverse:
             score=obs.score,
             regret=obs.regret,
             is_admitted=is_admitted,
+            future_moves=future_moves,
             future_evidence=events
         ))
         
