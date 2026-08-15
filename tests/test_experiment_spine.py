@@ -133,6 +133,44 @@ def test_result_provenance_immutability(base_spec):
     assert result.spec_digest == orig_digest
     assert result.spec_digest != base_spec.spec_digest()
 
+def test_result_artifact_validation(base_spec):
+    """
+    Ensure direct construction or JSON deserialization rigorously validates the payload and digest.
+    """
+    import json
+    orig_digest = base_spec.spec_digest()
+    
+    # .create() round-trips successfully (proven by construction)
+    valid_result = ExperimentResult.create(spec_digest=orig_digest, data={"heat": 100})
+    
+    # direct construction with a fake digest fails
+    with pytest.raises(ValidationError):
+        ExperimentResult(
+            spec_digest=orig_digest,
+            artifact_digest="fake_digest",
+            data_payload=json.dumps({"heat": 100})
+        )
+
+    # JSON deserialization with a tampered payload but old digest fails
+    tampered_payload_json = valid_result.model_dump()
+    tampered_payload_json["data_payload"] = json.dumps({"heat": 999})
+    with pytest.raises(ValidationError):
+        ExperimentResult.model_validate(tampered_payload_json)
+
+    # JSON deserialization with a tampered digest fails
+    tampered_digest_json = valid_result.model_dump()
+    tampered_digest_json["artifact_digest"] = "tampered"
+    with pytest.raises(ValidationError):
+        ExperimentResult.model_validate(tampered_digest_json)
+
+    # Non-canonical payload (e.g. unsorted keys or extra whitespace) fails
+    with pytest.raises(ValidationError):
+        ExperimentResult(
+            spec_digest=orig_digest,
+            artifact_digest=valid_result.artifact_digest, # Using valid digest but padded payload
+            data_payload='{"heat": 100 }'
+        )
+
 def test_digest_order_stability(base_spec):
     """
     Digest canonicalization is order-stable for mappings where ordering is not semantically meaningful.

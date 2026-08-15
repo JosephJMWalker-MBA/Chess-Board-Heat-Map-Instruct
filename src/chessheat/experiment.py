@@ -2,7 +2,7 @@ import hashlib
 import json
 from enum import Enum
 from typing import Dict, Any, List
-from pydantic import BaseModel
+from pydantic import BaseModel, model_validator
 from .semantics import SufficientPosition
 
 class SuiteKind(str, Enum):
@@ -56,6 +56,25 @@ class ExperimentResult(BaseModel):
     spec_digest: str
     artifact_digest: str
     data_payload: str
+
+    @model_validator(mode='after')
+    def verify_artifact_integrity(self) -> 'ExperimentResult':
+        try:
+            parsed = json.loads(self.data_payload)
+        except json.JSONDecodeError:
+            raise ValueError("data_payload must be valid JSON.")
+            
+        canonical_payload = json.dumps(parsed, sort_keys=True)
+        if self.data_payload != canonical_payload:
+            raise ValueError("data_payload must be canonically serialized (sorted keys, no whitespace padding).")
+            
+        combined = f"{self.spec_digest}:{canonical_payload}"
+        expected = hashlib.sha256(combined.encode('utf-8')).hexdigest()
+        
+        if self.artifact_digest != expected:
+            raise ValueError(f"artifact_digest mismatch. Expected {expected}, got {self.artifact_digest}")
+            
+        return self
 
     @property
     def data(self) -> Dict[str, Any]:
