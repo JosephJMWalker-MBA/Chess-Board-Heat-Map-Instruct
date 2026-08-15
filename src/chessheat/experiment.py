@@ -15,7 +15,12 @@ class SuiteManifest(BaseModel):
     """
     suite_id: str
     kind: SuiteKind
-    fixtures: List[str]
+    fixtures: Dict[str, str]  # fixture_identity -> fixture_content_digest
+
+    def suite_digest(self) -> str:
+        """Deterministic SHA-256 hash of the suite manifest."""
+        payload_str = json.dumps(self.model_dump(), sort_keys=True)
+        return hashlib.sha256(payload_str.encode('utf-8')).hexdigest()
 
 class ExperimentSpec(BaseModel):
     """
@@ -23,8 +28,11 @@ class ExperimentSpec(BaseModel):
     Serves as the deterministic identity of an experiment.
     """
     semantic_signature_version: str
+    semantic_signature_digest: str
     suite_identity: str
+    suite_digest: str
     fixture_identity: str
+    fixture_digest: str
     sufficient_position: SufficientPosition
     candidate_policy: Dict[str, Any]
     producer_identity: str
@@ -41,19 +49,38 @@ class ExperimentSpec(BaseModel):
 class ExperimentResult(BaseModel):
     """
     The immutable result of an experiment.
-    Cannot mutate its source specification.
+    Cannot mutate its source specification or payload.
     """
     model_config = {"frozen": True}
 
     spec_digest: str
     artifact_digest: str
-    data: Dict[str, Any]
+    data_payload: str
+
+    @property
+    def data(self) -> Dict[str, Any]:
+        """Returns a throwaway parsed dict of the deeply immutable data payload."""
+        return json.loads(self.data_payload)
+
+    @classmethod
+    def create(cls, spec_digest: str, data: Dict[str, Any]) -> "ExperimentResult":
+        """Mechanically derives artifact_digest from canonical payload and spec digest."""
+        payload = json.dumps(data, sort_keys=True)
+        combined = f"{spec_digest}:{payload}"
+        artifact_digest = hashlib.sha256(combined.encode('utf-8')).hexdigest()
+        return cls(spec_digest=spec_digest, artifact_digest=artifact_digest, data_payload=payload)
 
 class ComparisonResult(BaseModel):
     """
     Connects two ExperimentResult digests for a specified hypothesis.
     """
+    model_config = {"frozen": True}
+
     hypothesis_identifier: str
     result_digest_a: str
     result_digest_b: str
-    outcome: Dict[str, Any]
+    outcome_payload: str
+    
+    @property
+    def outcome(self) -> Dict[str, Any]:
+        return json.loads(self.outcome_payload)

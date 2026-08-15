@@ -21,8 +21,11 @@ def base_position():
 def base_spec(base_position):
     return ExperimentSpec(
         semantic_signature_version="1.0",
+        semantic_signature_digest="fake_s0_digest",
         suite_identity="test_suite",
+        suite_digest="fake_suite_digest",
         fixture_identity="fixture_1",
+        fixture_digest="fake_fixture_digest",
         sufficient_position=base_position,
         candidate_policy={"top_n": 5},
         producer_identity="stockfish_18",
@@ -60,6 +63,34 @@ def test_experiment_identity_mutation(base_spec):
     mutated_pos.sufficient_position.side_to_move = "b"
     assert mutated_pos.spec_digest() != orig_digest
 
+    # Changed semantic-signature digest => different spec identity
+    mutated_sem = base_spec.model_copy(deep=True)
+    mutated_sem.semantic_signature_digest = "changed_s0_digest"
+    assert mutated_sem.spec_digest() != orig_digest
+
+def test_suite_and_fixture_identity_changes(base_spec):
+    """
+    same suite label + changed fixture content => different suite/spec identity;
+    same fixture label + changed fixture content => different fixture/spec identity;
+    """
+    manifest_a = SuiteManifest(suite_id="suite1", kind=SuiteKind.NATURAL_REPRESENTATIVE, fixtures={"f1": "content_hash_1"})
+    manifest_b = SuiteManifest(suite_id="suite1", kind=SuiteKind.NATURAL_REPRESENTATIVE, fixtures={"f1": "content_hash_2"})
+    
+    # Same suite label, changed fixture content -> different suite digest
+    assert manifest_a.suite_digest() != manifest_b.suite_digest()
+
+    orig_digest = base_spec.spec_digest()
+    
+    # Same fixture label, changed fixture content -> different spec digest
+    mutated_fix = base_spec.model_copy(deep=True)
+    mutated_fix.fixture_digest = "changed_fixture_digest"
+    assert mutated_fix.spec_digest() != orig_digest
+
+    # Same suite label, changed suite content (digest) -> different spec digest
+    mutated_suite = base_spec.model_copy(deep=True)
+    mutated_suite.suite_digest = manifest_b.suite_digest()
+    assert mutated_suite.spec_digest() != orig_digest
+
 def test_experiment_serialization(base_spec):
     """
     Fixture identity and semantic-signature version survive round-trip JSON serialization.
@@ -78,17 +109,22 @@ def test_result_provenance_immutability(base_spec):
     does not alter the result's represented provenance.
     """
     orig_digest = base_spec.spec_digest()
-    result = ExperimentResult(
+    result = ExperimentResult.create(
         spec_digest=orig_digest,
-        artifact_digest="artifact_hash",
         data={"heat": 100}
     )
     
     with pytest.raises(ValidationError):
         result.spec_digest = "new_digest"
         
-    with pytest.raises(ValidationError):
-        result.data = {}
+    # Result payload cannot silently mutate under an unchanged artifact digest
+    # Result payload is accessible via throwing dictionary
+    result.data["heat"] = 999
+    
+    # The actual payload was unmutated
+    assert result.data["heat"] == 100
+    # Artifact digest mechanically derived
+    assert result.artifact_digest != result.spec_digest
 
     # Mutate the source spec's nested dictionary
     base_spec.candidate_policy["top_n"] = 999
@@ -113,8 +149,8 @@ def test_suite_distinction():
     """
     Natural/representative suites and mechanism-stress suites are explicitly distinguishable.
     """
-    natural = SuiteManifest(suite_id="s1", kind=SuiteKind.NATURAL_REPRESENTATIVE, fixtures=["f1"])
-    stress = SuiteManifest(suite_id="s2", kind=SuiteKind.MECHANISM_STRESS, fixtures=["f2"])
+    natural = SuiteManifest(suite_id="s1", kind=SuiteKind.NATURAL_REPRESENTATIVE, fixtures={"f1": "d1"})
+    stress = SuiteManifest(suite_id="s2", kind=SuiteKind.MECHANISM_STRESS, fixtures={"f2": "d2"})
     
     assert natural.kind == SuiteKind.NATURAL_REPRESENTATIVE
     assert stress.kind == SuiteKind.MECHANISM_STRESS
