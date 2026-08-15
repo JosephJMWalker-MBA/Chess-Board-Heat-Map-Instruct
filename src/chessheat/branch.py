@@ -58,7 +58,10 @@ def extract_branches(record: AnalysisRecord) -> BranchUniverse:
             aggregated_pvs += 1
             for ply_obs in obs.parsed_pv:
                 ply = ply_obs.ply_number
-                future_moves.append(ply_obs.uci)
+                if ply == 1:
+                    assert ply_obs.uci == obs.uci, "Ply 1 UCI must mechanically match the root UCI"
+                else:
+                    future_moves.append(ply_obs.uci)
                 events.append(SpatialEvent(square=ply_obs.origin, role="origin", ply=ply))
                 events.append(SpatialEvent(square=ply_obs.destination, role="destination", ply=ply))
                 if ply_obs.capture:

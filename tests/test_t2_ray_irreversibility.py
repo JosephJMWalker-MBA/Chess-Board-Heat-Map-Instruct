@@ -20,6 +20,17 @@ def project_relations_to_spatial_events(relations: list[RelationContainer], ply:
                 events.append(SpatialEvent(square=p.subject, role=role_map[p.role], ply=ply))
     return sorted(events, key=lambda e: (e.square, e.role))
 
+def replay_branch(branch: FutureBranch) -> chess.Board:
+    board = chess.Board(branch.root_fen)
+    root_move = chess.Move.from_uci(branch.root_uci)
+    assert root_move in board.legal_moves, f"Root move {branch.root_uci} is illegal"
+    board.push(root_move)
+    for uci in branch.future_moves:
+        move = chess.Move.from_uci(uci)
+        assert move in board.legal_moves, f"Future move {uci} is illegal"
+        board.push(move)
+    return board
+
 def test_endpoint_pairing_lemma():
     """
     Endpoint-Pairing Lemma: 
@@ -79,6 +90,59 @@ def test_ordinary_pv_reconstruction_lemma():
     rook_attacks = simulated_board.attacks(chess.H1)
     assert chess.H8 in rook_attacks  
 
+def test_legal_move_semantics_sufficiency():
+    """
+    Focused fixtures proving exact-UCI replay preserves ordinary moves,
+    promotions, underpromotions, castling, en passant, and capture.
+    """
+    # 1. Ordinary move + Capture
+    fen_cap = "4k3/8/8/3p4/4P3/8/8/4K3 w - - 0 1"
+    b_cap = replay_branch(FutureBranch(
+        root_uci="e4d5", root_fen=fen_cap, actor="white", line_source="test", producer="test",
+        score=Score(type="cp", value=0, perspective="white"), regret=None, is_admitted=True,
+        future_moves=["e8e7"], future_evidence=[]
+    ))
+    assert b_cap.piece_at(chess.D5).color == chess.WHITE
+    assert b_cap.piece_at(chess.E7).color == chess.BLACK
+    
+    # 2. Promotion and Underpromotion
+    fen_prom = "k7/3P4/8/8/8/8/8/4K3 w - - 0 1"
+    b_q = replay_branch(FutureBranch(
+        root_uci="e1d1", root_fen=fen_prom, actor="white", line_source="test", producer="test",
+        score=Score(type="cp", value=0, perspective="white"), regret=None, is_admitted=True,
+        future_moves=["a8a7", "d7d8q"], future_evidence=[]
+    ))
+    assert b_q.piece_at(chess.D8).piece_type == chess.QUEEN
+    
+    b_n = replay_branch(FutureBranch(
+        root_uci="e1d1", root_fen=fen_prom, actor="white", line_source="test", producer="test",
+        score=Score(type="cp", value=0, perspective="white"), regret=None, is_admitted=True,
+        future_moves=["a8a7", "d7d8n"], future_evidence=[]
+    ))
+    assert b_n.piece_at(chess.D8).piece_type == chess.KNIGHT
+    
+    # 3. Castling
+    fen_castle = "r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1"
+    b_castle = replay_branch(FutureBranch(
+        root_uci="e1g1", root_fen=fen_castle, actor="white", line_source="test", producer="test",
+        score=Score(type="cp", value=0, perspective="white"), regret=None, is_admitted=True,
+        future_moves=["e8c8"], future_evidence=[]
+    ))
+    assert b_castle.piece_at(chess.G1).piece_type == chess.KING
+    assert b_castle.piece_at(chess.F1).piece_type == chess.ROOK
+    assert b_castle.piece_at(chess.C8).piece_type == chess.KING
+    assert b_castle.piece_at(chess.D8).piece_type == chess.ROOK
+    
+    # 4. En Passant
+    fen_ep = "4k3/8/8/3pP3/8/8/8/4K3 w - d6 0 1"
+    b_ep = replay_branch(FutureBranch(
+        root_uci="e5d6", root_fen=fen_ep, actor="white", line_source="test", producer="test",
+        score=Score(type="cp", value=0, perspective="white"), regret=None, is_admitted=True,
+        future_moves=["e8d7"], future_evidence=[]
+    ))
+    assert b_ep.piece_at(chess.D5) is None
+    assert b_ep.piece_at(chess.D6).piece_type == chess.PAWN
+
 def test_promotion_ambiguity_proves_irreversibility():
     """
     T2 Preflight: Ray/Blocker Information Irreversibility
@@ -96,14 +160,16 @@ def test_promotion_ambiguity_proves_irreversibility():
     assert chess.Move.from_uci(root_uci) in board.legal_moves
     
     # We construct two legal PV continuations from this root
-    # PV A: 1... a8a7 (ply 1) 2. d7d8q (ply 2)
-    # PV B: 1... a8a7 (ply 1) 2. d7d8r (ply 2)
+    # PV A: 1. e1d1 (ply 1, root) 1... a8a7 (ply 2) 2. d7d8q (ply 3)
+    # PV B: 1. e1d1 (ply 1, root) 1... a8a7 (ply 2) 2. d7d8r (ply 3)
     
     pv_events = [
-        SpatialEvent(square="a8", role="origin", ply=1),
-        SpatialEvent(square="a7", role="destination", ply=1),
-        SpatialEvent(square="d7", role="origin", ply=2),
-        SpatialEvent(square="d8", role="destination", ply=2)
+        SpatialEvent(square="e1", role="origin", ply=1),
+        SpatialEvent(square="d1", role="destination", ply=1),
+        SpatialEvent(square="a8", role="origin", ply=2),
+        SpatialEvent(square="a7", role="destination", ply=2),
+        SpatialEvent(square="d7", role="origin", ply=3),
+        SpatialEvent(square="d8", role="destination", ply=3)
     ]
     
     # 2. Use the actual FutureBranch information boundary
@@ -123,11 +189,11 @@ def test_promotion_ambiguity_proves_irreversibility():
     # Trying to reconstruct from baseline fails to uniquely determine promotion:
     # Origin is d7, dest is d8. The move is d7d8? -> could be q, r, b, or n.
     reconstructed_moves = []
-    board_after_ply1 = board.copy()
-    board_after_ply1.push_uci("e1d1")
-    board_after_ply1.push_uci("a8a7")
+    board_after_ply2 = board.copy()
+    board_after_ply2.push_uci("e1d1")
+    board_after_ply2.push_uci("a8a7")
     
-    for m in board_after_ply1.legal_moves:
+    for m in board_after_ply2.legal_moves:
         if chess.square_name(m.from_square) == "d7" and chess.square_name(m.to_square) == "d8":
             reconstructed_moves.append(m)
             
@@ -135,13 +201,13 @@ def test_promotion_ambiguity_proves_irreversibility():
     
     # 3. Test relational consequence of the ambiguity (and fix with future_moves)
     # Replay Q promotion using EXACT future_moves
-    board_Q = board_after_ply1.copy()
+    board_Q = board_after_ply2.copy()
     board_Q.push_uci(branch_Q.future_moves[-1])
     attacks_Q = board_Q.attacks(chess.D8)
     assert chess.H4 in attacks_Q # Queen on d8 attacks h4
     
     # Replay R promotion using EXACT future_moves
-    board_R = board_after_ply1.copy()
+    board_R = board_after_ply2.copy()
     board_R.push_uci(branch_R.future_moves[-1])
     attacks_R = board_R.attacks(chess.D8)
     assert chess.H4 not in attacks_R # Rook on d8 does NOT attack h4
