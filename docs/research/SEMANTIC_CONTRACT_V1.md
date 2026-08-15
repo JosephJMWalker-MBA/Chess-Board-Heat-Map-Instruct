@@ -21,8 +21,8 @@ To maintain semantic integrity, a position must distinguish:
 
 Evidence in ChessHeat originates from distinct epistemic processes. We classify evidence into the following types:
 - `RULE_EXACT`: Derived exclusively from the rules of chess (e.g., pseudo-legal mobility).
-- `ENGINE_DERIVED`: Sourced from a deterministic evaluation function or engine search without human modification.
-- `SEARCH_DERIVED`: Derived from tree search policies and pruning heuristics.
+- `ENGINE_DERIVED`: Direct evaluator/engine output independent of search depth/trees (e.g., static evaluation).
+- `SEARCH_DERIVED`: Evidence materially dependent on the search process, tree, or configuration. Branch/PV evidence is SEARCH_DERIVED.
 - `EMPIRICAL`: Derived from historical datasets or observed play.
 - `HEURISTIC`: Derived from approximate or proxy functions (e.g., simple piece values).
 
@@ -33,12 +33,12 @@ Lower levels of evidence must not silently inherit the causal claims of higher l
 2. **Recurrence**: An event happened across multiple lines.
 3. **Branch Discrimination**: The event is preferentially associated with lines possessing certain properties.
 4. **Consequence Association**: The presence of the event correlates with a change in typed root regret.
-5. **Intervention Sensitivity**: Manipulating the board state alters the event and changes the regret (Causal mechanism).
-6. **Causal / Subject Validation**: The intervention sensitivity holds across a statistically valid empirical sample.
+5. **Intervention Sensitivity**: A controlled manipulation of the board state alters both the event and the root regret.
+6. **Causal / Subject Validation**: Demonstrated causal effect on a target subject, generalizing beyond a single intervention without reducing to statistical sample size alone.
 
 ## 4. Subject Identity
 
-Subject kinds in ChessHeat must be extensible but explicitly typed. At minimum, these include:
+Subject kinds in ChessHeat are a closed ontology. Adding a new top-level subject kind requires a semantic-version bump. At minimum, these include:
 - `SQUARE`: A distinct coordinate on the board.
 - `PIECE`: A distinct piece instance.
 - `MOVE`: A source-to-destination transition.
@@ -56,7 +56,9 @@ Relations are not strictly pairwise edges. The semantic container must support:
 - **Participant Roles**: The function of each participant (e.g., "origin", "target", "mediator").
 - **Geometry/Path** (Optional): The spatial trajectory.
 - **Provenance**: The source of the relation.
-- **Relation State**: Relations undergo conceptual transitions (`LATENT` -> `ENABLED` -> `REALIZED`). The system must not assume a binary "exists/does not exist" state without context.
+- **Relation State**: Relations undergo conceptual transitions. `LATENT`, `ENABLED`, and `REALIZED` are recognized core examples, but the semantic container allows future typed relation states as strings without rewriting the ontology.
+  - **Extensibility Rule**: Future custom states must be explicitly namespaced (e.g., `domain:state_name`) rather than unconstrained text.
+  - **Versioning**: Adding a new non-core namespaced state does *not* require an S0 semantic-version bump (only a local schema bump). Conversely, changing the meaning of an existing core state requires an S0 semantic-version bump because it invalidates existing data.
 
 ## 6. Branch Identity Invariant
 

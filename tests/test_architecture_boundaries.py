@@ -13,8 +13,15 @@ def get_imports(file_path: Path):
             for alias in node.names:
                 imports.add(alias.name)
         elif isinstance(node, ast.ImportFrom):
-            if node.module:
-                imports.add(node.module)
+            module_name = node.module or ""
+            prefix = "." * node.level
+            full_name = f"{prefix}{module_name}" if module_name else prefix
+            imports.add(full_name)
+            for alias in node.names:
+                if full_name == ".":
+                    imports.add(f".{alias.name}")
+                else:
+                    imports.add(f"{full_name}.{alias.name}")
     return imports
 
 def test_objective_code_does_not_depend_on_human_layers():
@@ -27,7 +34,11 @@ def test_objective_code_does_not_depend_on_human_layers():
     # We will check models, recurrence, consequence, attribution, branch, delta
     core_modules = ["models.py", "recurrence.py", "consequence.py", "attribution.py", "branch.py", "delta.py"]
     
-    forbidden_prefixes = ("chessheat.ui", "chessheat.explanation", "chessheat.visualization")
+    forbidden_prefixes = (
+        "chessheat.ui", "chessheat.explanation", "chessheat.visualization",
+        ".ui", ".explanation", ".visualization",
+        "..ui", "..explanation", "..visualization"
+    )
     
     for module_name in core_modules:
         file_path = base_dir / module_name

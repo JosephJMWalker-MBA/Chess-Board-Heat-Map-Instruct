@@ -1,6 +1,7 @@
 from enum import Enum
 from typing import List, Optional, Any, Dict
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
+import re
 
 class EpistemicGuarantee(str, Enum):
     RULE_EXACT = "rule_exact"
@@ -10,6 +11,10 @@ class EpistemicGuarantee(str, Enum):
     HEURISTIC = "heuristic"
 
 class SubjectKind(str, Enum):
+    """
+    Extensibility rule: SubjectKind is a closed enum. Adding a new top-level
+    subject kind requires a semantic-version bump in the semantic ontology.
+    """
     SQUARE = "square"
     PIECE = "piece"
     MOVE = "move"
@@ -27,7 +32,11 @@ class EvidenceLevel(str, Enum):
     INTERVENTION_SENSITIVITY = "intervention_sensitivity"
     CAUSAL_VALIDATION = "causal_validation"
 
-class RelationState(str, Enum):
+class CoreRelationState(str, Enum):
+    """
+    Core examples of relation states. The semantic ontology allows future typed 
+    relation states (as strings) without rewriting the ontology.
+    """
     LATENT = "latent"
     ENABLED = "enabled"
     REALIZED = "realized"
@@ -58,8 +67,21 @@ class RelationContainer(BaseModel):
     relation_type: str
     participants: List[ParticipantRole]
     geometry_path: Optional[List[str]] = None
-    state: RelationState
+    state: str  # CoreRelationState or a namespaced string (e.g., "domain:state")
     provenance: str
+
+    @field_validator('state')
+    @classmethod
+    def validate_state_format(cls, v: str) -> str:
+        if v in {e.value for e in CoreRelationState}:
+            return v
+        # Reject unconstrained text, require explicit namespace for future states
+        if not re.match(r'^[a-z0-9_]+:[a-z0-9_]+$', v):
+            raise ValueError(
+                f"Custom relation state '{v}' is rejected. "
+                "Non-core states must be explicitly namespaced (e.g., 'domain:state')."
+            )
+        return v
 
 class ObservationIdentity(BaseModel):
     """
@@ -79,12 +101,38 @@ class SemanticSignatureV1(BaseModel):
     """
     A tiny deterministic semantic fixture/signature mechanism.
     This serves as a semantic regression sentinel.
+    Hashes canonical serialized semantic records, including sufficient position identity,
+    a multi-participant relation/mediator example, and relation-state/transition semantics.
     """
     version: str = "1.0"
-    epistemic_types: List[str] = [e.value for e in EpistemicGuarantee]
-    subject_kinds: List[str] = [s.value for s in SubjectKind]
-    evidence_levels: List[str] = [e.value for e in EvidenceLevel]
-    relation_states: List[str] = [r.value for r in RelationState]
+    position: SufficientPosition
+    relation: RelationContainer
+    
+    @classmethod
+    def create_canonical(cls) -> "SemanticSignatureV1":
+        return cls(
+            position=SufficientPosition(
+                board_arrangement_fen="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR",
+                side_to_move="w",
+                castling_rights="KQkq",
+                en_passant_square=None,
+                halfmove_clock=0,
+                fullmove_number=1,
+                history_available=False,
+                variant="standard"
+            ),
+            relation=RelationContainer(
+                relation_type="attacks",
+                participants=[
+                    ParticipantRole(subject="e2", kind=SubjectKind.SQUARE, role="origin"),
+                    ParticipantRole(subject="e4", kind=SubjectKind.SQUARE, role="mediator"),
+                    ParticipantRole(subject="e7", kind=SubjectKind.SQUARE, role="target")
+                ],
+                geometry_path=["e2", "e3", "e4", "e5", "e6", "e7"],
+                state=CoreRelationState.ENABLED.value,
+                provenance="rule_exact"
+            )
+        )
     
     def signature_hash(self) -> str:
         import hashlib
