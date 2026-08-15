@@ -147,6 +147,6 @@ def aggregate_bundle_leverage(record: AnalysisRecord, move_deltas: Dict[str, Geo
         bundles.append(b)
 
     # Sort by fraction (desc), then by mean_regret_diff (desc)
-    bundles.sort(key=lambda b: (-b.candidate_fraction, -b.mean_regret_diff))
+    bundles.sort(key=lambda b: (-b.candidate_fraction, -b.median_regret_diff))
 
     return bundles
