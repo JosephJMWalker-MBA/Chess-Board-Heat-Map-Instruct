@@ -132,3 +132,77 @@ def aggregate_square_recurrence(record: AnalysisRecord) -> RecurrenceResult:
         )
 
     return RecurrenceResult(provenance=provenance, squares=result)
+
+def reconstruct_recurrence_from_branches(universe: 'BranchUniverse') -> RecurrenceResult:
+    """
+    Mechanically reconstructs the original ordinary recurrence counts 
+    from the richer branch-preserved universe. 
+    This serves as a proof that the richer representation is a strict superset.
+    """
+    from .models import SquareRecurrence, RecurrenceMetric, RecurrenceResult
+
+    agg = {}
+
+    def init_sq(sq):
+        if sq not in agg:
+            agg[sq] = {
+                "overall": {"lines": set(), "visits": 0, "earliest": None},
+                "roles": {}
+            }
+
+    def init_role(sq, r):
+        init_sq(sq)
+        if r not in agg[sq]["roles"]:
+            agg[sq]["roles"][r] = {"lines": set(), "visits": 0, "earliest": None}
+
+    num_candidates = universe.provenance.admitted_count
+    if num_candidates == 0:
+        return RecurrenceResult(provenance=universe.provenance, squares={})
+
+    for branch in universe.branches:
+        if not branch.is_admitted:
+            continue
+            
+        for event in branch.future_evidence:
+            sq = event.square
+            r = event.role
+            ply = event.ply
+            root_uci = branch.root_uci
+            
+            init_sq(sq)
+            agg[sq]["overall"]["lines"].add(root_uci)
+            agg[sq]["overall"]["visits"] += 1
+            if agg[sq]["overall"]["earliest"] is None or ply < agg[sq]["overall"]["earliest"]:
+                agg[sq]["overall"]["earliest"] = ply
+                
+            init_role(sq, r)
+            agg[sq]["roles"][r]["lines"].add(root_uci)
+            agg[sq]["roles"][r]["visits"] += 1
+            if agg[sq]["roles"][r]["earliest"] is None or ply < agg[sq]["roles"][r]["earliest"]:
+                agg[sq]["roles"][r]["earliest"] = ply
+
+    result = {}
+    for sq, data in agg.items():
+        overall_metric = RecurrenceMetric(
+            distinct_line_count=len(data["overall"]["lines"]),
+            line_fraction=len(data["overall"]["lines"]) / num_candidates if num_candidates > 0 else 0.0,
+            visit_count=data["overall"]["visits"],
+            earliest_ply=data["overall"]["earliest"]
+        )
+
+        by_role = {}
+        for r, r_data in data["roles"].items():
+            by_role[r] = RecurrenceMetric(
+                distinct_line_count=len(r_data["lines"]),
+                line_fraction=len(r_data["lines"]) / num_candidates if num_candidates > 0 else 0.0,
+                visit_count=r_data["visits"],
+                earliest_ply=r_data["earliest"]
+            )
+
+        result[sq] = SquareRecurrence(
+            square=sq,
+            overall=overall_metric,
+            by_role=by_role
+        )
+
+    return RecurrenceResult(provenance=universe.provenance, squares=result)

@@ -175,7 +175,34 @@ class EventBundle(BaseModel):
     regret_without_bundle: MetricDistribution
     outcome_with_bundle: MetricDistribution
     outcome_without_bundle: MetricDistribution
-    mean_regret_diff: float
     median_regret_diff: float
     implicated_squares: List[str]
     is_perfectly_confounded: bool
+
+class EvidenceEnvelope(BaseModel):
+    epistemic_guarantee: str
+    subject_kind: str
+    producer: str
+    history_requirement: bool
+    line_source: str
+
+class SpatialEvent(BaseModel):
+    square: str
+    role: Literal["origin", "destination", "capture"]
+    ply: int
+
+class FutureBranch(BaseModel):
+    root_uci: str
+    root_fen: str
+    actor: str
+    line_source: str
+    producer: str
+    score: Score
+    regret: Optional[Score]
+    is_admitted: bool
+    future_evidence: List[SpatialEvent]
+
+class BranchUniverse(BaseModel):
+    envelope: EvidenceEnvelope
+    provenance: CandidateProvenance
+    branches: List[FutureBranch]
