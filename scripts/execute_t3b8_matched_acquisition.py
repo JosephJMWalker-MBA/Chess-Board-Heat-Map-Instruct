@@ -34,8 +34,8 @@ def main():
     if not os.access(engine_path, os.X_OK):
         exit_error("Engine is not executable")
         
-    engine_sha256 = get_file_sha(engine_path)
-    if engine_sha256 != "ae4c93fa9676ca7750d0714342fd8a5b1d018000fc6e0f6cedf112067b5ef374":
+    engine_sha256_preflight = get_file_sha(engine_path)
+    if engine_sha256_preflight != "ae4c93fa9676ca7750d0714342fd8a5b1d018000fc6e0f6cedf112067b5ef374":
         exit_error("ENGINE_SHA256_MISMATCH")
 
     # 2. Require reviewed-code identity
@@ -163,6 +163,13 @@ def main():
         if observed_uci_name != "Stockfish 18":
             exit_error("PRODUCER_IDENTITY_MISMATCH")
             
+        engine_sha256_post_spawn = get_file_sha(engine_path)
+        if engine_sha256_post_spawn != engine_sha256_preflight or engine_sha256_post_spawn != "ae4c93fa9676ca7750d0714342fd8a5b1d018000fc6e0f6cedf112067b5ef374":
+            exit_error("ENGINE_BINARY_IDENTITY_CHANGED_AFTER_SPAWN")
+            
+        if "Threads" not in engine.options or "Hash" not in engine.options:
+            exit_error("REQUIRED_ENGINE_OPTIONS_MISSING")
+            
         engine.configure({
             "Threads": 1,
             "Hash": 16,
@@ -180,7 +187,7 @@ def main():
             "s1_suite_digest": "b483e152cbfd51704f62befabdfd2a9f7880999a199409b63253802a965ed6d7",
             "observed_uci_engine_name": observed_uci_name,
             "resolved_executable_path": engine_path,
-            "engine_binary_sha256": engine_sha256,
+            "engine_binary_sha256": engine_sha256_post_spawn,
             "Threads": 1,
             "Hash": 16,
             "nodes_per_required_child": 100000,
@@ -293,7 +300,7 @@ def main():
             "s1_suite_digest": "b483e152cbfd51704f62befabdfd2a9f7880999a199409b63253802a965ed6d7",
             "observed_uci_engine_name": observed_uci_name,
             "resolved_executable_path": engine_path,
-            "engine_binary_sha256": engine_sha256,
+            "engine_binary_sha256": engine_sha256_post_spawn,
             "Threads": 1,
             "Hash": 16,
             "nodes_per_required_child": 100000,

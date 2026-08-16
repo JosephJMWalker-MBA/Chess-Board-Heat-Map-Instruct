@@ -14,6 +14,8 @@ def test_t3b8_acquisition_executor_contract():
     play_calls = 0
     clear_hash_calls = 0
     experiment_result_create_calls = 0
+    configure_calls = 0
+    get_file_sha_engine_path_calls = 0
     
     strings = set()
     
@@ -57,9 +59,14 @@ def test_t3b8_acquisition_executor_contract():
                     play_calls += 1
                 elif node.func.attr == "clear_hash":
                     clear_hash_calls += 1
+                elif node.func.attr == "configure":
+                    configure_calls += 1
                 elif node.func.attr == "create":
                     if isinstance(node.func.value, ast.Name) and node.func.value.id == "ExperimentResult":
                         experiment_result_create_calls += 1
+            elif isinstance(node.func, ast.Name) and node.func.id == "get_file_sha":
+                if len(node.args) == 1 and isinstance(node.args[0], ast.Name) and node.args[0].id == "engine_path":
+                    get_file_sha_engine_path_calls += 1
                         
         elif isinstance(node, ast.Constant) and isinstance(node.value, str):
             strings.add(node.value)
@@ -76,6 +83,8 @@ def test_t3b8_acquisition_executor_contract():
     assert analysis_calls == 0, f"Expected 0 analysis calls, found {analysis_calls}"
     assert play_calls == 0, f"Expected 0 play calls, found {play_calls}"
     assert clear_hash_calls == 0, f"Expected 0 clear_hash calls, found {clear_hash_calls}"
+    assert configure_calls == 1, f"Expected 1 configure call, found {configure_calls}"
+    assert get_file_sha_engine_path_calls >= 2, f"Expected at least 2 get_file_sha(engine_path) calls, found {get_file_sha_engine_path_calls}"
     assert experiment_result_create_calls >= 1, "Expected ExperimentResult.create to be called"
     
     expected_strings = [
@@ -83,6 +92,8 @@ def test_t3b8_acquisition_executor_contract():
         "6ce6b91d3839998f2b9f24c3c6368cbb30cf799c1e8ddaeb9a9a3dcfc54e957b",
         "ae4c93fa9676ca7750d0714342fd8a5b1d018000fc6e0f6cedf112067b5ef374",
         "b483e152cbfd51704f62befabdfd2a9f7880999a199409b63253802a965ed6d7",
+        "ENGINE_BINARY_IDENTITY_CHANGED_AFTER_SPAWN",
+        "REQUIRED_ENGINE_OPTIONS_MISSING",
         "tests/fixtures/t3b8/t3b8_acquisition_started.json",
         "tests/fixtures/t3b8/t3b8_raw_acquisition.json"
     ]
