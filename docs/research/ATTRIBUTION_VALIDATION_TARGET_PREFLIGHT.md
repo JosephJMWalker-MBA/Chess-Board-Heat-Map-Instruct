@@ -28,8 +28,8 @@ Let $M_\mu = \mu(X)$.
 
 Because the tested attribution operators are deterministic functions of the frozen upstream evidence, $X \to M_\mu$ is a deterministic transformation.
 
-Therefore, for held-out target $Y$ and an independently supplied query representation $q$, by the data-processing inequality:
-$$I(Y; M_\mu, q) \le I(Y; X, q)$$
+Therefore, for held-out target $Y$ and an independently supplied query representation $\rho(q)$ (where "independently supplied" means $\rho$ is frozen independently of the tested $\mu$, not that $q$ must be statistically independent of the position or target), by the data-processing inequality:
+$$I(Y; M_\mu, \rho(q)) \le I(Y; X, \rho(q))$$
 
 **Spatial attribution cannot create information about $Y$ that was not already present in $X$.**
 

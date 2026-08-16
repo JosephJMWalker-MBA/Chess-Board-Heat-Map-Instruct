@@ -72,7 +72,7 @@ Proved that exact ordered `future_moves` restore deterministic replay of standar
 
 **Phase:** T3b Legal Reply Intervention
 **Status:** CLOSED / FALSIFIED
-**Next Scientific Step:** Attribution Validation Target Preflight (Next Candidate / planning only)
+**Next Scientific Step:** Attribution Utility Semantics Preflight (Next Candidate / planning only)
 
 ## T3b Queue
 
@@ -109,10 +109,19 @@ SPATIAL_CONSEQUENCE_OBJECT_REQUIRES_EXPLICIT_ATTRIBUTION_AXIOMS
 SPATIAL_OWNERSHIP_IS_CONVENTIONAL_NOT_IDENTIFIED
 
 ### Attribution Validation Target Preflight
+**Status: COMPLETE / CLOSED**
+
+**Leading target family:**
+held-out legal-alternative consequence discrimination
+
+**Conclusion:**
+VALIDATION_COMPARISON_REQUIRES_UTILITY_SEMANTICS_FIRST
+
+### Attribution Utility Semantics Preflight
 **Priority: P2 (Next Candidate / PLANNING ONLY)**
 
 **Purpose:**
-Which independent target Y could compare spatial attribution operators for empirical utility without defining spatial ownership by construction?
+What exact source evidence, legal-alternative comparison, query encoding, representation, readout, baseline, and utility notion would make held-out legal-alternative discrimination a scientifically interpretable test of representation utility?
 
 ### Representation Audit
 **Priority: PARKED P2 / NOT YET EARNED**
@@ -155,12 +164,13 @@ Remain downstream and outside objective Heat.
 15. **CLOSED** — T3b-9 Matched Analysis (FALSIFIED)
 16. **CLOSED** — Spatial Consequence Object Preflight
 17. **CLOSED** — Spatial Attribution Axiom Preflight
-18. **NEXT CANDIDATE P2** — Attribution Validation Target Preflight
-19. **PARKED P2** — Representation Audit (NOT YET EARNED)
-20. **PARKED P2** — Projection Audit (GATED)
-21. **P2** — Multi-Instrument / T1.12 robustness
-22. **P3** — Pathways / Evidence Fusion / Amplitude
-23. **DEFER** — Human Navigation / Teacher / Explanation
+18. **CLOSED** — Attribution Validation Target Preflight
+19. **NEXT CANDIDATE P2** — Attribution Utility Semantics Preflight
+20. **PARKED P2** — Representation Audit (NOT YET EARNED)
+21. **PARKED P2** — Projection Audit (GATED)
+22. **P2** — Multi-Instrument / T1.12 robustness
+23. **P3** — Pathways / Evidence Fusion / Amplitude
+24. **DEFER** — Human Navigation / Teacher / Explanation
 
 ---
 
