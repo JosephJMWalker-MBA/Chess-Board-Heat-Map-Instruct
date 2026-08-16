@@ -33,15 +33,43 @@ For every future fixture $u$, retain exactly two event replies:
 $$C_u(s) = \{c_1, c_2\}$$
 with the existing distinct-origin semantics.
 
-Require prospectively:
-$|M_u(c_j; s)| \ge 1 \text{ for } j=1,2.$
+Strict matchability requires $m_j \ge 1$.
 
 Define:
 $$m_j = |M_u(c_j; s)|$$
+
+A future Design-B outcome fixture must satisfy prospectively and rule-only:
+**calibration-admissible fixture** $\iff m_1 \ge 2 \land m_2 \ge 2$.
+
+If $m_j = 1$, then $H_j$ contains exactly two identities. Under the pseudo-label construction:
+- unequal CP outcomes give signed contrasts $+1, -1$, hence $S_j = 1$ for both identities;
+- tied CP outcomes give $S_j = 0$ for both identities.
+
+Therefore:
+$m_j = 1 \implies S_j(z)$ is invariant over $z \in H_j$.
+
+In particular:
+$m_1 = m_2 = 1 \implies Q_u = 1/2$
+for every possible outcome assignment.
+
+State explicitly:
+Such a value would be structurally forced by the calibration universe rather than evidence against destination sensitivity.
+
+Therefore a future Design-B outcome fixture must satisfy prospectively and rule-only:
+$m_1 \ge 2, m_2 \ge 2$.
+
+This requirement is a calibration-resolution condition, not an enrichment or relaxation of $B_{strict}$.
+It must be checked before engine observation.
+
+Define:
 $$G_j = \#\{ n \in M_u(c_j; s) : Y_{c_j} > Y_n \}$$
 $$T_j = \#\{ n \in M_u(c_j; s) : Y_{c_j} = Y_n \}$$
 
-All consequence observations must use one frozen perspective and compatible typed CP values. No mate-to-CP conversion.
+The matched statistic requires compatible CP-typed outcomes for every member of:
+$H_1 \cup H_2$.
+
+A mate-typed observation in that required matched/calibration universe makes the fixture non-evaluable for $D, S, Q$; no mate-to-CP conversion.
+Do not require CP typing for unrelated legal replies outside $H_1 \cup H_2$ merely for this statistic.
 
 ## 3. Ordinal Evidence and Unsigned Sensitivity
 Freeze the signed within-stratum ordinal contrast:
@@ -61,8 +89,9 @@ Matching-set cardinality is legal opportunity structure, not scientific importan
 
 ### Explicitly Rejected Statistics
 Explicitly reject as the primary statistic:
-$\frac{\sum_j |M_j|}{\sum_j \sum_{n \in M_j} \text{pairwise comparison}}$
-because it weights event realizations by control-set cardinality.
+$$A_{pooled} = \frac{\sum_{j=1}^2 \sum_{n \in M_j} [1(Y_{c_j} > Y_n) + \frac{1}{2} 1(Y_{c_j} = Y_n)]}{m_1 + m_2}$$
+
+This is rejected as the primary fixture estimator because an event reply contributes once per available control, so control-set cardinality determines scientific weight.
 
 Also explicitly reject:
 $\left| \frac{D_1 + D_2}{2} \right|$
