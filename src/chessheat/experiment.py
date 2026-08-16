@@ -1,7 +1,7 @@
 import hashlib
 import json
 from enum import Enum
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 from pydantic import BaseModel, model_validator
 from .semantics import SufficientPosition
 
@@ -27,6 +27,8 @@ class ExperimentSpec(BaseModel):
     Defines the rigid inputs and conditions of a single experiment.
     Serves as the deterministic identity of an experiment.
     """
+    model_config = {"extra": "forbid"}
+
     semantic_signature_version: str
     semantic_signature_digest: str
     suite_identity: str
@@ -40,10 +42,14 @@ class ExperimentSpec(BaseModel):
     budget_config: Dict[str, Any]
     line_source: str
     hypothesis_identifier: str
+    comparison_perspective: Optional[str] = None
 
     def spec_digest(self) -> str:
         """Deterministic SHA-256 hash of the specification."""
-        payload_str = json.dumps(self.model_dump(), sort_keys=True)
+        d = self.model_dump()
+        if d.get("comparison_perspective") is None:
+            del d["comparison_perspective"]
+        payload_str = json.dumps(d, sort_keys=True)
         return hashlib.sha256(payload_str.encode('utf-8')).hexdigest()
 
 class ExperimentResult(BaseModel):

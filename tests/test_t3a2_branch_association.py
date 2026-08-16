@@ -214,8 +214,7 @@ def test_t3a2_branch_conditioned_association():
         instrument_config=fixture["engine_options"],
         budget_config={"type": fixture["search_budget_type"], "value": fixture["search_budget_value"]},
         line_source="pv",
-        hypothesis_identifier="T3a-2",
-        comparison_perspective="white"
+        hypothesis_identifier="T3a-2"
     )
     
     # 7. Preserve fully typed scores and regrets (including perspective)
