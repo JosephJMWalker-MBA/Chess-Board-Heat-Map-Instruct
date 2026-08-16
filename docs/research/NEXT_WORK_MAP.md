@@ -72,7 +72,7 @@ Proved that exact ordered `future_moves` restore deterministic replay of standar
 
 **Phase:** T3b Legal Reply Intervention
 **Status:** CLOSED / FALSIFIED
-**Next Scientific Step:** Spatial Consequence Object Preflight (Next Candidate / planning only)
+**Next Scientific Step:** Spatial Attribution Axiom Preflight (Next Candidate / planning only)
 
 ## T3b Queue
 
@@ -94,12 +94,19 @@ Proved that exact ordered `future_moves` restore deterministic replay of standar
 ## Later work, intentionally gated
 
 ### Spatial Consequence Object Preflight
-**Priority: P2 (Next Candidate)**
+**Status: COMPLETE / CLOSED**
+
+**Earned result:**
+SPATIAL_ATTRIBUTION_NOT_IDENTIFIED_BY_CURRENT_AXIOMS
+
+**Primary conclusion:**
+SPATIAL_CONSEQUENCE_OBJECT_REQUIRES_EXPLICIT_ATTRIBUTION_AXIOMS
+
+### Spatial Attribution Axiom Preflight
+**Priority: P2 (Next Candidate / PLANNING ONLY)**
 
 **Purpose:**
-Determine what mathematical object could legitimately represent "where consequence lives" before choosing another representation, projection, or Heat mechanism.
-
-**Note:** This is not authorization for a new engine experiment. It is a mathematical / semantic / identifiability preflight.
+What additional ownership/responsibility assumptions could distinguish admissible spatial attribution operators, and which of those assumptions are semantic definitions versus empirically falsifiable claims?
 
 ### Representation Audit
 **Priority: PARKED P2 / NOT YET EARNED**
@@ -140,12 +147,13 @@ Remain downstream and outside objective Heat.
 13. **CLOSED** — T3b-7 Rule-Only Matched Intervention Fixture Protocol
 14. **CLOSED** — T3b-8 Acquisition
 15. **CLOSED** — T3b-9 Matched Analysis (FALSIFIED)
-16. **NEXT CANDIDATE P2** — Spatial Consequence Object Preflight
-17. **PARKED P2** — Representation Audit (NOT YET EARNED)
-18. **PARKED P2** — Projection Audit (GATED)
-19. **P2** — Multi-Instrument / T1.12 robustness
-20. **P3** — Pathways / Evidence Fusion / Amplitude
-21. **DEFER** — Human Navigation / Teacher / Explanation
+16. **CLOSED** — Spatial Consequence Object Preflight
+17. **NEXT CANDIDATE P2** — Spatial Attribution Axiom Preflight
+18. **PARKED P2** — Representation Audit (NOT YET EARNED)
+19. **PARKED P2** — Projection Audit (GATED)
+20. **P2** — Multi-Instrument / T1.12 robustness
+21. **P3** — Pathways / Evidence Fusion / Amplitude
+22. **DEFER** — Human Navigation / Teacher / Explanation
 
 ---
 
