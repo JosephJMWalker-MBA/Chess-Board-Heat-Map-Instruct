@@ -65,29 +65,35 @@ The core identifiability question targets the mapping **C2 $\to$ C4**: Is this m
 
 ## 5. Candidate Axioms / Desiderata
 
-The following are evaluated for the spatial attribution operator:
+We separate three kinds of requirements:
 
-**Required:**
-- no normalization-generated hotspot when amplitude is zero/negligible
-- zero-consequence behavior: zero amplitude implies zero attribution mass
-- no dependence on visualization choices
-- explicit comparison/reference identity
+**Upstream consequence-target constraints**
+- sufficient-state identity
+- explicit legal-alternative/reference identity
+- branch identity preserved until consequence comparison
+- typed target preservation
 - no mate-to-CP coercion
-- typed outcome preservation
-- branch identity until consequence comparison
-- sufficient-state invariance
-- deterministic fixed-input behavior
-- producer/instrument separation
+- target $V$ distinguished from estimator $\hat{V}$
+- producer/instrument provenance
+
+**C2 $\to$ C4 attribution-operator axioms used in the identifiability theorem**
+- deterministic under fixed inputs
+- depends only on the declared comparison subject and supplied magnitude $a$
+- comparison-order invariance for unsigned spatial mass
+- zero: $a=0$ implies zero attribution everywhere
+- positive homogeneity in the symbolic amplitude: $\mu(s | x, \lambda a) = \lambda \mu(s | x, a)$ for $\lambda \geq 0$
+- visualization independence
+
+*(Optional pending exact formulation)*
+- rule-preserving board equivariance: $\mu(\pi(s) | \pi x, a) = \mu(s | x, a)$ for a rule-preserving board relabeling/isomorphism $\pi$. Both $\mu_D$ and $\mu_T$ (defined below) satisfy this because from/to sets commute with $\pi$.
+
+**Downstream measurement/projection safeguards**
 - projection provenance
+- raw attribution mass vanishes with amplitude
+- any normalized spatial shape is conditional on amplitude and may not be interpreted as magnitude or displayed without amplitude-aware semantics
+- $A=0 \implies$ shape null/undefined
 
-**Optional pending exact formulation:**
-- rule-preserving board symmetry/equivariance
-
-**Candidate-family dependent (not universally required):**
-- legal-counterfactual requirements
-
-**Unadopted as a global axiom:**
-- Conservation ($\sum_s \mu(s) = A$). The counterexample below will satisfy conservation voluntarily, demonstrating that adding conservation alone still does not restore uniqueness.
+These downstream safeguards do not select between $\mu_D$ and $\mu_T$.
 
 ## 6. Shape Versus Amplitude
 
@@ -97,11 +103,13 @@ Therefore, a candidate object should be explicitly represented as a pair:
 $$(A(P), S(\cdot|P))$$
 rather than a single normalized Heat vector.
 
-**Requirement:** $A = 0$ must not force an arbitrary normalized shape. Shape must be undefined/null at zero amplitude rather than uniformly or rank normalized. We do not define a new production amplitude metric here.
+**Requirement:** Raw attribution mass vanishes with amplitude. Any normalized spatial shape is conditional on amplitude and may not be interpreted as magnitude or displayed without amplitude-aware semantics. Shape must be undefined/null at zero amplitude rather than uniformly or rank normalized. No arbitrary "negligible" threshold or production amplitude definition is provided here.
 
 ## 7. The Identifiability Test
 
 Do the proposed axioms uniquely identify a spatial attribution operator?
+
+The theorem does not require ChessHeat to have already earned a universal scalar amplitude. It is conditional: even granting any scientifically valid supplied nonnegative consequence magnitude $a$, the currently defensible spatial axioms do not uniquely determine where that magnitude should be assigned.
 
 Use one abstract legal-transition comparison:
 $$x=(P,m,n,C)$$
@@ -111,8 +119,9 @@ after deduplication, and:
 $$T(x) = \{from(m), to(m), from(n), to(n)\}$$
 after deduplication.
 
-Choose the abstract case so:
-$$D(x) \neq T(x)$$
+Choose $x$ with:
+$$D(x) \subsetneq T(x)$$
+which is stronger than merely $D(x) \neq T(x)$.
 
 Define:
 $$\mu_D(s|x) = \begin{cases} a/|D(x)|, & s \in D(x) \\ 0, & \text{otherwise} \end{cases}$$
@@ -120,35 +129,32 @@ $$\mu_D(s|x) = \begin{cases} a/|D(x)|, & s \in D(x) \\ 0, & \text{otherwise} \en
 and:
 $$\mu_T(s|x) = \begin{cases} a/|T(x)|, & s \in T(x) \\ 0, & \text{otherwise} \end{cases}$$
 
-At $a=0$, both operators return zero attribution mass and spatial shape is null/undefined.
-*(Note: $a$ is a symbolic nonnegative consequence magnitude used only for the identifiability construction, not a claim about the production amplitude metric.)*
+### Axiom Admissibility
+Both $\mu_D$ and $\mu_T$ satisfy the attribution-operator axioms:
+- **Deterministic under fixed inputs:** Yes, depend only on fixed sets $D(x)$ and $T(x)$ and scalar $a$.
+- **Depends only on declared comparison/magnitude:** Yes.
+- **Comparison-order invariance:** Yes, $D$ and $T$ sets are symmetric in $m,n$.
+- **Zero:** If $a=0$, mass is $0$.
+- **Positive homogeneity:** $\mu_D(\cdot | \lambda a) = \lambda \mu_D(\cdot | a)$ and $\mu_T(\cdot | \lambda a) = \lambda \mu_T(\cdot | a)$.
+- **Visualization independence:** Yes, purely mathematical sets.
+- **Voluntary conservation:** $\sum_s \mu_D(s|x) = \sum_s \mu_T(s|x) = a$. Thus $\|\mu_D\|_1 = \|\mu_T\|_1 = a \to 0$ as $a \to 0$.
 
-### Axiom-by-Axiom Admissibility Proof
+For any:
+$$s^\star \in T(x) \setminus D(x)$$
+we explicitly derive:
+$$\mu_D(s^\star | x) = 0$$
+while
+$$\mu_T(s^\star | x) = a / |T(x)| > 0$$
 
-| Required Axiom | $\mu_D$ Compliance | $\mu_T$ Compliance |
-| :--- | :--- | :--- |
-| Uses only fixed sufficient-state / legal-transition identities | Yes, uses target squares of $m,n$ | Yes, uses origin/target squares of $m,n$ |
-| Applied only after branch consequence comparison | Yes, conditions on $x=(P,m,n,C)$ | Yes, conditions on $x=(P,m,n,C)$ |
-| Deterministic | Yes, $D(x)$ and $a$ are deterministic | Yes, $T(x)$ and $a$ are deterministic |
-| Explicit reference pair $(m,n)$ | Yes, defined directly over $(m,n)$ | Yes, defined directly over $(m,n)$ |
-| Independent of visualization | Yes, mathematical set operations | Yes, mathematical set operations |
-| Independent of producer identity once C2 target value is supplied | Yes, only uses $a$ and move geometry | Yes, only uses $a$ and move geometry |
-| No mate/CP conversion | Yes, $a$ is purely symbolic | Yes, $a$ is purely symbolic |
-| Zero amplitude gives zero mass and null shape | Yes, if $a=0$, mass is $0$ | Yes, if $a=0$, mass is $0$ |
-| Voluntarily conserves $a$ | Yes, $\sum \mu_D = a$ | Yes, $\sum \mu_T = a$ |
+Therefore:
+$$\mu_D \neq \mu_T$$
 
-If color/perspective consistency requires an additional definition, it can be stated precisely without breaking the counterexample.
-
-Then, because:
-$$D(x) \neq T(x)$$
-we prove:
-$$\mu_D(\cdot|x) \neq \mu_T(\cdot|x)$$
-
-Therefore, two distinct operators satisfy the same defensible axioms.
+**Conditional non-identifiability result.** 
+Given a fixed legal-alternative comparison subject and any supplied nonnegative consequence magnitude $a$, the currently adopted attribution-operator axioms—even strengthened by conservation—do not uniquely identify a square attribution. The explicit operators $\mu_D$ and $\mu_T$ satisfy those axioms but differ on the same comparison.
 
 **SPATIAL_ATTRIBUTION_NOT_IDENTIFIED_BY_CURRENT_AXIOMS**
 
-To distinguish them, exactly one extra assumption is required. Examples include:
+At least one additional substantive attribution assumption or equivalent selection rule is necessary to distinguish these operators; further assumptions may be required to uniquely identify an operator over the full admissible class. Examples include:
 - destination-ownership axiom
 - transition-touch ownership axiom
 - mechanistic dependency attribution axiom
@@ -196,12 +202,12 @@ A candidate should fail the preflight if:
 
 | Candidate | Canonical Subject | Consequence Target | Spatial Subject | Extra Choices | Legal-State Fidelity | Branch Preservation | Instrument Dependence | Uniqueness Status | S0/S1 | T2/T3 | Strongest Claim | Principal Unresolved Issue / Falsifier |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **A. Pairwise Legal-Transition** | Legal-alternative pair | $C_V$ | None at C2 | Any C2$\to$C4 attribution rule | High | Preserved | Estimator-bound | Subject identity high / spatial attribution N/A | Yes | Yes | Baseline canonical measure | Consequence target V and later spatialization |
+| **A. Pairwise Legal-Transition** | Legal-alternative pair | $C_V$ | None at C2 | Any C2$\to$C4 attribution rule | High | Preserved | Estimator-bound | Subject identity high / spatial attribution N/A | Yes | Yes | Canonical comparison subject | Consequence target V and later spatialization |
 | **B. Legal-Intervention Sensitivity** | $P$ | $V$ delta | Intervention locus | Intervention set | Variable | Reduced | Estimator-bound | Low | Yes | Partial | Intervention sensitivity | Arbitrary coalitions |
 | **C. Branch-Conditioned** | Branch sets | Branch target | Derived | Attribution operator | High | Preserved | Estimator-bound | Low | Yes | Yes | Validated C2 rep. | Redistributes search |
 | **D. State-Difference Support** | Diff subset | $C_V$ | Changed squares | Scaling rule | High | Preserved | Estimator-bound | Low | Yes | Compatibility risk | Spatial mapping heuristic | Unchanged relationally relevant squares |
 | **E. Cooperative/Shapley** | Subsets | $C_V$ | Features | Coalition semantics | Low (illegal states) | Reduced | Estimator-bound | Low | Distinguish typing | Partial | Axiomatic fairness | Illegal counterfactuals |
-| **F. Transition Graph w/ Projection** | Graph structure | $C_V$ or other typed target | Derived projection | Projection mapping | High | Preserved | Estimator-bound | C2 identity high / C4 uniqueness low | Yes | Yes | Sound canonical architecture | Conflates target/estimator |
+| **F. Transition Graph w/ Projection** | Graph structure | $C_V$ or other typed target | Derived projection | Projection mapping | High | Preserved | Estimator-bound | C2 identity high / C4 uniqueness low | Yes | Yes | Architecture compatible with transition-keyed canonical evidence | Conflates target/estimator |
 
 ## 12. Preflight Conclusion
 
