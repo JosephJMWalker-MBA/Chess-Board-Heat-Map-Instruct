@@ -116,7 +116,7 @@ For each candidate utility notion state:
 
 **A. Raw Reference**
 $$R_X(X, \rho(q))$$
-This is an upper/reference view of task accessibility from full upstream evidence under declared learner constraints—not an information-equivalent competitor.
+This is the information-rich/raw-evidence reference. It is not guaranteed to be an empirical performance upper bound under finite learner/resource constraints.
 
 **B. Spatial Encodings**
 $$R_\mu(M_\mu, \rho(q))$$
