@@ -9,18 +9,14 @@ def evaluate_t3a3(branches):
     event_sq = "c4"
     event_role = "capture"
     
-    partition_1 = []
-    partition_0 = []
-    
     classification = "UNCLASSIFIED"
     failure_reason = None
     
     short_roots = {}
     all_regrets = {}
     
-    # Pre-check all horizons to ensure observational completeness
+    # Pass A: Pre-check all horizons to ensure observational completeness and typed-consequence validity
     is_evaluable_set_incomplete = False
-    
     for b in branches:
         if b.regret.type != "cp":
             classification = "INCONCLUSIVE"
@@ -29,8 +25,6 @@ def evaluate_t3a3(branches):
             
         all_regrets[b.root_uci] = {"type": b.regret.type, "value": b.regret.value}
         
-        # Check if ply 2 is present in future_evidence
-        # future_moves excludes ply 1 (root). We just need ply 2 to be there.
         has_ply_2 = False
         for ev in b.future_evidence:
             if ev.ply == 2:
@@ -38,28 +32,34 @@ def evaluate_t3a3(branches):
                 break
                 
         if not has_ply_2:
-            short_roots[b.root_uci] = len(b.future_moves) # length might be 0
+            short_roots[b.root_uci] = len(b.future_moves)
             classification = "INCONCLUSIVE"
             failure_reason = "INSUFFICIENT_OBSERVED_PV_LENGTH"
             is_evaluable_set_incomplete = True
-            
-        if not is_evaluable_set_incomplete:
-            # We only evaluate X_i if all roots pass the completeness gate
-            x = 0
-            for ev in b.future_evidence:
-                if ev.ply == 2:
-                    if ev.square == event_sq and ev.role == event_role:
-                        x = 1
-            if x == 1:
-                partition_1.append(b)
-            else:
-                partition_0.append(b)
 
+    root_event_membership = {}
+    partition_1 = []
+    partition_0 = []
     d = None
     m = None
     ax = None
     
     if not is_evaluable_set_incomplete and classification != "INCONCLUSIVE":
+        # Pass B: assign X_i for every root
+        for b in branches:
+            x = 0
+            for ev in b.future_evidence:
+                if ev.ply == 2:
+                    if ev.square == event_sq and ev.role == event_role:
+                        x = 1
+            root_event_membership[b.root_uci] = x
+            if x == 1:
+                partition_1.append(b)
+            else:
+                partition_0.append(b)
+        
+        ax = sum(root_event_membership.values())
+        
         if len(partition_1) < 2 or len(partition_0) < 2:
             classification = "INCONCLUSIVE"
             failure_reason = "INSUFFICIENT_PARTITION_CARDINALITY"
@@ -86,8 +86,6 @@ def evaluate_t3a3(branches):
                 classification = "WEAK_SUPPORT"
             else:
                 classification = "FALSIFIED"
-                
-            ax = len(partition_1)
             
     return {
         "classification": classification,
@@ -98,6 +96,8 @@ def evaluate_t3a3(branches):
         "horizon_plies": [2],
         "short_roots": short_roots,
         "typed_root_regrets": all_regrets,
+        "root_event_membership": root_event_membership,
+        "legal_root_ucis": sorted([b.root_uci for b in branches]),
         "unevaluable_roots": sorted(list(short_roots.keys())),
         "evaluable_event_present_roots": sorted([b.root_uci for b in partition_1]),
         "evaluable_event_absent_roots": sorted([b.root_uci for b in partition_0]),
@@ -258,6 +258,8 @@ def test_t3a3_branch_conditioned_association():
         "evaluable_event_present_roots": res["evaluable_event_present_roots"],
         "evaluable_event_absent_roots": res["evaluable_event_absent_roots"],
         "unevaluable_roots": res["unevaluable_roots"],
+        "root_event_membership": res["root_event_membership"],
+        "legal_root_ucis": res["legal_root_ucis"],
         "typed_scores": fully_typed_scores,
         "typed_regrets": fully_typed_regrets,
         "D": res["D"],
