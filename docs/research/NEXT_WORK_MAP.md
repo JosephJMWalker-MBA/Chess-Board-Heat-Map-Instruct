@@ -71,7 +71,8 @@ Proved that exact ordered `future_moves` restore deterministic replay of standar
 ## Active Research Track
 
 **Phase:** T3b Legal Reply Intervention
-**Next Scientific Step:** T3b-7 — Rule-Only Matched Intervention Fixture Protocol
+**Status:** CLOSED / FALSIFIED
+**Next Scientific Step:** Representation Audit (Next Candidate)
 
 ## T3b Queue
 
@@ -82,14 +83,18 @@ Proved that exact ordered `future_moves` restore deterministic replay of standar
 5. ~~T3b-4 — Matched-Control Identifiability Feasibility Audit~~ COMPLETE / strict matcher semantically admissible
 6. ~~T3b-5 — Strict Matchability Coverage Audit~~ COMPLETE / FEASIBLE_FOR_MATCHED_PROTOCOL_DESIGN / RULE-ONLY
 7. ~~T3b-6 — Matched-Control Estimand & Calibration Preregistration~~ COMPLETE / MATCHED ESTIMAND & CALIBRATION FROZEN
-8. T3b-7 — Rule-Only Matched Intervention Fixture Protocol
+8. ~~T3b-7 — Rule-Only Matched Intervention Fixture Protocol~~ COMPLETE / FROZEN
+9. ~~T3b-8 — Acquisition~~ COMPLETE / 171 observations / integrity passed
+10. ~~T3b-9 — Matched Analysis~~ COMPLETE / FALSIFIED
+
+**Note**: No further T3b fixture hunting, matcher relaxation, alternative calibration, rescue corpus, or outcome-driven retuning is authorized.
 
 ---
 
 ## Later work, intentionally gated
 
 ### Representation Audit
-**Priority: P2**
+**Priority: P2 (Next Candidate)**
 Test whether independently meaningful chess concepts are recoverable from the representation. `decodable != causally used != useful for Heat`.
 
 ### Projection Audit
@@ -124,12 +129,14 @@ Remain downstream and outside objective Heat.
 10. **DONE** — T3b-4 Matched-Control Identifiability Feasibility Audit
 11. **DONE** — T3b-5 Strict Matchability Coverage Audit
 12. **DONE** — T3b-6 Matched-Control Estimand & Calibration Preregistration (COMPLETE / MATCHED ESTIMAND & CALIBRATION FROZEN)
-13. **NEXT P1** — T3b-7 Rule-Only Matched Intervention Fixture Protocol
-14. **P2** — Representation Audit
-15. **P2** — Projection Audit
-16. **P2** — Multi-Instrument / T1.12 robustness
-17. **P3** — Pathways / Evidence Fusion / Amplitude
-18. **DEFER** — Human Navigation / Teacher / Explanation
+13. **CLOSED** — T3b-7 Rule-Only Matched Intervention Fixture Protocol
+14. **CLOSED** — T3b-8 Acquisition
+15. **CLOSED** — T3b-9 Matched Analysis (FALSIFIED)
+16. **NEXT CANDIDATE P2** — Representation Audit
+17. **P2** — Projection Audit
+18. **P2** — Multi-Instrument / T1.12 robustness
+19. **P3** — Pathways / Evidence Fusion / Amplitude
+20. **DEFER** — Human Navigation / Teacher / Explanation
 
 ---
 
