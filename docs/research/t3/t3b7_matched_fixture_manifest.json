@@ -1,0 +1,4240 @@
+{
+  "K_min": 12,
+  "chess_version": "1.11.2",
+  "comparison_perspective": "white",
+  "consequence_observations_present": false,
+  "engine_observations_present": false,
+  "evidence_ceiling": "intervention_sensitivity",
+  "expected_future_search_count": 171,
+  "fixture_count": 16,
+  "fixtures": [
+    {
+      "B_strict": {
+        "d8a5": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8b6": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8c7": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8d7": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8e8": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8f8": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "e7e8": [
+          "e7",
+          "king",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "e7f7": [
+          "e7",
+          "king",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "e7f8": [
+          "e7",
+          "king",
+          "none",
+          null,
+          null,
+          false
+        ]
+      },
+      "C_reply_ucis": [
+        "d8e8",
+        "e7e8"
+      ],
+      "H_1_ucis": [
+        "d8a5",
+        "d8b6",
+        "d8c7",
+        "d8d7",
+        "d8e8",
+        "d8f8"
+      ],
+      "H_2_ucis": [
+        "e7e8",
+        "e7f7",
+        "e7f8"
+      ],
+      "M_1_ucis": [
+        "d8a5",
+        "d8b6",
+        "d8c7",
+        "d8d7",
+        "d8f8"
+      ],
+      "M_2_ucis": [
+        "e7f7",
+        "e7f8"
+      ],
+      "c_1": "d8e8",
+      "c_2": "e7e8",
+      "fixture_content_digest": "68439b1fef7b3e008025028c1614f97929b0ca91acfda07699d54a5fa438bdb0",
+      "fixture_identity": "t3b7_f00",
+      "fixture_index": 0,
+      "game_index": 0,
+      "half_move_index": 15,
+      "intervention_fen": "rnbq2nr/p3k1pp/2pp1p2/1p2pQ2/1bP2P2/PP2P2N/3P2PP/RNB1KB1R b KQ - 3 8",
+      "legal_reply_ucis": [
+        "a7a5",
+        "a7a6",
+        "b4a3",
+        "b4a5",
+        "b4c3",
+        "b4c5",
+        "b4d2",
+        "b5c4",
+        "b8a6",
+        "b8d7",
+        "c6c5",
+        "c8a6",
+        "c8b7",
+        "c8d7",
+        "c8e6",
+        "c8f5",
+        "d6d5",
+        "d8a5",
+        "d8b6",
+        "d8c7",
+        "d8d7",
+        "d8e8",
+        "d8f8",
+        "e5e4",
+        "e5f4",
+        "e7e8",
+        "e7f7",
+        "e7f8",
+        "g7g5",
+        "g7g6",
+        "g8h6",
+        "h7h5",
+        "h7h6"
+      ],
+      "m_1": 5,
+      "m_2": 2,
+      "observation_reply_ucis": [
+        "d8a5",
+        "d8b6",
+        "d8c7",
+        "d8d7",
+        "d8e8",
+        "d8f8",
+        "e7e8",
+        "e7f7",
+        "e7f8"
+      ],
+      "qualifying_target_squares": [
+        "e8",
+        "f8"
+      ],
+      "required_children": [
+        {
+          "child_fen": "rnb3nr/p3k1pp/2pp1p2/qp2pQ2/1bP2P2/PP2P2N/3P2PP/RNB1KB1R w KQ - 4 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8a5"
+        },
+        {
+          "child_fen": "rnb3nr/p3k1pp/1qpp1p2/1p2pQ2/1bP2P2/PP2P2N/3P2PP/RNB1KB1R w KQ - 4 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8b6"
+        },
+        {
+          "child_fen": "rnb3nr/p1q1k1pp/2pp1p2/1p2pQ2/1bP2P2/PP2P2N/3P2PP/RNB1KB1R w KQ - 4 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8c7"
+        },
+        {
+          "child_fen": "rnb3nr/p2qk1pp/2pp1p2/1p2pQ2/1bP2P2/PP2P2N/3P2PP/RNB1KB1R w KQ - 4 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8d7"
+        },
+        {
+          "child_fen": "rnb1q1nr/p3k1pp/2pp1p2/1p2pQ2/1bP2P2/PP2P2N/3P2PP/RNB1KB1R w KQ - 4 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8e8"
+        },
+        {
+          "child_fen": "rnb2qnr/p3k1pp/2pp1p2/1p2pQ2/1bP2P2/PP2P2N/3P2PP/RNB1KB1R w KQ - 4 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8f8"
+        },
+        {
+          "child_fen": "rnbqk1nr/p5pp/2pp1p2/1p2pQ2/1bP2P2/PP2P2N/3P2PP/RNB1KB1R w KQ - 4 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "e7e8"
+        },
+        {
+          "child_fen": "rnbq2nr/p4kpp/2pp1p2/1p2pQ2/1bP2P2/PP2P2N/3P2PP/RNB1KB1R w KQ - 4 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "e7f7"
+        },
+        {
+          "child_fen": "rnbq1knr/p5pp/2pp1p2/1p2pQ2/1bP2P2/PP2P2N/3P2PP/RNB1KB1R w KQ - 4 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "e7f8"
+        }
+      ],
+      "required_search_count": 9,
+      "sufficient_position": {
+        "board_arrangement_fen": "rnbq2nr/p3k1pp/2pp1p2/1p2pQ2/1bP2P2/PP2P2N/3P2PP/RNB1KB1R",
+        "castling_rights": "KQ",
+        "en_passant_square": "-",
+        "fullmove_number": 8,
+        "halfmove_clock": 3,
+        "history_available": false,
+        "history_identity": null,
+        "side_to_move": "black",
+        "variant": "standard"
+      },
+      "target_event": {
+        "ply": 1,
+        "role": "destination",
+        "square": "e8"
+      }
+    },
+    {
+      "B_strict": {
+        "d7c7": [
+          "d7",
+          "king",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d7c8": [
+          "d7",
+          "king",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d7e8": [
+          "d7",
+          "king",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8b8": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8c7": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8c8": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8e8": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ]
+      },
+      "C_reply_ucis": [
+        "d7e8",
+        "d8e8"
+      ],
+      "H_1_ucis": [
+        "d7c7",
+        "d7c8",
+        "d7e8"
+      ],
+      "H_2_ucis": [
+        "d8b8",
+        "d8c7",
+        "d8c8",
+        "d8e8"
+      ],
+      "M_1_ucis": [
+        "d7c7",
+        "d7c8"
+      ],
+      "M_2_ucis": [
+        "d8b8",
+        "d8c7",
+        "d8c8"
+      ],
+      "c_1": "d7e8",
+      "c_2": "d8e8",
+      "fixture_content_digest": "bc32bc5a7a54c9d661453b1d73ea0242742a36195c0d908e585339875b29ad99",
+      "fixture_identity": "t3b7_f01",
+      "fixture_index": 1,
+      "game_index": 1,
+      "half_move_index": 21,
+      "intervention_fen": "r2q1bn1/p2kpp1r/nppp2p1/2Q2P1p/4P3/N2P3b/PPPBB1PP/R3K1NR b KQ - 1 11",
+      "legal_reply_ucis": [
+        "a6b4",
+        "a6b8",
+        "a6c5",
+        "a6c7",
+        "a8b8",
+        "a8c8",
+        "b6b5",
+        "b6c5",
+        "d6c5",
+        "d6d5",
+        "d7c7",
+        "d7c8",
+        "d7e8",
+        "d8b8",
+        "d8c7",
+        "d8c8",
+        "d8e8",
+        "e7e5",
+        "e7e6",
+        "f7f6",
+        "f8g7",
+        "f8h6",
+        "g6f5",
+        "g6g5",
+        "g8f6",
+        "g8h6",
+        "h3f5",
+        "h3g2",
+        "h3g4",
+        "h5h4",
+        "h7g7",
+        "h7h6",
+        "h7h8"
+      ],
+      "m_1": 2,
+      "m_2": 3,
+      "observation_reply_ucis": [
+        "d7c7",
+        "d7c8",
+        "d7e8",
+        "d8b8",
+        "d8c7",
+        "d8c8",
+        "d8e8"
+      ],
+      "qualifying_target_squares": [
+        "e8"
+      ],
+      "required_children": [
+        {
+          "child_fen": "r2q1bn1/p1k1pp1r/nppp2p1/2Q2P1p/4P3/N2P3b/PPPBB1PP/R3K1NR w KQ - 2 12",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d7c7"
+        },
+        {
+          "child_fen": "r1kq1bn1/p3pp1r/nppp2p1/2Q2P1p/4P3/N2P3b/PPPBB1PP/R3K1NR w KQ - 2 12",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d7c8"
+        },
+        {
+          "child_fen": "r2qkbn1/p3pp1r/nppp2p1/2Q2P1p/4P3/N2P3b/PPPBB1PP/R3K1NR w KQ - 2 12",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d7e8"
+        },
+        {
+          "child_fen": "rq3bn1/p2kpp1r/nppp2p1/2Q2P1p/4P3/N2P3b/PPPBB1PP/R3K1NR w KQ - 2 12",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8b8"
+        },
+        {
+          "child_fen": "r4bn1/p1qkpp1r/nppp2p1/2Q2P1p/4P3/N2P3b/PPPBB1PP/R3K1NR w KQ - 2 12",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8c7"
+        },
+        {
+          "child_fen": "r1q2bn1/p2kpp1r/nppp2p1/2Q2P1p/4P3/N2P3b/PPPBB1PP/R3K1NR w KQ - 2 12",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8c8"
+        },
+        {
+          "child_fen": "r3qbn1/p2kpp1r/nppp2p1/2Q2P1p/4P3/N2P3b/PPPBB1PP/R3K1NR w KQ - 2 12",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8e8"
+        }
+      ],
+      "required_search_count": 7,
+      "sufficient_position": {
+        "board_arrangement_fen": "r2q1bn1/p2kpp1r/nppp2p1/2Q2P1p/4P3/N2P3b/PPPBB1PP/R3K1NR",
+        "castling_rights": "KQ",
+        "en_passant_square": "-",
+        "fullmove_number": 11,
+        "halfmove_clock": 1,
+        "history_available": false,
+        "history_identity": null,
+        "side_to_move": "black",
+        "variant": "standard"
+      },
+      "target_event": {
+        "ply": 1,
+        "role": "destination",
+        "square": "e8"
+      }
+    },
+    {
+      "B_strict": {
+        "a8a6": [
+          "a8",
+          "rook",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "a8a7": [
+          "a8",
+          "rook",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "a8b8": [
+          "a8",
+          "rook",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "a8c8": [
+          "a8",
+          "rook",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8b8": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8c8": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8e7": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8f6": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8g5": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8h4": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ]
+      },
+      "C_reply_ucis": [
+        "a8c8",
+        "d8c8"
+      ],
+      "H_1_ucis": [
+        "a8a6",
+        "a8a7",
+        "a8b8",
+        "a8c8"
+      ],
+      "H_2_ucis": [
+        "d8b8",
+        "d8c8",
+        "d8e7",
+        "d8f6",
+        "d8g5",
+        "d8h4"
+      ],
+      "M_1_ucis": [
+        "a8a6",
+        "a8a7",
+        "a8b8"
+      ],
+      "M_2_ucis": [
+        "d8b8",
+        "d8e7",
+        "d8f6",
+        "d8g5",
+        "d8h4"
+      ],
+      "c_1": "a8c8",
+      "c_2": "d8c8",
+      "fixture_content_digest": "294e4f793014428fb61b1323f84ecfcc0dd173f7db261c590a95fad38ce82bd9",
+      "fixture_identity": "t3b7_f02",
+      "fixture_index": 2,
+      "game_index": 2,
+      "half_move_index": 17,
+      "intervention_fen": "r2qkbnr/2pn2p1/1p6/p2Ppp1p/PP6/2R2PPb/3PP2P/1NBQKBNR b Kkq - 1 9",
+      "legal_reply_ucis": [
+        "a5b4",
+        "a8a6",
+        "a8a7",
+        "a8b8",
+        "a8c8",
+        "b6b5",
+        "c7c5",
+        "c7c6",
+        "d7b8",
+        "d7c5",
+        "d7f6",
+        "d8b8",
+        "d8c8",
+        "d8e7",
+        "d8f6",
+        "d8g5",
+        "d8h4",
+        "e5e4",
+        "e8e7",
+        "e8f7",
+        "f5f4",
+        "f8b4",
+        "f8c5",
+        "f8d6",
+        "f8e7",
+        "g7g5",
+        "g7g6",
+        "g8e7",
+        "g8f6",
+        "g8h6",
+        "h3f1",
+        "h3g2",
+        "h3g4",
+        "h5h4",
+        "h8h6",
+        "h8h7"
+      ],
+      "m_1": 3,
+      "m_2": 5,
+      "observation_reply_ucis": [
+        "a8a6",
+        "a8a7",
+        "a8b8",
+        "a8c8",
+        "d8b8",
+        "d8c8",
+        "d8e7",
+        "d8f6",
+        "d8g5",
+        "d8h4"
+      ],
+      "qualifying_target_squares": [
+        "c8"
+      ],
+      "required_children": [
+        {
+          "child_fen": "3qkbnr/2pn2p1/rp6/p2Ppp1p/PP6/2R2PPb/3PP2P/1NBQKBNR w Kk - 2 10",
+          "is_terminal_claim_draw_false": false,
+          "uci": "a8a6"
+        },
+        {
+          "child_fen": "3qkbnr/r1pn2p1/1p6/p2Ppp1p/PP6/2R2PPb/3PP2P/1NBQKBNR w Kk - 2 10",
+          "is_terminal_claim_draw_false": false,
+          "uci": "a8a7"
+        },
+        {
+          "child_fen": "1r1qkbnr/2pn2p1/1p6/p2Ppp1p/PP6/2R2PPb/3PP2P/1NBQKBNR w Kk - 2 10",
+          "is_terminal_claim_draw_false": false,
+          "uci": "a8b8"
+        },
+        {
+          "child_fen": "2rqkbnr/2pn2p1/1p6/p2Ppp1p/PP6/2R2PPb/3PP2P/1NBQKBNR w Kk - 2 10",
+          "is_terminal_claim_draw_false": false,
+          "uci": "a8c8"
+        },
+        {
+          "child_fen": "rq2kbnr/2pn2p1/1p6/p2Ppp1p/PP6/2R2PPb/3PP2P/1NBQKBNR w Kkq - 2 10",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8b8"
+        },
+        {
+          "child_fen": "r1q1kbnr/2pn2p1/1p6/p2Ppp1p/PP6/2R2PPb/3PP2P/1NBQKBNR w Kkq - 2 10",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8c8"
+        },
+        {
+          "child_fen": "r3kbnr/2pnq1p1/1p6/p2Ppp1p/PP6/2R2PPb/3PP2P/1NBQKBNR w Kkq - 2 10",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8e7"
+        },
+        {
+          "child_fen": "r3kbnr/2pn2p1/1p3q2/p2Ppp1p/PP6/2R2PPb/3PP2P/1NBQKBNR w Kkq - 2 10",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8f6"
+        },
+        {
+          "child_fen": "r3kbnr/2pn2p1/1p6/p2Pppqp/PP6/2R2PPb/3PP2P/1NBQKBNR w Kkq - 2 10",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8g5"
+        },
+        {
+          "child_fen": "r3kbnr/2pn2p1/1p6/p2Ppp1p/PP5q/2R2PPb/3PP2P/1NBQKBNR w Kkq - 2 10",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8h4"
+        }
+      ],
+      "required_search_count": 10,
+      "sufficient_position": {
+        "board_arrangement_fen": "r2qkbnr/2pn2p1/1p6/p2Ppp1p/PP6/2R2PPb/3PP2P/1NBQKBNR",
+        "castling_rights": "Kkq",
+        "en_passant_square": "-",
+        "fullmove_number": 9,
+        "halfmove_clock": 1,
+        "history_available": false,
+        "history_identity": null,
+        "side_to_move": "black",
+        "variant": "standard"
+      },
+      "target_event": {
+        "ply": 1,
+        "role": "destination",
+        "square": "c8"
+      }
+    },
+    {
+      "B_strict": {
+        "f6c3": [
+          "f6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f6c6": [
+          "f6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f6d4": [
+          "f6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f6d6": [
+          "f6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f6d8": [
+          "f6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f6e5": [
+          "f6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f6e6": [
+          "f6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f6e7": [
+          "f6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f6f5": [
+          "f6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f6g5": [
+          "f6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f6g7": [
+          "f6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f6h4": [
+          "f6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f6h8": [
+          "f6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f8b4": [
+          "f8",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f8c5": [
+          "f8",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f8d6": [
+          "f8",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f8e7": [
+          "f8",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f8g7": [
+          "f8",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ]
+      },
+      "C_reply_ucis": [
+        "f6d6",
+        "f8d6"
+      ],
+      "H_1_ucis": [
+        "f6c3",
+        "f6c6",
+        "f6d4",
+        "f6d6",
+        "f6d8",
+        "f6e5",
+        "f6e6",
+        "f6e7",
+        "f6f5",
+        "f6g5",
+        "f6g7",
+        "f6h4",
+        "f6h8"
+      ],
+      "H_2_ucis": [
+        "f8b4",
+        "f8c5",
+        "f8d6",
+        "f8e7",
+        "f8g7"
+      ],
+      "M_1_ucis": [
+        "f6c3",
+        "f6c6",
+        "f6d4",
+        "f6d8",
+        "f6e5",
+        "f6e6",
+        "f6e7",
+        "f6f5",
+        "f6g5",
+        "f6g7",
+        "f6h4",
+        "f6h8"
+      ],
+      "M_2_ucis": [
+        "f8b4",
+        "f8c5",
+        "f8e7",
+        "f8g7"
+      ],
+      "c_1": "f6d6",
+      "c_2": "f8d6",
+      "fixture_content_digest": "1d8e159f9e1223dc7f0215f692e3156f07190453bee08652458e30f8556683f5",
+      "fixture_identity": "t3b7_f03",
+      "fixture_index": 3,
+      "game_index": 3,
+      "half_move_index": 15,
+      "intervention_fen": "rnb1kbr1/p1pp1p1p/1p3qpn/1B6/2P1PpP1/P7/1P1PQP1P/RNB1K2R b KQq - 2 8",
+      "legal_reply_ucis": [
+        "a7a5",
+        "a7a6",
+        "b8a6",
+        "b8c6",
+        "c7c5",
+        "c7c6",
+        "c8a6",
+        "c8b7",
+        "e8d8",
+        "e8e7",
+        "f4f3",
+        "f6b2",
+        "f6c3",
+        "f6c6",
+        "f6d4",
+        "f6d6",
+        "f6d8",
+        "f6e5",
+        "f6e6",
+        "f6e7",
+        "f6f5",
+        "f6g5",
+        "f6g7",
+        "f6h4",
+        "f6h8",
+        "f8a3",
+        "f8b4",
+        "f8c5",
+        "f8d6",
+        "f8e7",
+        "f8g7",
+        "g6g5",
+        "g8g7",
+        "g8h8",
+        "h6f5",
+        "h6g4"
+      ],
+      "m_1": 12,
+      "m_2": 4,
+      "observation_reply_ucis": [
+        "f6c3",
+        "f6c6",
+        "f6d4",
+        "f6d6",
+        "f6d8",
+        "f6e5",
+        "f6e6",
+        "f6e7",
+        "f6f5",
+        "f6g5",
+        "f6g7",
+        "f6h4",
+        "f6h8",
+        "f8b4",
+        "f8c5",
+        "f8d6",
+        "f8e7",
+        "f8g7"
+      ],
+      "qualifying_target_squares": [
+        "d6"
+      ],
+      "required_children": [
+        {
+          "child_fen": "rnb1kbr1/p1pp1p1p/1p4pn/1B6/2P1PpP1/P1q5/1P1PQP1P/RNB1K2R w KQq - 3 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f6c3"
+        },
+        {
+          "child_fen": "rnb1kbr1/p1pp1p1p/1pq3pn/1B6/2P1PpP1/P7/1P1PQP1P/RNB1K2R w KQq - 3 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f6c6"
+        },
+        {
+          "child_fen": "rnb1kbr1/p1pp1p1p/1p4pn/1B6/2PqPpP1/P7/1P1PQP1P/RNB1K2R w KQq - 3 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f6d4"
+        },
+        {
+          "child_fen": "rnb1kbr1/p1pp1p1p/1p1q2pn/1B6/2P1PpP1/P7/1P1PQP1P/RNB1K2R w KQq - 3 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f6d6"
+        },
+        {
+          "child_fen": "rnbqkbr1/p1pp1p1p/1p4pn/1B6/2P1PpP1/P7/1P1PQP1P/RNB1K2R w KQq - 3 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f6d8"
+        },
+        {
+          "child_fen": "rnb1kbr1/p1pp1p1p/1p4pn/1B2q3/2P1PpP1/P7/1P1PQP1P/RNB1K2R w KQq - 3 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f6e5"
+        },
+        {
+          "child_fen": "rnb1kbr1/p1pp1p1p/1p2q1pn/1B6/2P1PpP1/P7/1P1PQP1P/RNB1K2R w KQq - 3 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f6e6"
+        },
+        {
+          "child_fen": "rnb1kbr1/p1ppqp1p/1p4pn/1B6/2P1PpP1/P7/1P1PQP1P/RNB1K2R w KQq - 3 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f6e7"
+        },
+        {
+          "child_fen": "rnb1kbr1/p1pp1p1p/1p4pn/1B3q2/2P1PpP1/P7/1P1PQP1P/RNB1K2R w KQq - 3 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f6f5"
+        },
+        {
+          "child_fen": "rnb1kbr1/p1pp1p1p/1p4pn/1B4q1/2P1PpP1/P7/1P1PQP1P/RNB1K2R w KQq - 3 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f6g5"
+        },
+        {
+          "child_fen": "rnb1kbr1/p1pp1pqp/1p4pn/1B6/2P1PpP1/P7/1P1PQP1P/RNB1K2R w KQq - 3 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f6g7"
+        },
+        {
+          "child_fen": "rnb1kbr1/p1pp1p1p/1p4pn/1B6/2P1PpPq/P7/1P1PQP1P/RNB1K2R w KQq - 3 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f6h4"
+        },
+        {
+          "child_fen": "rnb1kbrq/p1pp1p1p/1p4pn/1B6/2P1PpP1/P7/1P1PQP1P/RNB1K2R w KQq - 3 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f6h8"
+        },
+        {
+          "child_fen": "rnb1k1r1/p1pp1p1p/1p3qpn/1B6/1bP1PpP1/P7/1P1PQP1P/RNB1K2R w KQq - 3 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f8b4"
+        },
+        {
+          "child_fen": "rnb1k1r1/p1pp1p1p/1p3qpn/1Bb5/2P1PpP1/P7/1P1PQP1P/RNB1K2R w KQq - 3 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f8c5"
+        },
+        {
+          "child_fen": "rnb1k1r1/p1pp1p1p/1p1b1qpn/1B6/2P1PpP1/P7/1P1PQP1P/RNB1K2R w KQq - 3 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f8d6"
+        },
+        {
+          "child_fen": "rnb1k1r1/p1ppbp1p/1p3qpn/1B6/2P1PpP1/P7/1P1PQP1P/RNB1K2R w KQq - 3 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f8e7"
+        },
+        {
+          "child_fen": "rnb1k1r1/p1pp1pbp/1p3qpn/1B6/2P1PpP1/P7/1P1PQP1P/RNB1K2R w KQq - 3 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f8g7"
+        }
+      ],
+      "required_search_count": 18,
+      "sufficient_position": {
+        "board_arrangement_fen": "rnb1kbr1/p1pp1p1p/1p3qpn/1B6/2P1PpP1/P7/1P1PQP1P/RNB1K2R",
+        "castling_rights": "KQq",
+        "en_passant_square": "-",
+        "fullmove_number": 8,
+        "halfmove_clock": 2,
+        "history_available": false,
+        "history_identity": null,
+        "side_to_move": "black",
+        "variant": "standard"
+      },
+      "target_event": {
+        "ply": 1,
+        "role": "destination",
+        "square": "d6"
+      }
+    },
+    {
+      "B_strict": {
+        "d8c8": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8e7": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8f6": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8g5": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8h4": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "g8e7": [
+          "g8",
+          "knight",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "g8f6": [
+          "g8",
+          "knight",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "g8h6": [
+          "g8",
+          "knight",
+          "none",
+          null,
+          null,
+          false
+        ]
+      },
+      "C_reply_ucis": [
+        "d8f6",
+        "g8f6"
+      ],
+      "H_1_ucis": [
+        "d8c8",
+        "d8e7",
+        "d8f6",
+        "d8g5",
+        "d8h4"
+      ],
+      "H_2_ucis": [
+        "g8e7",
+        "g8f6",
+        "g8h6"
+      ],
+      "M_1_ucis": [
+        "d8c8",
+        "d8e7",
+        "d8g5",
+        "d8h4"
+      ],
+      "M_2_ucis": [
+        "g8e7",
+        "g8h6"
+      ],
+      "c_1": "d8f6",
+      "c_2": "g8f6",
+      "fixture_content_digest": "5587cda42a20fcd8f341c6b4924ab9fee71827e0831ae6d1ba7bcaf5329ec181",
+      "fixture_identity": "t3b7_f04",
+      "fixture_index": 4,
+      "game_index": 4,
+      "half_move_index": 13,
+      "intervention_fen": "rn1qkbnr/1bpp2p1/pp6/3Npp1p/5P2/5N2/PPPPPKPP/1RBQ1B1R b kq - 1 7",
+      "legal_reply_ucis": [
+        "a6a5",
+        "a8a7",
+        "b6b5",
+        "b7c6",
+        "b7c8",
+        "b7d5",
+        "b8c6",
+        "c7c5",
+        "c7c6",
+        "d7d6",
+        "d8c8",
+        "d8e7",
+        "d8f6",
+        "d8g5",
+        "d8h4",
+        "e5e4",
+        "e5f4",
+        "e8f7",
+        "f8a3",
+        "f8b4",
+        "f8c5",
+        "f8d6",
+        "f8e7",
+        "g7g5",
+        "g7g6",
+        "g8e7",
+        "g8f6",
+        "g8h6",
+        "h5h4",
+        "h8h6",
+        "h8h7"
+      ],
+      "m_1": 4,
+      "m_2": 2,
+      "observation_reply_ucis": [
+        "d8c8",
+        "d8e7",
+        "d8f6",
+        "d8g5",
+        "d8h4",
+        "g8e7",
+        "g8f6",
+        "g8h6"
+      ],
+      "qualifying_target_squares": [
+        "f6"
+      ],
+      "required_children": [
+        {
+          "child_fen": "rnq1kbnr/1bpp2p1/pp6/3Npp1p/5P2/5N2/PPPPPKPP/1RBQ1B1R w kq - 2 8",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8c8"
+        },
+        {
+          "child_fen": "rn2kbnr/1bppq1p1/pp6/3Npp1p/5P2/5N2/PPPPPKPP/1RBQ1B1R w kq - 2 8",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8e7"
+        },
+        {
+          "child_fen": "rn2kbnr/1bpp2p1/pp3q2/3Npp1p/5P2/5N2/PPPPPKPP/1RBQ1B1R w kq - 2 8",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8f6"
+        },
+        {
+          "child_fen": "rn2kbnr/1bpp2p1/pp6/3Nppqp/5P2/5N2/PPPPPKPP/1RBQ1B1R w kq - 2 8",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8g5"
+        },
+        {
+          "child_fen": "rn2kbnr/1bpp2p1/pp6/3Npp1p/5P1q/5N2/PPPPPKPP/1RBQ1B1R w kq - 2 8",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8h4"
+        },
+        {
+          "child_fen": "rn1qkb1r/1bppn1p1/pp6/3Npp1p/5P2/5N2/PPPPPKPP/1RBQ1B1R w kq - 2 8",
+          "is_terminal_claim_draw_false": false,
+          "uci": "g8e7"
+        },
+        {
+          "child_fen": "rn1qkb1r/1bpp2p1/pp3n2/3Npp1p/5P2/5N2/PPPPPKPP/1RBQ1B1R w kq - 2 8",
+          "is_terminal_claim_draw_false": false,
+          "uci": "g8f6"
+        },
+        {
+          "child_fen": "rn1qkb1r/1bpp2p1/pp5n/3Npp1p/5P2/5N2/PPPPPKPP/1RBQ1B1R w kq - 2 8",
+          "is_terminal_claim_draw_false": false,
+          "uci": "g8h6"
+        }
+      ],
+      "required_search_count": 8,
+      "sufficient_position": {
+        "board_arrangement_fen": "rn1qkbnr/1bpp2p1/pp6/3Npp1p/5P2/5N2/PPPPPKPP/1RBQ1B1R",
+        "castling_rights": "kq",
+        "en_passant_square": "-",
+        "fullmove_number": 7,
+        "halfmove_clock": 1,
+        "history_available": false,
+        "history_identity": null,
+        "side_to_move": "black",
+        "variant": "standard"
+      },
+      "target_event": {
+        "ply": 1,
+        "role": "destination",
+        "square": "f6"
+      }
+    },
+    {
+      "B_strict": {
+        "b6a6": [
+          "b6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "b6a7": [
+          "b6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "b6b3": [
+          "b6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "b6b4": [
+          "b6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "b6b5": [
+          "b6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "b6c6": [
+          "b6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "b6c7": [
+          "b6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "b6d6": [
+          "b6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "b6d8": [
+          "b6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "b6e6": [
+          "b6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "b6f6": [
+          "b6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "b6g6": [
+          "b6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "b6h6": [
+          "b6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d5b4": [
+          "d5",
+          "knight",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d5c7": [
+          "d5",
+          "knight",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d5f4": [
+          "d5",
+          "knight",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d5f6": [
+          "d5",
+          "knight",
+          "none",
+          null,
+          null,
+          false
+        ]
+      },
+      "C_reply_ucis": [
+        "b6b4",
+        "d5b4"
+      ],
+      "H_1_ucis": [
+        "b6a6",
+        "b6a7",
+        "b6b3",
+        "b6b4",
+        "b6b5",
+        "b6c6",
+        "b6c7",
+        "b6d6",
+        "b6d8",
+        "b6e6",
+        "b6f6",
+        "b6g6",
+        "b6h6"
+      ],
+      "H_2_ucis": [
+        "d5b4",
+        "d5c7",
+        "d5f4",
+        "d5f6"
+      ],
+      "M_1_ucis": [
+        "b6a6",
+        "b6a7",
+        "b6b3",
+        "b6b5",
+        "b6c6",
+        "b6c7",
+        "b6d6",
+        "b6d8",
+        "b6e6",
+        "b6f6",
+        "b6g6",
+        "b6h6"
+      ],
+      "M_2_ucis": [
+        "d5c7",
+        "d5f4",
+        "d5f6"
+      ],
+      "c_1": "b6b4",
+      "c_2": "d5b4",
+      "fixture_content_digest": "5b8c11584e6c240815b6bb8ce35065aca99f0d4768007d56583937628d176807",
+      "fixture_identity": "t3b7_f05",
+      "fixture_index": 5,
+      "game_index": 5,
+      "half_move_index": 15,
+      "intervention_fen": "rnb1kb1r/1p1pp1pp/1q6/p1pn1p2/Q2P2P1/P1P1PP2/1P3K1P/RNB2BNR b kq - 3 8",
+      "legal_reply_ucis": [
+        "a8a6",
+        "a8a7",
+        "b6a6",
+        "b6a7",
+        "b6b2",
+        "b6b3",
+        "b6b4",
+        "b6b5",
+        "b6c6",
+        "b6c7",
+        "b6d6",
+        "b6d8",
+        "b6e6",
+        "b6f6",
+        "b6g6",
+        "b6h6",
+        "b8a6",
+        "b8c6",
+        "c5c4",
+        "c5d4",
+        "d5b4",
+        "d5c3",
+        "d5c7",
+        "d5e3",
+        "d5f4",
+        "d5f6",
+        "e7e5",
+        "e7e6",
+        "e8d8",
+        "e8f7",
+        "f5f4",
+        "f5g4",
+        "g7g5",
+        "g7g6",
+        "h7h5",
+        "h7h6",
+        "h8g8"
+      ],
+      "m_1": 12,
+      "m_2": 3,
+      "observation_reply_ucis": [
+        "b6a6",
+        "b6a7",
+        "b6b3",
+        "b6b4",
+        "b6b5",
+        "b6c6",
+        "b6c7",
+        "b6d6",
+        "b6d8",
+        "b6e6",
+        "b6f6",
+        "b6g6",
+        "b6h6",
+        "d5b4",
+        "d5c7",
+        "d5f4",
+        "d5f6"
+      ],
+      "qualifying_target_squares": [
+        "b4",
+        "c7",
+        "f6"
+      ],
+      "required_children": [
+        {
+          "child_fen": "rnb1kb1r/1p1pp1pp/q7/p1pn1p2/Q2P2P1/P1P1PP2/1P3K1P/RNB2BNR w kq - 4 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "b6a6"
+        },
+        {
+          "child_fen": "rnb1kb1r/qp1pp1pp/8/p1pn1p2/Q2P2P1/P1P1PP2/1P3K1P/RNB2BNR w kq - 4 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "b6a7"
+        },
+        {
+          "child_fen": "rnb1kb1r/1p1pp1pp/8/p1pn1p2/Q2P2P1/PqP1PP2/1P3K1P/RNB2BNR w kq - 4 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "b6b3"
+        },
+        {
+          "child_fen": "rnb1kb1r/1p1pp1pp/8/p1pn1p2/Qq1P2P1/P1P1PP2/1P3K1P/RNB2BNR w kq - 4 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "b6b4"
+        },
+        {
+          "child_fen": "rnb1kb1r/1p1pp1pp/8/pqpn1p2/Q2P2P1/P1P1PP2/1P3K1P/RNB2BNR w kq - 4 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "b6b5"
+        },
+        {
+          "child_fen": "rnb1kb1r/1p1pp1pp/2q5/p1pn1p2/Q2P2P1/P1P1PP2/1P3K1P/RNB2BNR w kq - 4 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "b6c6"
+        },
+        {
+          "child_fen": "rnb1kb1r/1pqpp1pp/8/p1pn1p2/Q2P2P1/P1P1PP2/1P3K1P/RNB2BNR w kq - 4 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "b6c7"
+        },
+        {
+          "child_fen": "rnb1kb1r/1p1pp1pp/3q4/p1pn1p2/Q2P2P1/P1P1PP2/1P3K1P/RNB2BNR w kq - 4 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "b6d6"
+        },
+        {
+          "child_fen": "rnbqkb1r/1p1pp1pp/8/p1pn1p2/Q2P2P1/P1P1PP2/1P3K1P/RNB2BNR w kq - 4 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "b6d8"
+        },
+        {
+          "child_fen": "rnb1kb1r/1p1pp1pp/4q3/p1pn1p2/Q2P2P1/P1P1PP2/1P3K1P/RNB2BNR w kq - 4 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "b6e6"
+        },
+        {
+          "child_fen": "rnb1kb1r/1p1pp1pp/5q2/p1pn1p2/Q2P2P1/P1P1PP2/1P3K1P/RNB2BNR w kq - 4 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "b6f6"
+        },
+        {
+          "child_fen": "rnb1kb1r/1p1pp1pp/6q1/p1pn1p2/Q2P2P1/P1P1PP2/1P3K1P/RNB2BNR w kq - 4 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "b6g6"
+        },
+        {
+          "child_fen": "rnb1kb1r/1p1pp1pp/7q/p1pn1p2/Q2P2P1/P1P1PP2/1P3K1P/RNB2BNR w kq - 4 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "b6h6"
+        },
+        {
+          "child_fen": "rnb1kb1r/1p1pp1pp/1q6/p1p2p2/Qn1P2P1/P1P1PP2/1P3K1P/RNB2BNR w kq - 4 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d5b4"
+        },
+        {
+          "child_fen": "rnb1kb1r/1pnpp1pp/1q6/p1p2p2/Q2P2P1/P1P1PP2/1P3K1P/RNB2BNR w kq - 4 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d5c7"
+        },
+        {
+          "child_fen": "rnb1kb1r/1p1pp1pp/1q6/p1p2p2/Q2P1nP1/P1P1PP2/1P3K1P/RNB2BNR w kq - 4 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d5f4"
+        },
+        {
+          "child_fen": "rnb1kb1r/1p1pp1pp/1q3n2/p1p2p2/Q2P2P1/P1P1PP2/1P3K1P/RNB2BNR w kq - 4 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d5f6"
+        }
+      ],
+      "required_search_count": 17,
+      "sufficient_position": {
+        "board_arrangement_fen": "rnb1kb1r/1p1pp1pp/1q6/p1pn1p2/Q2P2P1/P1P1PP2/1P3K1P/RNB2BNR",
+        "castling_rights": "kq",
+        "en_passant_square": "-",
+        "fullmove_number": 8,
+        "halfmove_clock": 3,
+        "history_available": false,
+        "history_identity": null,
+        "side_to_move": "black",
+        "variant": "standard"
+      },
+      "target_event": {
+        "ply": 1,
+        "role": "destination",
+        "square": "b4"
+      }
+    },
+    {
+      "B_strict": {
+        "f7d6": [
+          "f7",
+          "knight",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f7h6": [
+          "f7",
+          "knight",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f7h8": [
+          "f7",
+          "knight",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "g8g6": [
+          "g8",
+          "rook",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "g8g7": [
+          "g8",
+          "rook",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "g8h8": [
+          "g8",
+          "rook",
+          "none",
+          null,
+          null,
+          false
+        ]
+      },
+      "C_reply_ucis": [
+        "f7h8",
+        "g8h8"
+      ],
+      "H_1_ucis": [
+        "f7d6",
+        "f7h6",
+        "f7h8"
+      ],
+      "H_2_ucis": [
+        "g8g6",
+        "g8g7",
+        "g8h8"
+      ],
+      "M_1_ucis": [
+        "f7d6",
+        "f7h6"
+      ],
+      "M_2_ucis": [
+        "g8g6",
+        "g8g7"
+      ],
+      "c_1": "f7h8",
+      "c_2": "g8h8",
+      "fixture_content_digest": "cf0bf74700b5cc2d039715bd6f14fcd3a252546d8de4fa03ccc769554138d920",
+      "fixture_identity": "t3b7_f06",
+      "fixture_index": 6,
+      "game_index": 6,
+      "half_move_index": 15,
+      "intervention_fen": "rnbqkbr1/1ppppn1p/p7/4P1p1/3P1p2/5N1P/PPPQBPP1/RNB2RK1 b q - 0 8",
+      "legal_reply_ucis": [
+        "a6a5",
+        "a8a7",
+        "b7b5",
+        "b7b6",
+        "b8c6",
+        "c7c5",
+        "c7c6",
+        "d7d5",
+        "d7d6",
+        "e7e6",
+        "f7d6",
+        "f7e5",
+        "f7h6",
+        "f7h8",
+        "f8g7",
+        "f8h6",
+        "g5g4",
+        "g8g6",
+        "g8g7",
+        "g8h8",
+        "h7h5",
+        "h7h6"
+      ],
+      "m_1": 2,
+      "m_2": 2,
+      "observation_reply_ucis": [
+        "f7d6",
+        "f7h6",
+        "f7h8",
+        "g8g6",
+        "g8g7",
+        "g8h8"
+      ],
+      "qualifying_target_squares": [
+        "h8"
+      ],
+      "required_children": [
+        {
+          "child_fen": "rnbqkbr1/1pppp2p/p2n4/4P1p1/3P1p2/5N1P/PPPQBPP1/RNB2RK1 w q - 1 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f7d6"
+        },
+        {
+          "child_fen": "rnbqkbr1/1pppp2p/p6n/4P1p1/3P1p2/5N1P/PPPQBPP1/RNB2RK1 w q - 1 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f7h6"
+        },
+        {
+          "child_fen": "rnbqkbrn/1pppp2p/p7/4P1p1/3P1p2/5N1P/PPPQBPP1/RNB2RK1 w q - 1 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f7h8"
+        },
+        {
+          "child_fen": "rnbqkb2/1ppppn1p/p5r1/4P1p1/3P1p2/5N1P/PPPQBPP1/RNB2RK1 w q - 1 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "g8g6"
+        },
+        {
+          "child_fen": "rnbqkb2/1ppppnrp/p7/4P1p1/3P1p2/5N1P/PPPQBPP1/RNB2RK1 w q - 1 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "g8g7"
+        },
+        {
+          "child_fen": "rnbqkb1r/1ppppn1p/p7/4P1p1/3P1p2/5N1P/PPPQBPP1/RNB2RK1 w q - 1 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "g8h8"
+        }
+      ],
+      "required_search_count": 6,
+      "sufficient_position": {
+        "board_arrangement_fen": "rnbqkbr1/1ppppn1p/p7/4P1p1/3P1p2/5N1P/PPPQBPP1/RNB2RK1",
+        "castling_rights": "q",
+        "en_passant_square": "-",
+        "fullmove_number": 8,
+        "halfmove_clock": 0,
+        "history_available": false,
+        "history_identity": null,
+        "side_to_move": "black",
+        "variant": "standard"
+      },
+      "target_event": {
+        "ply": 1,
+        "role": "destination",
+        "square": "h8"
+      }
+    },
+    {
+      "B_strict": {
+        "d7c6": [
+          "d7",
+          "king",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d7c7": [
+          "d7",
+          "king",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d7d6": [
+          "d7",
+          "king",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d7e6": [
+          "d7",
+          "king",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d7e8": [
+          "d7",
+          "king",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8b6": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8c7": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8e8": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ]
+      },
+      "C_reply_ucis": [
+        "d7e8",
+        "d8e8"
+      ],
+      "H_1_ucis": [
+        "d7c6",
+        "d7c7",
+        "d7d6",
+        "d7e6",
+        "d7e8"
+      ],
+      "H_2_ucis": [
+        "d8b6",
+        "d8c7",
+        "d8e8"
+      ],
+      "M_1_ucis": [
+        "d7c6",
+        "d7c7",
+        "d7d6",
+        "d7e6"
+      ],
+      "M_2_ucis": [
+        "d8b6",
+        "d8c7"
+      ],
+      "c_1": "d7e8",
+      "c_2": "d8e8",
+      "fixture_content_digest": "5b69f5f8950ad07b4741c0d0d3654b5d83e8207733b401401751d6a76363fcea",
+      "fixture_identity": "t3b7_f07",
+      "fixture_index": 7,
+      "game_index": 7,
+      "half_move_index": 19,
+      "intervention_fen": "2bq1b1r/rp1kpp1p/n6n/p5pP/2p5/N4PP1/PPPPP3/R1BQ1KNR b - - 1 10",
+      "legal_reply_ucis": [
+        "a5a4",
+        "a6b4",
+        "a6b8",
+        "a6c5",
+        "a6c7",
+        "a7a8",
+        "b7b5",
+        "b7b6",
+        "c4c3",
+        "d7c6",
+        "d7c7",
+        "d7d6",
+        "d7e6",
+        "d7e8",
+        "d8b6",
+        "d8c7",
+        "d8e8",
+        "e7e5",
+        "e7e6",
+        "f7f5",
+        "f7f6",
+        "f8g7",
+        "g5g4",
+        "h6f5",
+        "h6g4",
+        "h6g8",
+        "h8g8"
+      ],
+      "m_1": 4,
+      "m_2": 2,
+      "observation_reply_ucis": [
+        "d7c6",
+        "d7c7",
+        "d7d6",
+        "d7e6",
+        "d7e8",
+        "d8b6",
+        "d8c7",
+        "d8e8"
+      ],
+      "qualifying_target_squares": [
+        "e8"
+      ],
+      "required_children": [
+        {
+          "child_fen": "2bq1b1r/rp2pp1p/n1k4n/p5pP/2p5/N4PP1/PPPPP3/R1BQ1KNR w - - 2 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d7c6"
+        },
+        {
+          "child_fen": "2bq1b1r/rpk1pp1p/n6n/p5pP/2p5/N4PP1/PPPPP3/R1BQ1KNR w - - 2 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d7c7"
+        },
+        {
+          "child_fen": "2bq1b1r/rp2pp1p/n2k3n/p5pP/2p5/N4PP1/PPPPP3/R1BQ1KNR w - - 2 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d7d6"
+        },
+        {
+          "child_fen": "2bq1b1r/rp2pp1p/n3k2n/p5pP/2p5/N4PP1/PPPPP3/R1BQ1KNR w - - 2 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d7e6"
+        },
+        {
+          "child_fen": "2bqkb1r/rp2pp1p/n6n/p5pP/2p5/N4PP1/PPPPP3/R1BQ1KNR w - - 2 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d7e8"
+        },
+        {
+          "child_fen": "2b2b1r/rp1kpp1p/nq5n/p5pP/2p5/N4PP1/PPPPP3/R1BQ1KNR w - - 2 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8b6"
+        },
+        {
+          "child_fen": "2b2b1r/rpqkpp1p/n6n/p5pP/2p5/N4PP1/PPPPP3/R1BQ1KNR w - - 2 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8c7"
+        },
+        {
+          "child_fen": "2b1qb1r/rp1kpp1p/n6n/p5pP/2p5/N4PP1/PPPPP3/R1BQ1KNR w - - 2 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8e8"
+        }
+      ],
+      "required_search_count": 8,
+      "sufficient_position": {
+        "board_arrangement_fen": "2bq1b1r/rp1kpp1p/n6n/p5pP/2p5/N4PP1/PPPPP3/R1BQ1KNR",
+        "castling_rights": "-",
+        "en_passant_square": "-",
+        "fullmove_number": 10,
+        "halfmove_clock": 1,
+        "history_available": false,
+        "history_identity": null,
+        "side_to_move": "black",
+        "variant": "standard"
+      },
+      "target_event": {
+        "ply": 1,
+        "role": "destination",
+        "square": "e8"
+      }
+    },
+    {
+      "B_strict": {
+        "e8d8": [
+          "e8",
+          "king",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "e8e7": [
+          "e8",
+          "king",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "e8f8": [
+          "e8",
+          "king",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f6a6": [
+          "f6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f6b6": [
+          "f6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f6c6": [
+          "f6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f6d6": [
+          "f6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f6d8": [
+          "f6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f6e6": [
+          "f6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f6e7": [
+          "f6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f6f3": [
+          "f6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f6f4": [
+          "f6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f6f5": [
+          "f6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f6g5": [
+          "f6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f6g6": [
+          "f6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f6h4": [
+          "f6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f6h6": [
+          "f6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ]
+      },
+      "C_reply_ucis": [
+        "e8d8",
+        "f6d8"
+      ],
+      "H_1_ucis": [
+        "e8d8",
+        "e8e7",
+        "e8f8"
+      ],
+      "H_2_ucis": [
+        "f6a6",
+        "f6b6",
+        "f6c6",
+        "f6d6",
+        "f6d8",
+        "f6e6",
+        "f6e7",
+        "f6f3",
+        "f6f4",
+        "f6f5",
+        "f6g5",
+        "f6g6",
+        "f6h4",
+        "f6h6"
+      ],
+      "M_1_ucis": [
+        "e8e7",
+        "e8f8"
+      ],
+      "M_2_ucis": [
+        "f6a6",
+        "f6b6",
+        "f6c6",
+        "f6d6",
+        "f6e6",
+        "f6e7",
+        "f6f3",
+        "f6f4",
+        "f6f5",
+        "f6g5",
+        "f6g6",
+        "f6h4",
+        "f6h6"
+      ],
+      "c_1": "e8d8",
+      "c_2": "f6d8",
+      "fixture_content_digest": "332e8a0f97782c03fa7a37e6529ac995d6c873373e6a82b983fc989396bbecc5",
+      "fixture_identity": "t3b7_f08",
+      "fixture_index": 8,
+      "game_index": 8,
+      "half_move_index": 19,
+      "intervention_fen": "1nb1k1nr/rppp1ppp/5q2/2bPp3/pB2P1P1/2N4B/PPP1QP1P/R3K1NR b KQk - 4 10",
+      "legal_reply_ucis": [
+        "a4a3",
+        "a7a5",
+        "a7a6",
+        "a7a8",
+        "b7b5",
+        "b7b6",
+        "b8a6",
+        "b8c6",
+        "c5b4",
+        "c5b6",
+        "c5d4",
+        "c5d6",
+        "c5e3",
+        "c5e7",
+        "c5f2",
+        "c5f8",
+        "c7c6",
+        "d7d6",
+        "e8d8",
+        "e8e7",
+        "e8f8",
+        "f6a6",
+        "f6b6",
+        "f6c6",
+        "f6d6",
+        "f6d8",
+        "f6e6",
+        "f6e7",
+        "f6f2",
+        "f6f3",
+        "f6f4",
+        "f6f5",
+        "f6g5",
+        "f6g6",
+        "f6h4",
+        "f6h6",
+        "g7g5",
+        "g7g6",
+        "g8e7",
+        "g8h6",
+        "h7h5",
+        "h7h6"
+      ],
+      "m_1": 2,
+      "m_2": 13,
+      "observation_reply_ucis": [
+        "e8d8",
+        "e8e7",
+        "e8f8",
+        "f6a6",
+        "f6b6",
+        "f6c6",
+        "f6d6",
+        "f6d8",
+        "f6e6",
+        "f6e7",
+        "f6f3",
+        "f6f4",
+        "f6f5",
+        "f6g5",
+        "f6g6",
+        "f6h4",
+        "f6h6"
+      ],
+      "qualifying_target_squares": [
+        "d8",
+        "f8"
+      ],
+      "required_children": [
+        {
+          "child_fen": "1nbk2nr/rppp1ppp/5q2/2bPp3/pB2P1P1/2N4B/PPP1QP1P/R3K1NR w KQ - 5 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "e8d8"
+        },
+        {
+          "child_fen": "1nb3nr/rpppkppp/5q2/2bPp3/pB2P1P1/2N4B/PPP1QP1P/R3K1NR w KQ - 5 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "e8e7"
+        },
+        {
+          "child_fen": "1nb2knr/rppp1ppp/5q2/2bPp3/pB2P1P1/2N4B/PPP1QP1P/R3K1NR w KQ - 5 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "e8f8"
+        },
+        {
+          "child_fen": "1nb1k1nr/rppp1ppp/q7/2bPp3/pB2P1P1/2N4B/PPP1QP1P/R3K1NR w KQk - 5 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f6a6"
+        },
+        {
+          "child_fen": "1nb1k1nr/rppp1ppp/1q6/2bPp3/pB2P1P1/2N4B/PPP1QP1P/R3K1NR w KQk - 5 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f6b6"
+        },
+        {
+          "child_fen": "1nb1k1nr/rppp1ppp/2q5/2bPp3/pB2P1P1/2N4B/PPP1QP1P/R3K1NR w KQk - 5 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f6c6"
+        },
+        {
+          "child_fen": "1nb1k1nr/rppp1ppp/3q4/2bPp3/pB2P1P1/2N4B/PPP1QP1P/R3K1NR w KQk - 5 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f6d6"
+        },
+        {
+          "child_fen": "1nbqk1nr/rppp1ppp/8/2bPp3/pB2P1P1/2N4B/PPP1QP1P/R3K1NR w KQk - 5 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f6d8"
+        },
+        {
+          "child_fen": "1nb1k1nr/rppp1ppp/4q3/2bPp3/pB2P1P1/2N4B/PPP1QP1P/R3K1NR w KQk - 5 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f6e6"
+        },
+        {
+          "child_fen": "1nb1k1nr/rpppqppp/8/2bPp3/pB2P1P1/2N4B/PPP1QP1P/R3K1NR w KQk - 5 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f6e7"
+        },
+        {
+          "child_fen": "1nb1k1nr/rppp1ppp/8/2bPp3/pB2P1P1/2N2q1B/PPP1QP1P/R3K1NR w KQk - 5 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f6f3"
+        },
+        {
+          "child_fen": "1nb1k1nr/rppp1ppp/8/2bPp3/pB2PqP1/2N4B/PPP1QP1P/R3K1NR w KQk - 5 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f6f4"
+        },
+        {
+          "child_fen": "1nb1k1nr/rppp1ppp/8/2bPpq2/pB2P1P1/2N4B/PPP1QP1P/R3K1NR w KQk - 5 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f6f5"
+        },
+        {
+          "child_fen": "1nb1k1nr/rppp1ppp/8/2bPp1q1/pB2P1P1/2N4B/PPP1QP1P/R3K1NR w KQk - 5 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f6g5"
+        },
+        {
+          "child_fen": "1nb1k1nr/rppp1ppp/6q1/2bPp3/pB2P1P1/2N4B/PPP1QP1P/R3K1NR w KQk - 5 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f6g6"
+        },
+        {
+          "child_fen": "1nb1k1nr/rppp1ppp/8/2bPp3/pB2P1Pq/2N4B/PPP1QP1P/R3K1NR w KQk - 5 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f6h4"
+        },
+        {
+          "child_fen": "1nb1k1nr/rppp1ppp/7q/2bPp3/pB2P1P1/2N4B/PPP1QP1P/R3K1NR w KQk - 5 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f6h6"
+        }
+      ],
+      "required_search_count": 17,
+      "sufficient_position": {
+        "board_arrangement_fen": "1nb1k1nr/rppp1ppp/5q2/2bPp3/pB2P1P1/2N4B/PPP1QP1P/R3K1NR",
+        "castling_rights": "KQk",
+        "en_passant_square": "-",
+        "fullmove_number": 10,
+        "halfmove_clock": 4,
+        "history_available": false,
+        "history_identity": null,
+        "side_to_move": "black",
+        "variant": "standard"
+      },
+      "target_event": {
+        "ply": 1,
+        "role": "destination",
+        "square": "d8"
+      }
+    },
+    {
+      "B_strict": {
+        "d6b4": [
+          "d6",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d6c5": [
+          "d6",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d6c7": [
+          "d6",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d6e7": [
+          "d6",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d6f8": [
+          "d6",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8a5": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8b6": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8c7": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8c8": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8e7": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ]
+      },
+      "C_reply_ucis": [
+        "d6c7",
+        "d8c7"
+      ],
+      "H_1_ucis": [
+        "d6b4",
+        "d6c5",
+        "d6c7",
+        "d6e7",
+        "d6f8"
+      ],
+      "H_2_ucis": [
+        "d8a5",
+        "d8b6",
+        "d8c7",
+        "d8c8",
+        "d8e7"
+      ],
+      "M_1_ucis": [
+        "d6b4",
+        "d6c5",
+        "d6e7",
+        "d6f8"
+      ],
+      "M_2_ucis": [
+        "d8a5",
+        "d8b6",
+        "d8c8",
+        "d8e7"
+      ],
+      "c_1": "d6c7",
+      "c_2": "d8c7",
+      "fixture_content_digest": "bed1bf538dae2496ac42a0e5a0837ec875756b57eab2b96533a9b1a2857a56bf",
+      "fixture_identity": "t3b7_f09",
+      "fixture_index": 9,
+      "game_index": 9,
+      "half_move_index": 19,
+      "intervention_fen": "rn1qk1nr/1p1b2pp/p1Bb1p2/4p3/2p5/P3PQ1P/1P1P1PP1/RNB1K1NR b KQkq - 0 10",
+      "legal_reply_ucis": [
+        "a6a5",
+        "a8a7",
+        "b7b5",
+        "b7b6",
+        "b7c6",
+        "b8c6",
+        "c4c3",
+        "d6a3",
+        "d6b4",
+        "d6c5",
+        "d6c7",
+        "d6e7",
+        "d6f8",
+        "d7c6",
+        "d8a5",
+        "d8b6",
+        "d8c7",
+        "d8c8",
+        "d8e7",
+        "e5e4",
+        "e8e7",
+        "e8f7",
+        "e8f8",
+        "f6f5",
+        "g7g5",
+        "g7g6",
+        "g8e7",
+        "g8h6",
+        "h7h5",
+        "h7h6"
+      ],
+      "m_1": 4,
+      "m_2": 4,
+      "observation_reply_ucis": [
+        "d6b4",
+        "d6c5",
+        "d6c7",
+        "d6e7",
+        "d6f8",
+        "d8a5",
+        "d8b6",
+        "d8c7",
+        "d8c8",
+        "d8e7"
+      ],
+      "qualifying_target_squares": [
+        "c7",
+        "f8"
+      ],
+      "required_children": [
+        {
+          "child_fen": "rn1qk1nr/1p1b2pp/p1B2p2/4p3/1bp5/P3PQ1P/1P1P1PP1/RNB1K1NR w KQkq - 1 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d6b4"
+        },
+        {
+          "child_fen": "rn1qk1nr/1p1b2pp/p1B2p2/2b1p3/2p5/P3PQ1P/1P1P1PP1/RNB1K1NR w KQkq - 1 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d6c5"
+        },
+        {
+          "child_fen": "rn1qk1nr/1pbb2pp/p1B2p2/4p3/2p5/P3PQ1P/1P1P1PP1/RNB1K1NR w KQkq - 1 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d6c7"
+        },
+        {
+          "child_fen": "rn1qk1nr/1p1bb1pp/p1B2p2/4p3/2p5/P3PQ1P/1P1P1PP1/RNB1K1NR w KQkq - 1 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d6e7"
+        },
+        {
+          "child_fen": "rn1qkbnr/1p1b2pp/p1B2p2/4p3/2p5/P3PQ1P/1P1P1PP1/RNB1K1NR w KQkq - 1 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d6f8"
+        },
+        {
+          "child_fen": "rn2k1nr/1p1b2pp/p1Bb1p2/q3p3/2p5/P3PQ1P/1P1P1PP1/RNB1K1NR w KQkq - 1 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8a5"
+        },
+        {
+          "child_fen": "rn2k1nr/1p1b2pp/pqBb1p2/4p3/2p5/P3PQ1P/1P1P1PP1/RNB1K1NR w KQkq - 1 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8b6"
+        },
+        {
+          "child_fen": "rn2k1nr/1pqb2pp/p1Bb1p2/4p3/2p5/P3PQ1P/1P1P1PP1/RNB1K1NR w KQkq - 1 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8c7"
+        },
+        {
+          "child_fen": "rnq1k1nr/1p1b2pp/p1Bb1p2/4p3/2p5/P3PQ1P/1P1P1PP1/RNB1K1NR w KQkq - 1 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8c8"
+        },
+        {
+          "child_fen": "rn2k1nr/1p1bq1pp/p1Bb1p2/4p3/2p5/P3PQ1P/1P1P1PP1/RNB1K1NR w KQkq - 1 11",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8e7"
+        }
+      ],
+      "required_search_count": 10,
+      "sufficient_position": {
+        "board_arrangement_fen": "rn1qk1nr/1p1b2pp/p1Bb1p2/4p3/2p5/P3PQ1P/1P1P1PP1/RNB1K1NR",
+        "castling_rights": "KQkq",
+        "en_passant_square": "-",
+        "fullmove_number": 10,
+        "halfmove_clock": 0,
+        "history_available": false,
+        "history_identity": null,
+        "side_to_move": "black",
+        "variant": "standard"
+      },
+      "target_event": {
+        "ply": 1,
+        "role": "destination",
+        "square": "c7"
+      }
+    },
+    {
+      "B_strict": {
+        "b4a6": [
+          "b4",
+          "knight",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "b4c2": [
+          "b4",
+          "knight",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "b4c6": [
+          "b4",
+          "knight",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "b4d3": [
+          "b4",
+          "knight",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "b4d5": [
+          "b4",
+          "knight",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "b7a6": [
+          "b7",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "b7c6": [
+          "b7",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "b7c8": [
+          "b7",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "b7d5": [
+          "b7",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ]
+      },
+      "C_reply_ucis": [
+        "b4c6",
+        "b7c6"
+      ],
+      "H_1_ucis": [
+        "b4a6",
+        "b4c2",
+        "b4c6",
+        "b4d3",
+        "b4d5"
+      ],
+      "H_2_ucis": [
+        "b7a6",
+        "b7c6",
+        "b7c8",
+        "b7d5"
+      ],
+      "M_1_ucis": [
+        "b4a6",
+        "b4c2",
+        "b4d3",
+        "b4d5"
+      ],
+      "M_2_ucis": [
+        "b7a6",
+        "b7c8",
+        "b7d5"
+      ],
+      "c_1": "b4c6",
+      "c_2": "b7c6",
+      "fixture_content_digest": "0d1ba28f8ad03e6f7f7ff64e7525ee54785e8fefde2d781b34f9b01589684bba",
+      "fixture_identity": "t3b7_f10",
+      "fixture_index": 10,
+      "game_index": 10,
+      "half_move_index": 21,
+      "intervention_fen": "r2qkbn1/pb1p2pr/1p1P1p2/4p2p/1n1NP3/7P/PP1PBPP1/R1BQK2R b KQq - 0 11",
+      "legal_reply_ucis": [
+        "a7a5",
+        "a7a6",
+        "a8b8",
+        "a8c8",
+        "b4a2",
+        "b4a6",
+        "b4c2",
+        "b4c6",
+        "b4d3",
+        "b4d5",
+        "b6b5",
+        "b7a6",
+        "b7c6",
+        "b7c8",
+        "b7d5",
+        "b7e4",
+        "d8b8",
+        "d8c7",
+        "d8c8",
+        "d8e7",
+        "e5d4",
+        "e8f7",
+        "f6f5",
+        "f8d6",
+        "f8e7",
+        "g7g5",
+        "g7g6",
+        "g8e7",
+        "g8h6",
+        "h5h4",
+        "h7h6",
+        "h7h8"
+      ],
+      "m_1": 4,
+      "m_2": 3,
+      "observation_reply_ucis": [
+        "b4a6",
+        "b4c2",
+        "b4c6",
+        "b4d3",
+        "b4d5",
+        "b7a6",
+        "b7c6",
+        "b7c8",
+        "b7d5"
+      ],
+      "qualifying_target_squares": [
+        "c6",
+        "d5"
+      ],
+      "required_children": [
+        {
+          "child_fen": "r2qkbn1/pb1p2pr/np1P1p2/4p2p/3NP3/7P/PP1PBPP1/R1BQK2R w KQq - 1 12",
+          "is_terminal_claim_draw_false": false,
+          "uci": "b4a6"
+        },
+        {
+          "child_fen": "r2qkbn1/pb1p2pr/1p1P1p2/4p2p/3NP3/7P/PPnPBPP1/R1BQK2R w KQq - 1 12",
+          "is_terminal_claim_draw_false": false,
+          "uci": "b4c2"
+        },
+        {
+          "child_fen": "r2qkbn1/pb1p2pr/1pnP1p2/4p2p/3NP3/7P/PP1PBPP1/R1BQK2R w KQq - 1 12",
+          "is_terminal_claim_draw_false": false,
+          "uci": "b4c6"
+        },
+        {
+          "child_fen": "r2qkbn1/pb1p2pr/1p1P1p2/4p2p/3NP3/3n3P/PP1PBPP1/R1BQK2R w KQq - 1 12",
+          "is_terminal_claim_draw_false": false,
+          "uci": "b4d3"
+        },
+        {
+          "child_fen": "r2qkbn1/pb1p2pr/1p1P1p2/3np2p/3NP3/7P/PP1PBPP1/R1BQK2R w KQq - 1 12",
+          "is_terminal_claim_draw_false": false,
+          "uci": "b4d5"
+        },
+        {
+          "child_fen": "r2qkbn1/p2p2pr/bp1P1p2/4p2p/1n1NP3/7P/PP1PBPP1/R1BQK2R w KQq - 1 12",
+          "is_terminal_claim_draw_false": false,
+          "uci": "b7a6"
+        },
+        {
+          "child_fen": "r2qkbn1/p2p2pr/1pbP1p2/4p2p/1n1NP3/7P/PP1PBPP1/R1BQK2R w KQq - 1 12",
+          "is_terminal_claim_draw_false": false,
+          "uci": "b7c6"
+        },
+        {
+          "child_fen": "r1bqkbn1/p2p2pr/1p1P1p2/4p2p/1n1NP3/7P/PP1PBPP1/R1BQK2R w KQq - 1 12",
+          "is_terminal_claim_draw_false": false,
+          "uci": "b7c8"
+        },
+        {
+          "child_fen": "r2qkbn1/p2p2pr/1p1P1p2/3bp2p/1n1NP3/7P/PP1PBPP1/R1BQK2R w KQq - 1 12",
+          "is_terminal_claim_draw_false": false,
+          "uci": "b7d5"
+        }
+      ],
+      "required_search_count": 9,
+      "sufficient_position": {
+        "board_arrangement_fen": "r2qkbn1/pb1p2pr/1p1P1p2/4p2p/1n1NP3/7P/PP1PBPP1/R1BQK2R",
+        "castling_rights": "KQq",
+        "en_passant_square": "-",
+        "fullmove_number": 11,
+        "halfmove_clock": 0,
+        "history_available": false,
+        "history_identity": null,
+        "side_to_move": "black",
+        "variant": "standard"
+      },
+      "target_event": {
+        "ply": 1,
+        "role": "destination",
+        "square": "c6"
+      }
+    },
+    {
+      "B_strict": {
+        "d8c7": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8c8": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8d7": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "e6a2": [
+          "e6",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "e6b3": [
+          "e6",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "e6c4": [
+          "e6",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "e6c8": [
+          "e6",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "e6d5": [
+          "e6",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "e6d7": [
+          "e6",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "e6f5": [
+          "e6",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "e6g4": [
+          "e6",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ]
+      },
+      "C_reply_ucis": [
+        "d8c8",
+        "e6c8"
+      ],
+      "H_1_ucis": [
+        "d8c7",
+        "d8c8",
+        "d8d7"
+      ],
+      "H_2_ucis": [
+        "e6a2",
+        "e6b3",
+        "e6c4",
+        "e6c8",
+        "e6d5",
+        "e6d7",
+        "e6f5",
+        "e6g4"
+      ],
+      "M_1_ucis": [
+        "d8c7",
+        "d8d7"
+      ],
+      "M_2_ucis": [
+        "e6a2",
+        "e6b3",
+        "e6c4",
+        "e6d5",
+        "e6d7",
+        "e6f5",
+        "e6g4"
+      ],
+      "c_1": "d8c8",
+      "c_2": "e6c8",
+      "fixture_content_digest": "7152f88f6755d1ebf7aef0ca8743424bcc30849118cf0b49ef2fee64ea0c8327",
+      "fixture_identity": "t3b7_f11",
+      "fixture_index": 11,
+      "game_index": 11,
+      "half_move_index": 13,
+      "intervention_fen": "rn1qkbnr/p3pppp/1p1pbP2/2p5/P7/R1P4N/1P1PP1PP/1NBQKB1R b Kkq - 0 7",
+      "legal_reply_ucis": [
+        "a7a5",
+        "a7a6",
+        "b6b5",
+        "b8a6",
+        "b8c6",
+        "b8d7",
+        "c5c4",
+        "d6d5",
+        "d8c7",
+        "d8c8",
+        "d8d7",
+        "e6a2",
+        "e6b3",
+        "e6c4",
+        "e6c8",
+        "e6d5",
+        "e6d7",
+        "e6f5",
+        "e6g4",
+        "e6h3",
+        "e7f6",
+        "e8d7",
+        "g7f6",
+        "g7g5",
+        "g7g6",
+        "g8f6",
+        "g8h6",
+        "h7h5",
+        "h7h6"
+      ],
+      "m_1": 2,
+      "m_2": 7,
+      "observation_reply_ucis": [
+        "d8c7",
+        "d8c8",
+        "d8d7",
+        "e6a2",
+        "e6b3",
+        "e6c4",
+        "e6c8",
+        "e6d5",
+        "e6d7",
+        "e6f5",
+        "e6g4"
+      ],
+      "qualifying_target_squares": [
+        "c8"
+      ],
+      "required_children": [
+        {
+          "child_fen": "rn2kbnr/p1q1pppp/1p1pbP2/2p5/P7/R1P4N/1P1PP1PP/1NBQKB1R w Kkq - 1 8",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8c7"
+        },
+        {
+          "child_fen": "rnq1kbnr/p3pppp/1p1pbP2/2p5/P7/R1P4N/1P1PP1PP/1NBQKB1R w Kkq - 1 8",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8c8"
+        },
+        {
+          "child_fen": "rn2kbnr/p2qpppp/1p1pbP2/2p5/P7/R1P4N/1P1PP1PP/1NBQKB1R w Kkq - 1 8",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8d7"
+        },
+        {
+          "child_fen": "rn1qkbnr/p3pppp/1p1p1P2/2p5/P7/R1P4N/bP1PP1PP/1NBQKB1R w Kkq - 1 8",
+          "is_terminal_claim_draw_false": false,
+          "uci": "e6a2"
+        },
+        {
+          "child_fen": "rn1qkbnr/p3pppp/1p1p1P2/2p5/P7/RbP4N/1P1PP1PP/1NBQKB1R w Kkq - 1 8",
+          "is_terminal_claim_draw_false": false,
+          "uci": "e6b3"
+        },
+        {
+          "child_fen": "rn1qkbnr/p3pppp/1p1p1P2/2p5/P1b5/R1P4N/1P1PP1PP/1NBQKB1R w Kkq - 1 8",
+          "is_terminal_claim_draw_false": false,
+          "uci": "e6c4"
+        },
+        {
+          "child_fen": "rnbqkbnr/p3pppp/1p1p1P2/2p5/P7/R1P4N/1P1PP1PP/1NBQKB1R w Kkq - 1 8",
+          "is_terminal_claim_draw_false": false,
+          "uci": "e6c8"
+        },
+        {
+          "child_fen": "rn1qkbnr/p3pppp/1p1p1P2/2pb4/P7/R1P4N/1P1PP1PP/1NBQKB1R w Kkq - 1 8",
+          "is_terminal_claim_draw_false": false,
+          "uci": "e6d5"
+        },
+        {
+          "child_fen": "rn1qkbnr/p2bpppp/1p1p1P2/2p5/P7/R1P4N/1P1PP1PP/1NBQKB1R w Kkq - 1 8",
+          "is_terminal_claim_draw_false": false,
+          "uci": "e6d7"
+        },
+        {
+          "child_fen": "rn1qkbnr/p3pppp/1p1p1P2/2p2b2/P7/R1P4N/1P1PP1PP/1NBQKB1R w Kkq - 1 8",
+          "is_terminal_claim_draw_false": false,
+          "uci": "e6f5"
+        },
+        {
+          "child_fen": "rn1qkbnr/p3pppp/1p1p1P2/2p5/P5b1/R1P4N/1P1PP1PP/1NBQKB1R w Kkq - 1 8",
+          "is_terminal_claim_draw_false": false,
+          "uci": "e6g4"
+        }
+      ],
+      "required_search_count": 11,
+      "sufficient_position": {
+        "board_arrangement_fen": "rn1qkbnr/p3pppp/1p1pbP2/2p5/P7/R1P4N/1P1PP1PP/1NBQKB1R",
+        "castling_rights": "Kkq",
+        "en_passant_square": "-",
+        "fullmove_number": 7,
+        "halfmove_clock": 0,
+        "history_available": false,
+        "history_identity": null,
+        "side_to_move": "black",
+        "variant": "standard"
+      },
+      "target_event": {
+        "ply": 1,
+        "role": "destination",
+        "square": "c8"
+      }
+    },
+    {
+      "B_strict": {
+        "e8d8": [
+          "e8",
+          "king",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "e8e7": [
+          "e8",
+          "king",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "e8f7": [
+          "e8",
+          "king",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "h7e7": [
+          "h7",
+          "rook",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "h7f7": [
+          "h7",
+          "rook",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "h7g7": [
+          "h7",
+          "rook",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "h7h8": [
+          "h7",
+          "rook",
+          "none",
+          null,
+          null,
+          false
+        ]
+      },
+      "C_reply_ucis": [
+        "e8f7",
+        "h7f7"
+      ],
+      "H_1_ucis": [
+        "e8d8",
+        "e8e7",
+        "e8f7"
+      ],
+      "H_2_ucis": [
+        "h7e7",
+        "h7f7",
+        "h7g7",
+        "h7h8"
+      ],
+      "M_1_ucis": [
+        "e8d8",
+        "e8e7"
+      ],
+      "M_2_ucis": [
+        "h7e7",
+        "h7g7",
+        "h7h8"
+      ],
+      "c_1": "e8f7",
+      "c_2": "h7f7",
+      "fixture_content_digest": "26e7664278851552ef6ed3a884bb2399e9cd1299dc0c21fedc1e374bc7c3b08b",
+      "fixture_identity": "t3b7_f12",
+      "fixture_index": 12,
+      "game_index": 12,
+      "half_move_index": 15,
+      "intervention_fen": "rnb1kbn1/pppp3r/4pp1p/6p1/1q1P1P2/BP3KP1/P1P1P1BP/RN1Q2NR b q - 2 8",
+      "legal_reply_ucis": [
+        "a7a5",
+        "a7a6",
+        "b4a3",
+        "b4a4",
+        "b4a5",
+        "b4b3",
+        "b4b5",
+        "b4b6",
+        "b4c3",
+        "b4c4",
+        "b4c5",
+        "b4d2",
+        "b4d4",
+        "b4d6",
+        "b4e1",
+        "b4e7",
+        "b7b5",
+        "b7b6",
+        "b8a6",
+        "b8c6",
+        "c7c5",
+        "c7c6",
+        "d7d5",
+        "d7d6",
+        "e6e5",
+        "e8d8",
+        "e8e7",
+        "e8f7",
+        "f6f5",
+        "f8c5",
+        "f8d6",
+        "f8e7",
+        "f8g7",
+        "g5f4",
+        "g5g4",
+        "g8e7",
+        "h6h5",
+        "h7e7",
+        "h7f7",
+        "h7g7",
+        "h7h8"
+      ],
+      "m_1": 2,
+      "m_2": 3,
+      "observation_reply_ucis": [
+        "e8d8",
+        "e8e7",
+        "e8f7",
+        "h7e7",
+        "h7f7",
+        "h7g7",
+        "h7h8"
+      ],
+      "qualifying_target_squares": [
+        "f7",
+        "g7"
+      ],
+      "required_children": [
+        {
+          "child_fen": "rnbk1bn1/pppp3r/4pp1p/6p1/1q1P1P2/BP3KP1/P1P1P1BP/RN1Q2NR w - - 3 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "e8d8"
+        },
+        {
+          "child_fen": "rnb2bn1/ppppk2r/4pp1p/6p1/1q1P1P2/BP3KP1/P1P1P1BP/RN1Q2NR w - - 3 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "e8e7"
+        },
+        {
+          "child_fen": "rnb2bn1/pppp1k1r/4pp1p/6p1/1q1P1P2/BP3KP1/P1P1P1BP/RN1Q2NR w - - 3 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "e8f7"
+        },
+        {
+          "child_fen": "rnb1kbn1/ppppr3/4pp1p/6p1/1q1P1P2/BP3KP1/P1P1P1BP/RN1Q2NR w q - 3 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "h7e7"
+        },
+        {
+          "child_fen": "rnb1kbn1/pppp1r2/4pp1p/6p1/1q1P1P2/BP3KP1/P1P1P1BP/RN1Q2NR w q - 3 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "h7f7"
+        },
+        {
+          "child_fen": "rnb1kbn1/pppp2r1/4pp1p/6p1/1q1P1P2/BP3KP1/P1P1P1BP/RN1Q2NR w q - 3 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "h7g7"
+        },
+        {
+          "child_fen": "rnb1kbnr/pppp4/4pp1p/6p1/1q1P1P2/BP3KP1/P1P1P1BP/RN1Q2NR w q - 3 9",
+          "is_terminal_claim_draw_false": false,
+          "uci": "h7h8"
+        }
+      ],
+      "required_search_count": 7,
+      "sufficient_position": {
+        "board_arrangement_fen": "rnb1kbn1/pppp3r/4pp1p/6p1/1q1P1P2/BP3KP1/P1P1P1BP/RN1Q2NR",
+        "castling_rights": "q",
+        "en_passant_square": "-",
+        "fullmove_number": 8,
+        "halfmove_clock": 2,
+        "history_available": false,
+        "history_identity": null,
+        "side_to_move": "black",
+        "variant": "standard"
+      },
+      "target_event": {
+        "ply": 1,
+        "role": "destination",
+        "square": "f7"
+      }
+    },
+    {
+      "B_strict": {
+        "d8b6": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8c7": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8d6": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8d7": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8e7": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f8b4": [
+          "f8",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f8c5": [
+          "f8",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f8d6": [
+          "f8",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "f8e7": [
+          "f8",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ]
+      },
+      "C_reply_ucis": [
+        "d8d6",
+        "f8d6"
+      ],
+      "H_1_ucis": [
+        "d8b6",
+        "d8c7",
+        "d8d6",
+        "d8d7",
+        "d8e7"
+      ],
+      "H_2_ucis": [
+        "f8b4",
+        "f8c5",
+        "f8d6",
+        "f8e7"
+      ],
+      "M_1_ucis": [
+        "d8b6",
+        "d8c7",
+        "d8d7",
+        "d8e7"
+      ],
+      "M_2_ucis": [
+        "f8b4",
+        "f8c5",
+        "f8e7"
+      ],
+      "c_1": "d8d6",
+      "c_2": "f8d6",
+      "fixture_content_digest": "3dbd7a01f428416100be4fe235116d3bd61998a94fa98afc8fe16655f4b00ba8",
+      "fixture_identity": "t3b7_f13",
+      "fixture_index": 13,
+      "game_index": 13,
+      "half_move_index": 21,
+      "intervention_fen": "rnbqkb1r/6p1/2p2p2/pp1p1p1p/5P1P/BPP1PN2/P2P4/RN1QKB1R b KQq - 1 11",
+      "legal_reply_ucis": [
+        "a5a4",
+        "a8a6",
+        "a8a7",
+        "b5b4",
+        "b8a6",
+        "b8d7",
+        "c6c5",
+        "c8a6",
+        "c8b7",
+        "c8d7",
+        "c8e6",
+        "d5d4",
+        "d8b6",
+        "d8c7",
+        "d8d6",
+        "d8d7",
+        "d8e7",
+        "e8d7",
+        "e8f7",
+        "f8a3",
+        "f8b4",
+        "f8c5",
+        "f8d6",
+        "f8e7",
+        "g7g5",
+        "g7g6",
+        "h8g8",
+        "h8h6",
+        "h8h7"
+      ],
+      "m_1": 4,
+      "m_2": 3,
+      "observation_reply_ucis": [
+        "d8b6",
+        "d8c7",
+        "d8d6",
+        "d8d7",
+        "d8e7",
+        "f8b4",
+        "f8c5",
+        "f8d6",
+        "f8e7"
+      ],
+      "qualifying_target_squares": [
+        "d6",
+        "e7"
+      ],
+      "required_children": [
+        {
+          "child_fen": "rnb1kb1r/6p1/1qp2p2/pp1p1p1p/5P1P/BPP1PN2/P2P4/RN1QKB1R w KQq - 2 12",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8b6"
+        },
+        {
+          "child_fen": "rnb1kb1r/2q3p1/2p2p2/pp1p1p1p/5P1P/BPP1PN2/P2P4/RN1QKB1R w KQq - 2 12",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8c7"
+        },
+        {
+          "child_fen": "rnb1kb1r/6p1/2pq1p2/pp1p1p1p/5P1P/BPP1PN2/P2P4/RN1QKB1R w KQq - 2 12",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8d6"
+        },
+        {
+          "child_fen": "rnb1kb1r/3q2p1/2p2p2/pp1p1p1p/5P1P/BPP1PN2/P2P4/RN1QKB1R w KQq - 2 12",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8d7"
+        },
+        {
+          "child_fen": "rnb1kb1r/4q1p1/2p2p2/pp1p1p1p/5P1P/BPP1PN2/P2P4/RN1QKB1R w KQq - 2 12",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8e7"
+        },
+        {
+          "child_fen": "rnbqk2r/6p1/2p2p2/pp1p1p1p/1b3P1P/BPP1PN2/P2P4/RN1QKB1R w KQq - 2 12",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f8b4"
+        },
+        {
+          "child_fen": "rnbqk2r/6p1/2p2p2/ppbp1p1p/5P1P/BPP1PN2/P2P4/RN1QKB1R w KQq - 2 12",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f8c5"
+        },
+        {
+          "child_fen": "rnbqk2r/6p1/2pb1p2/pp1p1p1p/5P1P/BPP1PN2/P2P4/RN1QKB1R w KQq - 2 12",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f8d6"
+        },
+        {
+          "child_fen": "rnbqk2r/4b1p1/2p2p2/pp1p1p1p/5P1P/BPP1PN2/P2P4/RN1QKB1R w KQq - 2 12",
+          "is_terminal_claim_draw_false": false,
+          "uci": "f8e7"
+        }
+      ],
+      "required_search_count": 9,
+      "sufficient_position": {
+        "board_arrangement_fen": "rnbqkb1r/6p1/2p2p2/pp1p1p1p/5P1P/BPP1PN2/P2P4/RN1QKB1R",
+        "castling_rights": "KQq",
+        "en_passant_square": "-",
+        "fullmove_number": 11,
+        "halfmove_clock": 1,
+        "history_available": false,
+        "history_identity": null,
+        "side_to_move": "black",
+        "variant": "standard"
+      },
+      "target_event": {
+        "ply": 1,
+        "role": "destination",
+        "square": "d6"
+      }
+    },
+    {
+      "B_strict": {
+        "b4a3": [
+          "b4",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "b4a5": [
+          "b4",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "b4c5": [
+          "b4",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "b4d6": [
+          "b4",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "b4e7": [
+          "b4",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "b4f8": [
+          "b4",
+          "bishop",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8a5": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8b6": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8c7": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d8e7": [
+          "d8",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ]
+      },
+      "C_reply_ucis": [
+        "b4a5",
+        "d8a5"
+      ],
+      "H_1_ucis": [
+        "b4a3",
+        "b4a5",
+        "b4c5",
+        "b4d6",
+        "b4e7",
+        "b4f8"
+      ],
+      "H_2_ucis": [
+        "d8a5",
+        "d8b6",
+        "d8c7",
+        "d8e7"
+      ],
+      "M_1_ucis": [
+        "b4a3",
+        "b4c5",
+        "b4d6",
+        "b4e7",
+        "b4f8"
+      ],
+      "M_2_ucis": [
+        "d8b6",
+        "d8c7",
+        "d8e7"
+      ],
+      "c_1": "b4a5",
+      "c_2": "d8a5",
+      "fixture_content_digest": "d4c69b0f9af67ec1a1217cc988ba6c06067367c8923f079e6235c50b832c6a73",
+      "fixture_identity": "t3b7_f14",
+      "fixture_index": 14,
+      "game_index": 14,
+      "half_move_index": 13,
+      "intervention_fen": "r1bqk2r/pp1p1pp1/n1p1pn2/7p/1b2PP1P/1PP5/P2PQ1P1/RNB1KBNR b KQkq f3 0 7",
+      "legal_reply_ucis": [
+        "a6b8",
+        "a6c5",
+        "a6c7",
+        "a8b8",
+        "b4a3",
+        "b4a5",
+        "b4c3",
+        "b4c5",
+        "b4d6",
+        "b4e7",
+        "b4f8",
+        "b7b5",
+        "b7b6",
+        "c6c5",
+        "d7d5",
+        "d7d6",
+        "d8a5",
+        "d8b6",
+        "d8c7",
+        "d8e7",
+        "e6e5",
+        "e8e7",
+        "e8f8",
+        "e8g8",
+        "f6d5",
+        "f6e4",
+        "f6g4",
+        "f6g8",
+        "f6h7",
+        "g7g5",
+        "g7g6",
+        "h8f8",
+        "h8g8",
+        "h8h6",
+        "h8h7"
+      ],
+      "m_1": 5,
+      "m_2": 3,
+      "observation_reply_ucis": [
+        "b4a3",
+        "b4a5",
+        "b4c5",
+        "b4d6",
+        "b4e7",
+        "b4f8",
+        "d8a5",
+        "d8b6",
+        "d8c7",
+        "d8e7"
+      ],
+      "qualifying_target_squares": [
+        "a5",
+        "c7",
+        "h7"
+      ],
+      "required_children": [
+        {
+          "child_fen": "r1bqk2r/pp1p1pp1/n1p1pn2/7p/4PP1P/bPP5/P2PQ1P1/RNB1KBNR w KQkq - 1 8",
+          "is_terminal_claim_draw_false": false,
+          "uci": "b4a3"
+        },
+        {
+          "child_fen": "r1bqk2r/pp1p1pp1/n1p1pn2/b6p/4PP1P/1PP5/P2PQ1P1/RNB1KBNR w KQkq - 1 8",
+          "is_terminal_claim_draw_false": false,
+          "uci": "b4a5"
+        },
+        {
+          "child_fen": "r1bqk2r/pp1p1pp1/n1p1pn2/2b4p/4PP1P/1PP5/P2PQ1P1/RNB1KBNR w KQkq - 1 8",
+          "is_terminal_claim_draw_false": false,
+          "uci": "b4c5"
+        },
+        {
+          "child_fen": "r1bqk2r/pp1p1pp1/n1pbpn2/7p/4PP1P/1PP5/P2PQ1P1/RNB1KBNR w KQkq - 1 8",
+          "is_terminal_claim_draw_false": false,
+          "uci": "b4d6"
+        },
+        {
+          "child_fen": "r1bqk2r/pp1pbpp1/n1p1pn2/7p/4PP1P/1PP5/P2PQ1P1/RNB1KBNR w KQkq - 1 8",
+          "is_terminal_claim_draw_false": false,
+          "uci": "b4e7"
+        },
+        {
+          "child_fen": "r1bqkb1r/pp1p1pp1/n1p1pn2/7p/4PP1P/1PP5/P2PQ1P1/RNB1KBNR w KQkq - 1 8",
+          "is_terminal_claim_draw_false": false,
+          "uci": "b4f8"
+        },
+        {
+          "child_fen": "r1b1k2r/pp1p1pp1/n1p1pn2/q6p/1b2PP1P/1PP5/P2PQ1P1/RNB1KBNR w KQkq - 1 8",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8a5"
+        },
+        {
+          "child_fen": "r1b1k2r/pp1p1pp1/nqp1pn2/7p/1b2PP1P/1PP5/P2PQ1P1/RNB1KBNR w KQkq - 1 8",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8b6"
+        },
+        {
+          "child_fen": "r1b1k2r/ppqp1pp1/n1p1pn2/7p/1b2PP1P/1PP5/P2PQ1P1/RNB1KBNR w KQkq - 1 8",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8c7"
+        },
+        {
+          "child_fen": "r1b1k2r/pp1pqpp1/n1p1pn2/7p/1b2PP1P/1PP5/P2PQ1P1/RNB1KBNR w KQkq - 1 8",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d8e7"
+        }
+      ],
+      "required_search_count": 10,
+      "sufficient_position": {
+        "board_arrangement_fen": "r1bqk2r/pp1p1pp1/n1p1pn2/7p/1b2PP1P/1PP5/P2PQ1P1/RNB1KBNR",
+        "castling_rights": "KQkq",
+        "en_passant_square": "f3",
+        "fullmove_number": 7,
+        "halfmove_clock": 0,
+        "history_available": false,
+        "history_identity": null,
+        "side_to_move": "black",
+        "variant": "standard"
+      },
+      "target_event": {
+        "ply": 1,
+        "role": "destination",
+        "square": "a5"
+      }
+    },
+    {
+      "B_strict": {
+        "c6a5": [
+          "c6",
+          "knight",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "c6a7": [
+          "c6",
+          "knight",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "c6b4": [
+          "c6",
+          "knight",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "c6b8": [
+          "c6",
+          "knight",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "c6d4": [
+          "c6",
+          "knight",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "c6e5": [
+          "c6",
+          "knight",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d6b8": [
+          "d6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d6c7": [
+          "d6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d6d3": [
+          "d6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d6d4": [
+          "d6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d6d5": [
+          "d6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d6e5": [
+          "d6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d6e6": [
+          "d6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d6f6": [
+          "d6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ],
+        "d6g6": [
+          "d6",
+          "queen",
+          "none",
+          null,
+          null,
+          false
+        ]
+      },
+      "C_reply_ucis": [
+        "c6d4",
+        "d6d4"
+      ],
+      "H_1_ucis": [
+        "c6a5",
+        "c6a7",
+        "c6b4",
+        "c6b8",
+        "c6d4",
+        "c6e5"
+      ],
+      "H_2_ucis": [
+        "d6b8",
+        "d6c7",
+        "d6d3",
+        "d6d4",
+        "d6d5",
+        "d6e5",
+        "d6e6",
+        "d6f6",
+        "d6g6"
+      ],
+      "M_1_ucis": [
+        "c6a5",
+        "c6a7",
+        "c6b4",
+        "c6b8",
+        "c6e5"
+      ],
+      "M_2_ucis": [
+        "d6b8",
+        "d6c7",
+        "d6d3",
+        "d6d5",
+        "d6e5",
+        "d6e6",
+        "d6f6",
+        "d6g6"
+      ],
+      "c_1": "c6d4",
+      "c_2": "d6d4",
+      "fixture_content_digest": "addb4c58c77d3cf8d19486bb86008a1f846686db71314ced9db1ea37c3ea8976",
+      "fixture_identity": "t3b7_f15",
+      "fixture_index": 15,
+      "game_index": 15,
+      "half_move_index": 23,
+      "intervention_fen": "r1bk1bnr/3pp1p1/p1nq3p/1pp2p2/4PPP1/N1P4N/PP1PB2P/R1BQKR2 b Q - 0 12",
+      "legal_reply_ucis": [
+        "a6a5",
+        "a8a7",
+        "a8b8",
+        "b5b4",
+        "c5c4",
+        "c6a5",
+        "c6a7",
+        "c6b4",
+        "c6b8",
+        "c6d4",
+        "c6e5",
+        "c8b7",
+        "d6b8",
+        "d6c7",
+        "d6d2",
+        "d6d3",
+        "d6d4",
+        "d6d5",
+        "d6e5",
+        "d6e6",
+        "d6f4",
+        "d6f6",
+        "d6g6",
+        "d8c7",
+        "d8e8",
+        "e7e5",
+        "e7e6",
+        "f5e4",
+        "f5g4",
+        "g7g5",
+        "g7g6",
+        "g8f6",
+        "h6h5",
+        "h8h7"
+      ],
+      "m_1": 5,
+      "m_2": 8,
+      "observation_reply_ucis": [
+        "c6a5",
+        "c6a7",
+        "c6b4",
+        "c6b8",
+        "c6d4",
+        "c6e5",
+        "d6b8",
+        "d6c7",
+        "d6d3",
+        "d6d4",
+        "d6d5",
+        "d6e5",
+        "d6e6",
+        "d6f6",
+        "d6g6"
+      ],
+      "qualifying_target_squares": [
+        "d4"
+      ],
+      "required_children": [
+        {
+          "child_fen": "r1bk1bnr/3pp1p1/p2q3p/npp2p2/4PPP1/N1P4N/PP1PB2P/R1BQKR2 w Q - 1 13",
+          "is_terminal_claim_draw_false": false,
+          "uci": "c6a5"
+        },
+        {
+          "child_fen": "r1bk1bnr/n2pp1p1/p2q3p/1pp2p2/4PPP1/N1P4N/PP1PB2P/R1BQKR2 w Q - 1 13",
+          "is_terminal_claim_draw_false": false,
+          "uci": "c6a7"
+        },
+        {
+          "child_fen": "r1bk1bnr/3pp1p1/p2q3p/1pp2p2/1n2PPP1/N1P4N/PP1PB2P/R1BQKR2 w Q - 1 13",
+          "is_terminal_claim_draw_false": false,
+          "uci": "c6b4"
+        },
+        {
+          "child_fen": "rnbk1bnr/3pp1p1/p2q3p/1pp2p2/4PPP1/N1P4N/PP1PB2P/R1BQKR2 w Q - 1 13",
+          "is_terminal_claim_draw_false": false,
+          "uci": "c6b8"
+        },
+        {
+          "child_fen": "r1bk1bnr/3pp1p1/p2q3p/1pp2p2/3nPPP1/N1P4N/PP1PB2P/R1BQKR2 w Q - 1 13",
+          "is_terminal_claim_draw_false": false,
+          "uci": "c6d4"
+        },
+        {
+          "child_fen": "r1bk1bnr/3pp1p1/p2q3p/1pp1np2/4PPP1/N1P4N/PP1PB2P/R1BQKR2 w Q - 1 13",
+          "is_terminal_claim_draw_false": false,
+          "uci": "c6e5"
+        },
+        {
+          "child_fen": "rqbk1bnr/3pp1p1/p1n4p/1pp2p2/4PPP1/N1P4N/PP1PB2P/R1BQKR2 w Q - 1 13",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d6b8"
+        },
+        {
+          "child_fen": "r1bk1bnr/2qpp1p1/p1n4p/1pp2p2/4PPP1/N1P4N/PP1PB2P/R1BQKR2 w Q - 1 13",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d6c7"
+        },
+        {
+          "child_fen": "r1bk1bnr/3pp1p1/p1n4p/1pp2p2/4PPP1/N1Pq3N/PP1PB2P/R1BQKR2 w Q - 1 13",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d6d3"
+        },
+        {
+          "child_fen": "r1bk1bnr/3pp1p1/p1n4p/1pp2p2/3qPPP1/N1P4N/PP1PB2P/R1BQKR2 w Q - 1 13",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d6d4"
+        },
+        {
+          "child_fen": "r1bk1bnr/3pp1p1/p1n4p/1ppq1p2/4PPP1/N1P4N/PP1PB2P/R1BQKR2 w Q - 1 13",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d6d5"
+        },
+        {
+          "child_fen": "r1bk1bnr/3pp1p1/p1n4p/1pp1qp2/4PPP1/N1P4N/PP1PB2P/R1BQKR2 w Q - 1 13",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d6e5"
+        },
+        {
+          "child_fen": "r1bk1bnr/3pp1p1/p1n1q2p/1pp2p2/4PPP1/N1P4N/PP1PB2P/R1BQKR2 w Q - 1 13",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d6e6"
+        },
+        {
+          "child_fen": "r1bk1bnr/3pp1p1/p1n2q1p/1pp2p2/4PPP1/N1P4N/PP1PB2P/R1BQKR2 w Q - 1 13",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d6f6"
+        },
+        {
+          "child_fen": "r1bk1bnr/3pp1p1/p1n3qp/1pp2p2/4PPP1/N1P4N/PP1PB2P/R1BQKR2 w Q - 1 13",
+          "is_terminal_claim_draw_false": false,
+          "uci": "d6g6"
+        }
+      ],
+      "required_search_count": 15,
+      "sufficient_position": {
+        "board_arrangement_fen": "r1bk1bnr/3pp1p1/p1nq3p/1pp2p2/4PPP1/N1P4N/PP1PB2P/R1BQKR2",
+        "castling_rights": "Q",
+        "en_passant_square": "-",
+        "fullmove_number": 12,
+        "halfmove_clock": 0,
+        "history_available": false,
+        "history_identity": null,
+        "side_to_move": "black",
+        "variant": "standard"
+      },
+      "target_event": {
+        "ply": 1,
+        "role": "destination",
+        "square": "d4"
+      }
+    }
+  ],
+  "future_instrument_preregistration": {
+    "Hash_MB": 16,
+    "Threads": 1,
+    "expected_producer_uci_name": "Stockfish 18",
+    "nodes_per_required_child": 100000
+  },
+  "generator_id": "T3B7_MATCHED_V1",
+  "history_available": false,
+  "history_identity": null,
+  "matcher_commit": "23281ca6d75a239de6f63a6ff542597c1cfc0fc2",
+  "matcher_file_sha256": "568fe380107859ed2e8d7aee0ac6f81d95131ac5a25f1f67fb85073653d1a907",
+  "mathematics_commit": "100e4f20b41b260875fb14901b61bbe51c4fe74e",
+  "mathematics_file_sha256": "7f395355e2505db8cc24468e541db5f9618d81c206a8f489c30a09607b0ac8a8",
+  "prior_design_state_provenance": {
+    "combined_prior_design_state_digest": "30b5cf85c4a52df8e10de9245d7f7eedb3b38b205a6d1836759d222ad8956a4b",
+    "combined_prior_design_state_unique_count": 265,
+    "t3b2_design_state_digest": "894176f4d46569948ecf8bb73adb357f83f97f01fa7c68ef2d704c9664236c3c",
+    "t3b2_design_state_raw_count": 12,
+    "t3b2_design_state_unique_count": 12,
+    "t3b5_design_state_digest": "2ba3ae7536cdbbc787e225ebd9e62eac4849d41c5aa8bcb47f741258ca217682",
+    "t3b5_design_state_raw_count": 253,
+    "t3b5_design_state_unique_count": 253
+  },
+  "prior_engine_exposure_provenance": {
+    "combined_prior_engine_exposure_digest": "c5707a48a22a0056232a06f28514f15af8dd631aa5a361f97f38c1a807867a89",
+    "combined_prior_engine_exposure_unique_count": 776,
+    "pre_t3b3_engine_exposure_count": 414,
+    "pre_t3b3_engine_exposure_digest": "a4342f713a22ccc3c4790fcc220136b2f78f16e5f014d7a195f26d6fd8842476",
+    "sources": [
+      {
+        "actual_sha256": "151a5ad4414ef6caadf4251441b72dfbe934fa0d05bb57aa4dd03c6107f61bf5",
+        "expected_sha256": "151a5ad4414ef6caadf4251441b72dfbe934fa0d05bb57aa4dd03c6107f61bf5",
+        "extraction_rule": "top-level fen, observations[*].resulting_fen",
+        "source_path": "tests/fixtures/t3a1_fixture.json"
+      },
+      {
+        "actual_sha256": "ec55f31c873292aaefe2229a8b197458b678e6bb3617d6094b22068b8240a1b1",
+        "expected_sha256": "ec55f31c873292aaefe2229a8b197458b678e6bb3617d6094b22068b8240a1b1",
+        "extraction_rule": "top-level fen, observations[*].resulting_fen",
+        "source_path": "tests/fixtures/t3a2_fixture.json"
+      },
+      {
+        "actual_sha256": "8a0f700123697df9892914a7f38f56efbfe09945f2d7752479895a57a70cdf5a",
+        "expected_sha256": "8a0f700123697df9892914a7f38f56efbfe09945f2d7752479895a57a70cdf5a",
+        "extraction_rule": "top-level fen, move_observations[*].resulting_fen",
+        "source_path": "tests/fixtures/t3a3_fixture.json"
+      },
+      {
+        "actual_sha256": "dd102d9b7826dededa21ff54c72e9d92a7350f94a4bce82fff517b5b52cd685d",
+        "expected_sha256": "dd102d9b7826dededa21ff54c72e9d92a7350f94a4bce82fff517b5b52cd685d",
+        "extraction_rule": "top-level fen, move_observations[*].resulting_fen",
+        "source_path": "tests/fixtures/t3a4/raw/t3a4_f00.json"
+      },
+      {
+        "actual_sha256": "9601744071efd9b6d39ff94110f8f22b369ad35afc6e8db7f1278a70ed64e4eb",
+        "expected_sha256": "9601744071efd9b6d39ff94110f8f22b369ad35afc6e8db7f1278a70ed64e4eb",
+        "extraction_rule": "top-level fen, move_observations[*].resulting_fen",
+        "source_path": "tests/fixtures/t3a4/raw/t3a4_f01.json"
+      },
+      {
+        "actual_sha256": "cfa55403c8053e2f2b84bcccec745e150cc261ff1566c6ae87b49dd6ee66d855",
+        "expected_sha256": "cfa55403c8053e2f2b84bcccec745e150cc261ff1566c6ae87b49dd6ee66d855",
+        "extraction_rule": "top-level fen, move_observations[*].resulting_fen",
+        "source_path": "tests/fixtures/t3a4/raw/t3a4_f02.json"
+      },
+      {
+        "actual_sha256": "71a5927f427f072a65c767a7a75dbedff9b874b3b2a79a324976bf554d6a5e98",
+        "expected_sha256": "71a5927f427f072a65c767a7a75dbedff9b874b3b2a79a324976bf554d6a5e98",
+        "extraction_rule": "top-level fen, move_observations[*].resulting_fen",
+        "source_path": "tests/fixtures/t3a4/raw/t3a4_f03.json"
+      },
+      {
+        "actual_sha256": "f7478bde4c1cd624c4a01c9b2ed1b0601defef0f0888fff91eff1359077cc748",
+        "expected_sha256": "f7478bde4c1cd624c4a01c9b2ed1b0601defef0f0888fff91eff1359077cc748",
+        "extraction_rule": "top-level fen, move_observations[*].resulting_fen",
+        "source_path": "tests/fixtures/t3a4/raw/t3a4_f04.json"
+      },
+      {
+        "actual_sha256": "2d0b40d8ca65de1447619c7beee8ba33d0ffb9165eb4012ae8f30df79c2dfd82",
+        "expected_sha256": "2d0b40d8ca65de1447619c7beee8ba33d0ffb9165eb4012ae8f30df79c2dfd82",
+        "extraction_rule": "top-level fen, move_observations[*].resulting_fen",
+        "source_path": "tests/fixtures/t3a4/raw/t3a4_f05.json"
+      },
+      {
+        "actual_sha256": "2f70e07e98d1a72611f932d815e8339f0bbd1a821ff89cd181f9335f3fe633a0",
+        "expected_sha256": "2f70e07e98d1a72611f932d815e8339f0bbd1a821ff89cd181f9335f3fe633a0",
+        "extraction_rule": "top-level fen, move_observations[*].resulting_fen",
+        "source_path": "tests/fixtures/t3a4/raw/t3a4_f06.json"
+      },
+      {
+        "actual_sha256": "9d63d91803f9b769ecc3caf8ced4868c7951f461ad326010e85ece0944e7b976",
+        "expected_sha256": "9d63d91803f9b769ecc3caf8ced4868c7951f461ad326010e85ece0944e7b976",
+        "extraction_rule": "top-level fen, move_observations[*].resulting_fen",
+        "source_path": "tests/fixtures/t3a4/raw/t3a4_f07.json"
+      },
+      {
+        "actual_sha256": "c71be07ec2299159bf86bc2a1454af16513a12261d2b7b46e17f650a40b63031",
+        "expected_sha256": "c71be07ec2299159bf86bc2a1454af16513a12261d2b7b46e17f650a40b63031",
+        "extraction_rule": "top-level fen, move_observations[*].resulting_fen",
+        "source_path": "tests/fixtures/t3a4/raw/t3a4_f08.json"
+      },
+      {
+        "actual_sha256": "f3c284a6dfc3f6260aa2fa84a0b26c4046b9a465c52218ce3c14174d24691070",
+        "expected_sha256": "f3c284a6dfc3f6260aa2fa84a0b26c4046b9a465c52218ce3c14174d24691070",
+        "extraction_rule": "top-level fen, move_observations[*].resulting_fen",
+        "source_path": "tests/fixtures/t3a4/raw/t3a4_f09.json"
+      },
+      {
+        "actual_sha256": "ffa4fa05fc6e251f2e8d3d7a0f536e548717d503d27801b7b08646420fd9bfd7",
+        "expected_sha256": "ffa4fa05fc6e251f2e8d3d7a0f536e548717d503d27801b7b08646420fd9bfd7",
+        "extraction_rule": "top-level fen, move_observations[*].resulting_fen",
+        "source_path": "tests/fixtures/t3a4/raw/t3a4_f10.json"
+      },
+      {
+        "actual_sha256": "37cfc3b58962aeeeecc4723d58ef63b5c9ec00e6f588d9c37c53ba9e41368641",
+        "expected_sha256": "37cfc3b58962aeeeecc4723d58ef63b5c9ec00e6f588d9c37c53ba9e41368641",
+        "extraction_rule": "top-level fen, move_observations[*].resulting_fen",
+        "source_path": "tests/fixtures/t3a4/raw/t3a4_f11.json"
+      }
+    ],
+    "t3b3_observed_child_digest": "d6dccdc30403c04bc3e974d6de2ad8d348831a1e1ad16a01855e13842df1f90f",
+    "t3b3_observed_child_raw_count": 362,
+    "t3b3_observed_child_unique_count": 362,
+    "t3b3_raw_execution_sha256": "9333f9d26480f43f4d64846be498f720892d93d73da5127296e067653b476d6b"
+  },
+  "protocol_commit": "fd54ad04c54e4756ad904f17454b9e70e881afea",
+  "protocol_file_sha256": "2b9377a46b5ff54453ec1796b9a5ce8ca3f1e7bf36a112820d9390b69ed819b9",
+  "python_version": "3.13.5",
+  "s1_suite_digest": "021f4272ed738e2492911c33841efa5c3c4a3be23def946666f8fe1b693ec144",
+  "s1_suite_manifest": {
+    "fixtures": {
+      "t3b7_f00": "68439b1fef7b3e008025028c1614f97929b0ca91acfda07699d54a5fa438bdb0",
+      "t3b7_f01": "bc32bc5a7a54c9d661453b1d73ea0242742a36195c0d908e585339875b29ad99",
+      "t3b7_f02": "294e4f793014428fb61b1323f84ecfcc0dd173f7db261c590a95fad38ce82bd9",
+      "t3b7_f03": "1d8e159f9e1223dc7f0215f692e3156f07190453bee08652458e30f8556683f5",
+      "t3b7_f04": "5587cda42a20fcd8f341c6b4924ab9fee71827e0831ae6d1ba7bcaf5329ec181",
+      "t3b7_f05": "5b8c11584e6c240815b6bb8ce35065aca99f0d4768007d56583937628d176807",
+      "t3b7_f06": "cf0bf74700b5cc2d039715bd6f14fcd3a252546d8de4fa03ccc769554138d920",
+      "t3b7_f07": "5b69f5f8950ad07b4741c0d0d3654b5d83e8207733b401401751d6a76363fcea",
+      "t3b7_f08": "332e8a0f97782c03fa7a37e6529ac995d6c873373e6a82b983fc989396bbecc5",
+      "t3b7_f09": "bed1bf538dae2496ac42a0e5a0837ec875756b57eab2b96533a9b1a2857a56bf",
+      "t3b7_f10": "0d1ba28f8ad03e6f7f7ff64e7525ee54785e8fefde2d781b34f9b01589684bba",
+      "t3b7_f11": "7152f88f6755d1ebf7aef0ca8743424bcc30849118cf0b49ef2fee64ea0c8327",
+      "t3b7_f12": "26e7664278851552ef6ed3a884bb2399e9cd1299dc0c21fedc1e374bc7c3b08b",
+      "t3b7_f13": "3dbd7a01f428416100be4fe235116d3bd61998a94fa98afc8fe16655f4b00ba8",
+      "t3b7_f14": "d4c69b0f9af67ec1a1217cc988ba6c06067367c8923f079e6235c50b832c6a73",
+      "t3b7_f15": "addb4c58c77d3cf8d19486bb86008a1f846686db71314ced9db1ea37c3ea8976"
+    },
+    "kind": "mechanism_stress",
+    "suite_id": "t3b7_matched_intervention_v1"
+  },
+  "schema_version": 1,
+  "semantic_signature_digest": "5fa4d57cf43c673fa31874ce5d19e777acf0ea695fd032412b193c2123461080",
+  "semantic_signature_version": "1.0",
+  "suite_size": 16
+}
