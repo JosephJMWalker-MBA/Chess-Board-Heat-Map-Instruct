@@ -16,18 +16,18 @@ The observational program T3a is officially closed with the following frozen sta
 
 ## Prospective Intervention Objects
 
-For a sufficient position $P$ and legal White root $m_i$, let $P_i$ be the rule-exact post-root state and $R_i$ its complete set of legal Black replies. For a target event $x$:
+For a sufficient position $P$ and legal White root $m_i$, let $P_i$ be the rule-exact post-root state and $\mathcal{R}_i$ its complete set of legal Black replies. For a target event $x$:
 
-$$C_i(x) = \{r \in R_i : \text{reply } r \text{ realizes } x\}$$
-$$N_i(x) = R_i \setminus C_i(x)$$
+$$C_i(x) = \{r \in \mathcal{R}_i : \text{reply } r \text{ realizes } x\}$$
+$$N_i(x) = \mathcal{R}_i \setminus C_i(x)$$
 
 Define:
 $$do(r): P_i \to P_{i,r}$$
 as the rule-exact intervention selecting one particular legal immediate reply and then evaluating the resulting legal child state.
 
 Define provisionally:
-$$Y_{i,r}(J, \theta)$$
-as the typed consequence estimate of $P_{i,r}$ under producer/instrument $J$, configuration $\theta$, and frozen comparison perspective. $Y$ is an instrument estimate, not objective truth.
+$$Y_{i,r}(\mathcal{J}, \theta)$$
+as the typed consequence estimate of $P_{i,r}$ under producer/instrument $\mathcal{J}$, configuration $\theta$, and frozen comparison perspective. $Y$ is an instrument estimate, not objective truth.
 
 ---
 
@@ -87,20 +87,27 @@ Any future T3b comparator must:
 
 **A. All-legal-reply class contrast**
 Compare consequence distributions for $C_i(x)$ versus $N_i(x)$.
-- *Advantage*: No producer-realization dependence.
-- *Limitation*: Reply-class differences bundle other chess effects.
+- **What it could earn**: Consequence estimates are sensitive to legal immediate reply class membership involving the target event $x$.
+- **What it cannot earn**: The isolated causal effect of event $x$.
+- **Principal confound/dependency**: Reply-class differences bundle other chess effects (the intervention changes more than just the target event).
 
 **B. Deterministically matched legal reply**
 Choose a non-event reply through a preregistered rule-exact matching metric.
-- *Advantage*: Tighter control.
-- *Limitation*: The matching metric itself may inject ontology assumptions and may fail to find valid controls.
+- **What it could earn**: Tighter control over non-target move differences, earning a more specific causal attribution.
+- **What it cannot earn**: Objective causal effect free from metric bias.
+- **Principal confound/dependency**: The matching metric itself may inject ontology assumptions and may fail to find valid controls.
 
 **C. Instrument forcing (searchmoves)**
 Explicitly classify as an instrument intervention.
-- *Advantage/Limitation*: It may study search behavior but cannot by itself establish chess-state intervention sensitivity.
+- **What it could earn**: Characterization of search behavior under restricted move consideration.
+- **What it cannot earn**: Chess-state intervention sensitivity (it does not evaluate a true, freely produced legal chess state).
+- **Principal confound/dependency**: Intervenes on the engine's attention mechanism rather than the chess board state itself.
 
 **D. Artificial board perturbation**
 Explicitly defer pending a separate legality/semantic-validity contract.
+- **What it could earn**: Plausible counterfactual tests for states that cannot be reached legally.
+- **What it cannot earn**: Meaningful legal chess consequence (creates invalid or semantically undefined positions).
+- **Principal confound/dependency**: Relies on the engine's behavior in non-legal or unreachable game states.
 
 ---
 
