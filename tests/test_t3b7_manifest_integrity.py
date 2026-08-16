@@ -9,7 +9,8 @@ sys.path.insert(0, os.path.abspath("src"))
 from chessheat.semantics import SemanticSignatureV1
 from chessheat.experiment import SufficientPosition, SuiteManifest, SuiteKind
 
-EXPECTED_MANIFEST_SHA = "cdb51243f5561a1c18bd8d0667691663360dcf4316364ca0665ea5344de1e8c9"
+EXPECTED_MANIFEST_SHA = "40949ceeaa5ff1cd1c8a083df45f0dbe0f252d3f1637a692dbf96ae98156ad13"
+EXPECTED_SUITE_DIGEST = "b483e152cbfd51704f62befabdfd2a9f7880999a199409b63253802a965ed6d7"
 
 def get_file_sha(path):
     with open(path, "rb") as f:
@@ -44,6 +45,9 @@ def get_B_strict_tuple(board, move):
     if board.is_en_passant(move):
         capture_mode = "en_passant"
         captured_piece_type = "pawn"
+        ep_captured_square = chess.square(chess.square_file(move.to_square), chess.square_rank(move.from_square))
+        ep_captured_piece = board.piece_at(ep_captured_square)
+        assert ep_captured_piece is not None and ep_captured_piece.piece_type == chess.PAWN and ep_captured_piece.color != moving_piece.color
     elif board.is_capture(move):
         capture_mode = "ordinary"
         captured_piece = board.piece_at(move.to_square)
@@ -74,6 +78,33 @@ def test_t3b7_manifest_integrity():
     
     with open(manifest_path, "r", encoding="utf-8") as f:
         manifest = json.load(f)
+        
+    assert get_file_sha("docs/research/t3/T3B7_RULE_ONLY_MATCHED_FIXTURE_PROTOCOL.md") == "2b9377a46b5ff54453ec1796b9a5ce8ca3f1e7bf36a112820d9390b69ed819b9"
+    assert get_file_sha("docs/research/t3/T3B4_MATCHED_CONTROL_IDENTIFIABILITY_AUDIT.md") == "568fe380107859ed2e8d7aee0ac6f81d95131ac5a25f1f67fb85073653d1a907"
+    assert get_file_sha("docs/research/t3/T3B6_MATCHED_ESTIMAND_CALIBRATION.md") == "7f395355e2505db8cc24468e541db5f9618d81c206a8f489c30a09607b0ac8a8"
+    
+    assert manifest["protocol_commit"] == "fd54ad04c54e4756ad904f17454b9e70e881afea"
+    assert manifest["matcher_commit"] == "23281ca6d75a239de6f63a6ff542597c1cfc0fc2"
+    assert manifest["mathematics_commit"] == "100e4f20b41b260875fb14901b61bbe51c4fe74e"
+    assert manifest["generator_id"] == "T3B7_MATCHED_V1"
+    assert manifest["chess_version"] == "1.11.2"
+    assert manifest["fixture_count"] == 16
+    assert manifest["suite_size"] == 16
+    assert manifest["K_min"] == 12
+    assert manifest["comparison_perspective"] == "white"
+    assert manifest["evidence_ceiling"] == "intervention_sensitivity"
+    assert manifest["history_available"] is False
+    assert manifest["history_identity"] is None
+    assert manifest["engine_observations_present"] is False
+    assert manifest["consequence_observations_present"] is False
+    assert manifest["semantic_signature_version"] == "1.0"
+    assert manifest["semantic_signature_digest"] == "5fa4d57cf43c673fa31874ce5d19e777acf0ea695fd032412b193c2123461080"
+    
+    fp = manifest["future_instrument_preregistration"]
+    assert fp["expected_producer_uci_name"] == "Stockfish 18"
+    assert fp["Threads"] == 1
+    assert fp["Hash_MB"] == 16
+    assert fp["nodes_per_required_child"] == 100000
         
     # Historical exposure
     HISTORICAL_SOURCES = {
@@ -139,7 +170,18 @@ def test_t3b7_manifest_integrity():
 
     assert len(t3b3_fens) == 362
     t3b3_fens_set = set(t3b3_fens)
+    t3b3_observed_child_digest = digest_fens(t3b3_fens_set)
     combined_engine_exposure = pre_t3b3_canonical_fens.union(t3b3_fens_set)
+    combined_engine_exposure_digest = digest_fens(combined_engine_exposure)
+    
+    pee = manifest["prior_engine_exposure_provenance"]
+    assert pee["pre_t3b3_engine_exposure_count"] == len(pre_t3b3_canonical_fens) == 414
+    assert pee["pre_t3b3_engine_exposure_digest"] == digest_fens(pre_t3b3_canonical_fens) == "a4342f713a22ccc3c4790fcc220136b2f78f16e5f014d7a195f26d6fd8842476"
+    assert pee["t3b3_observed_child_raw_count"] == 362
+    assert pee["t3b3_observed_child_unique_count"] == len(t3b3_fens_set) == 362
+    assert pee["t3b3_observed_child_digest"] == t3b3_observed_child_digest == "d6dccdc30403c04bc3e974d6de2ad8d348831a1e1ad16a01855e13842df1f90f"
+    assert pee["combined_prior_engine_exposure_unique_count"] == len(combined_engine_exposure) == 776
+    assert pee["combined_prior_engine_exposure_digest"] == combined_engine_exposure_digest == "c5707a48a22a0056232a06f28514f15af8dd631aa5a361f97f38c1a807867a89"
 
     # T3b-2 / T3b-5 design states
     t3b2_manifest_path = "docs/research/t3/t3b2_fixture_manifest.json"
@@ -165,6 +207,16 @@ def test_t3b7_manifest_integrity():
     
     combined_design_state = t3b2_canonical.union(t3b5_canonical)
 
+    pds = manifest["prior_design_state_provenance"]
+    assert pds["t3b2_design_state_raw_count"] == len(t3b2_raw_fens) == 12
+    assert pds["t3b2_design_state_unique_count"] == len(t3b2_canonical) == 12
+    assert pds["t3b2_design_state_digest"] == digest_fens(t3b2_canonical) == "894176f4d46569948ecf8bb73adb357f83f97f01fa7c68ef2d704c9664236c3c"
+    assert pds["t3b5_design_state_raw_count"] == len(t3b5_raw_fens) == 253
+    assert pds["t3b5_design_state_unique_count"] == len(t3b5_canonical) == 253
+    assert pds["t3b5_design_state_digest"] == digest_fens(t3b5_canonical) == "2ba3ae7536cdbbc787e225ebd9e62eac4849d41c5aa8bcb47f741258ca217682"
+    assert pds["combined_prior_design_state_unique_count"] == len(combined_design_state) == 265
+    assert pds["combined_prior_design_state_digest"] == digest_fens(combined_design_state) == "30b5cf85c4a52df8e10de9245d7f7eedb3b38b205a6d1836759d222ad8956a4b"
+
     # Generate
     accepted_fixtures = []
     accepted_p_i_fens = set()
@@ -180,6 +232,9 @@ def test_t3b7_manifest_integrity():
         
         while not fixture_found_for_game:
             if board.is_game_over(claim_draw=False):
+                break
+                
+            if p > 79:
                 break
                 
             if p in (13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53, 55, 57, 59, 61, 63, 65, 67, 69, 71, 73, 75, 77, 79):
@@ -272,17 +327,23 @@ def test_t3b7_manifest_integrity():
                                 fixture_identity = f"t3b7_f{fixture_index:02d}"
                                 
                                 fen_parts = intervention_fen.split()
+                                ep_field = fen_parts[3]
+                                en_passant_square = None if ep_field == "-" else ep_field
                                 sp = SufficientPosition(
                                     board_arrangement_fen=fen_parts[0],
                                     side_to_move="black",
                                     castling_rights=fen_parts[2],
-                                    en_passant_square=fen_parts[3],
+                                    en_passant_square=en_passant_square,
                                     halfmove_clock=int(fen_parts[4]),
                                     fullmove_number=int(fen_parts[5]),
                                     history_available=False,
                                     history_identity=None,
                                     variant="standard"
                                 )
+                                if ep_field == "-":
+                                    assert sp.en_passant_square is None
+                                else:
+                                    assert sp.en_passant_square == ep_field
                                 
                                 payload_without_digest = {
                                     "fixture_identity": fixture_identity,
@@ -394,7 +455,7 @@ def test_t3b7_manifest_integrity():
             for item in obj:
                 reject_keys(item)
                 
-    reject_keys(manifest["fixtures"])
+    reject_keys(manifest)
     
 if __name__ == "__main__":
     test_t3b7_manifest_integrity()

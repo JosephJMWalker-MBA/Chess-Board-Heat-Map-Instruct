@@ -45,6 +45,10 @@ def get_B_strict_tuple(board, move):
     if board.is_en_passant(move):
         capture_mode = "en_passant"
         captured_piece_type = "pawn"
+        ep_captured_square = chess.square(chess.square_file(move.to_square), chess.square_rank(move.from_square))
+        ep_captured_piece = board.piece_at(ep_captured_square)
+        if ep_captured_piece is None or ep_captured_piece.piece_type != chess.PAWN or ep_captured_piece.color == moving_piece.color:
+            exit_error("B_STRICT_INVARIANT_FAILURE")
     elif board.is_capture(move):
         capture_mode = "ordinary"
         captured_piece = board.piece_at(move.to_square)
@@ -95,8 +99,16 @@ HISTORICAL_SOURCES = {
 
 def generate():
     protocol_file_sha256 = get_file_sha(PROTOCOL_FILE_PATH)
+    if protocol_file_sha256 != "2b9377a46b5ff54453ec1796b9a5ce8ca3f1e7bf36a112820d9390b69ed819b9":
+        exit_error("PROTOCOL_DIGEST_MISMATCH")
+    
     matcher_file_sha256 = get_file_sha(MATCHER_FILE_PATH)
+    if matcher_file_sha256 != "568fe380107859ed2e8d7aee0ac6f81d95131ac5a25f1f67fb85073653d1a907":
+        exit_error("MATCHER_DIGEST_MISMATCH")
+        
     mathematics_file_sha256 = get_file_sha(MATHEMATICS_FILE_PATH)
+    if mathematics_file_sha256 != "7f395355e2505db8cc24468e541db5f9618d81c206a8f489c30a09607b0ac8a8":
+        exit_error("MATHEMATICS_DIGEST_MISMATCH")
 
     # Historical exposure
     pre_t3b3_canonical_fens = set()
@@ -256,6 +268,9 @@ def generate():
             if board.is_game_over(claim_draw=False):
                 break
                 
+            if p > 79:
+                break
+                
             if p in (13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53, 55, 57, 59, 61, 63, 65, 67, 69, 71, 73, 75, 77, 79):
                 intervention_fen = board.fen(shredder=False, en_passant="fen")
                 P_i = chess.Board(intervention_fen)
@@ -350,11 +365,13 @@ def generate():
                                 fixture_identity = f"t3b7_f{fixture_index:02d}"
                                 
                                 fen_parts = intervention_fen.split()
+                                ep_field = fen_parts[3]
+                                en_passant_square = None if ep_field == "-" else ep_field
                                 sp = SufficientPosition(
                                     board_arrangement_fen=fen_parts[0],
                                     side_to_move="black",
                                     castling_rights=fen_parts[2],
-                                    en_passant_square=fen_parts[3],
+                                    en_passant_square=en_passant_square,
                                     halfmove_clock=int(fen_parts[4]),
                                     fullmove_number=int(fen_parts[5]),
                                     history_available=False,
@@ -477,8 +494,36 @@ if __name__ == "__main__":
     if bytes1 != bytes2:
         exit_error("CHILD_RECONSTRUCTION_FAILURE") # proxy
         
+    manifest1 = json.loads(bytes1)
+    
+    with open("docs/research/t3/t3b7_matched_fixture_manifest_historical.json", "r") as f:
+        hist_manifest = json.load(f)
+        
+    for i in range(16):
+        mf = hist_manifest["fixtures"][i]
+        rf = manifest1["fixtures"][i]
+        
+        check_keys = [
+            "fixture_identity", "fixture_index", "game_index", "half_move_index",
+            "intervention_fen", "qualifying_target_squares", "target_event",
+            "legal_reply_ucis", "C_reply_ucis", "c_1", "c_2", "m_1", "m_2",
+            "M_1_ucis", "M_2_ucis", "H_1_ucis", "H_2_ucis", "observation_reply_ucis",
+            "B_strict", "required_children", "required_search_count"
+        ]
+        
+        for k in check_keys:
+            if mf[k] != rf[k]:
+                exit_error(f"IDENTITY_REPAIR_FAILURE: {k} changed for fixture {i}")
+                
+    if hist_manifest["expected_future_search_count"] != manifest1["expected_future_search_count"]:
+        exit_error("IDENTITY_REPAIR_FAILURE: expected_future_search_count changed")
+        
     with open("docs/research/t3/t3b7_matched_fixture_manifest.json", "wb") as f:
         f.write(bytes1)
     
     sha = hashlib.sha256(bytes1).hexdigest()
     print(f"Manifest SHA-256: {sha}")
+    print(f"S1 Suite Digest: {manifest1['s1_suite_digest']}")
+    print(f"Protocol SHA: {manifest1['protocol_file_sha256']}")
+    print(f"Matcher SHA: {manifest1['matcher_file_sha256']}")
+    print(f"Mathematics SHA: {manifest1['mathematics_file_sha256']}")
