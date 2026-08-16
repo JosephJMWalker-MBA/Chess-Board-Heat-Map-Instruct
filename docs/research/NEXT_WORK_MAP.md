@@ -81,7 +81,7 @@ Proved that exact ordered `future_moves` restore deterministic replay of standar
 4. ~~T3b-3 — Frozen legal-reply intervention execution~~ COMPLETE / WEAK_SUPPORT / INTERVENTION_SENSITIVITY
 5. ~~T3b-4 — Matched-Control Identifiability Feasibility Audit~~ COMPLETE / strict matcher semantically admissible
 6. T3b-5 — Strict Matchability Coverage Audit
-   *(RULE-ONLY / NO ENGINE. If M < 12, abandon strict basis. If M >= 12, basis is justified.)*
+   *(RULE-ONLY / NO ENGINE. If M_2 < 12, abandon strict basis. If M_2 >= 12, strict two-reply destination-event matching has sufficient rule-only availability to justify DESIGNING a separate matched-control protocol.)*
 
 ---
 

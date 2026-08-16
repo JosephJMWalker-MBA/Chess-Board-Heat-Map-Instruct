@@ -39,21 +39,43 @@ $P_i$
 
 No preceding White root is needed for the feasibility audit.
 
-For every legal reply $r \in R_i$, compute $B_{strict}(r \mid P_i)$.
+For each eligible sampled $P_i$, enumerate the complete legal reply universe:
+$R_i$.
 
-Partition the entire legal-reply universe into exact signature strata:
-$$S_i(b) = \{ r \in R_i : B_{strict}(r \mid P_i) = b \}$$
+For every exact destination square $s$ reached by at least one legal reply, define prospectively:
+$x_s = (s, \text{destination}, \text{ply}=1)$
 
-**Define:**
-$S_i(b) \text{ is matchable} \iff |S_i(b)| \ge 2$.
+and:
+$$C_i(s) = \{ r \in R_i : \text{destination}(r) = s \}$$
+$$N_i(s) = R_i \setminus C_i(s)$$
 
-Any reply in such a stratum has at least one legal same-origin, same-form reply to a different destination.
+No target is manually chosen.
+Every destination represented in the legal reply universe is audited.
 
-**Destinations:**
-Require distinct destinations mechanically.
-Do not choose a target square or event reply during coverage auditing.
+For each:
+$c \in C_i(s)$,
 
-## 4. Sample Positions Independently of Matchability
+define:
+$$M_i(c;s) = \{ n \in N_i(s) : B_{strict}(n \mid P_i) = B_{strict}(c \mid P_i) \}$$
+
+Note the explicit exclusion:
+$n \in N_i(s)$.
+A second move with the same destination is not a control for that destination event.
+
+## 4. Freeze strict destination-event matchability
+
+Define:
+$s \text{ is strictly matchable in } P_i \iff C_i(s) \neq \emptyset \land \forall c \in C_i(s), |M_i(c;s)| \ge 1$.
+
+This is the direct T3b-4 quantifier.
+
+Do not use:
+existence of any $B_{strict}$ stratum with cardinality $\ge 2$
+as the primary feasibility object.
+
+That quantity may still be recorded descriptively as sibling-stratum availability, but it cannot contribute to $M$.
+
+## 5. Sample Positions Independently of Matchability
 
 **Freeze exactly:**
 game_index $g = 0..255$
@@ -71,7 +93,7 @@ idx = int(hashlib.sha256(payload).hexdigest(), 16) % len(legal)
 ```
 where $p$ is the number of half-moves already played.
 
-## 5. Predetermine the Sampled Ply Before Playing the Game
+## 6. Predetermine the Sampled Ply Before Playing the Game
 
 Use:
 `T3B5_COVERAGE_PLY_V1:<g>`
@@ -95,7 +117,7 @@ and the sampled state is always nominally Black to move.
 $sample\_p$ must be determined before any board-state or matchability inspection.
 Do not shift it earlier/later because the sampled state is inconvenient.
 
-## 6. Freeze Trajectory/Sample Handling
+## 7. Freeze Trajectory/Sample Handling
 
 Begin from the standard initial position.
 Generate moves until exactly $sample\_p$ half-moves have been played.
@@ -119,7 +141,7 @@ so generated repetition history is unavailable to eligibility semantics.
 **Require:**
 `chess.__version__ == "1.11.2"`
 
-## 7. Freeze Base Eligibility
+## 8. Freeze Base Eligibility
 
 A sampled state is coverage-eligible iff:
 - valid standard chess
@@ -133,70 +155,63 @@ If not eligible, record the exact rule-only reason:
 No resampling and no replacement.
 Do not require any minimum global legal-reply count beyond legality itself.
 
-## 8. Freeze Coverage Measurements
+## 9. Freeze the Design-B event cardinality question explicitly
 
-For every eligible $P_i$, record only rule-exact quantities:
-- canonical six-field FEN
-- complete sorted legal reply UCI universe
-- reply count
-- exact $B_{strict}$ for every reply
-- all exact signature strata
-- stratum cardinalities
-- number of matchable strata
-- number of replies belonging to matchable strata
-- maximum strict-stratum cardinality
-- whether the state has $\ge 1$ matchable stratum
+Record two separate rule-only coverage counts:
 
-**Optionally record descriptive counts by:**
-- moving piece type
-- capture mode
-- stratum cardinality
-
-but these may not alter eligibility or feasibility classification.
-
-**Do not record:**
-- SAN
-- engine score
-- PV
-- check delivered by reply
-- mobility after reply
-- attack maps
-- SEE
-- material values
-- tactical labels
-- T3b-3 statistics
-
-## 9. Freeze the Operational Feasibility Criterion Before Generation
-
-Let:
-$M = \# \{ g : \text{the predetermined sampled state is eligible and contains at least one matchable strict stratum} \}$
-
-**Freeze:**
-`FEASIBLE_FOR_MATCHED_PROTOCOL_DESIGN` iff $M \ge 12$
-`NOT_FEASIBLE_UNDER_FROZEN_COVERAGE_BUDGET` iff $M < 12$
-
-The number 12 is an operational development-feasibility threshold only. It is not a population significance threshold, estimated prevalence requirement, or preregistration of the eventual experiment's sample size.
-
-It asks only whether a bounded 256-trajectory rule-only sample demonstrates at least twelve distinct trajectory-level opportunities for exact matching without relaxing $B_{strict}$.
-
-## 10. Report Coverage Descriptively
-
-Future coverage output must report:
-$256, N_{eligible}, M$
-
+$M_{\ge 1} = \# \{ g : P_i \text{ eligible and contains at least one strictly matchable destination } s \}$
 and:
-$M / 256$
-only as a deterministic development-corpus fraction.
+$M_2 = \# \{ g : P_i \text{ eligible and contains at least one strictly matchable destination } s \text{ with } |C_i(s)| = 2 \}$
 
-Also report the distribution of:
-- matchable strata per eligible state
-- matchable replies per eligible state
-- strict-stratum cardinalities
+The second count preserves the cardinality structure used by T3b-2/T3b-3.
 
-Do not attach confidence intervals, p-values, population prevalence language, or independence claims.
-The 256 trajectories are distinct deterministic trajectories, not a random population sample.
+Primary feasibility criterion must use $M_2$:
+`FEASIBLE_FOR_MATCHED_PROTOCOL_DESIGN` iff $M_2 \ge 12$
+`NOT_FEASIBLE_UNDER_FROZEN_COVERAGE_BUDGET` iff $M_2 < 12$
 
-## 11. Freeze Separation from the Later Experiment
+Preserve the already frozen threshold 12.
+$M_{\ge 1}$ is descriptive only and cannot rescue failure of $M_2$.
+
+Rationale:
+T3b-5 is auditing whether Design B can tighten the already-studied two-reply destination-class intervention without changing the subject merely because matching is sparse.
+If future research wants a singleton destination-event Design B, that requires a separate semantic/preregistration decision rather than silently deriving it from this coverage audit.
+
+## 10. Freeze destination-event measurements
+
+For every eligible sampled state record, rule-only:
+- every represented destination square
+- $C_i(s)$ reply UCIs
+- $|C_i(s)|$
+- for every $c$ in $C_i(s)$:
+    - exact $B_{strict}(c)$
+    - complete $M_i(c;s)$ control UCI set
+- whether every $c$ has $\ge 1$ control
+- destination strictly_matchable boolean
+
+Also retain the existing descriptive whole-position signature-stratum information if desired.
+
+Record per state:
+- number of represented destination events
+- number of strictly matchable destination events
+- number of strictly matchable destination events with $|C|=2$
+- has_any_strictly_matchable_destination
+- has_any_strictly_matchable_two_reply_destination
+
+No engine quantities or downstream tactical properties.
+
+## 11. Correct the aggregate definition
+
+Replace the old M everywhere with primary:
+$M = M_2$.
+
+Future output must report:
+$256, N_{eligible}, M_{\ge 1}, M_2$.
+
+Report:
+$M_{\ge 1} / 256, M_2 / 256$
+only as deterministic development-corpus fractions.
+
+## 12. Freeze Separation from the Later Experiment
 
 The T3b-5 coverage corpus is design data only.
 
@@ -208,23 +223,31 @@ Any later Design-B outcome experiment must use:
 
 No Stockfish observation may ever be added to the T3b-5 coverage artifact.
 
-## 12. Freeze No-Rescue Behavior
+## 13. Preserve no-rescue behavior
 
 If:
-$M < 12$
-then:
-Abandon $B_{strict}$ as operationally too sparse under the frozen audit. Do not remove fields, introduce a distance function, alter sampled plies, scan later positions, increase the 256-game budget, or use T3b-3 results to construct a replacement matcher.
+$M_2 < 12$
+Design B fails this frozen operational feasibility audit.
+
+Do not rescue it using:
+- $M_{\ge 1}$;
+- singleton event classes;
+- relaxed $B_{strict}$;
+- later plies;
+- more trajectories;
+- weighted matching;
+- T3b-3 outcome information.
 
 The next scientific step becomes Representation Audit unless a genuinely independent matching basis is justified without reference to outcome data.
 
 If:
-$M \ge 12$
+$M_2 \ge 12$
 then only this is earned:
 $B_{strict}$ has sufficient rule-only availability to justify designing a separate matched-control intervention protocol.
 
 This does not authorize an engine run by itself.
 
-## 13. Two-Boundary Process
+## 14. Two-Boundary Process
 
 **Require:**
 coverage protocol commit $\rightarrow$ rule-only coverage artifact + independent reconstruction commit.
