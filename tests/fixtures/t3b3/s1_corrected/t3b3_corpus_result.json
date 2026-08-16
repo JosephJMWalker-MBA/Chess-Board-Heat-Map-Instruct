@@ -1,0 +1,277 @@
+{
+  "aggregate_payload_digest": "9de532f8d70b6beadc50655f85ea20f65422fc001d144c56a8f524c0f5c3cc2d",
+  "payload": {
+    "H_0_75": 4,
+    "K": 11,
+    "canonical_suite_digest": "2eb662fbe081c82e325f41bf387c509383567b9a9f084fa7baff56e7e26cc70a",
+    "classification": "WEAK_SUPPORT",
+    "fixture_summaries": [
+      {
+        "delta_u": {
+          "decimal": 25.0,
+          "denominator": 1,
+          "numerator": 25
+        },
+        "evaluable": true,
+        "fixture_index": 0,
+        "q_u": {
+          "decimal": 0.5643678160919541,
+          "denominator": 870,
+          "numerator": 491
+        },
+        "s_u": {
+          "decimal": 0.35714285714285715,
+          "denominator": 14,
+          "numerator": 5
+        }
+      },
+      {
+        "delta_u": {
+          "decimal": 142.5,
+          "denominator": 2,
+          "numerator": 285
+        },
+        "evaluable": true,
+        "fixture_index": 1,
+        "q_u": {
+          "decimal": 0.30158730158730157,
+          "denominator": 63,
+          "numerator": 19
+        },
+        "s_u": {
+          "decimal": 0.17307692307692307,
+          "denominator": 52,
+          "numerator": 9
+        }
+      },
+      {
+        "delta_u": {
+          "decimal": 46.0,
+          "denominator": 1,
+          "numerator": 46
+        },
+        "evaluable": true,
+        "fixture_index": 2,
+        "q_u": {
+          "decimal": 0.7419354838709677,
+          "denominator": 31,
+          "numerator": 23
+        },
+        "s_u": {
+          "decimal": 0.5172413793103449,
+          "denominator": 29,
+          "numerator": 15
+        }
+      },
+      {
+        "delta_u": {
+          "decimal": -72.0,
+          "denominator": 1,
+          "numerator": -72
+        },
+        "evaluable": true,
+        "fixture_index": 3,
+        "q_u": {
+          "decimal": 0.5732574679943101,
+          "denominator": 703,
+          "numerator": 403
+        },
+        "s_u": {
+          "decimal": 0.3611111111111111,
+          "denominator": 36,
+          "numerator": 13
+        }
+      },
+      {
+        "delta_u": {
+          "decimal": -212.0,
+          "denominator": 1,
+          "numerator": -212
+        },
+        "evaluable": true,
+        "fixture_index": 4,
+        "q_u": {
+          "decimal": 0.8991935483870968,
+          "denominator": 248,
+          "numerator": 223
+        },
+        "s_u": {
+          "decimal": 0.7166666666666667,
+          "denominator": 60,
+          "numerator": 43
+        }
+      },
+      {
+        "delta_u": {
+          "decimal": -8.5,
+          "denominator": 2,
+          "numerator": -17
+        },
+        "evaluable": true,
+        "fixture_index": 5,
+        "q_u": {
+          "decimal": 0.034482758620689655,
+          "denominator": 29,
+          "numerator": 1
+        },
+        "s_u": {
+          "decimal": 0.018518518518518517,
+          "denominator": 54,
+          "numerator": 1
+        }
+      },
+      {
+        "delta_u": {
+          "decimal": 18.5,
+          "denominator": 2,
+          "numerator": 37
+        },
+        "evaluable": true,
+        "fixture_index": 6,
+        "q_u": {
+          "decimal": 0.857707509881423,
+          "denominator": 253,
+          "numerator": 217
+        },
+        "s_u": {
+          "decimal": 0.6666666666666666,
+          "denominator": 3,
+          "numerator": 2
+        }
+      },
+      {
+        "delta_u": {
+          "decimal": -24.5,
+          "denominator": 2,
+          "numerator": -49
+        },
+        "evaluable": true,
+        "fixture_index": 7,
+        "q_u": {
+          "decimal": 0.5849802371541502,
+          "denominator": 253,
+          "numerator": 148
+        },
+        "s_u": {
+          "decimal": 0.38095238095238093,
+          "denominator": 21,
+          "numerator": 8
+        }
+      },
+      {
+        "delta_u": {
+          "decimal": -51.0,
+          "denominator": 1,
+          "numerator": -51
+        },
+        "evaluable": true,
+        "fixture_index": 8,
+        "q_u": {
+          "decimal": 0.914651493598862,
+          "denominator": 703,
+          "numerator": 643
+        },
+        "s_u": {
+          "decimal": 0.7361111111111112,
+          "denominator": 72,
+          "numerator": 53
+        }
+      },
+      {
+        "delta_u": {
+          "decimal": -11.0,
+          "denominator": 1,
+          "numerator": -11
+        },
+        "evaluable": true,
+        "fixture_index": 9,
+        "q_u": {
+          "decimal": 0.16996047430830039,
+          "denominator": 253,
+          "numerator": 43
+        },
+        "s_u": {
+          "decimal": 0.09523809523809523,
+          "denominator": 21,
+          "numerator": 2
+        }
+      },
+      {
+        "delta_u": {
+          "decimal": -65.0,
+          "denominator": 1,
+          "numerator": -65
+        },
+        "evaluable": true,
+        "fixture_index": 10,
+        "q_u": {
+          "decimal": 0.8506401137980085,
+          "denominator": 703,
+          "numerator": 598
+        },
+        "s_u": {
+          "decimal": 0.6388888888888888,
+          "denominator": 36,
+          "numerator": 23
+        }
+      },
+      {
+        "delta_u": null,
+        "evaluable": false,
+        "fixture_index": 11,
+        "q_u": null,
+        "s_u": null
+      }
+    ],
+    "frozen_manifest_sha": "27321ceb4bf5c48716d836f9d4433c017be3a127e94b6d1508bd8973e0d23bc0",
+    "historical_execution_commit": "567c40232d0b4d6a7de0c68c2aebb7d0acec0876",
+    "q_suite": {
+      "decimal": 0.5849802371541502,
+      "denominator": 253,
+      "numerator": 148
+    },
+    "raw_execution_sha": "9333f9d26480f43f4d64846be498f720892d93d73da5127296e067653b476d6b",
+    "result_artifact_digests": [
+      "06ef1623b592adefaf2bf84988a839212774ee1669684664b4e461bbcdc04f58",
+      "22f1331285a1175559efdd31a21d39a15ef4a6f5a48832e41934ad42cb9084f4",
+      "302dff5d3c2e40ac4df1aacf911f93e123fa6bca621d7639a4723b1a4c4f7d19",
+      "196d19ace634bd2079ebb854bb73838ecf695ad80378daef31e5685a3b5bb71d",
+      "3c7e60f8523251e2882d494754634fc92ad6d40588abf67cbd45afe5db9b2328",
+      "27ab15762d93204f25b9253493ed4afa10db87268083f4ee7145682b3f8b688a",
+      "90d8c14132a1b702362d8a34bff60e63298f4e092af89ac1d6a6581df29e46fb",
+      "2939a5ec3d093055ff01a0d881cbd1b8bb750b880cd7b86b27759ac9dfec7eb2",
+      "a4870f863f0a1304c765cfe45dbaccf53aa45e113cd12bd2a2bdf503f126870f",
+      "477b2576bbf21dc84db6b0ec4fd9cd5eb5cc731a6d33ce8196f173c038aa89a4",
+      "b8a9a1ef55880e578facbbba1d1de9d6dd32a6931e024685bf855d7112088ddd",
+      "8395f489f9a5f1cc11e2725fd193c844a6fd5afaf0f004d97ef2c096a028b513"
+    ],
+    "result_file_shas": [
+      "d1b3435ae8c1dd567bc1401fc806c1b9076a60158a33e399920146bc07170897",
+      "187115cadeb9f2a0993944055c1f4923c2f45198f685f0533f1be92fca9a59ab",
+      "86f8cc53746e1943a49a8cc623eb13b13a29cd840101db8e4e551231ebf9d484",
+      "35f24c68c88dea1cf7cfc121653e6a309017d37b78ab432cf94d938b6f36fa63",
+      "d1d41a573b6cfdd9df370a567488afeaff7fd042be0fcd7392ec991cc2ec1a2b",
+      "168e7a92e0a48786b1dbeea9c047b6cac39e575beda8e7907dd94613cf6d6194",
+      "69caf625636f73df5ea21c5a7f394034c5ed40989aa061c875eedfc04db0ffcf",
+      "d6e3f1ad114d05488074a865eb0cdb2a0b2342474f01af6538d8f8e994c81d63",
+      "a32776e6abdc8946ed6f9784052d67ca3707ed2bacf14e72b8806dd3045b0d29",
+      "61d38a7c3a2bef0e6c41ba839f3bb107774a98f2608e781dc9a72167dbaf21e1",
+      "c4e48cbfe0bdd5f16bc4b3b0417533fb7ea4919b938f0c520337080031ebb8de",
+      "8852e98aa5b7266b92bcf20c55f9c65511e5c9201e4b0d6ae2d651ea590cdbd0"
+    ],
+    "spec_digests": [
+      "395ba2c141466331121866dd3546b1e04b3b3df17903f4930086e5b626f0bd45",
+      "4f10b37dca40ca0b931982766a5f8ef962759ff7bdd0f01819301b6e0694c8f9",
+      "3bb5da0e4a90f5da7e4db109aa6f28c15b66f57d9ed895e07a4eb1bc88482179",
+      "0b3b3152480b881b8f49bb844460abad5af020eec7ec07c461a17b6b48a7d0ab",
+      "ac113a9060040c6445822f456b545d13b19ba0ea80d43a0b8d344b1bf2df58fb",
+      "6567b14b5d88b420b45c5bce3922b5dcc078a84ffcef2592c387f35fb45f1a3b",
+      "078b40d4709ad7c0de1533c94d7de0fbbcfddefb754f5398586d88c90ce40266",
+      "acd7411806abd914c24207267645a17f7f1e5301ad7adc7f9b7b283463aa2b6a",
+      "bc892996e13f4780a5110d51f03a7368080921aa84533a96c9f323b804a06c6f",
+      "4420bd208f82cbcc1048e60f708945b3557bf2dc2bab62b1c5f7963f48e278e0",
+      "8c639132bd2c5f4178d0f9ae2c370d489a8281fba4cde8461dd71b7254b0e807",
+      "f3fbd10c8e7ed24d74052d62573626d295a74bae414f56496ca1ea5f1d54df2e"
+    ]
+  }
+}
