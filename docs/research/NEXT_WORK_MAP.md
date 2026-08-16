@@ -64,18 +64,24 @@ Proved that exact ordered `future_moves` restore deterministic replay of standar
 - **T3a-3**: INCONCLUSIVE — zero realized support
 - **T3a-4**: INCONCLUSIVE — provenance; conditional numeric result strongly **FALSIFIED**
 
-**T3a Conclusion**: $E_i(x;J,\theta)$ has earned status as producer-conditioned observational evidence, but $E_i$ has not earned status as a monotonic primitive of objective consequence. Six of the seven informative T3a-4 $P_f$'s ran opposite the preregistered direction. Even with the provenance ceiling, that is enough reason to stop trying to promote single-PV realization through more T3a experiments. No additional T3a experiment may be introduced merely to obtain a favorable single-PV realization result.
+**T3a Conclusion**: $E_i(x;\mathcal{J},\theta)$ has earned status as producer-conditioned observational evidence, but $E_i$ has not earned status as a monotonic primitive of objective consequence. Six of the seven informative T3a-4 $P_f$'s ran opposite the preregistered direction. Even with the provenance ceiling, that is enough reason to stop trying to promote single-PV realization through more T3a experiments. No additional T3a experiment may be introduced merely to obtain a favorable single-PV realization result.
 
 ---
 
-## Active Phase: T3b Legal Matched Intervention
+## Active Phase: T3b Legal Reply Intervention
 
 **Status: ACTIVE P1**
 
-### Next Scientific Step: T3b-0
+### Next Scientific Step: T3b-2
 
 **T3b-0 — Intervention Semantics Contract**
-Define what an intervention actually is before touching the engine again. Not because intervention is expected to rescue T3a, but because T3a exposed the confounding between which future the producer selects and what consequence a legal future carries. See `docs/research/t3/T3B0_INTERVENTION_CONTRACT.md`.
+**Status: COMPLETE**
+
+**T3b-1 — Comparator Design / Identifiability**
+**Status: COMPLETE**
+
+**T3b-2 — Rule-Only Fixture and Statistic Preregistration**
+*(Keep actual engine execution gated after T3b-2.)*
 
 ---
 
@@ -110,25 +116,27 @@ Remain downstream and outside objective Heat.
 3. **DONE** — S1 experiment spine
 4. **CLOSED** — T2b ray/blocker representation inquiry; no privileged relation basis earned
 5. **CLOSED** — T3a consequence-association (T3a-1, T3a-2, T3a-3, T3a-4)
-6. **NEXT P1** — T3b-0 Intervention Semantics Contract
-7. **GATED P2** — T3b legal matched intervention experiment
-8. **P2** — Representation Audit
-9. **P2** — Projection Audit
-10. **P2** — Multi-Instrument / T1.12 robustness
-11. **P3** — Pathways / Evidence Fusion / Amplitude
-12. **DEFER** — Human Navigation / Teacher / Explanation
+6. **DONE** — T3b-0 Intervention Semantics Contract
+7. **DONE** — T3b-1 Comparator Design / Identifiability
+8. **NEXT P1** — T3b-2 Rule-Only Fixture and Statistic Preregistration
+9. **GATED P2** — T3b legal reply intervention experiment
+10. **P2** — Representation Audit
+11. **P2** — Projection Audit
+12. **P2** — Multi-Instrument / T1.12 robustness
+13. **P3** — Pathways / Evidence Fusion / Amplitude
+14. **DEFER** — Human Navigation / Teacher / Explanation
 
 ---
 
 ## Active-Phase Constraints
 
-The following freeze rules apply during the active T3a research track:
+The following freeze rules apply during the active T3 research phase:
 
 - No new Heat scalar;
 - No M8 or ShapeSelectivity retuning;
 - No broad relational graph architecture;
 - No relation-rescue experiments unless new evidence independently motivates them;
-- No intervention or causal language before T3b;
+- No causal language beyond the evidence level actually earned; T3b intervention sensitivity is not causal identification;
 - No T1.12 execution yet;
 - No human-policy quantity entering objective Heat;
 - Negative, falsified, and inconclusive experiments remain preserved rather than tuned around.

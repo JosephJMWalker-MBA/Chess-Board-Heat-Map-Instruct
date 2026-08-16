@@ -93,21 +93,21 @@ Compare consequence distributions for $C_i(x)$ versus $N_i(x)$.
 
 **B. Deterministically matched legal reply**
 Choose a non-event reply through a preregistered rule-exact matching metric.
-- **What it could earn**: Tighter control over non-target move differences, earning a more specific causal attribution.
-- **What it cannot earn**: Objective causal effect free from metric bias.
-- **Principal confound/dependency**: The matching metric itself may inject ontology assumptions and may fail to find valid controls.
+- **What it could earn**: tighter control of known non-target reply differences and potentially more specific intervention-sensitivity evidence.
+- **What it cannot earn**: isolated event-specific causal attribution merely because a deterministic matching rule was used.
+- **Principal confound/dependency**: the matching basis can encode ontology assumptions, omit relevant differences, and may fail to produce a valid comparator.
 
 **C. Instrument forcing (searchmoves)**
 Explicitly classify as an instrument intervention.
-- **What it could earn**: Characterization of search behavior under restricted move consideration.
-- **What it cannot earn**: Chess-state intervention sensitivity (it does not evaluate a true, freely produced legal chess state).
-- **Principal confound/dependency**: Intervenes on the engine's attention mechanism rather than the chess board state itself.
+- **What it could earn**: sensitivity of search/evaluation behavior to instrument-side candidate restriction.
+- **What it cannot earn**: chess-state intervention sensitivity from the forcing operation alone.
+- **Principal confound/dependency**: the manipulation acts on the engine's search process/candidate universe rather than independently applying a legal reply to produce $P_{i,r}$.
 
 **D. Artificial board perturbation**
 Explicitly defer pending a separate legality/semantic-validity contract.
-- **What it could earn**: Plausible counterfactual tests for states that cannot be reached legally.
-- **What it cannot earn**: Meaningful legal chess consequence (creates invalid or semantically undefined positions).
-- **Principal confound/dependency**: Relies on the engine's behavior in non-legal or unreachable game states.
+- **What it could earn**: perturbation sensitivity under a separately defined semantic-validity protocol.
+- **What it cannot earn**: the guarantees of a rule-exact legal-move intervention merely because the perturbed FEN is syntactically or positionally valid.
+- **Principal confound/dependency**: artificial states may be unreachable, history-incompatible, or differ from the original position in multiple uncontrolled ways.
 
 ---
 
