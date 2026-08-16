@@ -105,16 +105,22 @@ def evaluate_t3a2(branches):
     }
 
 def test_t3a2_branch_conditioned_association():
-    with open("tests/fixtures/t3a2_fixture.json", "r") as f:
+    fixture_path = "tests/fixtures/t3a2_fixture.json"
+    
+    # Preserve observation invariant
+    with open(fixture_path, "rb") as f:
+        raw_fixture_bytes = f.read()
+    raw_fixture_digest = hashlib.sha256(raw_fixture_bytes).hexdigest()
+    
+    with open(fixture_path, "r") as f:
         fixture = json.load(f)
         
     fen = fixture["fen"]
     preregistration_commit = fixture["preregistration_commit"]
     
-    # Assert fixture values against preregistration invariants
+    # 1. Exact producer gate
     assert fen == "4k3/8/1b6/8/3R4/8/8/4K3 w - - 0 1"
-    assert fixture["engine_name"].startswith("Stockfish")
-    assert "18" in fixture["engine_name"]
+    assert fixture["engine_name"] == "Stockfish 18", "Engine identity must be exactly Stockfish 18"
     assert fixture["engine_options"] == {"Threads": 1, "Hash": 16}
     assert fixture["search_budget_type"] == "nodes"
     assert fixture["search_budget_value"] == 100000
@@ -124,22 +130,24 @@ def test_t3a2_branch_conditioned_association():
     move_observations = [MoveObservation(**obs) for obs in fixture["observations"]]
     scores_dict = {obs.uci: obs.score for obs in move_observations}
     
-    # 4. Compute typed regret exactly once from the complete root universe
+    # Compute typed regret exactly once from the complete root universe
     regrets_dict = compute_regrets(scores_dict)
     
     for obs in move_observations:
         if obs.uci in regrets_dict:
             obs.regret = regrets_dict[obs.uci]
 
+    # 2. Reconstruct AnalysisRecord with exact observed metadata
     record = AnalysisRecord(
         fen=fen,
         root_side="white",
-        comparison_perspective="white",
-        engine_name="stockfish",
-        search_budget_type="nodes",
-        search_budget_value=100000,
-        candidate_policy={},
-        baseline_observation=Score(type="cp", value=0, perspective="white"),
+        comparison_perspective=fixture["comparison_perspective"],
+        engine_name=fixture["engine_name"],
+        engine_options=fixture["engine_options"],
+        search_budget_type=fixture["search_budget_type"],
+        search_budget_value=fixture["search_budget_value"],
+        candidate_policy=fixture["candidate_policy"],
+        baseline_observation=Score(**fixture["baseline_observation"]),
         move_observations=move_observations
     )
 
@@ -150,11 +158,11 @@ def test_t3a2_branch_conditioned_association():
     legal_ucis = {m.uci() for m in board.legal_moves}
     obs_ucis = {b.root_uci for b in branches}
     
-    # 3. Mechanical provenance gates before statistics
+    # Mechanical provenance gates before statistics
     assert legal_ucis == obs_ucis, "Missing legal roots in observations"
     assert len(obs_ucis) == 19, "Legal root count must be exactly 19"
 
-    # 10. Mechanical permutation invariance
+    # Mechanical permutation invariance
     res_orig = evaluate_t3a2(branches)
     res_rev = evaluate_t3a2(branches[::-1])
     res_sort = evaluate_t3a2(sorted(branches, key=lambda b: b.root_uci))
@@ -163,59 +171,109 @@ def test_t3a2_branch_conditioned_association():
     
     res = res_orig
     
-    # Save the result artifact
-    with open("tests/fixtures/t3a2_fixture.json", "rb") as f:
-        fixture_bytes = f.read()
-    fixture_digest = hashlib.sha256(fixture_bytes).hexdigest()
+    from chessheat.semantics import SemanticSignatureV1
+    canonical_sig = SemanticSignatureV1.create_canonical()
+    s0_digest = canonical_sig.signature_hash()
     
-    # Ensure S0 digest exists
-    try:
-        from test_semantics_audit import current_semantic_digest
-        s0_digest = current_semantic_digest()
-    except Exception:
-        s0_digest = "S0_DIGEST_UNAVAILABLE"
-        
-    result_payload = {
-        "suite_identity": "SuiteManifest(kind=MECHANISM_STRESS)",
-        "preregistration_commit": preregistration_commit,
+    # 4. Construct an actual SuiteManifest
+    from chessheat.experiment import SuiteManifest, SuiteKind
+    suite = SuiteManifest(
+        suite_id="t3a2_suite",
+        kind=SuiteKind.MECHANISM_STRESS,
+        fixtures={
+            "t3a2_immediate_capture": raw_fixture_digest
+        }
+    )
+    
+    # 5. Construct the exact SufficientPosition
+    from chessheat.semantics import SufficientPosition
+    sp = SufficientPosition(
+        board_arrangement_fen="4k3/8/1b6/8/3R4/8/8/4K3",
+        side_to_move="w",
+        castling_rights="-",
+        en_passant_square=None,
+        halfmove_clock=0,
+        fullmove_number=1,
+        history_available=False,
+        history_identity=None,
+        variant="standard"
+    )
+    
+    # 6. Construct a real ExperimentSpec
+    from chessheat.experiment import ExperimentSpec
+    spec = ExperimentSpec(
+        semantic_signature_version=canonical_sig.version,
+        semantic_signature_digest=s0_digest,
+        suite_identity="t3a2_suite",
+        suite_digest=suite.suite_digest(),
+        fixture_identity="t3a2_immediate_capture",
+        fixture_digest=raw_fixture_digest,
+        sufficient_position=sp,
+        candidate_policy={},
+        producer_identity=fixture["engine_name"],
+        instrument_config=fixture["engine_options"],
+        budget_config={"type": fixture["search_budget_type"], "value": fixture["search_budget_value"]},
+        line_source="pv",
+        hypothesis_identifier="T3a-2",
+        comparison_perspective="white"
+    )
+    
+    # 7. Preserve fully typed scores and regrets (including perspective)
+    fully_typed_scores = {k: {"type": v.type, "value": v.value, "perspective": v.perspective} for k,v in scores_dict.items()}
+    fully_typed_regrets = {k: {"type": v.type, "value": v.value, "perspective": v.perspective} for k,v in regrets_dict.items()}
+
+    # 8. Create a real immutable ExperimentResult
+    payload = {
         "classification": res["classification"],
         "failure_reason": res["failure_reason"],
+        "preregistration_commit": preregistration_commit,
         "fen": fen,
         "event": {"square": "d4", "role": "capture", "ply": 2},
         "expected_direction": "BAD / HIGHER_REGRET",
-        "engine_identity": fixture["engine_name"],
-        "engine_options": fixture["engine_options"],
-        "search_budget": {"type": "nodes", "value": 100000},
-        "candidate_policy": {},
-        "line_source": "pv",
         "legal_root_count": 19,
-        "typed_scores": {k: {"type": v.type, "value": v.value} for k,v in scores_dict.items()},
-        "typed_regrets": res["typed_root_regrets"],
         "evaluable_event_present_roots": res["evaluable_event_present_roots"],
         "evaluable_event_absent_roots": res["evaluable_event_absent_roots"],
         "unevaluable_roots": res["unevaluable_roots"],
+        "typed_scores": fully_typed_scores,
+        "typed_regrets": fully_typed_regrets,
         "D": res["D"],
         "M": res["M"],
-        "aggregate_membership_count": res["A_x"],
-        "fixture_digest": fixture_digest,
-        "semantic_signature_digest": s0_digest
+        "A_x": res["A_x"],
+        "fixture_digest": raw_fixture_digest,
+        "semantic_signature_digest": s0_digest,
+        "suite_identity": "t3a2_suite",
+        "suite_digest": suite.suite_digest(),
+        "spec_digest": spec.spec_digest(),
+        "exact_producer": fixture["engine_name"],
+        "exact_options": fixture["engine_options"],
+        "exact_budget": {"type": fixture["search_budget_type"], "value": fixture["search_budget_value"]}
     }
     
+    from chessheat.experiment import ExperimentResult
+    result_obj = ExperimentResult.create(spec_digest=spec.spec_digest(), data=payload)
+    
     with open("tests/fixtures/t3a2_result.json", "w") as f:
-        json.dump(result_payload, f, indent=2)
+        json.dump(result_obj.model_dump(mode="json"), f, indent=2)
         
-    # The actual result logic doesn't assert a specific classification in the test itself
-    # because the classification is determined by the data. The experiment result is preserved.
-    # The test passes if all provenance and constraints held, and it didn't crash.
-    print(f"\n[T3a-2 Execution Result]")
-    print(f"Classification: {res['classification']}")
-    if res['failure_reason']:
-        print(f"Failure Reason: {res['failure_reason']}")
-    else:
-        print(f"|X=1| = {len(res['evaluable_event_present_roots'])}")
-        print(f"|X=0| = {len(res['evaluable_event_absent_roots'])}")
-        print(f"D = {res['D']}")
-        print(f"M = {res['M']}")
-        print(f"A(x) = {res['A_x']}")
+    # 9. Mechanical reload/integrity test
+    with open("tests/fixtures/t3a2_result.json", "r") as f:
+        serialized_data = json.load(f)
         
-    assert True
+    loaded_result = ExperimentResult(**serialized_data)
+    assert loaded_result.spec_digest == spec.spec_digest()
+    assert loaded_result.data["classification"] == "SUPPORTED"
+    assert loaded_result.data["D"] == 27.0
+    assert loaded_result.data["M"] == 3
+    assert loaded_result.data["A_x"] == 5
+    
+    # 10. Preserve the observation
+    with open(fixture_path, "rb") as f:
+        final_fixture_bytes = f.read()
+    final_fixture_digest = hashlib.sha256(final_fixture_bytes).hexdigest()
+    assert raw_fixture_digest == final_fixture_digest, "Fixture was illegally modified"
+    
+    print(f"Classification: {loaded_result.data['classification']}")
+    print(f"Artifact Digest: {loaded_result.artifact_digest}")
+    print(f"Spec Digest: {spec.spec_digest()}")
+    print(f"S0 Digest: {s0_digest}")
+    print(f"Raw Fixture SHA unchanged: {raw_fixture_digest == final_fixture_digest}")
