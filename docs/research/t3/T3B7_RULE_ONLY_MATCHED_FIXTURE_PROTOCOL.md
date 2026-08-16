@@ -21,6 +21,13 @@
 Generate future intervention states directly.
 The experimental state is $P_i$, a Black-to-move state. Do not introduce a preceding White root merely for historical symmetry with T3b-2.
 
+T3b-7 is an independently generated Design-B corpus. Its fixture-generation architecture differs from T3b-2/T3b-3 because it samples intervention states $P_i$ directly rather than deriving them through enumerated White roots.
+
+Therefore freeze:
+A future difference between T3b-3 and T3b-7 classifications must not be attributed solely to the comparator change. T3b-7 independently tests the matched Design-B estimand under its own preregistered corpus.
+
+This does not alter either experiment.
+
 Use new domain:
 `T3B7_MATCHED_V1:<g>:<p>`
 with:
@@ -59,41 +66,64 @@ No repetition/history claim. Future S1 state uses:
 - `history_available = false`
 - `history_identity = null`
 
-Enumerate the complete Black legal reply universe $R_i$.
+At every scanned $P_i$, perform these steps in exactly this order:
 
+### A. Rule-only event discovery
+
+Enumerate the complete Black legal reply universe $R_i$.
 For every represented destination square $s$, define:
 $$C_i(s) = \{r \in R_i : \text{destination}(r) = s\}$$
 
-A candidate event qualifies only if:
-$|C_i(s)| = 2$
-the two event replies have distinct origin squares, and neither event reply is a promotion.
+Construct all destination squares satisfying:
+- $|C_i(s)| = 2$
+- event replies have distinct origins
+- neither event reply is a promotion
+- $m_1 \ge 2$
+- $m_2 \ge 2$
 
-Sort the two event replies by ASCII UCI and call them $c_1, c_2$.
+using the frozen $B_{strict}$.
 
-Compute the already-frozen:
-$B_{strict}$
-and:
-$$M_i(c_j; s) = \{n \notin C_i(s) : B_{strict}(n) = B_{strict}(c_j)\}$$
+Do not apply historical exposure, prior-design-state exclusion, or accepted-suite uniqueness while determining this candidate-square set.
 
-Retain all controls. Do not cap, sample, rank, or choose among them.
+### B. Target freeze
 
-Require the T3b-6 calibration-resolution condition prospectively:
-$|M_i(c_1; s)| \ge 2 \land |M_i(c_2; s)| \ge 2$
+If the rule-only candidate set is nonempty:
 
-This is fixture eligibility, not a modification of $B_{strict}$.
+`target_square = min(candidate_squares)`
 
-If multiple destination squares qualify at one scanned $P_i$, choose exactly the ASCII-lexicographically smallest square name.
-No engine, tactical, material-value, checking, mobility, SEE, or outcome-based tie-break.
+using ASCII lexicographic square names.
 
-For the selected event define:
-$$H_j = \{c_j\} \cup M_i(c_j; s)$$
+Once chosen, this target is final for that scanned $P_i$.
 
-Require mechanically that $H_1 \cap H_2 = \emptyset$; distinct origins plus origin-bearing $B_{strict}$ should imply this, but verify it rather than assume it.
+Construct its $C, c_1, c_2, M_1, M_2, H_1, H_2, O_i$ and required child FENs.
 
-Future engine observation universe for the fixture is exactly:
-$$O_i = H_1 \cup H_2$$
+### C. Identity gates
 
-Do not evaluate unrelated replies merely because they belong to $R_i$.
+Only after target selection apply:
+- prior engine-exposure exclusion;
+- prior-design-state exclusion;
+- accepted-suite $P_i$ uniqueness;
+- accepted-suite child uniqueness.
+
+If the selected target fails any identity gate:
+reject the entire scanned $P_i$ and continue to the next odd $p$ in the same trajectory.
+
+Do not fall back to the second-smallest qualifying destination at that same state.
+
+Prior-data identities may exclude a prospectively selected state, but may not choose among otherwise qualifying event identities within that state.
+
+### D. Distinguish invariant failures from eligibility failures
+
+Under frozen semantics, distinct event origins plus origin-bearing $B_{strict}$ imply $H_1 \cap H_2 = \emptyset$.
+
+Still verify this mechanically.
+
+If it fails:
+`MATCHER_DISJOINTNESS_INVARIANT_FAILURE`
+
+Abort manifest generation rather than treating the state as merely ineligible or trying another destination.
+
+Likewise, malformed legal-reply identity, impossible $B_{strict}$ field consistency, `python-chess` version mismatch, or noncanonical child reconstruction is a global generation/integrity failure—not a reason to skip to another event.
 
 For every $r \in O_i$, materialize and persist exact:
 $P_{i,r} = \text{ApplyReply}(P_i, r)$
@@ -103,28 +133,86 @@ Retain terminal children; do not replace a fixture because a required child is t
 
 ## 5. Prior-Data Separation
 
-Prior-data separation must be identity-only.
+### Exact prior-engine-exposure extraction
 
-Reconstruct the frozen historical T3 engine-exposure set defined by the T3b-2 protocol and require its previously frozen 414-state digest:
-`a4342f713a22ccc3c4790fcc220136b2f78f16e5f014d7a195f26d6fd8842476`
+Preserve the historical pre-T3b-3 exposure basis exactly as frozen by T3b-2:
+- exact 15 T3a source files;
+- exact source SHA-256 values;
+- exact field extraction rules;
+- canonicalization with:
+```python
+chess.Board(fen).fen(
+    shredder=False,
+    en_passant="fen",
+)
+```
 
-Then augment prior engine exposure with every child FEN directly evaluated in immutable T3b-3 raw execution:
-SHA = `9333f9d26480f43f4d64846be498f720892d93d73da5127296e067653b476d6b`
-Do not inspect the corresponding scores while constructing this set.
+Require:
+- unique canonical count = 414
+- digest = `a4342f713a22ccc3c4790fcc220136b2f78f16e5f014d7a195f26d6fd8842476`
 
-Separately construct a prior-design-state exclusion set containing:
-- every T3b-2 intervention-state $P_i$ from the frozen manifest;
-- every non-null sampled FEN from the frozen T3b-5 coverage artifact.
+No additional historical source may enter that frozen component.
 
-This exclusion is based on identity only.
+Augment it from immutable T3b-3 raw execution:
+`tests/fixtures/t3b3/t3b3_raw_execution.json`
+SHA-256 = `9333f9d26480f43f4d64846be498f720892d93d73da5127296e067653b476d6b`
 
-Reject a candidate if:
-- its $P_i$ occurs in either prior-exposure or prior-design-state set; or
-- any required future observed child $P_{i,r}, r \in O_i$ occurs in either set.
+Extract only:
+`fixtures[*].observed_replies[*].child_fen`
 
-Thus no T3b-5 sampled FEN becomes either a Design-B fixture or a future engine-observed matched child.
+Require mechanically:
+- actual_search_count = 362
+- total extracted observed child records = 362
 
-Do not inspect T3b-5 matchability counts, event identities, or FEN contents for any purpose other than exact identity exclusion.
+For each fixture require:
+`sorted(observed_replies[*].uci) == sorted(legal_reply_ucis)`
+
+Canonicalize only the extracted `child_fen`.
+
+Do not read or use:
+outcome, type, value, score, classification, or S/Q/Delta for fixture selection.
+
+Persist in the future manifest:
+- `pre_t3b3_engine_exposure_count`
+- `pre_t3b3_engine_exposure_digest`
+- `t3b3_observed_child_raw_count`
+- `t3b3_observed_child_unique_count`
+- `t3b3_observed_child_digest`
+- `combined_prior_engine_exposure_unique_count`
+- `combined_prior_engine_exposure_digest`
+
+Define each digest as SHA-256 of:
+`("\n".join(sorted(canonical_fens)) + "\n").encode("utf-8")`
+
+### Exact prior-design-state extraction
+
+From frozen T3b-2 manifest:
+`docs/research/t3/t3b2_fixture_manifest.json`
+SHA-256 = `27321ceb4bf5c48716d836f9d4433c017be3a127e94b6d1508bd8973e0d23bc0`
+
+extract only:
+`fixtures[*].intervention_fen`
+
+Require exactly 12 records.
+
+From frozen T3b-5 coverage artifact:
+`docs/research/t3/t3b5_coverage_artifact.json`
+SHA-256 = `642006581ce870f0ab0eb4fea6ddeadb07b9796b653bdc7afefa3e09492ecceb`
+
+extract only:
+`trajectory_records[*].sampled_fen`
+
+where the key exists and value is non-null.
+
+Require:
+- trajectory_count = 256
+- TERMINATED_BEFORE_SAMPLE count = 3
+- extracted sampled_fen count = 253
+
+Do not use:
+destination_events, replies, signature_strata, strictly_matchable*, M_2, matchability counts, or descriptive distributions in T3b-7 selection.
+
+Canonicalize the extracted FEN strings and persist separate plus combined prior-design-state counts/digests in the future manifest.
 
 ## 6. Suite Construction
 
@@ -145,6 +233,8 @@ If $g=9999$ is exhausted first:
 and no engine may be invoked.
 
 Do not enlarge the domain, reduce $m_j$, relax the matcher, permit singleton controls, change target selection, or reuse T3b-5 positions as rescue.
+
+Do not use Python `assert` for semantic/integrity gates in the future generator; preregister explicit runtime failures with stable failure codes.
 
 ## 7. Freeze Future Evaluability
 
