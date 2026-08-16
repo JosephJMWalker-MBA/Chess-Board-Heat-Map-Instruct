@@ -72,7 +72,7 @@ Proved that exact ordered `future_moves` restore deterministic replay of standar
 
 **Phase:** T3b Legal Reply Intervention
 **Status:** CLOSED / FALSIFIED
-**Next Scientific Step:** Spatial Attribution Axiom Preflight (Next Candidate / planning only)
+**Next Scientific Step:** Attribution Validation Target Preflight (Next Candidate / planning only)
 
 ## T3b Queue
 
@@ -103,10 +103,16 @@ SPATIAL_ATTRIBUTION_NOT_IDENTIFIED_BY_CURRENT_AXIOMS
 SPATIAL_CONSEQUENCE_OBJECT_REQUIRES_EXPLICIT_ATTRIBUTION_AXIOMS
 
 ### Spatial Attribution Axiom Preflight
+**Status: COMPLETE / CLOSED**
+
+**Earned conclusion:**
+SPATIAL_OWNERSHIP_IS_CONVENTIONAL_NOT_IDENTIFIED
+
+### Attribution Validation Target Preflight
 **Priority: P2 (Next Candidate / PLANNING ONLY)**
 
 **Purpose:**
-What additional ownership/responsibility assumptions could distinguish admissible spatial attribution operators, and which of those assumptions are semantic definitions versus empirically falsifiable claims?
+Which independent target Y could compare spatial attribution operators for empirical utility without defining spatial ownership by construction?
 
 ### Representation Audit
 **Priority: PARKED P2 / NOT YET EARNED**
@@ -148,12 +154,13 @@ Remain downstream and outside objective Heat.
 14. **CLOSED** — T3b-8 Acquisition
 15. **CLOSED** — T3b-9 Matched Analysis (FALSIFIED)
 16. **CLOSED** — Spatial Consequence Object Preflight
-17. **NEXT CANDIDATE P2** — Spatial Attribution Axiom Preflight
-18. **PARKED P2** — Representation Audit (NOT YET EARNED)
-19. **PARKED P2** — Projection Audit (GATED)
-20. **P2** — Multi-Instrument / T1.12 robustness
-21. **P3** — Pathways / Evidence Fusion / Amplitude
-22. **DEFER** — Human Navigation / Teacher / Explanation
+17. **CLOSED** — Spatial Attribution Axiom Preflight
+18. **NEXT CANDIDATE P2** — Attribution Validation Target Preflight
+19. **PARKED P2** — Representation Audit (NOT YET EARNED)
+20. **PARKED P2** — Projection Audit (GATED)
+21. **P2** — Multi-Instrument / T1.12 robustness
+22. **P3** — Pathways / Evidence Fusion / Amplitude
+23. **DEFER** — Human Navigation / Teacher / Explanation
 
 ---
 

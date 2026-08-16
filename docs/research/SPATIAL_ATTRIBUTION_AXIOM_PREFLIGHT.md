@@ -93,7 +93,7 @@ Conversely, strong predictive performance does not prove:
 - **Ownership identifiability:** NOT IDENTIFIED / CONVENTIONAL
 - **Empirical utility test:** Held-out consequence discrimination.
 - **Claim ceiling:** Intervention-sensitivity map under an explicitly declared legal-intervention set and weighting distribution.
-- **Classification:** EMPIRICAL HYPOTHESIS.
+- **Classification:** ATTRIBUTION CONVENTION (plus EMPIRICAL HYPOTHESIS only for separately stated intervention-sensitivity or predictive-utility claims).
 
 ### F. Coalition/Value-Allocation Ownership (Shapley)
 - **Assigns ownership to:** Square/feature coalitions based on marginal contribution.
