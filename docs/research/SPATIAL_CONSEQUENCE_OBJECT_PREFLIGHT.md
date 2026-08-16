@@ -109,7 +109,7 @@ rather than a single normalized Heat vector.
 
 Do the proposed axioms uniquely identify a spatial attribution operator?
 
-The theorem does not require ChessHeat to have already earned a universal scalar amplitude. It is conditional: even granting any scientifically valid supplied nonnegative consequence magnitude $a$, the currently defensible spatial axioms do not uniquely determine where that magnitude should be assigned.
+The theorem does not require ChessHeat to have already earned a universal scalar amplitude. It is conditional: even granting any scientifically valid supplied positive consequence magnitude $a > 0$, the currently defensible spatial axioms do not uniquely determine where that magnitude should be assigned.
 
 Use one abstract legal-transition comparison:
 $$x=(P,m,n,C)$$
@@ -150,7 +150,9 @@ Therefore:
 $$\mu_D \neq \mu_T$$
 
 **Conditional non-identifiability result.** 
-Given a fixed legal-alternative comparison subject and any supplied nonnegative consequence magnitude $a$, the currently adopted attribution-operator axioms—even strengthened by conservation—do not uniquely identify a square attribution. The explicit operators $\mu_D$ and $\mu_T$ satisfy those axioms but differ on the same comparison.
+Given a fixed legal-alternative comparison subject and any supplied positive consequence magnitude $a > 0$, the currently adopted attribution-operator axioms—even strengthened by conservation—do not uniquely identify a square attribution. The explicit operators $\mu_D$ and $\mu_T$ satisfy those axioms but differ on the same comparison.
+
+At $a=0$, the zero axiom intentionally collapses both operators to the all-zero attribution, so $\mu_D = \mu_T = 0$ on that boundary. This does not restore operator uniqueness: uniqueness would require the admissible operators to agree on every admissible input, while $\mu_D$ and $\mu_T$ differ for the constructed comparison at every $a>0$.
 
 **SPATIAL_ATTRIBUTION_NOT_IDENTIFIED_BY_CURRENT_AXIOMS**
 
