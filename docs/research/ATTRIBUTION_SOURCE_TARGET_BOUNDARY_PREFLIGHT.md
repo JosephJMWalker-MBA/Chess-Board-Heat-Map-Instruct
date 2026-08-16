@@ -12,127 +12,142 @@ where:
 
 *(Do not assume $u$ is final).*
 
-## 2. Defining the Source Bundle
+## 2. Actual Source-Bundle Ledger
 
-Let $X_u$ be the exact information available before target acquisition. We audit candidate source bundles:
+Let $X_u$ be the exact information available before target acquisition. 
 
-**X0 — Rule-only**
-- $P$
-- legal $r$ identity
-- legal $q$ identity
-- rule-derived move/state geometry
-- provenance
-- *(No consequence estimate for $r$ or $q$)*
+| Property | X0 (Rule-only) | X1 (Source-instrument comparison) | X2 (Source branch evidence) |
+|---|---|---|---|
+| **Can $G_{\mu_D}$ be instantiated?** | Yes | Yes | Yes |
+| **Can $G_{\mu_T}$ be instantiated?** | Yes | Yes | Yes |
+| **Can consequence-weighted $M_{\mu_D}$ be instantiated?** | No | Yes (subject to typed weighting semantics) | Yes |
+| **Can consequence-weighted $M_{\mu_T}$ be instantiated?** | No | Yes (subject to typed weighting semantics) | Yes |
+| **$q$ source outcome known?** | No | Yes (under $J_X, \theta_X$) | Yes |
+| **Target $Y$ outcome withheld?** | Yes | Yes | Yes |
+| **Producer dependence** | None | Source instrument ($J_X$) | Source instrument ($J_X$) |
+| **Information entering representation** | Move/state geometry, provenance | X0 + typed source observations for $r$ and $q$ | X1 + branch evidence |
+| **Information withheld** | Any source/target evaluation | Target evaluations ($J_Y, \theta_Y$) | Target evaluations ($J_Y, \theta_Y$) |
+| **Strongest claim ceiling** | Geometry/support representation utility | Source-score-weighted representation utility | Branch-conditioned source-score utility |
+| **Principal leakage/confound** | Reference policy bias | Source/target conflation | Overfitting to source branch depth |
 
-**X1 — Source-instrument comparison**
-- $X_0$
-- $+$ typed source observation for $r$
-- $+$ typed source observation for $q$ under frozen $J_X, \theta_X$
-
-**X2 — Source branch evidence**
-- $X_1$
-- $+$ frozen branch-preserved source evidence
-
-*For each:* Can $\mu_D$ and $\mu_T$ actually be instantiated? What information enters the spatial map? What information is withheld for $Y$? Is $q$'s source outcome known? What producer dependence is introduced? What claim could the resulting representation earn?
+X2 adds branch evidence but must not be assumed superior merely because it is richer.
 
 ## 3. Defining the Source Comparison Separately from Objective $V$
 
-If source observations are used, we introduce $O_X(r)$ and $O_X(q)$ as typed observations under $\hat{V}_{J_X, \theta_X}$.
+We introduce $O_X(r)$ and $O_X(q)$ as typed observations under $\hat{V}_{J_X, \theta_X}$.
 
 We define a source comparison object abstractly:
 $$C_X(P; r, q)$$
-We do not assume it is a scalar. It may preserve CP, mate, WDL, tie/order, perspective, and provenance exactly as typed.
+We do not assume it is a scalar. It preserves CP, mate, WDL, tie/order, perspective, and provenance exactly as typed.
 - **No mate-to-CP coercion.**
 - **No assertion that $C_X = C_V$.**
 
-## 4. The Amplitude Problem
+## 4. The Amplitude Problem and Magnitude Statuses
 
-The existing non-identifiability construction used a supplied symbolic $a > 0$. A future consequence-weighted representation requires some declared experimental source magnitude $a_X(P; r, q)$.
+We explicitly separate three magnitude statuses:
 
-We analyze candidate treatments:
+**A. Unit mass**
+$$a_X = 1$$
+This is an admissible geometry/support experimental convention. It does not encode consequence magnitude.
 
-**A. Constant unit mass ($a_X = 1$)**
-Permits support/geometry comparison but discards consequence magnitude.
-- *Explicit ceiling:* geometry/support representation utility only.
-- *Never call it consequence-weighted Heat.*
+**B. CP-only source-score magnitude**
+For CP/CP source observations under one frozen perspective/instrument:
+$$a_X^{CP} = |\Delta CP_X|$$
+This is classified as a mathematically defined, instrument-conditioned, task-local source-score magnitude. It is **not** an objective consequence amplitude or universal Heat amplitude. It is admissible for a future CP-only source-score-weighted representation study, provided prospective CP-only evaluability semantics are required and no replacement/tuning occurs around mate cases. Do not call this production Heat.
 
-**B. CP-only source magnitude ($a_X = |\Delta CP_X|$)**
-For source comparisons where both observations are CP-typed. We analyze whether this is legitimate as a task-local CP-only experimental quantity, while explicitly denying that it is a universal amplitude or a mate conversion. Mate/WDL cases would require exclusion or separate typed treatment—not conversion.
+**C. Universal cross-typed consequence amplitude**
+CP/mate/WDL scalarization is **NOT IDENTIFIED / NOT EARNED**. No fake conversion is permitted.
 
-**C. Typed multi-channel source signal**
-Preserve CP/mate/WDL/order as separate channels rather than forcing one scalar conserved mass. Ask whether this constitutes the same $\mu_D$/$\mu_T$ operators or defines a materially new representation family.
+## 5. Typed Multi-Channel Option
 
-**D. New universal scalarization**
-- *Status:* **NOT CURRENTLY EARNED** (if it requires inventing a CP/mate/WDL scalar merely to make the experiment convenient).
+If we preserve CP, mate, and WDL/order as separate channels without scalarization, this defines a materially new vector-valued representation family:
+$$M_\mu^{typed}$$
+This is distinct from $M_\mu = a_X G_\mu$. It is materially new and must not be used to rescue the current scalar attribution design.
 
-## 5. Geometry vs. Consequence-Weighted
+## 6. Target Object for $u=(P,r,q)$
 
-We must explicitly separate:
-$$G_\mu(P, r, q) = \text{spatial support/geometry convention}$$
-from:
-$$M_\mu(P, r, q) = \text{consequence-weighted spatial representation}$$
+The target candidate $Y_u$ is defined as the **pairwise typed ordering of $r$ versus $q$ under frozen $\hat{V}_{J_Y, \theta_Y}$**.
+A full legal-move ranking at $P$ is not the direct target because $u=(P,r,q)$ natively frames a pairwise contrast. 
 
-If $M_\mu = a_X G_\mu$, we must state exactly what scientific entitlement belongs to $G_\mu$ and what additional entitlement depends on $a_X$. A geometry experiment cannot silently become a consequence-attribution experiment.
+Abstractly:
+$$Y_u = \text{CompareTyped}(O_Y(r), O_Y(q))$$
+under one frozen perspective. 
+There is no mate-to-CP scalar.
+Handling semantics:
+- CP/CP: Standard numerical ordering.
+- Mate/Mate: Distance-to-mate ordering.
+- CP/Mate: Mate always strictly dominates CP.
+- Ties: Explicitly handled as equality/undecidable.
+Any cases not covered must be explicitly declared as unordered. We do not invent missing semantics.
 
-## 6. Defining the Target Independently
+## 7. Audit of Source→Target Relationships
 
-The leading target remains:
-$$Y_u = \text{typed ordering of legal alternatives under } \hat{V}_{J_Y, \theta_Y}$$
+| Relationship | Independence Level | Producer Dependence | Genuinely Held Out | Principal Dependence/Confound | Strongest Claim Ceiling |
+|---|---|---|---|---|---|
+| **Deeper same producer** | Low | Absolute | Search depth increment | Horizon effects, search artifacts | Predicts deeper search behavior of same engine |
+| **Independently configured same producer** | Low-Medium | Absolute | Different configuration / heuristic parameters | Shared core evaluation function | Predicts alternative configuration outcomes |
+| **Different producer** | Medium-High | Shared | The entire target instrument | Cross-engine bias | Robustness across specific tested instruments |
+| **Cross-producer replicated target** | High | Low | Consensus target | Ensemble bias / shared blindspots | Robustness against engine consensus |
 
-We must specify conceptually whether $Y$ is a deeper same-producer observation, independently configured same producer, different producer, or cross-producer replicated observation. Do not choose based on convenience. Same producer at greater depth does not become instrument-independent evidence merely because it is held out.
+*Do not say "instrument-independent" for finite same/different-engine agreement.*
 
-## 7. What "Held Out" Means
+## 8. Audit of Reference Policies ($r$)
 
-Target observations under $J_Y, \theta_Y$ must be unavailable to:
-- fixture construction
-- reference selection
-- $\mu$ definition
-- $\mu$ instantiation
-- source-signal construction
-- $\rho$ design
-- readout selection/tuning
-- baseline selection
-- threshold/statistic selection
+| Reference Policy | Target Leakage Risk | Producer-Preference Dependence | Symmetry/Equivariance Implications | Stability Across $q$ | Scientific Interpretation of $C_X$ |
+|---|---|---|---|---|---|
+| **Fixed lexicographic** | None | None | Breaks permutation equivariance / arbitrary | High (fixed) | Arbitrary pair contrast |
+| **Rule-only deterministic** | None | None | Needs complex rule to maintain symmetry | High (fixed) | Rule-based pair contrast |
+| **Source-producer preferred** | None (if frozen from $X$) | Absolute | Privileges engine's top choice | High (if $r$ is $top_1$) | Consequence relative to best-play |
+| **Externally frozen** | Depends on origin | Depends on origin | Depends on policy design | High (fixed) | Depends on policy |
 
-Source observations under $J_X, \theta_X$ may be allowed only if explicitly included in $X$. Never call source-known $q$ information "held out"; only its target observation may be held out.
+A single fixed $r(P)$ across all $q$ at a root is strongly preferred for the proposed pairwise comparison family to ensure pairwise source contrasts remain comparable against a consistent baseline. 
 
-## 8. Freezing Reference-Policy Semantics
+*We do not choose a reference policy yet unless one is logically dominated.*
 
-Compare candidate reference rules ($r$):
-- fixed lexicographic legal reference
-- rule-only deterministic reference
-- source-producer preferred reference
-- externally frozen reference policy
+## 9. Representation Equivalence Audit
 
-For each, we record target leakage risk, producer-preference dependence, symmetry/equivariance consequences, stability across $q$, whether one $r$ is fixed for all $q$ at $P$, whether $r$ can equal producer-best move, and scientific meaning of $C_X(P; r, q)$. (Prefer no policy yet).
-Explicitly ask whether a single reference $r(P)$ must remain fixed across all queried alternatives at a root so that pairwise source contrasts are comparable.
+For the principal admissible source treatments:
 
-## 9. Representation Equivalence Under Source Choices
+**1. X0 + Unit Mass ($a_X = 1$)**
+- $\sum_s M_\mu = a_X$ recovers the magnitude trivially (1).
+- $P, r, q, \rho(q)$ plus the spatial support makes $\mu_D$ and $\mu_T$ effectively invertible/reconstructible.
+- This represents different coordinate organization, not genuinely lossy differences. Both operators contain the same total information about the move geometry.
 
-For each $X_k$ and amplitude treatment, ask:
-- can $\sum_s M_\mu$ recover $a_X$?
-- can $\rho(q)$, $r$, and support pattern reconstruct $\mu$ identity?
-- are $\mu_D$ and $\mu_T$ injective transforms of the same source variables?
-- what information is actually discarded?
+**2. X1 + CP-only source-score magnitude ($a_X^{CP} = |\Delta CP_X|$)**
+- $\sum_s M_\mu = a_X^{CP}$ recovers the complete magnitude.
+- $P, r, q, \rho(q)$ plus spatial support allows full reconstruction of the same scalar source signal.
+- The two operators are effectively injective transforms of the same source variables.
 
-If two encodings are information-equivalent, record that only inductive-bias/efficiency claims remain available.
+Since these encodings are information-equivalent, **only inductive-bias/efficiency claims remain available**, not claims of capturing fundamentally different consequence information.
 
-## 10. Primary Utility Notion Earnability
+## 10. Matched-Control Implications
 
-After fixing candidate source/target semantics, reconsider exactly one of: held-out discrimination performance, sample efficiency/generalization, readout/computational efficiency, robustness/transfer, or compression/task-relevant sufficiency. (Do not combine them).
-If no choice is justified yet, leave it unresolved.
+Candidate controls and what they establish/destroy:
 
-## 11. Matched-Control Implications
+- **Coordinate-scrambled spatial map:**
+  - Destroys: Spatial semantics / geometric coherence.
+  - Preserves: Total mass, sparsity, channel distributions.
+  - Supports: Negative control for coordinate semantics / spatial inductive bias.
+  - Cannot establish: That the control itself is "non-spatial".
+- **Value multiset without square identity:**
+  - Destroys: Coordinate identity and spatial location.
+  - Preserves: The exact set of scalar values.
+  - Supports: Utility of maintaining exact values vs structure.
+  - Cannot establish: The utility of any spatial map if it matches this.
+- **Non-spatial fixed-width source vector:**
+  - Destroys: Spatial organization / board geometry mapping.
+  - Preserves: Declared source variables.
+  - Supports: Pure comparison of spatialization vs flattened encoding.
+  - Cannot establish: Anything if constructed poorly to deliberately fail.
+- **Rule-derived move encoding:**
+  - Destroys: Source magnitude / evaluation signal (unless added).
+  - Preserves: Move semantics.
+  - Supports: Baseline geometry utility without consequence weighting.
+  - Cannot establish: Consequence utility.
 
-Do not choose $B_{\text{matched}}$ until the exact source variables entering $M_\mu$ are known. Matched-control construction is downstream of the source boundary.
+*$B_{\text{matched}}$ remains unchosen until the exact source variables entering $M_\mu$ are known.*
 
-Candidate controls reclassified:
-- **coordinate-scrambled spatial map:** negative control for coordinate semantics / spatial inductive bias, not automatically "non-spatial"
-- **value multiset without square identity:** destroys coordinate identity while preserving values
-- **non-spatial fixed-width source vector:** preserves declared source variables but changes organization
-- **rule-derived move encoding:** preserves move semantics with different representation geometry
-
-## 12. Source-Boundary Falsifiers
+## 11. Source-Boundary Falsifiers
 
 Reject a proposed boundary if:
 - target $Y$ leaks into $X$
@@ -144,6 +159,8 @@ Reject a proposed boundary if:
 - source and target instruments are conflated
 - $q$'s target outcome is used during source construction
 
-## 13. Conclusion
+## 12. Conclusion
 
 **SOURCE_ATTRIBUTION_MAGNITUDE_NOT_IDENTIFIED**
+
+This means that a *universal consequence magnitude* is not identified, nor is a universal cross-typed amplitude. It does not deny the existence of admissible task-local quantities (like unit support or CP-only source-score differences), but those local quantities cannot be legitimately labeled as universal consequence-weighted "Heat". The fundamental blocker to the intended consequence-weighted architecture is the lack of an earned, universal experimental source magnitude that accommodates all outcome types without fake scalarization.
