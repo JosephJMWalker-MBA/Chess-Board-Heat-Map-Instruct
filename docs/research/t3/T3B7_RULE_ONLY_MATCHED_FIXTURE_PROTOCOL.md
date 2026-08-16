@@ -95,7 +95,35 @@ using ASCII lexicographic square names.
 
 Once chosen, this target is final for that scanned $P_i$.
 
-Construct its $C, c_1, c_2, M_1, M_2, H_1, H_2, O_i$ and required child FENs.
+Let `C = sorted(C_i(target_square), key=move.uci)` using ASCII UCI order. Require `len(C) == 2`. Define exactly:
+
+c_1 = C[0]
+c_2 = C[1]
+
+This ordering is identity/serialization semantics only. It does not assign scientific priority, weight, direction, or quality to either event reply.
+
+Then define:
+
+$M_1 = M_i(c_1; target\_square), M_2 = M_i(c_2; target\_square)$
+
+and require each matched-control UCI collection to be serialized in ASCII UCI order.
+
+Likewise serialize:
+
+$H_1$
+$H_2$
+$O_i$
+
+deterministically, with:
+
+$H_j$ reply identities sorted ASCII UCI
+$O_i = \text{sorted}(\text{set}(H_1) \cup \text{set}(H_2))$
+
+State explicitly:
+
+Sorting changes no set membership or mathematical weighting; it only makes labels and artifact bytes deterministic.
+
+Construct its required child FENs.
 
 ### C. Identity gates
 
