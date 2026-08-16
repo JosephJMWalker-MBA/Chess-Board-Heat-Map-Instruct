@@ -68,20 +68,17 @@ Proved that exact ordered `future_moves` restore deterministic replay of standar
 
 ---
 
-## Active Phase: T3b Legal Reply Intervention
+## Active Research Track
 
-**Status: ACTIVE P1**
+**Phase:** T3b Legal Reply Intervention
+**Next Scientific Step:** T3b-3 — Frozen legal-reply intervention execution
 
-### Next Scientific Step: T3b-2
+## T3b Queue
 
-**T3b-0 — Intervention Semantics Contract**
-**Status: COMPLETE**
-
-**T3b-1 — Comparator Design / Identifiability**
-**Status: COMPLETE**
-
-**T3b-2 — Rule-Only Fixture and Statistic Preregistration**
-*(Keep actual engine execution gated after T3b-2.)*
+1. ~~T3b-0 — Intervention Semantics & Scope~~ COMPLETE
+2. ~~T3b-1 — Comparator Identity~~ COMPLETE
+3. ~~T3b-2 — Rule-Only Fixture & Statistic Preregistration~~ COMPLETE/FROZEN
+4. T3b-3 — Frozen legal-reply intervention execution
 
 ---
 
@@ -118,8 +115,8 @@ Remain downstream and outside objective Heat.
 5. **CLOSED** — T3a consequence-association (T3a-1, T3a-2, T3a-3, T3a-4)
 6. **DONE** — T3b-0 Intervention Semantics Contract
 7. **DONE** — T3b-1 Comparator Design / Identifiability
-8. **NEXT P1** — T3b-2 Rule-Only Fixture and Statistic Preregistration
-9. **GATED P2** — T3b legal reply intervention experiment
+8. **DONE** — T3b-2 Rule-Only Fixture and Statistic Preregistration
+9. **NEXT P1** — T3b-3 Frozen legal-reply intervention execution
 10. **P2** — Representation Audit
 11. **P2** — Projection Audit
 12. **P2** — Multi-Instrument / T1.12 robustness
