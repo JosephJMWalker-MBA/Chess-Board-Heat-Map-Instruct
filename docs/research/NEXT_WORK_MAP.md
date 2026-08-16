@@ -71,7 +71,7 @@ Proved that exact ordered `future_moves` restore deterministic replay of standar
 ## Active Research Track
 
 **Phase:** T3b Legal Reply Intervention
-**Next Scientific Step:** T3b-6 — Matched-Control Estimand & Calibration Preregistration
+**Next Scientific Step:** T3b-7 — Rule-Only Matched Intervention Fixture Protocol
 
 ## T3b Queue
 
@@ -81,8 +81,8 @@ Proved that exact ordered `future_moves` restore deterministic replay of standar
 4. ~~T3b-3 — Frozen legal-reply intervention execution~~ COMPLETE / WEAK_SUPPORT / INTERVENTION_SENSITIVITY
 5. ~~T3b-4 — Matched-Control Identifiability Feasibility Audit~~ COMPLETE / strict matcher semantically admissible
 6. ~~T3b-5 — Strict Matchability Coverage Audit~~ COMPLETE / FEASIBLE_FOR_MATCHED_PROTOCOL_DESIGN / RULE-ONLY
-7. T3b-6 — Matched-Control Estimand & Calibration Preregistration
-   *(DOCUMENTATION / MATHEMATICS ONLY. NO ENGINE. NO FIXTURE GENERATION)*
+7. ~~T3b-6 — Matched-Control Estimand & Calibration Preregistration~~ COMPLETE / MATCHED ESTIMAND & CALIBRATION FROZEN
+8. T3b-7 — Rule-Only Matched Intervention Fixture Protocol
 
 ---
 
@@ -123,12 +123,13 @@ Remain downstream and outside objective Heat.
 9. **CLOSED** — T3b-3 Frozen legal-reply intervention execution
 10. **DONE** — T3b-4 Matched-Control Identifiability Feasibility Audit
 11. **DONE** — T3b-5 Strict Matchability Coverage Audit
-12. **NEXT P1** — T3b-6 Matched-Control Estimand & Calibration Preregistration (DOCUMENTATION / MATHEMATICS ONLY)
-13. **P2** — Representation Audit
-14. **P2** — Projection Audit
-15. **P2** — Multi-Instrument / T1.12 robustness
-16. **P3** — Pathways / Evidence Fusion / Amplitude
-17. **DEFER** — Human Navigation / Teacher / Explanation
+12. **DONE** — T3b-6 Matched-Control Estimand & Calibration Preregistration (COMPLETE / MATCHED ESTIMAND & CALIBRATION FROZEN)
+13. **NEXT P1** — T3b-7 Rule-Only Matched Intervention Fixture Protocol
+14. **P2** — Representation Audit
+15. **P2** — Projection Audit
+16. **P2** — Multi-Instrument / T1.12 robustness
+17. **P3** — Pathways / Evidence Fusion / Amplitude
+18. **DEFER** — Human Navigation / Teacher / Explanation
 
 ---
 
