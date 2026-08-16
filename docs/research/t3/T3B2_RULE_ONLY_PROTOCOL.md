@@ -147,9 +147,9 @@ A candidate root-state FEN or selected post-root $P_i$ FEN that exactly equals a
 Enumerate in this protocol the literal committed paths and SHA-256 digests of every historical T3 raw engine-observation artifact used to construct the exposure set.
 Include all applicable T3a-1, T3a-2, T3a-3, and twelve T3a-4 raw observations.
 
-- `tests/fixtures/t3a1_result.json` (89d7cb4f4a882cf8eaeedb3a1c78c2dace346613208f8bf06ad597f02b0b9f8b)
-- `tests/fixtures/t3a2_result.json` (0e4999b5f48d772168e64e5ca0a7ac78b434b7d6c8db24a3b435b33b4b2bbaea)
-- `tests/fixtures/t3a3_result.json` (9b8a9777430893f431c4a24add67ab1226ba71a6b84c4b3f06a601d9ad1f9214)
+- `tests/fixtures/t3a1_fixture.json` (151a5ad4414ef6caadf4251441b72dfbe934fa0d05bb57aa4dd03c6107f61bf5)
+- `tests/fixtures/t3a2_fixture.json` (ec55f31c873292aaefe2229a8b197458b678e6bb3617d6094b22068b8240a1b1)
+- `tests/fixtures/t3a3_fixture.json` (8a0f700123697df9892914a7f38f56efbfe09945f2d7752479895a57a70cdf5a)
 - `tests/fixtures/t3a4/raw/t3a4_f00.json` (dd102d9b7826dededa21ff54c72e9d92a7350f94a4bce82fff517b5b52cd685d)
 - `tests/fixtures/t3a4/raw/t3a4_f01.json` (9601744071efd9b6d39ff94110f8f22b369ad35afc6e8db7f1278a70ed64e4eb)
 - `tests/fixtures/t3a4/raw/t3a4_f02.json` (cfa55403c8053e2f2b84bcccec745e150cc261ff1566c6ae87b49dd6ee66d855)
@@ -163,10 +163,34 @@ Include all applicable T3a-1, T3a-2, T3a-3, and twelve T3a-4 raw observations.
 - `tests/fixtures/t3a4/raw/t3a4_f10.json` (ffa4fa05fc6e251f2e8d3d7a0f536e548717d503d27801b7b08646420fd9bfd7)
 - `tests/fixtures/t3a4/raw/t3a4_f11.json` (37cfc3b58962aeeeecc4723d58ef63b5c9ec00e6f588d9c37c53ba9e41368641)
 
-For each source, specify exactly which fields contain states that were directly passed to the engine for evaluation.
+T3a-1
+source: `tests/fixtures/t3a1_fixture.json`
+root engine-observed state: top-level `fen`
+post-root engine-observed states: every `observations[*].resulting_fen`
+
+T3a-2
+source: `tests/fixtures/t3a2_fixture.json`
+root engine-observed state: top-level `fen`
+post-root engine-observed states: every `observations[*].resulting_fen`
+
+T3a-3
+source: `tests/fixtures/t3a3_fixture.json`
+root engine-observed state: top-level `fen`
+post-root engine-observed states: every `move_observations[*].resulting_fen`
+
+T3a-4 fixtures f00..f11
+source: corresponding `tests/fixtures/t3a4/raw/t3a4_fXX.json`
+root engine-observed state: top-level `fen`
+post-root engine-observed states: every `move_observations[*].resulting_fen`
+
 The exclusion set must contain, at minimum:
 - each historical experiment root FEN directly engine-observed;
 - every historical legal-root resulting FEN that was directly passed to the engine for evaluation.
+
+State explicitly:
+- `principal_variation`, `parsed_pv`, and positions reached inside a PV are not added to the historical exposure set merely because they appeared in an engine-returned line; they were not separate root states passed to the engine for evaluation by these experiments.
+- The top-level root FEN was separately engine-observed because the historical harness performed a baseline evaluation.
+- Each stored `resulting_fen` was separately engine-observed because the historical harness evaluated that post-root board.
 
 Canonicalize every historical FEN solely for identity comparison by:
 `chess.Board(historical_fen).fen(shredder=False, en_passant="fen")`
@@ -241,6 +265,7 @@ Before any T3b-2 raw output is created, future execution must:
 - start one engine process;
 - read the actual UCI engine identity;
 - require the reported producer identity to match the preregistered Stockfish 18 identity;
+  - actual UCI engine name must equal the exact string "Stockfish 18"
 - persist the actual reported identity and binary digest.
 
 If identity verification fails, terminate before experimental acquisition.
