@@ -71,14 +71,16 @@ Proved that exact ordered `future_moves` restore deterministic replay of standar
 ## Active Research Track
 
 **Phase:** T3b Legal Reply Intervention
-**Next Scientific Step:** T3b-3 — Frozen legal-reply intervention execution
+**Next Scientific Step:** T3b-4 — Matched-Control Identifiability Feasibility Audit
 
 ## T3b Queue
 
 1. ~~T3b-0 — Intervention Semantics & Scope~~ COMPLETE
 2. ~~T3b-1 — Comparator Identity~~ COMPLETE
 3. ~~T3b-2 — Rule-Only Fixture & Statistic Preregistration~~ COMPLETE/FROZEN
-4. T3b-3 — Frozen legal-reply intervention execution
+4. ~~T3b-3 — Frozen legal-reply intervention execution~~ COMPLETE / WEAK_SUPPORT / INTERVENTION_SENSITIVITY
+5. T3b-4 — Matched-Control Identifiability Feasibility Audit
+   *(Documentation/design only initially. If no independently defensible rule-only matching basis can be defined, T3b Design B should be abandoned and the project should move to Representation Audit rather than inventing a matcher around the T3b-3 results.)*
 
 ---
 
@@ -116,12 +118,13 @@ Remain downstream and outside objective Heat.
 6. **DONE** — T3b-0 Intervention Semantics Contract
 7. **DONE** — T3b-1 Comparator Design / Identifiability
 8. **DONE** — T3b-2 Rule-Only Fixture and Statistic Preregistration
-9. **NEXT P1** — T3b-3 Frozen legal-reply intervention execution
-10. **P2** — Representation Audit
-11. **P2** — Projection Audit
-12. **P2** — Multi-Instrument / T1.12 robustness
-13. **P3** — Pathways / Evidence Fusion / Amplitude
-14. **DEFER** — Human Navigation / Teacher / Explanation
+9. **CLOSED** — T3b-3 Frozen legal-reply intervention execution
+10. **NEXT P1** — T3b-4 Matched-Control Identifiability Feasibility Audit
+11. **P2** — Representation Audit
+12. **P2** — Projection Audit
+13. **P2** — Multi-Instrument / T1.12 robustness
+14. **P3** — Pathways / Evidence Fusion / Amplitude
+15. **DEFER** — Human Navigation / Teacher / Explanation
 
 ---
 
