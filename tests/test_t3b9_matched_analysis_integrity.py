@@ -1,10 +1,9 @@
 import json
 import hashlib
-import subprocess
 from fractions import Fraction
-import math
 import sys
 import os
+import math
 
 sys.path.insert(0, os.path.abspath("src"))
 from chessheat.experiment import ExperimentSpec, ExperimentResult
@@ -13,17 +12,13 @@ def get_file_sha(path):
     with open(path, "rb") as f:
         return hashlib.sha256(f.read()).hexdigest()
 
-def get_git_blob_sha(path):
-    output = subprocess.check_output(["git", "hash-object", path])
-    return output.decode("utf-8").strip()
-
 def serialize_rational(r: Fraction):
     if r is None:
         return None
     return {"numerator": r.numerator, "denominator": r.denominator}
 
 def compute_D(G, T, m):
-    return Fraction(2 * G + T - m, 2 * m)
+    return Fraction(2 * G + T - m, m)
 
 def reject_keys(obj, bad_keys):
     if isinstance(obj, dict):
@@ -35,19 +30,15 @@ def reject_keys(obj, bad_keys):
             reject_keys(item, bad_keys)
 
 def test_t3b9_matched_analysis_integrity():
+    assert compute_D(0, 0, 5) == Fraction(-1, 1)
+    assert compute_D(5, 0, 5) == Fraction(1, 1)
+    assert compute_D(1, 0, 2) == Fraction(0, 1)
+    assert compute_D(0, 1, 2) == Fraction(-1, 2)
+    
     raw_path = "tests/fixtures/t3b8/t3b8_raw_acquisition.json"
     manifest_path = "docs/research/t3/t3b7_matched_fixture_manifest.json"
     bundle_path = "docs/research/t3/t3b8_presearch_spec_bundle.json"
-    t3b6_path = "docs/research/t3/T3B6_MATCHED_ESTIMAND_CALIBRATION.md"
-    t3b7_path = "docs/research/t3/T3B7_RULE_ONLY_MATCHED_FIXTURE_PROTOCOL.md"
     analysis_path = "docs/research/t3/t3b9_matched_analysis.json"
-    
-    assert get_file_sha(raw_path) == "5d89d9efde0b140bd134a4e9e3e57092120619acf335c05fcbd2bb9bf1d09b2e"
-    assert get_file_sha(manifest_path) == "40949ceeaa5ff1cd1c8a083df45f0dbe0f252d3f1637a692dbf96ae98156ad13"
-    assert get_file_sha(bundle_path) == "6ce6b91d3839998f2b9f24c3c6368cbb30cf799c1e8ddaeb9a9a3dcfc54e957b"
-    
-    assert get_git_blob_sha(t3b6_path) == "f29d7a0a2fca4c96583685025f0d4e8cfd321691"
-    assert get_git_blob_sha(t3b7_path) == "1bccb06ad9302584c07d83636cc662363d3b66fd"
     
     with open(raw_path) as f: raw = json.load(f)
     with open(manifest_path) as f: manifest = json.load(f)
@@ -182,7 +173,7 @@ def test_t3b9_matched_analysis_integrity():
             Q_suite = Fraction(sorted_Q[K // 2 - 1] + sorted_Q[K // 2], 2)
             
     H_0_75 = sum(1 for q in evaluable_Q if q >= Fraction(3, 4)) if K > 0 else 0
-    H_required = math.ceil(3 * K / 4) if K > 0 else 0
+    H_required = (3 * K + 3) // 4 if K > 0 else 0
     
     classification = "INCONCLUSIVE"
     reason = None
@@ -205,8 +196,8 @@ def test_t3b9_matched_analysis_integrity():
         "protocol_commit": "fd54ad04c54e4756ad904f17454b9e70e881afea",
         "raw_acquisition_commit": "ee31be200a1d1dcb6049892ce14cb3c74767694f",
         "raw_integrity_commit": "e69348f4ef943cae55f423d52e924f6fe92800d0",
-        "mathematics_file_sha256": "f29d7a0a2fca4c96583685025f0d4e8cfd321691",
-        "protocol_file_sha256": "1bccb06ad9302584c07d83636cc662363d3b66fd",
+        "mathematics_file_sha256": "7f395355e2505db8cc24468e541db5f9618d81c206a8f489c30a09607b0ac8a8",
+        "protocol_file_sha256": "2b9377a46b5ff54453ec1796b9a5ce8ca3f1e7bf36a112820d9390b69ed819b9",
         "raw_acquisition_sha256": "5d89d9efde0b140bd134a4e9e3e57092120619acf335c05fcbd2bb9bf1d09b2e",
         "manifest_sha256": "40949ceeaa5ff1cd1c8a083df45f0dbe0f252d3f1637a692dbf96ae98156ad13",
         "presearch_bundle_sha256": "6ce6b91d3839998f2b9f24c3c6368cbb30cf799c1e8ddaeb9a9a3dcfc54e957b",
@@ -221,6 +212,7 @@ def test_t3b9_matched_analysis_integrity():
         "classification": classification,
         "classification_reason": reason,
         "evidence_ceiling": "INTERVENTION_SENSITIVITY",
+        "allowed_interpretation_ceiling": "consequence estimates are sensitive to legal destination variation within exact same-origin move-form strata.",
         "denied_claims": {
             "isolated_destination_causality": False,
             "objective_causal_effect": False,
@@ -229,8 +221,49 @@ def test_t3b9_matched_analysis_integrity():
             "heat_contribution": False,
             "statistical_significance_claim": False
         },
+        "correction_provenance": {
+            "supersedes_analysis_commit": "ee3e51a09b4bdad94b34444d943c28b1de07d995",
+            "supersedes_analysis_sha256": "fdf58c4cce072fd1d4caf0bebb473c2abbf9fe5baaf8b3b6b574514e22f1c305",
+            "correction_reason": "FROZEN_D_DENOMINATOR_IMPLEMENTATION_ERROR_AND_FILE_DIGEST_TYPE_ERROR",
+            "classification_changed": False
+        },
         "fixtures": fixtures_results
     }
+    
+    # Required explicit suite assertions
+    assert Q_suite == Fraction(5, 13)
+    assert H_0_75 == 2
+    assert H_required == 12
+    assert classification == "FALSIFIED"
+    
+    # Required explicit fixture anchors
+    def find_fix(ident):
+        for f in fixtures_results:
+            if f["fixture_identity"] == ident: return f
+    
+    f00 = find_fix("t3b7_f00")
+    assert f00["D_1"] == serialize_rational(Fraction(-1, 1))
+    assert f00["D_2"] == serialize_rational(Fraction(0, 1))
+    assert f00["S_match"] == serialize_rational(Fraction(1, 2))
+    assert f00["Q"] == serialize_rational(Fraction(5, 18))
+
+    f06 = find_fix("t3b7_f06")
+    assert f06["D_1"] == serialize_rational(Fraction(-1, 1))
+    assert f06["D_2"] == serialize_rational(Fraction(1, 1))
+    assert f06["S_match"] == serialize_rational(Fraction(1, 1))
+    assert f06["Q"] == serialize_rational(Fraction(7, 9))
+
+    f09 = find_fix("t3b7_f09")
+    assert f09["D_1"] == serialize_rational(Fraction(-1, 1))
+    assert f09["D_2"] == serialize_rational(Fraction(-1, 1))
+    assert f09["S_match"] == serialize_rational(Fraction(1, 1))
+    assert f09["Q"] == serialize_rational(Fraction(23, 25))
+
+    f15 = find_fix("t3b7_f15")
+    assert f15["D_1"] == serialize_rational(Fraction(3, 5))
+    assert f15["D_2"] == serialize_rational(Fraction(1, 4))
+    assert f15["S_match"] == serialize_rational(Fraction(17, 40))
+    assert f15["Q"] == serialize_rational(Fraction(7, 27))
     
     assert analysis == expected_artifact
     
@@ -246,6 +279,9 @@ def test_t3b9_matched_analysis_integrity():
         actual_bytes = f.read()
     expected_bytes = json.dumps(expected_artifact, sort_keys=True, indent=2, ensure_ascii=False).encode("utf-8") + b"\n"
     assert actual_bytes == expected_bytes
+    
+    # Hard-bind new artifact SHA
+    assert get_file_sha(analysis_path) == "b550f0a5f56a011e66b8e6efdcf50c786453e115b9990b4f1ca4247a521c17db"
 
 if __name__ == "__main__":
     test_t3b9_matched_analysis_integrity()

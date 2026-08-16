@@ -7,8 +7,15 @@
     "denominator": 13,
     "numerator": 5
   },
+  "allowed_interpretation_ceiling": "consequence estimates are sensitive to legal destination variation within exact same-origin move-form strata.",
   "classification": "FALSIFIED",
   "classification_reason": null,
+  "correction_provenance": {
+    "classification_changed": false,
+    "correction_reason": "FROZEN_D_DENOMINATOR_IMPLEMENTATION_ERROR_AND_FILE_DIGEST_TYPE_ERROR",
+    "supersedes_analysis_commit": "ee3e51a09b4bdad94b34444d943c28b1de07d995",
+    "supersedes_analysis_sha256": "fdf58c4cce072fd1d4caf0bebb473c2abbf9fe5baaf8b3b6b574514e22f1c305"
+  },
   "denied_claims": {
     "heat_contribution": false,
     "isolated_destination_causality": false,
@@ -22,7 +29,7 @@
   "fixtures": [
     {
       "D_1": {
-        "denominator": 2,
+        "denominator": 1,
         "numerator": -1
       },
       "D_2": {
@@ -62,7 +69,7 @@
         "numerator": 5
       },
       "S_1": {
-        "denominator": 2,
+        "denominator": 1,
         "numerator": 1
       },
       "S_2": {
@@ -70,7 +77,7 @@
         "numerator": 0
       },
       "S_match": {
-        "denominator": 4,
+        "denominator": 2,
         "numerator": 1
       },
       "T_1": 0,
@@ -89,11 +96,11 @@
     },
     {
       "D_1": {
-        "denominator": 2,
+        "denominator": 1,
         "numerator": 1
       },
       "D_2": {
-        "denominator": 6,
+        "denominator": 3,
         "numerator": -1
       },
       "E": 4,
@@ -125,16 +132,16 @@
         "numerator": 1
       },
       "S_1": {
-        "denominator": 2,
+        "denominator": 1,
         "numerator": 1
       },
       "S_2": {
-        "denominator": 6,
+        "denominator": 3,
         "numerator": 1
       },
       "S_match": {
         "denominator": 3,
-        "numerator": 1
+        "numerator": 2
       },
       "T_1": 0,
       "T_2": 0,
@@ -152,11 +159,11 @@
     },
     {
       "D_1": {
-        "denominator": 6,
+        "denominator": 3,
         "numerator": 1
       },
       "D_2": {
-        "denominator": 2,
+        "denominator": 1,
         "numerator": -1
       },
       "E": 4,
@@ -194,16 +201,16 @@
         "numerator": 7
       },
       "S_1": {
-        "denominator": 6,
+        "denominator": 3,
         "numerator": 1
       },
       "S_2": {
-        "denominator": 2,
+        "denominator": 1,
         "numerator": 1
       },
       "S_match": {
         "denominator": 3,
-        "numerator": 1
+        "numerator": 2
       },
       "T_1": 0,
       "T_2": 0,
@@ -221,11 +228,11 @@
     },
     {
       "D_1": {
-        "denominator": 4,
+        "denominator": 2,
         "numerator": -1
       },
       "D_2": {
-        "denominator": 4,
+        "denominator": 2,
         "numerator": 1
       },
       "E": 8,
@@ -279,15 +286,15 @@
         "numerator": 5
       },
       "S_1": {
-        "denominator": 4,
+        "denominator": 2,
         "numerator": 1
       },
       "S_2": {
-        "denominator": 4,
+        "denominator": 2,
         "numerator": 1
       },
       "S_match": {
-        "denominator": 4,
+        "denominator": 2,
         "numerator": 1
       },
       "T_1": 0,
@@ -306,7 +313,7 @@
     },
     {
       "D_1": {
-        "denominator": 4,
+        "denominator": 2,
         "numerator": -1
       },
       "D_2": {
@@ -344,7 +351,7 @@
         "numerator": 2
       },
       "S_1": {
-        "denominator": 4,
+        "denominator": 2,
         "numerator": 1
       },
       "S_2": {
@@ -352,7 +359,7 @@
         "numerator": 0
       },
       "S_match": {
-        "denominator": 8,
+        "denominator": 4,
         "numerator": 1
       },
       "T_1": 0,
@@ -371,11 +378,11 @@
     },
     {
       "D_1": {
-        "denominator": 12,
+        "denominator": 6,
         "numerator": 5
       },
       "D_2": {
-        "denominator": 6,
+        "denominator": 3,
         "numerator": 1
       },
       "E": 6,
@@ -427,15 +434,15 @@
         "numerator": 23
       },
       "S_1": {
-        "denominator": 12,
+        "denominator": 6,
         "numerator": 5
       },
       "S_2": {
-        "denominator": 6,
+        "denominator": 3,
         "numerator": 1
       },
       "S_match": {
-        "denominator": 24,
+        "denominator": 12,
         "numerator": 7
       },
       "T_1": 0,
@@ -454,11 +461,11 @@
     },
     {
       "D_1": {
-        "denominator": 2,
+        "denominator": 1,
         "numerator": -1
       },
       "D_2": {
-        "denominator": 2,
+        "denominator": 1,
         "numerator": 1
       },
       "E": 4,
@@ -488,15 +495,15 @@
         "numerator": 7
       },
       "S_1": {
-        "denominator": 2,
+        "denominator": 1,
         "numerator": 1
       },
       "S_2": {
-        "denominator": 2,
+        "denominator": 1,
         "numerator": 1
       },
       "S_match": {
-        "denominator": 2,
+        "denominator": 1,
         "numerator": 1
       },
       "T_1": 0,
@@ -515,7 +522,7 @@
     },
     {
       "D_1": {
-        "denominator": 2,
+        "denominator": 1,
         "numerator": -1
       },
       "D_2": {
@@ -553,7 +560,7 @@
         "numerator": 1
       },
       "S_1": {
-        "denominator": 2,
+        "denominator": 1,
         "numerator": 1
       },
       "S_2": {
@@ -561,7 +568,7 @@
         "numerator": 0
       },
       "S_match": {
-        "denominator": 4,
+        "denominator": 2,
         "numerator": 1
       },
       "T_1": 0,
@@ -580,11 +587,11 @@
     },
     {
       "D_1": {
-        "denominator": 2,
+        "denominator": 1,
         "numerator": -1
       },
       "D_2": {
-        "denominator": 26,
+        "denominator": 13,
         "numerator": -5
       },
       "E": 4,
@@ -636,15 +643,15 @@
         "numerator": 4
       },
       "S_1": {
-        "denominator": 2,
+        "denominator": 1,
         "numerator": 1
       },
       "S_2": {
-        "denominator": 26,
+        "denominator": 13,
         "numerator": 5
       },
       "S_match": {
-        "denominator": 26,
+        "denominator": 13,
         "numerator": 9
       },
       "T_1": 0,
@@ -663,11 +670,11 @@
     },
     {
       "D_1": {
-        "denominator": 2,
+        "denominator": 1,
         "numerator": -1
       },
       "D_2": {
-        "denominator": 2,
+        "denominator": 1,
         "numerator": -1
       },
       "E": 4,
@@ -705,15 +712,15 @@
         "numerator": 23
       },
       "S_1": {
-        "denominator": 2,
+        "denominator": 1,
         "numerator": 1
       },
       "S_2": {
-        "denominator": 2,
+        "denominator": 1,
         "numerator": 1
       },
       "S_match": {
-        "denominator": 2,
+        "denominator": 1,
         "numerator": 1
       },
       "T_1": 0,
@@ -781,11 +788,11 @@
     },
     {
       "D_1": {
-        "denominator": 2,
+        "denominator": 1,
         "numerator": -1
       },
       "D_2": {
-        "denominator": 14,
+        "denominator": 7,
         "numerator": -1
       },
       "E": 4,
@@ -825,16 +832,16 @@
         "numerator": 5
       },
       "S_1": {
-        "denominator": 2,
+        "denominator": 1,
         "numerator": 1
       },
       "S_2": {
-        "denominator": 14,
+        "denominator": 7,
         "numerator": 1
       },
       "S_match": {
         "denominator": 7,
-        "numerator": 2
+        "numerator": 4
       },
       "T_1": 0,
       "T_2": 0,
@@ -856,7 +863,7 @@
         "numerator": 0
       },
       "D_2": {
-        "denominator": 6,
+        "denominator": 3,
         "numerator": -1
       },
       "E": 2,
@@ -892,11 +899,11 @@
         "numerator": 0
       },
       "S_2": {
-        "denominator": 6,
+        "denominator": 3,
         "numerator": 1
       },
       "S_match": {
-        "denominator": 12,
+        "denominator": 6,
         "numerator": 1
       },
       "T_1": 0,
@@ -915,11 +922,11 @@
     },
     {
       "D_1": {
-        "denominator": 4,
+        "denominator": 2,
         "numerator": 1
       },
       "D_2": {
-        "denominator": 6,
+        "denominator": 3,
         "numerator": -1
       },
       "E": 4,
@@ -955,15 +962,15 @@
         "numerator": 1
       },
       "S_1": {
-        "denominator": 4,
+        "denominator": 2,
         "numerator": 1
       },
       "S_2": {
-        "denominator": 6,
+        "denominator": 3,
         "numerator": 1
       },
       "S_match": {
-        "denominator": 24,
+        "denominator": 12,
         "numerator": 5
       },
       "T_1": 0,
@@ -982,11 +989,11 @@
     },
     {
       "D_1": {
-        "denominator": 10,
+        "denominator": 5,
         "numerator": 1
       },
       "D_2": {
-        "denominator": 6,
+        "denominator": 3,
         "numerator": -1
       },
       "E": 4,
@@ -1024,16 +1031,16 @@
         "numerator": 1
       },
       "S_1": {
-        "denominator": 10,
+        "denominator": 5,
         "numerator": 1
       },
       "S_2": {
-        "denominator": 6,
+        "denominator": 3,
         "numerator": 1
       },
       "S_match": {
         "denominator": 15,
-        "numerator": 2
+        "numerator": 4
       },
       "T_1": 0,
       "T_2": 0,
@@ -1051,11 +1058,11 @@
     },
     {
       "D_1": {
-        "denominator": 10,
+        "denominator": 5,
         "numerator": 3
       },
       "D_2": {
-        "denominator": 8,
+        "denominator": 4,
         "numerator": 1
       },
       "E": 4,
@@ -1103,15 +1110,15 @@
         "numerator": 7
       },
       "S_1": {
-        "denominator": 10,
+        "denominator": 5,
         "numerator": 3
       },
       "S_2": {
-        "denominator": 8,
+        "denominator": 4,
         "numerator": 1
       },
       "S_match": {
-        "denominator": 80,
+        "denominator": 40,
         "numerator": 17
       },
       "T_1": 0,
@@ -1131,12 +1138,12 @@
   ],
   "manifest_sha256": "40949ceeaa5ff1cd1c8a083df45f0dbe0f252d3f1637a692dbf96ae98156ad13",
   "mathematics_commit": "100e4f20b41b260875fb14901b61bbe51c4fe74e",
-  "mathematics_file_sha256": "f29d7a0a2fca4c96583685025f0d4e8cfd321691",
+  "mathematics_file_sha256": "7f395355e2505db8cc24468e541db5f9618d81c206a8f489c30a09607b0ac8a8",
   "non_evaluable_fixture_count": 1,
   "phase": "T3B9_FROZEN_MATCHED_ANALYSIS",
   "presearch_bundle_sha256": "6ce6b91d3839998f2b9f24c3c6368cbb30cf799c1e8ddaeb9a9a3dcfc54e957b",
   "protocol_commit": "fd54ad04c54e4756ad904f17454b9e70e881afea",
-  "protocol_file_sha256": "1bccb06ad9302584c07d83636cc662363d3b66fd",
+  "protocol_file_sha256": "2b9377a46b5ff54453ec1796b9a5ce8ca3f1e7bf36a112820d9390b69ed819b9",
   "raw_acquisition_commit": "ee31be200a1d1dcb6049892ce14cb3c74767694f",
   "raw_acquisition_sha256": "5d89d9efde0b140bd134a4e9e3e57092120619acf335c05fcbd2bb9bf1d09b2e",
   "raw_integrity_commit": "e69348f4ef943cae55f423d52e924f6fe92800d0",

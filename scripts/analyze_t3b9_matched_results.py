@@ -1,21 +1,19 @@
 import json
 import hashlib
-import subprocess
 from fractions import Fraction
-import math
 import sys
 import os
 
 sys.path.insert(0, os.path.abspath("src"))
 from chessheat.experiment import ExperimentSpec, ExperimentResult
 
+def exit_error(code):
+    print(code)
+    sys.exit(1)
+
 def get_file_sha(path):
     with open(path, "rb") as f:
         return hashlib.sha256(f.read()).hexdigest()
-
-def get_git_blob_sha(path):
-    output = subprocess.check_output(["git", "hash-object", path])
-    return output.decode("utf-8").strip()
 
 def serialize_rational(r: Fraction):
     if r is None:
@@ -23,7 +21,7 @@ def serialize_rational(r: Fraction):
     return {"numerator": r.numerator, "denominator": r.denominator}
 
 def compute_D(G, T, m):
-    return Fraction(2 * G + T - m, 2 * m)
+    return Fraction(2 * G + T - m, m)
 
 def load_and_verify():
     raw_path = "tests/fixtures/t3b8/t3b8_raw_acquisition.json"
@@ -32,27 +30,27 @@ def load_and_verify():
     t3b6_path = "docs/research/t3/T3B6_MATCHED_ESTIMAND_CALIBRATION.md"
     t3b7_path = "docs/research/t3/T3B7_RULE_ONLY_MATCHED_FIXTURE_PROTOCOL.md"
     
-    assert get_file_sha(raw_path) == "5d89d9efde0b140bd134a4e9e3e57092120619acf335c05fcbd2bb9bf1d09b2e"
-    assert get_file_sha(manifest_path) == "40949ceeaa5ff1cd1c8a083df45f0dbe0f252d3f1637a692dbf96ae98156ad13"
-    assert get_file_sha(bundle_path) == "6ce6b91d3839998f2b9f24c3c6368cbb30cf799c1e8ddaeb9a9a3dcfc54e957b"
+    if get_file_sha(raw_path) != "5d89d9efde0b140bd134a4e9e3e57092120619acf335c05fcbd2bb9bf1d09b2e": exit_error("INPUT_DIGEST_MISMATCH")
+    if get_file_sha(manifest_path) != "40949ceeaa5ff1cd1c8a083df45f0dbe0f252d3f1637a692dbf96ae98156ad13": exit_error("INPUT_DIGEST_MISMATCH")
+    if get_file_sha(bundle_path) != "6ce6b91d3839998f2b9f24c3c6368cbb30cf799c1e8ddaeb9a9a3dcfc54e957b": exit_error("INPUT_DIGEST_MISMATCH")
     
-    assert get_git_blob_sha(t3b6_path) == "f29d7a0a2fca4c96583685025f0d4e8cfd321691"
-    assert get_git_blob_sha(t3b7_path) == "1bccb06ad9302584c07d83636cc662363d3b66fd"
+    if get_file_sha(t3b6_path) != "7f395355e2505db8cc24468e541db5f9618d81c206a8f489c30a09607b0ac8a8": exit_error("NORMATIVE_DOCUMENT_DIGEST_MISMATCH")
+    if get_file_sha(t3b7_path) != "2b9377a46b5ff54453ec1796b9a5ce8ca3f1e7bf36a112820d9390b69ed819b9": exit_error("NORMATIVE_DOCUMENT_DIGEST_MISMATCH")
     
     with open(raw_path) as f: raw = json.load(f)
     with open(manifest_path) as f: manifest = json.load(f)
     with open(bundle_path) as f: bundle = json.load(f)
         
-    assert raw["fixture_count"] == 16
-    assert raw["actual_search_count"] == 171
-    assert raw["expected_search_count"] == 171
-    assert raw["comparison_perspective"] == "white"
-    assert raw["resume_allowed"] is False
-    assert raw["hash_reset_between_searches"] is False
+    if raw["fixture_count"] != 16: exit_error("RAW_ACQUISITION_IDENTITY_MISMATCH")
+    if raw["actual_search_count"] != 171: exit_error("RAW_ACQUISITION_IDENTITY_MISMATCH")
+    if raw["expected_search_count"] != 171: exit_error("RAW_ACQUISITION_IDENTITY_MISMATCH")
+    if raw["comparison_perspective"] != "white": exit_error("RAW_ACQUISITION_IDENTITY_MISMATCH")
+    if raw["resume_allowed"] is not False: exit_error("RAW_ACQUISITION_IDENTITY_MISMATCH")
+    if raw["hash_reset_between_searches"] is not False: exit_error("RAW_ACQUISITION_IDENTITY_MISMATCH")
     
     return raw, manifest, bundle
 
-def main():
+def generate_artifact():
     raw, manifest, bundle = load_and_verify()
     
     fixtures_results = []
@@ -63,16 +61,16 @@ def main():
         man_fix = manifest["fixtures"][f_idx]
         bun_fix = bundle["specs"][f_idx]
         
-        assert raw_fix["fixture_identity"] == man_fix["fixture_identity"]
-        assert bun_fix["fixture_identity"] == man_fix["fixture_identity"]
-        assert raw_fix["spec_digest"] == bun_fix["spec_digest"]
+        if raw_fix["fixture_identity"] != man_fix["fixture_identity"]: exit_error("FIXTURE_SPEC_RESULT_MAPPING_MISMATCH")
+        if raw_fix["fixture_identity"] != bun_fix["fixture_identity"]: exit_error("FIXTURE_SPEC_RESULT_MAPPING_MISMATCH")
+        if raw_fix["spec_digest"] != bun_fix["spec_digest"]: exit_error("FIXTURE_SPEC_RESULT_MAPPING_MISMATCH")
         
         result_model = ExperimentResult(**raw_fix["experiment_result"])
         reconstructed = ExperimentResult.create(
             spec_digest=result_model.spec_digest,
             data=json.loads(result_model.data_payload)
         )
-        assert result_model.model_dump() == reconstructed.model_dump()
+        if result_model.model_dump() != reconstructed.model_dump(): exit_error("FIXTURE_SPEC_RESULT_MAPPING_MISMATCH")
         
         payload = json.loads(result_model.data_payload)
         outcome_map = {obs["uci"]: obs["outcome"] for obs in payload["observed_replies"]}
@@ -84,14 +82,14 @@ def main():
         H_1_ucis = man_fix["H_1_ucis"]
         H_2_ucis = man_fix["H_2_ucis"]
         
-        assert H_1_ucis == sorted([c_1] + M_1_ucis)
-        assert H_2_ucis == sorted([c_2] + M_2_ucis)
-        assert len(set(H_1_ucis).intersection(H_2_ucis)) == 0
+        if H_1_ucis != sorted([c_1] + M_1_ucis): exit_error("MATCHED_UNIVERSE_INVARIANT_FAILURE")
+        if H_2_ucis != sorted([c_2] + M_2_ucis): exit_error("MATCHED_UNIVERSE_INVARIANT_FAILURE")
+        if len(set(H_1_ucis).intersection(H_2_ucis)) != 0: exit_error("MATCHED_UNIVERSE_INVARIANT_FAILURE")
         
         m_1 = len(M_1_ucis)
         m_2 = len(M_2_ucis)
-        assert m_1 >= 2
-        assert m_2 >= 2
+        if m_1 < 2: exit_error("MATCHED_UNIVERSE_INVARIANT_FAILURE")
+        if m_2 < 2: exit_error("MATCHED_UNIVERSE_INVARIANT_FAILURE")
         
         # Check evaluability
         evaluable = True
@@ -185,7 +183,7 @@ def main():
             Q_suite = Fraction(sorted_Q[K // 2 - 1] + sorted_Q[K // 2], 2)
             
     H_0_75 = sum(1 for q in evaluable_Q if q >= Fraction(3, 4)) if K > 0 else 0
-    H_required = math.ceil(3 * K / 4) if K > 0 else 0
+    H_required = (3 * K + 3) // 4 if K > 0 else 0
     
     classification = "INCONCLUSIVE"
     reason = None
@@ -208,8 +206,8 @@ def main():
         "protocol_commit": "fd54ad04c54e4756ad904f17454b9e70e881afea",
         "raw_acquisition_commit": "ee31be200a1d1dcb6049892ce14cb3c74767694f",
         "raw_integrity_commit": "e69348f4ef943cae55f423d52e924f6fe92800d0",
-        "mathematics_file_sha256": "f29d7a0a2fca4c96583685025f0d4e8cfd321691",
-        "protocol_file_sha256": "1bccb06ad9302584c07d83636cc662363d3b66fd",
+        "mathematics_file_sha256": "7f395355e2505db8cc24468e541db5f9618d81c206a8f489c30a09607b0ac8a8",
+        "protocol_file_sha256": "2b9377a46b5ff54453ec1796b9a5ce8ca3f1e7bf36a112820d9390b69ed819b9",
         "raw_acquisition_sha256": "5d89d9efde0b140bd134a4e9e3e57092120619acf335c05fcbd2bb9bf1d09b2e",
         "manifest_sha256": "40949ceeaa5ff1cd1c8a083df45f0dbe0f252d3f1637a692dbf96ae98156ad13",
         "presearch_bundle_sha256": "6ce6b91d3839998f2b9f24c3c6368cbb30cf799c1e8ddaeb9a9a3dcfc54e957b",
@@ -224,6 +222,7 @@ def main():
         "classification": classification,
         "classification_reason": reason,
         "evidence_ceiling": "INTERVENTION_SENSITIVITY",
+        "allowed_interpretation_ceiling": "consequence estimates are sensitive to legal destination variation within exact same-origin move-form strata.",
         "denied_claims": {
             "isolated_destination_causality": False,
             "objective_causal_effect": False,
@@ -232,12 +231,32 @@ def main():
             "heat_contribution": False,
             "statistical_significance_claim": False
         },
+        "correction_provenance": {
+            "supersedes_analysis_commit": "ee3e51a09b4bdad94b34444d943c28b1de07d995",
+            "supersedes_analysis_sha256": "fdf58c4cce072fd1d4caf0bebb473c2abbf9fe5baaf8b3b6b574514e22f1c305",
+            "correction_reason": "FROZEN_D_DENOMINATOR_IMPLEMENTATION_ERROR_AND_FILE_DIGEST_TYPE_ERROR",
+            "classification_changed": False
+        },
         "fixtures": fixtures_results
     }
     
+    return artifact
+
+def serialize_artifact(artifact):
+    return json.dumps(artifact, sort_keys=True, indent=2, ensure_ascii=False).encode("utf-8") + b"\n"
+
+def main():
+    a1 = generate_artifact()
+    a2 = generate_artifact()
+    
+    s1 = serialize_artifact(a1)
+    s2 = serialize_artifact(a2)
+    
+    if s1 != s2: exit_error("ANALYSIS_CORRECTION_INVARIANT_FAILURE")
+    
     out_path = "docs/research/t3/t3b9_matched_analysis.json"
-    with open(out_path, "w", encoding="utf-8") as f:
-        f.write(json.dumps(artifact, sort_keys=True, indent=2, ensure_ascii=False) + "\n")
+    with open(out_path, "wb") as f:
+        f.write(s1)
         
     print(get_file_sha(out_path))
 
