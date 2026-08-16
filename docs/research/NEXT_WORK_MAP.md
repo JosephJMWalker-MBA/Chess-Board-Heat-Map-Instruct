@@ -71,7 +71,7 @@ Proved that exact ordered `future_moves` restore deterministic replay of standar
 ## Active Research Track
 
 **Phase:** T3b Legal Reply Intervention
-**Next Scientific Step:** T3b-4 — Matched-Control Identifiability Feasibility Audit
+**Next Scientific Step:** T3b-5 — Strict Matchability Coverage Audit
 
 ## T3b Queue
 
@@ -79,8 +79,9 @@ Proved that exact ordered `future_moves` restore deterministic replay of standar
 2. ~~T3b-1 — Comparator Identity~~ COMPLETE
 3. ~~T3b-2 — Rule-Only Fixture & Statistic Preregistration~~ COMPLETE/FROZEN
 4. ~~T3b-3 — Frozen legal-reply intervention execution~~ COMPLETE / WEAK_SUPPORT / INTERVENTION_SENSITIVITY
-5. T3b-4 — Matched-Control Identifiability Feasibility Audit
-   *(Documentation/design only initially. If no independently defensible rule-only matching basis can be defined, T3b Design B should be abandoned and the project should move to Representation Audit rather than inventing a matcher around the T3b-3 results.)*
+5. ~~T3b-4 — Matched-Control Identifiability Feasibility Audit~~ COMPLETE / strict matcher semantically admissible
+6. T3b-5 — Strict Matchability Coverage Audit
+   *(RULE-ONLY / NO ENGINE. If M < 12, abandon strict basis. If M >= 12, basis is justified.)*
 
 ---
 
@@ -119,12 +120,13 @@ Remain downstream and outside objective Heat.
 7. **DONE** — T3b-1 Comparator Design / Identifiability
 8. **DONE** — T3b-2 Rule-Only Fixture and Statistic Preregistration
 9. **CLOSED** — T3b-3 Frozen legal-reply intervention execution
-10. **NEXT P1** — T3b-4 Matched-Control Identifiability Feasibility Audit
-11. **P2** — Representation Audit
-12. **P2** — Projection Audit
-13. **P2** — Multi-Instrument / T1.12 robustness
-14. **P3** — Pathways / Evidence Fusion / Amplitude
-15. **DEFER** — Human Navigation / Teacher / Explanation
+10. **DONE** — T3b-4 Matched-Control Identifiability Feasibility Audit
+11. **NEXT P1** — T3b-5 Strict Matchability Coverage Audit (RULE-ONLY / NO ENGINE)
+12. **P2** — Representation Audit
+13. **P2** — Projection Audit
+14. **P2** — Multi-Instrument / T1.12 robustness
+15. **P3** — Pathways / Evidence Fusion / Amplitude
+16. **DEFER** — Human Navigation / Teacher / Explanation
 
 ---
 
