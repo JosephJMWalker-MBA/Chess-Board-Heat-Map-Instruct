@@ -43,7 +43,7 @@ Without implementing or selecting among them yet, the next methodological choice
 
 3. **Acquire a preregistered top-k/MultiPV support set.**
    - *Scientific question:* Does the presence of an event across a broader set of plausible continuations associate with root regret?
-   - *Confound/dependency:* Support becomes heavily candidate-set and instrument dependent, destroying the simplicity of a single objective continuation.
+   - *Confound/dependency:* Support becomes heavily candidate-set and instrument dependent, destroying the simplicity of a single producer-selected continuation.
 
 4. **Move to a legal matched intervention that evaluates an event whether or not the producer naturally realizes it — the T3b direction.**
    - *Scientific question:* What is the isolated consequence effect of forcing the event to occur compared to an equivalent history where it is omitted?
