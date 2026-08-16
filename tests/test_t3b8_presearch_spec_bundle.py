@@ -2,6 +2,7 @@ import json
 import hashlib
 import sys
 import os
+import ast
 
 sys.path.insert(0, os.path.abspath("src"))
 from chessheat.experiment import SufficientPosition, SuiteManifest, SuiteKind, ExperimentSpec
@@ -34,6 +35,8 @@ def test_t3b8_presearch_spec_bundle():
     
     bundle_path = "docs/research/t3/t3b8_presearch_spec_bundle.json"
     bundle_sha = get_file_sha(bundle_path)
+    EXPECTED_BUNDLE_SHA = "6ce6b91d3839998f2b9f24c3c6368cbb30cf799c1e8ddaeb9a9a3dcfc54e957b"
+    assert bundle_sha == EXPECTED_BUNDLE_SHA
     
     with open(bundle_path, "r", encoding="utf-8") as f:
         bundle = json.load(f)
@@ -61,6 +64,10 @@ def test_t3b8_presearch_spec_bundle():
     
     observed_uci_name = bundle["observed_uci_engine_name"]
     engine_binary_sha256 = bundle["engine_binary_sha256"]
+    
+    assert observed_uci_name == "Stockfish 18"
+    assert engine_binary_sha256 == "ae4c93fa9676ca7750d0714342fd8a5b1d018000fc6e0f6cedf112067b5ef374"
+    assert bundle["resolved_executable_path"] == "/opt/homebrew/Cellar/stockfish/18/bin/stockfish"
     
     assert len(bundle["specs"]) == 16
     spec_digests = set()
@@ -135,7 +142,22 @@ def test_t3b8_presearch_spec_bundle():
                 
     reject_keys(bundle)
     
-    print(f"Bundle SHA-256 bound: {bundle_sha}")
+    # Zero-search invariant check via AST
+    generator_path = "scripts/prepare_t3b8_s1_specs.py"
+    with open(generator_path, "r", encoding="utf-8") as f:
+        tree = ast.parse(f.read())
+        
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Call):
+            if isinstance(node.func, ast.Attribute):
+                if isinstance(node.func.value, ast.Name) and node.func.value.id == "engine":
+                    assert node.func.attr in {"configure", "quit"}, f"Disallowed engine call: {node.func.attr}"
+                if node.func.attr in {"analyse", "analysis", "play"}:
+                    assert False, f"Disallowed callable: {node.func.attr}"
+        elif isinstance(node, ast.Constant) and isinstance(node.value, str):
+            val = node.value.strip().lower()
+            if val == "go" or val.startswith("go "):
+                assert False, f"Disallowed string literal: {node.value}"
 
 if __name__ == "__main__":
     test_t3b8_presearch_spec_bundle()
