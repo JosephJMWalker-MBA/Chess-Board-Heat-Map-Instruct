@@ -1,0 +1,18 @@
+{
+  "protocol_validity": false,
+  "scientific_classification": "INCONCLUSIVE",
+  "scientific_failure_reason": "ACQUISITION_PROVENANCE_NOT_CLOSED",
+  "conditional_numeric_classification": "FALSIFIED",
+  "K": 7,
+  "D_suite": -88.0,
+  "M_suite": -411.0,
+  "producer_identity_status": "UNVERIFIED_FROM_RAW_PRODUCER",
+  "engine_state_continuity_status": "UNVERIFIED",
+  "raw_artifacts_modified": false,
+  "rerun_performed": false,
+  "corpus_artifact_digest": "676dedd34a51fc08aea59b57143295115c0e21c884980125f605c33cd8d17ee3",
+  "protocol_sha": "6c599dc2b2705f3958274aef06d8aab15bd8e616",
+  "manifest_sha": "4337dd0c8ef2579a1b15eb58f5cb00f4bb566c6fdde6ef612f09b2bab2e1ecc7",
+  "audit_sha": "6c8b38431f73f606145abfdcac5e6e37f2313dc5",
+  "execution_sha": "ff3e0eccc6276ae9c72810209c3848ff8d35e666"
+}
