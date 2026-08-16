@@ -75,18 +75,21 @@ The complete result:
 
 ### 6. Compact Claim Ledger
 
-| Proposition | Status |
-| :--- | :--- |
-| Exact move history can preserve branch semantics. | EARNED |
-| Ordinary recurrence can lose branch-conditioned information. | EARNED |
-| Named chess relations can be useful descriptive coordinates. | EARNED |
-| Tested ray/blocker relations are irreducible to strong square/state representations. | FALSIFIED |
-| Search realization is objective consequence. | FALSIFIED |
-| Destination-square event membership is broadly consequence-sensitive. | WEAK_SUPPORT |
-| Destination-square event membership remains unusually consequence-sensitive after exact same-origin/move-form matching. | FALSIFIED |
-| Objective consequence has a spatially localizable structure. | STILL OPEN |
-| A 64-square projection faithfully represents that structure. | STILL OPEN |
-| Internal model concepts useful for chess are necessarily useful for Heat. | FORBIDDEN INFERENCE |
+| Proposition | Status | Evidence basis |
+| :--- | :--- | :--- |
+| Exact move history can preserve branch semantics. | EARNED | Demonstrated by Issue #7 |
+| Ordinary recurrence can lose branch-conditioned information. | EARNED | Demonstrated by Issue #4 |
+| Named chess relations can be useful descriptive coordinates. | EARNED | Rule-exact relations remain legitimate derived semantics (T2b) |
+| Tested ray/blocker relations are irreducible to strong square/state representations. | FALSIFIED | T2b-1/T2b-3 match at the audited information boundary |
+| Search realization is objective consequence. | INCONCLUSIVE | E_i earned producer-conditioned observational-evidence status. T3a-4 was scientifically inconclusive because of provenance, while its conditional preregistered monotonic numerical direction was falsified. Objective-consequence identity was not established. |
+| Destination-square event membership is broadly consequence-sensitive. | WEAK_SUPPORT | Supported by T3b-3 |
+| Under the frozen T3b-7 Design-B corpus/instrument, destination-event membership remains unusually consequence-sensitive after exact same-origin / same-move-form matching. | FALSIFIED | Stronger destination-specific matched claim failed to earn support in T3b-9 |
+| Objective consequence has a spatially localizable structure. | STILL OPEN | Requires foundational consequence metric |
+| A 64-square projection faithfully represents that structure. | STILL OPEN | Gated on earned spatial consequence object |
+| Internal model concepts useful for chess are necessarily useful for Heat. | FORBIDDEN INFERENCE | decodable != causally used != useful for Heat |
+
+**Preserve separately:**
+Search realization as a monotonic primitive of objective consequence: **NOT EARNED**
 
 ### 7. What Representation Audit Must NOT Be
 
@@ -143,4 +146,8 @@ Based on the accumulated negative evidence, a representation audit answers the f
 
 **REPRESENTATION_AUDIT_NOT_YET_EARNED**
 
-**Rationale:** The evidence tree establishes that we do not yet have a robust, strictly validated measurement of spatial consequence. $E_i$ and matched destination events both failed to earn status as objective consequence primitives. Until ChessHeat defines and earns a mathematical object that actually represents spatial consequence, auditing the decodability of relational concepts (R0/R1) or comparing them against an invalid baseline (R2-R5) cannot yield a decision-relevant outcome for the core architecture. Representation Audit must wait until the foundational consequence metric is established.
+**Rationale:** The evidence tree establishes that we do not yet have a robust, strictly validated measurement of spatial consequence. $E_i$ and matched destination events both failed to earn status as objective consequence primitives.
+
+R0-R2 can still answer representation questions such as decodability, reproducibility, and nonredundancy. But those results alone cannot decide Heat inclusion. R3-R5 require a scientifically earned consequence target against which association, intervention sensitivity, and incremental Heat value can be judged.
+
+Therefore, Representation Audit must wait until the foundational consequence metric is established.

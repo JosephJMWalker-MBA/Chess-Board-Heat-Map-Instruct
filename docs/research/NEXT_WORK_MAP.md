@@ -72,7 +72,7 @@ Proved that exact ordered `future_moves` restore deterministic replay of standar
 
 **Phase:** T3b Legal Reply Intervention
 **Status:** CLOSED / FALSIFIED
-**Next Scientific Step:** Representation Audit (Next Candidate)
+**Next Scientific Step:** Spatial Consequence Object Preflight (Next Candidate / planning only)
 
 ## T3b Queue
 
@@ -93,12 +93,20 @@ Proved that exact ordered `future_moves` restore deterministic replay of standar
 
 ## Later work, intentionally gated
 
-### Representation Audit
+### Spatial Consequence Object Preflight
 **Priority: P2 (Next Candidate)**
+
+**Purpose:**
+Determine what mathematical object could legitimately represent "where consequence lives" before choosing another representation, projection, or Heat mechanism.
+
+**Note:** This is not authorization for a new engine experiment. It is a mathematical / semantic / identifiability preflight.
+
+### Representation Audit
+**Priority: PARKED P2 / NOT YET EARNED**
 Test whether independently meaningful chess concepts are recoverable from the representation. `decodable != causally used != useful for Heat`.
 
 ### Projection Audit
-**Priority: P2**
+**Priority: PARKED P2 / GATED ON EARNED SPATIAL CONSEQUENCE OBJECT**
 Validate the lossy mapping from rich evidence to the 64-square public heatmap. The projection itself must earn faithfulness.
 
 ### Multi-Instrument robustness / T1.12
@@ -132,11 +140,12 @@ Remain downstream and outside objective Heat.
 13. **CLOSED** — T3b-7 Rule-Only Matched Intervention Fixture Protocol
 14. **CLOSED** — T3b-8 Acquisition
 15. **CLOSED** — T3b-9 Matched Analysis (FALSIFIED)
-16. **NEXT CANDIDATE P2** — Representation Audit
-17. **P2** — Projection Audit
-18. **P2** — Multi-Instrument / T1.12 robustness
-19. **P3** — Pathways / Evidence Fusion / Amplitude
-20. **DEFER** — Human Navigation / Teacher / Explanation
+16. **NEXT CANDIDATE P2** — Spatial Consequence Object Preflight
+17. **PARKED P2** — Representation Audit (NOT YET EARNED)
+18. **PARKED P2** — Projection Audit (GATED)
+19. **P2** — Multi-Instrument / T1.12 robustness
+20. **P3** — Pathways / Evidence Fusion / Amplitude
+21. **DEFER** — Human Navigation / Teacher / Explanation
 
 ---
 
