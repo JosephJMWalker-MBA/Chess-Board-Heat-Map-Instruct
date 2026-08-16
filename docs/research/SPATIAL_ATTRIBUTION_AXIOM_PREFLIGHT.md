@@ -8,7 +8,22 @@ Specifically, destination ownership ($\mu_D$) and transition-touch ownership ($\
 
 **Goal:** What additional ownership/responsibility assumptions could distinguish admissible spatial attribution operators, and which of those assumptions are semantic definitions versus empirically falsifiable claims?
 
-## 2. Candidate Attribution Principles
+## 2. The Critical Distinction
+
+**Empirical utility of an attribution operator $\neq$ truth of its ownership semantics.**
+
+An explicitly conventional attribution rule is not falsified merely because it performs poorly on a downstream task.
+
+Poor performance may falsify:
+*"operator $\mu$ is useful for predicting target $Y$ under protocol $\Pi$"*
+
+but not:
+*"$\mu$ is the declared attribution convention."*
+
+Conversely, strong predictive performance does not prove:
+*"consequence objectively belongs to the squares selected by $\mu$."*
+
+## 3. Candidate Attribution Principles
 
 ### A. Destination Ownership
 - **Assigns ownership to:** The exact target squares of the alternative transitions.
@@ -19,9 +34,9 @@ Specifically, destination ownership ($\mu_D$) and transition-touch ownership ($\
 - **Sufficient state:** Respected.
 - **Relation ontology:** None introduced.
 - **Implementation ambiguity:** Low.
-- **Possible falsifier:** Predictive incremental value, invariance under equivalent histories.
-- **Claim ceiling:** Simplest geometric attribution convention.
-- **Changes Heat Architecture:** Formalizes current projection.
+- **Ownership identifiability:** NOT IDENTIFIED / CONVENTIONAL
+- **Empirical utility test:** Destination-based attribution predicts independent target $Y$ better/worse than comparator operators.
+- **Claim ceiling:** Explicitly declared destination-based attribution.
 - **Classification:** SEMANTIC CONVENTION / EXPLANATORY CONVENTION.
 
 ### B. Transition-Touch Ownership
@@ -33,8 +48,9 @@ Specifically, destination ownership ($\mu_D$) and transition-touch ownership ($\
 - **Sufficient state:** Respected.
 - **Relation ontology:** None introduced.
 - **Implementation ambiguity:** Low.
-- **Possible falsifier:** Predictive incremental value.
-- **Claim ceiling:** Full movement footprint convention.
+- **Ownership identifiability:** NOT IDENTIFIED / CONVENTIONAL
+- **Empirical utility test:** Transition-footprint attribution predicts independent target $Y$ better/worse than comparator operators.
+- **Claim ceiling:** Explicitly declared transition-footprint attribution.
 - **Classification:** SEMANTIC CONVENTION.
 
 ### C. Changed-State Ownership
@@ -46,7 +62,8 @@ Specifically, destination ownership ($\mu_D$) and transition-touch ownership ($\
 - **Sufficient state:** Respected.
 - **Relation ontology:** None introduced.
 - **Implementation ambiguity:** Low.
-- **Possible falsifier:** Fails to capture static relational importance.
+- **Ownership identifiability:** NOT IDENTIFIED / CONVENTIONAL
+- **Empirical utility test:** Predicts independent target $Y$ better/worse than comparator operators. (Unchanged relationally important squares represent a structural limitation/failure mode, not a falsifier of the semantic convention.)
 - **Claim ceiling:** Diff-based convention.
 - **Classification:** SEMANTIC CONVENTION.
 
@@ -59,55 +76,58 @@ Specifically, destination ownership ($\mu_D$) and transition-touch ownership ($\
 - **Sufficient state:** Respected if relation graph is state-derived.
 - **Relation ontology:** Introduced and heavily relied upon.
 - **Implementation ambiguity:** High (two causal models can disagree).
-- **Possible falsifier:** Cross-instrument robustness, intervention prediction.
-- **Claim ceiling:** Explanatory causal representation.
-- **Classification:** EMPIRICAL HYPOTHESIS / EXPLANATORY CONVENTION.
+- **Ownership identifiability:** NOT IDENTIFIED / CONVENTIONAL
+- **Empirical utility test:** Cross-instrument robustness, intervention prediction.
+- **Claim ceiling:** Mechanistic/dependency representation with whatever intervention or predictive entitlement is independently earned.
+- **Classification:** EXPLANATORY CONVENTION (plus EMPIRICAL HYPOTHESIS only for separately stated predictions about independent observations).
 
 ### E. Legal-Intervention Ownership
 - **Assigns ownership to:** Locus of sensitivity under legal interventions.
 - **Information required:** Intervention distribution and response.
-- **Chess legality determines:** Legal intervention set, not the weighting.
+- **Chess legality determines:** Legal intervention set may be rule-derived; intervention distribution/weighting/ownership interpretation is not.
 - **Off-manifold counterfactuals:** No, if strictly legal.
 - **Branch identity:** Reduced to state sensitivity.
 - **Sufficient state:** Respected.
 - **Relation ontology:** None strictly necessary, but intervention set could embed one.
 - **Implementation ambiguity:** High (weighting distribution).
-- **Possible falsifier:** Held-out consequence discrimination.
-- **Claim ceiling:** Causal sensitivity map.
+- **Ownership identifiability:** NOT IDENTIFIED / CONVENTIONAL
+- **Empirical utility test:** Held-out consequence discrimination.
+- **Claim ceiling:** Intervention-sensitivity map under an explicitly declared legal-intervention set and weighting distribution.
 - **Classification:** EMPIRICAL HYPOTHESIS.
 
 ### F. Coalition/Value-Allocation Ownership (Shapley)
 - **Assigns ownership to:** Square/feature coalitions based on marginal contribution.
 - **Information required:** Value function over partial feature sets.
 - **Chess legality determines:** No.
-- **Off-manifold counterfactuals:** Yes, heavily (evaluating illegal partial boards).
+- **Off-manifold counterfactuals:** Off-manifold risk depends on coalition semantics; naïve square/feature deletion commonly creates illegal or insufficient chess states.
 - **Branch identity:** Reduced/Destroyed.
 - **Sufficient state:** Violated (requires state abstractions).
 - **Relation ontology:** Feature definitions.
 - **Implementation ambiguity:** High (feature selection and reference baseline).
-- **Possible falsifier:** Cannot be validated via legal engine paths.
+- **Ownership identifiability:** NOT IDENTIFIED / CONVENTIONAL
+- **Empirical utility test:** Utility may be compared against independent legal-state targets, but coalition-value semantics themselves require explicit justification.
 - **Claim ceiling:** Axiomatic fairness allocation.
 - **Classification:** MATHEMATICAL AXIOM / SEMANTIC CONVENTION.
 
-## 3. The Central Identifiability Problem
+## 4. The Central Validation Problem
 
 How can an attribution axiom be scientifically selected without circularly validating it against itself?
 
-Explicitly examine whether an ownership principle can be validated without already possessing the objective spatial ground truth it is supposed to define. If $\mu_D$ and $\mu_T$ distribute $a$ differently, validating $\mu_D$ against a downstream task requires proving it objectively better tracks $V$.
+An attribution operator can be empirically compared using an independent target $Y$ without proving that $Y$ is spatial ground truth. Such a study can establish predictive or intervention utility relative to $Y$. It cannot, by itself, establish that the operator's squares objectively own consequence.
 
-**Independent constraints for validation:**
-- intervention prediction
-- held-out consequence discrimination
-- cross-instrument robustness
-- minimal sufficient representation
-- invariance under equivalent legal histories
-- perturbation locality
-- predictive incremental value
+We must distinguish:
+- $Y = \text{independent validation target}$
+- $V = \text{ultimate consequence target}$
+- $\mu = \text{spatial attribution operator}$
 
-*Note: Selecting an attribution because it predicts consequence better is an empirical endeavor. Proving that consequence objectively "belongs" to those squares is a much stronger philosophical/non-identifiable claim.*
-
-## 4. Conclusion
+## 5. Conclusion
 
 **SPATIAL_OWNERSHIP_IS_CONVENTIONAL_NOT_IDENTIFIED**
 
-Without an independent empirical target, explicit spatial ownership assumptions (like destination vs. transition-touch) remain scientifically untestable semantic conventions. To promote them to empirically falsifiable hypotheses, they require an independent validation target (e.g., intervention prediction or cross-instrument robustness) that does not circularly rely on the attribution axiom itself. Until such a target is established, any declared spatial attribution operator is fundamentally a conventional projection, not a natively discovered property of chess consequence.
+Current chess semantics and adopted invariants do not identify a unique objective square-ownership interpretation. Any C2$\to$C4 ownership rule therefore remains an explicit attribution convention unless additional independently justified semantics are supplied.
+
+Operator-specific predictive, robustness, or intervention properties remain empirically testable. Success on those properties can earn utility claims, but does not convert the underlying ownership convention into discovered spatial ground truth.
+
+## 6. Next Planning Question
+
+Which independent validation target could compare attribution operators without pretending to provide spatial ground truth?
