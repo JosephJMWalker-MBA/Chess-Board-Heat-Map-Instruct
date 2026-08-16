@@ -1,0 +1,245 @@
+import json
+import hashlib
+import subprocess
+from fractions import Fraction
+import math
+import sys
+import os
+
+sys.path.insert(0, os.path.abspath("src"))
+from chessheat.experiment import ExperimentSpec, ExperimentResult
+
+def get_file_sha(path):
+    with open(path, "rb") as f:
+        return hashlib.sha256(f.read()).hexdigest()
+
+def get_git_blob_sha(path):
+    output = subprocess.check_output(["git", "hash-object", path])
+    return output.decode("utf-8").strip()
+
+def serialize_rational(r: Fraction):
+    if r is None:
+        return None
+    return {"numerator": r.numerator, "denominator": r.denominator}
+
+def compute_D(G, T, m):
+    return Fraction(2 * G + T - m, 2 * m)
+
+def load_and_verify():
+    raw_path = "tests/fixtures/t3b8/t3b8_raw_acquisition.json"
+    manifest_path = "docs/research/t3/t3b7_matched_fixture_manifest.json"
+    bundle_path = "docs/research/t3/t3b8_presearch_spec_bundle.json"
+    t3b6_path = "docs/research/t3/T3B6_MATCHED_ESTIMAND_CALIBRATION.md"
+    t3b7_path = "docs/research/t3/T3B7_RULE_ONLY_MATCHED_FIXTURE_PROTOCOL.md"
+    
+    assert get_file_sha(raw_path) == "5d89d9efde0b140bd134a4e9e3e57092120619acf335c05fcbd2bb9bf1d09b2e"
+    assert get_file_sha(manifest_path) == "40949ceeaa5ff1cd1c8a083df45f0dbe0f252d3f1637a692dbf96ae98156ad13"
+    assert get_file_sha(bundle_path) == "6ce6b91d3839998f2b9f24c3c6368cbb30cf799c1e8ddaeb9a9a3dcfc54e957b"
+    
+    assert get_git_blob_sha(t3b6_path) == "f29d7a0a2fca4c96583685025f0d4e8cfd321691"
+    assert get_git_blob_sha(t3b7_path) == "1bccb06ad9302584c07d83636cc662363d3b66fd"
+    
+    with open(raw_path) as f: raw = json.load(f)
+    with open(manifest_path) as f: manifest = json.load(f)
+    with open(bundle_path) as f: bundle = json.load(f)
+        
+    assert raw["fixture_count"] == 16
+    assert raw["actual_search_count"] == 171
+    assert raw["expected_search_count"] == 171
+    assert raw["comparison_perspective"] == "white"
+    assert raw["resume_allowed"] is False
+    assert raw["hash_reset_between_searches"] is False
+    
+    return raw, manifest, bundle
+
+def main():
+    raw, manifest, bundle = load_and_verify()
+    
+    fixtures_results = []
+    
+    evaluable_Q = []
+    
+    for f_idx, raw_fix in enumerate(raw["fixtures"]):
+        man_fix = manifest["fixtures"][f_idx]
+        bun_fix = bundle["specs"][f_idx]
+        
+        assert raw_fix["fixture_identity"] == man_fix["fixture_identity"]
+        assert bun_fix["fixture_identity"] == man_fix["fixture_identity"]
+        assert raw_fix["spec_digest"] == bun_fix["spec_digest"]
+        
+        result_model = ExperimentResult(**raw_fix["experiment_result"])
+        reconstructed = ExperimentResult.create(
+            spec_digest=result_model.spec_digest,
+            data=json.loads(result_model.data_payload)
+        )
+        assert result_model.model_dump() == reconstructed.model_dump()
+        
+        payload = json.loads(result_model.data_payload)
+        outcome_map = {obs["uci"]: obs["outcome"] for obs in payload["observed_replies"]}
+        
+        c_1 = man_fix["c_1"]
+        c_2 = man_fix["c_2"]
+        M_1_ucis = man_fix["M_1_ucis"]
+        M_2_ucis = man_fix["M_2_ucis"]
+        H_1_ucis = man_fix["H_1_ucis"]
+        H_2_ucis = man_fix["H_2_ucis"]
+        
+        assert H_1_ucis == sorted([c_1] + M_1_ucis)
+        assert H_2_ucis == sorted([c_2] + M_2_ucis)
+        assert len(set(H_1_ucis).intersection(H_2_ucis)) == 0
+        
+        m_1 = len(M_1_ucis)
+        m_2 = len(M_2_ucis)
+        assert m_1 >= 2
+        assert m_2 >= 2
+        
+        # Check evaluability
+        evaluable = True
+        reason = None
+        for uci in H_1_ucis + H_2_ucis:
+            if outcome_map[uci]["type"] == "mate":
+                evaluable = False
+                reason = "NON_CP_MATCHED_CHILD_PRESENT"
+                break
+                
+        fix_rec = {
+            "fixture_identity": man_fix["fixture_identity"],
+            "fixture_index": f_idx,
+            "spec_digest": bun_fix["spec_digest"],
+            "experiment_result_artifact_digest": result_model.artifact_digest,
+            "c_1": c_1,
+            "c_2": c_2,
+            "M_1_ucis": M_1_ucis,
+            "M_2_ucis": M_2_ucis,
+            "H_1_ucis": H_1_ucis,
+            "H_2_ucis": H_2_ucis,
+            "m_1": m_1,
+            "m_2": m_2,
+            "evaluable": evaluable,
+            "evaluability_reason": reason
+        }
+        
+        if not evaluable:
+            fix_rec.update({
+                "G_1": None, "T_1": None, "D_1": None, "S_1": None,
+                "G_2": None, "T_2": None, "D_2": None, "S_2": None,
+                "S_match": None, "omega_size": None, "L": None, "E": None, "Q": None
+            })
+        else:
+            def get_cp(u): return outcome_map[u]["value"]
+            
+            def calc_z(z, H_j_ucis):
+                G = 0
+                T = 0
+                mz = len(H_j_ucis) - 1
+                Y_z = get_cp(z)
+                for n in H_j_ucis:
+                    if n == z: continue
+                    Y_n = get_cp(n)
+                    if Y_z > Y_n: G += 1
+                    elif Y_z == Y_n: T += 1
+                D = compute_D(G, T, mz)
+                S = abs(D)
+                return G, T, D, S
+            
+            G_1, T_1, D_1, S_1 = calc_z(c_1, H_1_ucis)
+            G_2, T_2, D_2, S_2 = calc_z(c_2, H_2_ucis)
+            
+            S_match = Fraction(S_1 + S_2, 2)
+            
+            # Calibration
+            omega_size = len(H_1_ucis) * len(H_2_ucis)
+            L = 0
+            E = 0
+            
+            for z1 in H_1_ucis:
+                _, _, _, sz1 = calc_z(z1, H_1_ucis)
+                for z2 in H_2_ucis:
+                    _, _, _, sz2 = calc_z(z2, H_2_ucis)
+                    S_u = Fraction(sz1 + sz2, 2)
+                    if S_u < S_match:
+                        L += 1
+                    elif S_u == S_match:
+                        E += 1
+            
+            Q = Fraction(2 * L + E, 2 * omega_size)
+            evaluable_Q.append(Q)
+            
+            fix_rec.update({
+                "G_1": G_1, "T_1": T_1, "D_1": serialize_rational(D_1), "S_1": serialize_rational(S_1),
+                "G_2": G_2, "T_2": T_2, "D_2": serialize_rational(D_2), "S_2": serialize_rational(S_2),
+                "S_match": serialize_rational(S_match), "omega_size": omega_size, "L": L, "E": E, "Q": serialize_rational(Q)
+            })
+            
+        fixtures_results.append(fix_rec)
+        
+    K = len(evaluable_Q)
+    K_min = 12
+    
+    Q_suite = None
+    if K >= K_min:
+        sorted_Q = sorted(evaluable_Q)
+        if K % 2 == 1:
+            Q_suite = sorted_Q[K // 2]
+        else:
+            Q_suite = Fraction(sorted_Q[K // 2 - 1] + sorted_Q[K // 2], 2)
+            
+    H_0_75 = sum(1 for q in evaluable_Q if q >= Fraction(3, 4)) if K > 0 else 0
+    H_required = math.ceil(3 * K / 4) if K > 0 else 0
+    
+    classification = "INCONCLUSIVE"
+    reason = None
+    
+    if K < K_min:
+        classification = "INCONCLUSIVE"
+        reason = "INSUFFICIENT_TYPED_MATCHED_FIXTURES"
+    else:
+        if Q_suite >= Fraction(3, 4) and H_0_75 >= H_required:
+            classification = "SUPPORTED"
+        elif Q_suite > Fraction(1, 2):
+            classification = "WEAK_SUPPORT"
+        else:
+            classification = "FALSIFIED"
+            
+    artifact = {
+        "schema_version": 1,
+        "phase": "T3B9_FROZEN_MATCHED_ANALYSIS",
+        "mathematics_commit": "100e4f20b41b260875fb14901b61bbe51c4fe74e",
+        "protocol_commit": "fd54ad04c54e4756ad904f17454b9e70e881afea",
+        "raw_acquisition_commit": "ee31be200a1d1dcb6049892ce14cb3c74767694f",
+        "raw_integrity_commit": "e69348f4ef943cae55f423d52e924f6fe92800d0",
+        "mathematics_file_sha256": "f29d7a0a2fca4c96583685025f0d4e8cfd321691",
+        "protocol_file_sha256": "1bccb06ad9302584c07d83636cc662363d3b66fd",
+        "raw_acquisition_sha256": "5d89d9efde0b140bd134a4e9e3e57092120619acf335c05fcbd2bb9bf1d09b2e",
+        "manifest_sha256": "40949ceeaa5ff1cd1c8a083df45f0dbe0f252d3f1637a692dbf96ae98156ad13",
+        "presearch_bundle_sha256": "6ce6b91d3839998f2b9f24c3c6368cbb30cf799c1e8ddaeb9a9a3dcfc54e957b",
+        "s1_suite_digest": "b483e152cbfd51704f62befabdfd2a9f7880999a199409b63253802a965ed6d7",
+        "fixture_count": 16,
+        "K_min": 12,
+        "K": K,
+        "non_evaluable_fixture_count": 16 - K,
+        "Q_suite": serialize_rational(Q_suite),
+        "H_0_75": H_0_75,
+        "H_required": H_required,
+        "classification": classification,
+        "classification_reason": reason,
+        "evidence_ceiling": "INTERVENTION_SENSITIVITY",
+        "denied_claims": {
+            "isolated_destination_causality": False,
+            "objective_causal_effect": False,
+            "natural_prevalence": False,
+            "producer_independence": False,
+            "heat_contribution": False,
+            "statistical_significance_claim": False
+        },
+        "fixtures": fixtures_results
+    }
+    
+    out_path = "docs/research/t3/t3b9_matched_analysis.json"
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write(json.dumps(artifact, sort_keys=True, indent=2, ensure_ascii=False) + "\n")
+        
+    print(get_file_sha(out_path))
+
+if __name__ == "__main__":
+    main()

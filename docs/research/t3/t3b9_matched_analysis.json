@@ -1,0 +1,1145 @@
+{
+  "H_0_75": 2,
+  "H_required": 12,
+  "K": 15,
+  "K_min": 12,
+  "Q_suite": {
+    "denominator": 13,
+    "numerator": 5
+  },
+  "classification": "FALSIFIED",
+  "classification_reason": null,
+  "denied_claims": {
+    "heat_contribution": false,
+    "isolated_destination_causality": false,
+    "natural_prevalence": false,
+    "objective_causal_effect": false,
+    "producer_independence": false,
+    "statistical_significance_claim": false
+  },
+  "evidence_ceiling": "INTERVENTION_SENSITIVITY",
+  "fixture_count": 16,
+  "fixtures": [
+    {
+      "D_1": {
+        "denominator": 2,
+        "numerator": -1
+      },
+      "D_2": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "E": 2,
+      "G_1": 0,
+      "G_2": 1,
+      "H_1_ucis": [
+        "d8a5",
+        "d8b6",
+        "d8c7",
+        "d8d7",
+        "d8e8",
+        "d8f8"
+      ],
+      "H_2_ucis": [
+        "e7e8",
+        "e7f7",
+        "e7f8"
+      ],
+      "L": 4,
+      "M_1_ucis": [
+        "d8a5",
+        "d8b6",
+        "d8c7",
+        "d8d7",
+        "d8f8"
+      ],
+      "M_2_ucis": [
+        "e7f7",
+        "e7f8"
+      ],
+      "Q": {
+        "denominator": 18,
+        "numerator": 5
+      },
+      "S_1": {
+        "denominator": 2,
+        "numerator": 1
+      },
+      "S_2": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "S_match": {
+        "denominator": 4,
+        "numerator": 1
+      },
+      "T_1": 0,
+      "T_2": 0,
+      "c_1": "d8e8",
+      "c_2": "e7e8",
+      "evaluability_reason": null,
+      "evaluable": true,
+      "experiment_result_artifact_digest": "8caa86c994d6ade59e2c68ed97823335a30f93b23d0e2a66493696c3cbc9b8e4",
+      "fixture_identity": "t3b7_f00",
+      "fixture_index": 0,
+      "m_1": 5,
+      "m_2": 2,
+      "omega_size": 18,
+      "spec_digest": "fbadb8520ea21663f6dc54ab65a3668ae9a195eba5603fa329384cc84dd61310"
+    },
+    {
+      "D_1": {
+        "denominator": 2,
+        "numerator": 1
+      },
+      "D_2": {
+        "denominator": 6,
+        "numerator": -1
+      },
+      "E": 4,
+      "G_1": 2,
+      "G_2": 1,
+      "H_1_ucis": [
+        "d7c7",
+        "d7c8",
+        "d7e8"
+      ],
+      "H_2_ucis": [
+        "d8b8",
+        "d8c7",
+        "d8c8",
+        "d8e8"
+      ],
+      "L": 4,
+      "M_1_ucis": [
+        "d7c7",
+        "d7c8"
+      ],
+      "M_2_ucis": [
+        "d8b8",
+        "d8c7",
+        "d8c8"
+      ],
+      "Q": {
+        "denominator": 2,
+        "numerator": 1
+      },
+      "S_1": {
+        "denominator": 2,
+        "numerator": 1
+      },
+      "S_2": {
+        "denominator": 6,
+        "numerator": 1
+      },
+      "S_match": {
+        "denominator": 3,
+        "numerator": 1
+      },
+      "T_1": 0,
+      "T_2": 0,
+      "c_1": "d7e8",
+      "c_2": "d8e8",
+      "evaluability_reason": null,
+      "evaluable": true,
+      "experiment_result_artifact_digest": "fd36534c59ee5c4485db60324378fd7679681d681cd09936c9bc8c6e407fd692",
+      "fixture_identity": "t3b7_f01",
+      "fixture_index": 1,
+      "m_1": 2,
+      "m_2": 3,
+      "omega_size": 12,
+      "spec_digest": "d4a638fef1aab4054a84164466d509797afe3a70e3a5e4f5c56e0f8fddc6a159"
+    },
+    {
+      "D_1": {
+        "denominator": 6,
+        "numerator": 1
+      },
+      "D_2": {
+        "denominator": 2,
+        "numerator": -1
+      },
+      "E": 4,
+      "G_1": 2,
+      "G_2": 0,
+      "H_1_ucis": [
+        "a8a6",
+        "a8a7",
+        "a8b8",
+        "a8c8"
+      ],
+      "H_2_ucis": [
+        "d8b8",
+        "d8c8",
+        "d8e7",
+        "d8f6",
+        "d8g5",
+        "d8h4"
+      ],
+      "L": 12,
+      "M_1_ucis": [
+        "a8a6",
+        "a8a7",
+        "a8b8"
+      ],
+      "M_2_ucis": [
+        "d8b8",
+        "d8e7",
+        "d8f6",
+        "d8g5",
+        "d8h4"
+      ],
+      "Q": {
+        "denominator": 12,
+        "numerator": 7
+      },
+      "S_1": {
+        "denominator": 6,
+        "numerator": 1
+      },
+      "S_2": {
+        "denominator": 2,
+        "numerator": 1
+      },
+      "S_match": {
+        "denominator": 3,
+        "numerator": 1
+      },
+      "T_1": 0,
+      "T_2": 0,
+      "c_1": "a8c8",
+      "c_2": "d8c8",
+      "evaluability_reason": null,
+      "evaluable": true,
+      "experiment_result_artifact_digest": "759e6393f78b36bec0c933a7e93175d0c5feba8357c05fed5c6b768d1235b117",
+      "fixture_identity": "t3b7_f02",
+      "fixture_index": 2,
+      "m_1": 3,
+      "m_2": 5,
+      "omega_size": 24,
+      "spec_digest": "db18de153ffe088232059da8a8dc275fd96089a668d13cbba60af4cc7af8c44d"
+    },
+    {
+      "D_1": {
+        "denominator": 4,
+        "numerator": -1
+      },
+      "D_2": {
+        "denominator": 4,
+        "numerator": 1
+      },
+      "E": 8,
+      "G_1": 3,
+      "G_2": 3,
+      "H_1_ucis": [
+        "f6c3",
+        "f6c6",
+        "f6d4",
+        "f6d6",
+        "f6d8",
+        "f6e5",
+        "f6e6",
+        "f6e7",
+        "f6f5",
+        "f6g5",
+        "f6g7",
+        "f6h4",
+        "f6h8"
+      ],
+      "H_2_ucis": [
+        "f8b4",
+        "f8c5",
+        "f8d6",
+        "f8e7",
+        "f8g7"
+      ],
+      "L": 21,
+      "M_1_ucis": [
+        "f6c3",
+        "f6c6",
+        "f6d4",
+        "f6d8",
+        "f6e5",
+        "f6e6",
+        "f6e7",
+        "f6f5",
+        "f6g5",
+        "f6g7",
+        "f6h4",
+        "f6h8"
+      ],
+      "M_2_ucis": [
+        "f8b4",
+        "f8c5",
+        "f8e7",
+        "f8g7"
+      ],
+      "Q": {
+        "denominator": 13,
+        "numerator": 5
+      },
+      "S_1": {
+        "denominator": 4,
+        "numerator": 1
+      },
+      "S_2": {
+        "denominator": 4,
+        "numerator": 1
+      },
+      "S_match": {
+        "denominator": 4,
+        "numerator": 1
+      },
+      "T_1": 0,
+      "T_2": 0,
+      "c_1": "f6d6",
+      "c_2": "f8d6",
+      "evaluability_reason": null,
+      "evaluable": true,
+      "experiment_result_artifact_digest": "d6acde4b6b7274fb11bbc44906267472ca70d337ce3ad8b8fb16ea43f80c89bd",
+      "fixture_identity": "t3b7_f03",
+      "fixture_index": 3,
+      "m_1": 12,
+      "m_2": 4,
+      "omega_size": 65,
+      "spec_digest": "1a854a8b90773b29d80a0995ae2f4763312571e45e017f55578e4b0078e3d5bc"
+    },
+    {
+      "D_1": {
+        "denominator": 4,
+        "numerator": -1
+      },
+      "D_2": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "E": 2,
+      "G_1": 1,
+      "G_2": 1,
+      "H_1_ucis": [
+        "d8c8",
+        "d8e7",
+        "d8f6",
+        "d8g5",
+        "d8h4"
+      ],
+      "H_2_ucis": [
+        "g8e7",
+        "g8f6",
+        "g8h6"
+      ],
+      "L": 1,
+      "M_1_ucis": [
+        "d8c8",
+        "d8e7",
+        "d8g5",
+        "d8h4"
+      ],
+      "M_2_ucis": [
+        "g8e7",
+        "g8h6"
+      ],
+      "Q": {
+        "denominator": 15,
+        "numerator": 2
+      },
+      "S_1": {
+        "denominator": 4,
+        "numerator": 1
+      },
+      "S_2": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "S_match": {
+        "denominator": 8,
+        "numerator": 1
+      },
+      "T_1": 0,
+      "T_2": 0,
+      "c_1": "d8f6",
+      "c_2": "g8f6",
+      "evaluability_reason": null,
+      "evaluable": true,
+      "experiment_result_artifact_digest": "46b0f9442594ac5173965b8661c0a68a4083549eb2152f801cee7bd8cbb12686",
+      "fixture_identity": "t3b7_f04",
+      "fixture_index": 4,
+      "m_1": 4,
+      "m_2": 2,
+      "omega_size": 15,
+      "spec_digest": "870adadc2f784de7b3ff90fa1f7b5282815d09061ab9fefefb3bb4af39d1a801"
+    },
+    {
+      "D_1": {
+        "denominator": 12,
+        "numerator": 5
+      },
+      "D_2": {
+        "denominator": 6,
+        "numerator": 1
+      },
+      "E": 6,
+      "G_1": 11,
+      "G_2": 2,
+      "H_1_ucis": [
+        "b6a6",
+        "b6a7",
+        "b6b3",
+        "b6b4",
+        "b6b5",
+        "b6c6",
+        "b6c7",
+        "b6d6",
+        "b6d8",
+        "b6e6",
+        "b6f6",
+        "b6g6",
+        "b6h6"
+      ],
+      "H_2_ucis": [
+        "d5b4",
+        "d5c7",
+        "d5f4",
+        "d5f6"
+      ],
+      "L": 20,
+      "M_1_ucis": [
+        "b6a6",
+        "b6a7",
+        "b6b3",
+        "b6b5",
+        "b6c6",
+        "b6c7",
+        "b6d6",
+        "b6d8",
+        "b6e6",
+        "b6f6",
+        "b6g6",
+        "b6h6"
+      ],
+      "M_2_ucis": [
+        "d5c7",
+        "d5f4",
+        "d5f6"
+      ],
+      "Q": {
+        "denominator": 52,
+        "numerator": 23
+      },
+      "S_1": {
+        "denominator": 12,
+        "numerator": 5
+      },
+      "S_2": {
+        "denominator": 6,
+        "numerator": 1
+      },
+      "S_match": {
+        "denominator": 24,
+        "numerator": 7
+      },
+      "T_1": 0,
+      "T_2": 0,
+      "c_1": "b6b4",
+      "c_2": "d5b4",
+      "evaluability_reason": null,
+      "evaluable": true,
+      "experiment_result_artifact_digest": "448489194b1fcd5a0fd17ea3145efb4e7975a7a49683872609013081ded35be8",
+      "fixture_identity": "t3b7_f05",
+      "fixture_index": 5,
+      "m_1": 12,
+      "m_2": 3,
+      "omega_size": 52,
+      "spec_digest": "60405dea848f1d91b3a828a871b4a4df13e3d7b6c349d50f99085285409450ad"
+    },
+    {
+      "D_1": {
+        "denominator": 2,
+        "numerator": -1
+      },
+      "D_2": {
+        "denominator": 2,
+        "numerator": 1
+      },
+      "E": 4,
+      "G_1": 0,
+      "G_2": 2,
+      "H_1_ucis": [
+        "f7d6",
+        "f7h6",
+        "f7h8"
+      ],
+      "H_2_ucis": [
+        "g8g6",
+        "g8g7",
+        "g8h8"
+      ],
+      "L": 5,
+      "M_1_ucis": [
+        "f7d6",
+        "f7h6"
+      ],
+      "M_2_ucis": [
+        "g8g6",
+        "g8g7"
+      ],
+      "Q": {
+        "denominator": 9,
+        "numerator": 7
+      },
+      "S_1": {
+        "denominator": 2,
+        "numerator": 1
+      },
+      "S_2": {
+        "denominator": 2,
+        "numerator": 1
+      },
+      "S_match": {
+        "denominator": 2,
+        "numerator": 1
+      },
+      "T_1": 0,
+      "T_2": 0,
+      "c_1": "f7h8",
+      "c_2": "g8h8",
+      "evaluability_reason": null,
+      "evaluable": true,
+      "experiment_result_artifact_digest": "7e4d1a209be1a23f91e19185af25961cfaeef6e4f350834b7dbd8d132607c7d2",
+      "fixture_identity": "t3b7_f06",
+      "fixture_index": 6,
+      "m_1": 2,
+      "m_2": 2,
+      "omega_size": 9,
+      "spec_digest": "44876df1559729a5c662a60d909ca9d2465d417af2ecb780388bb786f5a3b3a0"
+    },
+    {
+      "D_1": {
+        "denominator": 2,
+        "numerator": -1
+      },
+      "D_2": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "E": 4,
+      "G_1": 0,
+      "G_2": 1,
+      "H_1_ucis": [
+        "d7c6",
+        "d7c7",
+        "d7d6",
+        "d7e6",
+        "d7e8"
+      ],
+      "H_2_ucis": [
+        "d8b6",
+        "d8c7",
+        "d8e8"
+      ],
+      "L": 3,
+      "M_1_ucis": [
+        "d7c6",
+        "d7c7",
+        "d7d6",
+        "d7e6"
+      ],
+      "M_2_ucis": [
+        "d8b6",
+        "d8c7"
+      ],
+      "Q": {
+        "denominator": 3,
+        "numerator": 1
+      },
+      "S_1": {
+        "denominator": 2,
+        "numerator": 1
+      },
+      "S_2": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "S_match": {
+        "denominator": 4,
+        "numerator": 1
+      },
+      "T_1": 0,
+      "T_2": 0,
+      "c_1": "d7e8",
+      "c_2": "d8e8",
+      "evaluability_reason": null,
+      "evaluable": true,
+      "experiment_result_artifact_digest": "6bf104edd63a6bb4ef9fc8aff48a2fb977c6d3a71ca2f17181580eb6a35c8d41",
+      "fixture_identity": "t3b7_f07",
+      "fixture_index": 7,
+      "m_1": 4,
+      "m_2": 2,
+      "omega_size": 15,
+      "spec_digest": "394eccf2f5bc7babf9afe07e8151dc2c6281d8a888546376884881b9d6315fe2"
+    },
+    {
+      "D_1": {
+        "denominator": 2,
+        "numerator": -1
+      },
+      "D_2": {
+        "denominator": 26,
+        "numerator": -5
+      },
+      "E": 4,
+      "G_1": 0,
+      "G_2": 4,
+      "H_1_ucis": [
+        "e8d8",
+        "e8e7",
+        "e8f8"
+      ],
+      "H_2_ucis": [
+        "f6a6",
+        "f6b6",
+        "f6c6",
+        "f6d6",
+        "f6d8",
+        "f6e6",
+        "f6e7",
+        "f6f3",
+        "f6f4",
+        "f6f5",
+        "f6g5",
+        "f6g6",
+        "f6h4",
+        "f6h6"
+      ],
+      "L": 22,
+      "M_1_ucis": [
+        "e8e7",
+        "e8f8"
+      ],
+      "M_2_ucis": [
+        "f6a6",
+        "f6b6",
+        "f6c6",
+        "f6d6",
+        "f6e6",
+        "f6e7",
+        "f6f3",
+        "f6f4",
+        "f6f5",
+        "f6g5",
+        "f6g6",
+        "f6h4",
+        "f6h6"
+      ],
+      "Q": {
+        "denominator": 7,
+        "numerator": 4
+      },
+      "S_1": {
+        "denominator": 2,
+        "numerator": 1
+      },
+      "S_2": {
+        "denominator": 26,
+        "numerator": 5
+      },
+      "S_match": {
+        "denominator": 26,
+        "numerator": 9
+      },
+      "T_1": 0,
+      "T_2": 0,
+      "c_1": "e8d8",
+      "c_2": "f6d8",
+      "evaluability_reason": null,
+      "evaluable": true,
+      "experiment_result_artifact_digest": "d6d6e57b30af2e93ca630db64c4afb6f43e54255890765bee3bbbfd6bdd94fbb",
+      "fixture_identity": "t3b7_f08",
+      "fixture_index": 8,
+      "m_1": 2,
+      "m_2": 13,
+      "omega_size": 42,
+      "spec_digest": "cb9e0b48dcd11e1ef5353870191ac28bbd81024b31c9a426b0f879e96bece43c"
+    },
+    {
+      "D_1": {
+        "denominator": 2,
+        "numerator": -1
+      },
+      "D_2": {
+        "denominator": 2,
+        "numerator": -1
+      },
+      "E": 4,
+      "G_1": 0,
+      "G_2": 0,
+      "H_1_ucis": [
+        "d6b4",
+        "d6c5",
+        "d6c7",
+        "d6e7",
+        "d6f8"
+      ],
+      "H_2_ucis": [
+        "d8a5",
+        "d8b6",
+        "d8c7",
+        "d8c8",
+        "d8e7"
+      ],
+      "L": 21,
+      "M_1_ucis": [
+        "d6b4",
+        "d6c5",
+        "d6e7",
+        "d6f8"
+      ],
+      "M_2_ucis": [
+        "d8a5",
+        "d8b6",
+        "d8c8",
+        "d8e7"
+      ],
+      "Q": {
+        "denominator": 25,
+        "numerator": 23
+      },
+      "S_1": {
+        "denominator": 2,
+        "numerator": 1
+      },
+      "S_2": {
+        "denominator": 2,
+        "numerator": 1
+      },
+      "S_match": {
+        "denominator": 2,
+        "numerator": 1
+      },
+      "T_1": 0,
+      "T_2": 0,
+      "c_1": "d6c7",
+      "c_2": "d8c7",
+      "evaluability_reason": null,
+      "evaluable": true,
+      "experiment_result_artifact_digest": "38b4630d106b85cde348cf37b9e59eefda206d79440ac6ff043078e1161da816",
+      "fixture_identity": "t3b7_f09",
+      "fixture_index": 9,
+      "m_1": 4,
+      "m_2": 4,
+      "omega_size": 25,
+      "spec_digest": "5298ceb938809fbe26f7d7d623610dcff3579ad6da58e81adc3499e06e400586"
+    },
+    {
+      "D_1": null,
+      "D_2": null,
+      "E": null,
+      "G_1": null,
+      "G_2": null,
+      "H_1_ucis": [
+        "b4a6",
+        "b4c2",
+        "b4c6",
+        "b4d3",
+        "b4d5"
+      ],
+      "H_2_ucis": [
+        "b7a6",
+        "b7c6",
+        "b7c8",
+        "b7d5"
+      ],
+      "L": null,
+      "M_1_ucis": [
+        "b4a6",
+        "b4c2",
+        "b4d3",
+        "b4d5"
+      ],
+      "M_2_ucis": [
+        "b7a6",
+        "b7c8",
+        "b7d5"
+      ],
+      "Q": null,
+      "S_1": null,
+      "S_2": null,
+      "S_match": null,
+      "T_1": null,
+      "T_2": null,
+      "c_1": "b4c6",
+      "c_2": "b7c6",
+      "evaluability_reason": "NON_CP_MATCHED_CHILD_PRESENT",
+      "evaluable": false,
+      "experiment_result_artifact_digest": "3740ca58be6181693e2b9d11326e606bdd81fc333d3b31b00cd84c273917f20a",
+      "fixture_identity": "t3b7_f10",
+      "fixture_index": 10,
+      "m_1": 4,
+      "m_2": 3,
+      "omega_size": null,
+      "spec_digest": "84810b615bf9fbbf79cc7e4de3cc830e0ba5c38ad1a3c35ed4f875a96fd25e98"
+    },
+    {
+      "D_1": {
+        "denominator": 2,
+        "numerator": -1
+      },
+      "D_2": {
+        "denominator": 14,
+        "numerator": -1
+      },
+      "E": 4,
+      "G_1": 0,
+      "G_2": 3,
+      "H_1_ucis": [
+        "d8c7",
+        "d8c8",
+        "d8d7"
+      ],
+      "H_2_ucis": [
+        "e6a2",
+        "e6b3",
+        "e6c4",
+        "e6c8",
+        "e6d5",
+        "e6d7",
+        "e6f5",
+        "e6g4"
+      ],
+      "L": 8,
+      "M_1_ucis": [
+        "d8c7",
+        "d8d7"
+      ],
+      "M_2_ucis": [
+        "e6a2",
+        "e6b3",
+        "e6c4",
+        "e6d5",
+        "e6d7",
+        "e6f5",
+        "e6g4"
+      ],
+      "Q": {
+        "denominator": 12,
+        "numerator": 5
+      },
+      "S_1": {
+        "denominator": 2,
+        "numerator": 1
+      },
+      "S_2": {
+        "denominator": 14,
+        "numerator": 1
+      },
+      "S_match": {
+        "denominator": 7,
+        "numerator": 2
+      },
+      "T_1": 0,
+      "T_2": 0,
+      "c_1": "d8c8",
+      "c_2": "e6c8",
+      "evaluability_reason": null,
+      "evaluable": true,
+      "experiment_result_artifact_digest": "14a7e2d018a9f69f375adc3e6e62649f82c21ad0da21d93f9b5b67e254fc995f",
+      "fixture_identity": "t3b7_f11",
+      "fixture_index": 11,
+      "m_1": 2,
+      "m_2": 7,
+      "omega_size": 24,
+      "spec_digest": "f559b112cf44f93651963d4362d7875b52d18b279325021dd96d14e8c5075260"
+    },
+    {
+      "D_1": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "D_2": {
+        "denominator": 6,
+        "numerator": -1
+      },
+      "E": 2,
+      "G_1": 1,
+      "G_2": 1,
+      "H_1_ucis": [
+        "e8d8",
+        "e8e7",
+        "e8f7"
+      ],
+      "H_2_ucis": [
+        "h7e7",
+        "h7f7",
+        "h7g7",
+        "h7h8"
+      ],
+      "L": 0,
+      "M_1_ucis": [
+        "e8d8",
+        "e8e7"
+      ],
+      "M_2_ucis": [
+        "h7e7",
+        "h7g7",
+        "h7h8"
+      ],
+      "Q": {
+        "denominator": 12,
+        "numerator": 1
+      },
+      "S_1": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "S_2": {
+        "denominator": 6,
+        "numerator": 1
+      },
+      "S_match": {
+        "denominator": 12,
+        "numerator": 1
+      },
+      "T_1": 0,
+      "T_2": 0,
+      "c_1": "e8f7",
+      "c_2": "h7f7",
+      "evaluability_reason": null,
+      "evaluable": true,
+      "experiment_result_artifact_digest": "a9a87227ec6fd3a2ce1d3342a781989b8f28a6929c0492a73c177cc024d34565",
+      "fixture_identity": "t3b7_f12",
+      "fixture_index": 12,
+      "m_1": 2,
+      "m_2": 3,
+      "omega_size": 12,
+      "spec_digest": "809f15587352c008ed3a51bba77afd105aa4ee9dae5b138116d2dd99c07e8f44"
+    },
+    {
+      "D_1": {
+        "denominator": 4,
+        "numerator": 1
+      },
+      "D_2": {
+        "denominator": 6,
+        "numerator": -1
+      },
+      "E": 4,
+      "G_1": 3,
+      "G_2": 1,
+      "H_1_ucis": [
+        "d8b6",
+        "d8c7",
+        "d8d6",
+        "d8d7",
+        "d8e7"
+      ],
+      "H_2_ucis": [
+        "f8b4",
+        "f8c5",
+        "f8d6",
+        "f8e7"
+      ],
+      "L": 2,
+      "M_1_ucis": [
+        "d8b6",
+        "d8c7",
+        "d8d7",
+        "d8e7"
+      ],
+      "M_2_ucis": [
+        "f8b4",
+        "f8c5",
+        "f8e7"
+      ],
+      "Q": {
+        "denominator": 5,
+        "numerator": 1
+      },
+      "S_1": {
+        "denominator": 4,
+        "numerator": 1
+      },
+      "S_2": {
+        "denominator": 6,
+        "numerator": 1
+      },
+      "S_match": {
+        "denominator": 24,
+        "numerator": 5
+      },
+      "T_1": 0,
+      "T_2": 0,
+      "c_1": "d8d6",
+      "c_2": "f8d6",
+      "evaluability_reason": null,
+      "evaluable": true,
+      "experiment_result_artifact_digest": "bd8b29c3bcd49fa7093b19c8fe8f58390beb698319e2d15cd48a04900e5cbf0e",
+      "fixture_identity": "t3b7_f13",
+      "fixture_index": 13,
+      "m_1": 4,
+      "m_2": 3,
+      "omega_size": 20,
+      "spec_digest": "b6adc20d34431b5560437fbf0c41daa24fe4403365acad2be5f8366c0bb1772e"
+    },
+    {
+      "D_1": {
+        "denominator": 10,
+        "numerator": 1
+      },
+      "D_2": {
+        "denominator": 6,
+        "numerator": -1
+      },
+      "E": 4,
+      "G_1": 3,
+      "G_2": 1,
+      "H_1_ucis": [
+        "b4a3",
+        "b4a5",
+        "b4c5",
+        "b4d6",
+        "b4e7",
+        "b4f8"
+      ],
+      "H_2_ucis": [
+        "d8a5",
+        "d8b6",
+        "d8c7",
+        "d8e7"
+      ],
+      "L": 0,
+      "M_1_ucis": [
+        "b4a3",
+        "b4c5",
+        "b4d6",
+        "b4e7",
+        "b4f8"
+      ],
+      "M_2_ucis": [
+        "d8b6",
+        "d8c7",
+        "d8e7"
+      ],
+      "Q": {
+        "denominator": 12,
+        "numerator": 1
+      },
+      "S_1": {
+        "denominator": 10,
+        "numerator": 1
+      },
+      "S_2": {
+        "denominator": 6,
+        "numerator": 1
+      },
+      "S_match": {
+        "denominator": 15,
+        "numerator": 2
+      },
+      "T_1": 0,
+      "T_2": 0,
+      "c_1": "b4a5",
+      "c_2": "d8a5",
+      "evaluability_reason": null,
+      "evaluable": true,
+      "experiment_result_artifact_digest": "27e998b39be77b7018c8f359ed6277e6ec306ceb0997f6b3446b6d758b5f878d",
+      "fixture_identity": "t3b7_f14",
+      "fixture_index": 14,
+      "m_1": 5,
+      "m_2": 3,
+      "omega_size": 24,
+      "spec_digest": "45ccd72fb22e99c3b34fae76365c15f63b7205fba72094b637797207a2f23346"
+    },
+    {
+      "D_1": {
+        "denominator": 10,
+        "numerator": 3
+      },
+      "D_2": {
+        "denominator": 8,
+        "numerator": 1
+      },
+      "E": 4,
+      "G_1": 4,
+      "G_2": 5,
+      "H_1_ucis": [
+        "c6a5",
+        "c6a7",
+        "c6b4",
+        "c6b8",
+        "c6d4",
+        "c6e5"
+      ],
+      "H_2_ucis": [
+        "d6b8",
+        "d6c7",
+        "d6d3",
+        "d6d4",
+        "d6d5",
+        "d6e5",
+        "d6e6",
+        "d6f6",
+        "d6g6"
+      ],
+      "L": 12,
+      "M_1_ucis": [
+        "c6a5",
+        "c6a7",
+        "c6b4",
+        "c6b8",
+        "c6e5"
+      ],
+      "M_2_ucis": [
+        "d6b8",
+        "d6c7",
+        "d6d3",
+        "d6d5",
+        "d6e5",
+        "d6e6",
+        "d6f6",
+        "d6g6"
+      ],
+      "Q": {
+        "denominator": 27,
+        "numerator": 7
+      },
+      "S_1": {
+        "denominator": 10,
+        "numerator": 3
+      },
+      "S_2": {
+        "denominator": 8,
+        "numerator": 1
+      },
+      "S_match": {
+        "denominator": 80,
+        "numerator": 17
+      },
+      "T_1": 0,
+      "T_2": 0,
+      "c_1": "c6d4",
+      "c_2": "d6d4",
+      "evaluability_reason": null,
+      "evaluable": true,
+      "experiment_result_artifact_digest": "9105b2937978a5a03b56831228768456c90ae71c4ea35e267931d22ead08f8c1",
+      "fixture_identity": "t3b7_f15",
+      "fixture_index": 15,
+      "m_1": 5,
+      "m_2": 8,
+      "omega_size": 54,
+      "spec_digest": "f8e0f167f7aeae60207bc191869f7e57980b8597b695b59802dba87301184b50"
+    }
+  ],
+  "manifest_sha256": "40949ceeaa5ff1cd1c8a083df45f0dbe0f252d3f1637a692dbf96ae98156ad13",
+  "mathematics_commit": "100e4f20b41b260875fb14901b61bbe51c4fe74e",
+  "mathematics_file_sha256": "f29d7a0a2fca4c96583685025f0d4e8cfd321691",
+  "non_evaluable_fixture_count": 1,
+  "phase": "T3B9_FROZEN_MATCHED_ANALYSIS",
+  "presearch_bundle_sha256": "6ce6b91d3839998f2b9f24c3c6368cbb30cf799c1e8ddaeb9a9a3dcfc54e957b",
+  "protocol_commit": "fd54ad04c54e4756ad904f17454b9e70e881afea",
+  "protocol_file_sha256": "1bccb06ad9302584c07d83636cc662363d3b66fd",
+  "raw_acquisition_commit": "ee31be200a1d1dcb6049892ce14cb3c74767694f",
+  "raw_acquisition_sha256": "5d89d9efde0b140bd134a4e9e3e57092120619acf335c05fcbd2bb9bf1d09b2e",
+  "raw_integrity_commit": "e69348f4ef943cae55f423d52e924f6fe92800d0",
+  "s1_suite_digest": "b483e152cbfd51704f62befabdfd2a9f7880999a199409b63253802a965ed6d7",
+  "schema_version": 1
+}
