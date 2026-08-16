@@ -1,0 +1,6428 @@
+{
+  "fen": "r2qkb1r/p2bppp1/n1pp3p/1p3n1P/3P2P1/4B3/PPP1PP2/RN1QKBNR w KQkq - 0 9",
+  "fixture_index": 2,
+  "target_event": {
+    "square": "d4",
+    "role": "capture",
+    "ply": 2
+  },
+  "protocol_sha": "6c599dc2b2705f3958274aef06d8aab15bd8e616",
+  "manifest_sha": "4337dd0c8ef2579a1b15eb58f5cb00f4bb566c6fdde6ef612f09b2bab2e1ecc7",
+  "engine_name": "Stockfish 18",
+  "engine_options": {
+    "Threads": 1,
+    "Hash": 16
+  },
+  "search_budget_type": "nodes",
+  "search_budget_value": 100000,
+  "candidate_policy": {},
+  "comparison_perspective": "white",
+  "baseline_observation": {
+    "type": "cp",
+    "value": 359,
+    "perspective": "white"
+  },
+  "move_observations": [
+    {
+      "uci": "e3h6",
+      "san": "Bxh6",
+      "origin_square": "e3",
+      "destination_square": "h6",
+      "is_capture": true,
+      "captured_square": "h6",
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3B/1p3n1P/3P2P1/8/PPP1PP2/RN1QKBNR b KQkq - 0 9",
+      "score": {
+        "type": "cp",
+        "value": -272,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "f5h6",
+        "g4g5",
+        "h6g4",
+        "d1d2",
+        "e7e5",
+        "f2f3",
+        "f8e7",
+        "g1h3",
+        "h8h5",
+        "f3g4",
+        "e7g5",
+        "e2e3",
+        "h5h6",
+        "f1g2"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "e3h6",
+          "origin": "e3",
+          "destination": "h6",
+          "capture": "h6",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "f5h6",
+          "origin": "f5",
+          "destination": "h6",
+          "capture": "h6",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 3,
+          "uci": "g4g5",
+          "origin": "g4",
+          "destination": "g5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 4,
+          "uci": "h6g4",
+          "origin": "h6",
+          "destination": "g4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 5,
+          "uci": "d1d2",
+          "origin": "d1",
+          "destination": "d2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 6,
+          "uci": "e7e5",
+          "origin": "e7",
+          "destination": "e5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 7,
+          "uci": "f2f3",
+          "origin": "f2",
+          "destination": "f3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 8,
+          "uci": "f8e7",
+          "origin": "f8",
+          "destination": "e7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 9,
+          "uci": "g1h3",
+          "origin": "g1",
+          "destination": "h3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 10,
+          "uci": "h8h5",
+          "origin": "h8",
+          "destination": "h5",
+          "capture": "h5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 11,
+          "uci": "f3g4",
+          "origin": "f3",
+          "destination": "g4",
+          "capture": "g4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 12,
+          "uci": "e7g5",
+          "origin": "e7",
+          "destination": "g5",
+          "capture": "g5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 13,
+          "uci": "e2e3",
+          "origin": "e2",
+          "destination": "e3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 14,
+          "uci": "h5h6",
+          "origin": "h5",
+          "destination": "h6",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 15,
+          "uci": "f1g2",
+          "origin": "f1",
+          "destination": "g2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        }
+      ]
+    },
+    {
+      "uci": "e3g5",
+      "san": "Bg5",
+      "origin_square": "e3",
+      "destination_square": "g5",
+      "is_capture": false,
+      "captured_square": null,
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3p/1p3nBP/3P2P1/8/PPP1PP2/RN1QKBNR b KQkq - 1 9",
+      "score": {
+        "type": "cp",
+        "value": -161,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "f5d4",
+        "g5h4",
+        "d4e6",
+        "e2e3",
+        "d8c8",
+        "f2f4",
+        "e6c5",
+        "f4f5",
+        "e7e5",
+        "b1c3"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "e3g5",
+          "origin": "e3",
+          "destination": "g5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "f5d4",
+          "origin": "f5",
+          "destination": "d4",
+          "capture": "d4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 3,
+          "uci": "g5h4",
+          "origin": "g5",
+          "destination": "h4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 4,
+          "uci": "d4e6",
+          "origin": "d4",
+          "destination": "e6",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 5,
+          "uci": "e2e3",
+          "origin": "e2",
+          "destination": "e3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 6,
+          "uci": "d8c8",
+          "origin": "d8",
+          "destination": "c8",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 7,
+          "uci": "f2f4",
+          "origin": "f2",
+          "destination": "f4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 8,
+          "uci": "e6c5",
+          "origin": "e6",
+          "destination": "c5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 9,
+          "uci": "f4f5",
+          "origin": "f4",
+          "destination": "f5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 10,
+          "uci": "e7e5",
+          "origin": "e7",
+          "destination": "e5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 11,
+          "uci": "b1c3",
+          "origin": "b1",
+          "destination": "c3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        }
+      ]
+    },
+    {
+      "uci": "e3f4",
+      "san": "Bf4",
+      "origin_square": "e3",
+      "destination_square": "f4",
+      "is_capture": false,
+      "captured_square": null,
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3p/1p3n1P/3P1BP1/8/PPP1PP2/RN1QKBNR b KQkq - 1 9",
+      "score": {
+        "type": "cp",
+        "value": 112,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "e7e5"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "e3f4",
+          "origin": "e3",
+          "destination": "f4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "e7e5",
+          "origin": "e7",
+          "destination": "e5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        }
+      ]
+    },
+    {
+      "uci": "e3d2",
+      "san": "Bd2",
+      "origin_square": "e3",
+      "destination_square": "d2",
+      "is_capture": false,
+      "captured_square": null,
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3p/1p3n1P/3P2P1/8/PPPBPP2/RN1QKBNR b KQkq - 1 9",
+      "score": {
+        "type": "cp",
+        "value": -94,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "f5d4",
+        "a2a4",
+        "d8c8",
+        "d2e3",
+        "d4e6",
+        "a4b5",
+        "c6b5",
+        "f1g2",
+        "d7c6",
+        "g2c6",
+        "c8c6",
+        "g1f3",
+        "e6c7",
+        "b1d2",
+        "e7e5",
+        "d2f1",
+        "a6b4",
+        "c2c3",
+        "b4d5",
+        "f1g3",
+        "f8e7",
+        "a1a7",
+        "a8a7",
+        "e3a7"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "e3d2",
+          "origin": "e3",
+          "destination": "d2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "f5d4",
+          "origin": "f5",
+          "destination": "d4",
+          "capture": "d4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 3,
+          "uci": "a2a4",
+          "origin": "a2",
+          "destination": "a4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 4,
+          "uci": "d8c8",
+          "origin": "d8",
+          "destination": "c8",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 5,
+          "uci": "d2e3",
+          "origin": "d2",
+          "destination": "e3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 6,
+          "uci": "d4e6",
+          "origin": "d4",
+          "destination": "e6",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 7,
+          "uci": "a4b5",
+          "origin": "a4",
+          "destination": "b5",
+          "capture": "b5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 8,
+          "uci": "c6b5",
+          "origin": "c6",
+          "destination": "b5",
+          "capture": "b5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 9,
+          "uci": "f1g2",
+          "origin": "f1",
+          "destination": "g2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 10,
+          "uci": "d7c6",
+          "origin": "d7",
+          "destination": "c6",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 11,
+          "uci": "g2c6",
+          "origin": "g2",
+          "destination": "c6",
+          "capture": "c6",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 12,
+          "uci": "c8c6",
+          "origin": "c8",
+          "destination": "c6",
+          "capture": "c6",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 13,
+          "uci": "g1f3",
+          "origin": "g1",
+          "destination": "f3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 14,
+          "uci": "e6c7",
+          "origin": "e6",
+          "destination": "c7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 15,
+          "uci": "b1d2",
+          "origin": "b1",
+          "destination": "d2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 16,
+          "uci": "e7e5",
+          "origin": "e7",
+          "destination": "e5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 17,
+          "uci": "d2f1",
+          "origin": "d2",
+          "destination": "f1",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 18,
+          "uci": "a6b4",
+          "origin": "a6",
+          "destination": "b4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 19,
+          "uci": "c2c3",
+          "origin": "c2",
+          "destination": "c3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 20,
+          "uci": "b4d5",
+          "origin": "b4",
+          "destination": "d5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 21,
+          "uci": "f1g3",
+          "origin": "f1",
+          "destination": "g3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 22,
+          "uci": "f8e7",
+          "origin": "f8",
+          "destination": "e7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 23,
+          "uci": "a1a7",
+          "origin": "a1",
+          "destination": "a7",
+          "capture": "a7",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 24,
+          "uci": "a8a7",
+          "origin": "a8",
+          "destination": "a7",
+          "capture": "a7",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 25,
+          "uci": "e3a7",
+          "origin": "e3",
+          "destination": "a7",
+          "capture": "a7",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        }
+      ]
+    },
+    {
+      "uci": "e3c1",
+      "san": "Bc1",
+      "origin_square": "e3",
+      "destination_square": "c1",
+      "is_capture": false,
+      "captured_square": null,
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3p/1p3n1P/3P2P1/8/PPP1PP2/RNBQKBNR b KQkq - 1 9",
+      "score": {
+        "type": "cp",
+        "value": 165,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "f5d4",
+        "d1d4",
+        "e7e5",
+        "d4e3",
+        "f8e7",
+        "e3g3",
+        "a6c5",
+        "g1f3",
+        "d8a5",
+        "c2c3",
+        "b5b4",
+        "g4g5"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "e3c1",
+          "origin": "e3",
+          "destination": "c1",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "f5d4",
+          "origin": "f5",
+          "destination": "d4",
+          "capture": "d4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 3,
+          "uci": "d1d4",
+          "origin": "d1",
+          "destination": "d4",
+          "capture": "d4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 4,
+          "uci": "e7e5",
+          "origin": "e7",
+          "destination": "e5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 5,
+          "uci": "d4e3",
+          "origin": "d4",
+          "destination": "e3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 6,
+          "uci": "f8e7",
+          "origin": "f8",
+          "destination": "e7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 7,
+          "uci": "e3g3",
+          "origin": "e3",
+          "destination": "g3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 8,
+          "uci": "a6c5",
+          "origin": "a6",
+          "destination": "c5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 9,
+          "uci": "g1f3",
+          "origin": "g1",
+          "destination": "f3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 10,
+          "uci": "d8a5",
+          "origin": "d8",
+          "destination": "a5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 11,
+          "uci": "c2c3",
+          "origin": "c2",
+          "destination": "c3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 12,
+          "uci": "b5b4",
+          "origin": "b5",
+          "destination": "b4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 13,
+          "uci": "g4g5",
+          "origin": "g4",
+          "destination": "g5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        }
+      ]
+    },
+    {
+      "uci": "h1h4",
+      "san": "Rh4",
+      "origin_square": "h1",
+      "destination_square": "h4",
+      "is_capture": false,
+      "captured_square": null,
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3p/1p3n1P/3P2PR/4B3/PPP1PP2/RN1QKBN1 b Qkq - 1 9",
+      "score": {
+        "type": "cp",
+        "value": -498,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "f5h4",
+        "a2a4",
+        "b5b4",
+        "d1d3",
+        "a6c7",
+        "b1d2",
+        "c7d5",
+        "f1h3",
+        "e7e6",
+        "e1c1",
+        "f8e7",
+        "d2e4",
+        "e8g8"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "h1h4",
+          "origin": "h1",
+          "destination": "h4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "f5h4",
+          "origin": "f5",
+          "destination": "h4",
+          "capture": "h4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 3,
+          "uci": "a2a4",
+          "origin": "a2",
+          "destination": "a4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 4,
+          "uci": "b5b4",
+          "origin": "b5",
+          "destination": "b4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 5,
+          "uci": "d1d3",
+          "origin": "d1",
+          "destination": "d3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 6,
+          "uci": "a6c7",
+          "origin": "a6",
+          "destination": "c7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 7,
+          "uci": "b1d2",
+          "origin": "b1",
+          "destination": "d2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 8,
+          "uci": "c7d5",
+          "origin": "c7",
+          "destination": "d5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 9,
+          "uci": "f1h3",
+          "origin": "f1",
+          "destination": "h3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 10,
+          "uci": "e7e6",
+          "origin": "e7",
+          "destination": "e6",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 11,
+          "uci": "e1c1",
+          "origin": "e1",
+          "destination": "c1",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 12,
+          "uci": "f8e7",
+          "origin": "f8",
+          "destination": "e7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 13,
+          "uci": "d2e4",
+          "origin": "d2",
+          "destination": "e4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 14,
+          "uci": "e8g8",
+          "origin": "e8",
+          "destination": "g8",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        }
+      ]
+    },
+    {
+      "uci": "h1h3",
+      "san": "Rh3",
+      "origin_square": "h1",
+      "destination_square": "h3",
+      "is_capture": false,
+      "captured_square": null,
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3p/1p3n1P/3P2P1/4B2R/PPP1PP2/RN1QKBN1 b Qkq - 1 9",
+      "score": {
+        "type": "cp",
+        "value": -119,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "f5e3",
+        "h3e3",
+        "d7g4",
+        "a2a4",
+        "b5b4",
+        "d1d3",
+        "a6c7",
+        "d3e4",
+        "d8d7",
+        "f1h3",
+        "g4h3",
+        "g1h3",
+        "d6d5",
+        "e4h4",
+        "e7e6",
+        "e3g3",
+        "f8e7",
+        "h4g4",
+        "e7f6",
+        "b1d2",
+        "c6c5",
+        "d4c5"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "h1h3",
+          "origin": "h1",
+          "destination": "h3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "f5e3",
+          "origin": "f5",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 3,
+          "uci": "h3e3",
+          "origin": "h3",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 4,
+          "uci": "d7g4",
+          "origin": "d7",
+          "destination": "g4",
+          "capture": "g4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 5,
+          "uci": "a2a4",
+          "origin": "a2",
+          "destination": "a4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 6,
+          "uci": "b5b4",
+          "origin": "b5",
+          "destination": "b4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 7,
+          "uci": "d1d3",
+          "origin": "d1",
+          "destination": "d3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 8,
+          "uci": "a6c7",
+          "origin": "a6",
+          "destination": "c7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 9,
+          "uci": "d3e4",
+          "origin": "d3",
+          "destination": "e4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 10,
+          "uci": "d8d7",
+          "origin": "d8",
+          "destination": "d7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 11,
+          "uci": "f1h3",
+          "origin": "f1",
+          "destination": "h3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 12,
+          "uci": "g4h3",
+          "origin": "g4",
+          "destination": "h3",
+          "capture": "h3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 13,
+          "uci": "g1h3",
+          "origin": "g1",
+          "destination": "h3",
+          "capture": "h3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 14,
+          "uci": "d6d5",
+          "origin": "d6",
+          "destination": "d5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 15,
+          "uci": "e4h4",
+          "origin": "e4",
+          "destination": "h4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 16,
+          "uci": "e7e6",
+          "origin": "e7",
+          "destination": "e6",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 17,
+          "uci": "e3g3",
+          "origin": "e3",
+          "destination": "g3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 18,
+          "uci": "f8e7",
+          "origin": "f8",
+          "destination": "e7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 19,
+          "uci": "h4g4",
+          "origin": "h4",
+          "destination": "g4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 20,
+          "uci": "e7f6",
+          "origin": "e7",
+          "destination": "f6",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 21,
+          "uci": "b1d2",
+          "origin": "b1",
+          "destination": "d2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 22,
+          "uci": "c6c5",
+          "origin": "c6",
+          "destination": "c5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 23,
+          "uci": "d4c5",
+          "origin": "d4",
+          "destination": "c5",
+          "capture": "c5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        }
+      ]
+    },
+    {
+      "uci": "h1h2",
+      "san": "Rh2",
+      "origin_square": "h1",
+      "destination_square": "h2",
+      "is_capture": false,
+      "captured_square": null,
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3p/1p3n1P/3P2P1/4B3/PPP1PP1R/RN1QKBN1 b Qkq - 1 9",
+      "score": {
+        "type": "cp",
+        "value": -219,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "f5e3",
+        "f2e3",
+        "e7e5",
+        "a2a4",
+        "b5a4",
+        "a1a4",
+        "d8b6",
+        "f1h3",
+        "c6c5",
+        "a4a1",
+        "c5d4",
+        "e3d4",
+        "f8e7",
+        "b1c3"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "h1h2",
+          "origin": "h1",
+          "destination": "h2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "f5e3",
+          "origin": "f5",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 3,
+          "uci": "f2e3",
+          "origin": "f2",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 4,
+          "uci": "e7e5",
+          "origin": "e7",
+          "destination": "e5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 5,
+          "uci": "a2a4",
+          "origin": "a2",
+          "destination": "a4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 6,
+          "uci": "b5a4",
+          "origin": "b5",
+          "destination": "a4",
+          "capture": "a4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 7,
+          "uci": "a1a4",
+          "origin": "a1",
+          "destination": "a4",
+          "capture": "a4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 8,
+          "uci": "d8b6",
+          "origin": "d8",
+          "destination": "b6",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 9,
+          "uci": "f1h3",
+          "origin": "f1",
+          "destination": "h3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 10,
+          "uci": "c6c5",
+          "origin": "c6",
+          "destination": "c5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 11,
+          "uci": "a4a1",
+          "origin": "a4",
+          "destination": "a1",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 12,
+          "uci": "c5d4",
+          "origin": "c5",
+          "destination": "d4",
+          "capture": "d4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 13,
+          "uci": "e3d4",
+          "origin": "e3",
+          "destination": "d4",
+          "capture": "d4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 14,
+          "uci": "f8e7",
+          "origin": "f8",
+          "destination": "e7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 15,
+          "uci": "b1c3",
+          "origin": "b1",
+          "destination": "c3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        }
+      ]
+    },
+    {
+      "uci": "g1h3",
+      "san": "Nh3",
+      "origin_square": "g1",
+      "destination_square": "h3",
+      "is_capture": false,
+      "captured_square": null,
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3p/1p3n1P/3P2P1/4B2N/PPP1PP2/RN1QKB1R b KQkq - 1 9",
+      "score": {
+        "type": "cp",
+        "value": -180,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "f5e3",
+        "f2e3",
+        "d6d5",
+        "f1g2",
+        "e7e5",
+        "e3e4",
+        "a8c8",
+        "e4d5",
+        "a6b4",
+        "c2c3",
+        "b4d5",
+        "d1d3",
+        "e5d4",
+        "c3d4",
+        "d8h4",
+        "h3f2"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "g1h3",
+          "origin": "g1",
+          "destination": "h3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "f5e3",
+          "origin": "f5",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 3,
+          "uci": "f2e3",
+          "origin": "f2",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 4,
+          "uci": "d6d5",
+          "origin": "d6",
+          "destination": "d5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 5,
+          "uci": "f1g2",
+          "origin": "f1",
+          "destination": "g2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 6,
+          "uci": "e7e5",
+          "origin": "e7",
+          "destination": "e5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 7,
+          "uci": "e3e4",
+          "origin": "e3",
+          "destination": "e4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 8,
+          "uci": "a8c8",
+          "origin": "a8",
+          "destination": "c8",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 9,
+          "uci": "e4d5",
+          "origin": "e4",
+          "destination": "d5",
+          "capture": "d5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 10,
+          "uci": "a6b4",
+          "origin": "a6",
+          "destination": "b4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 11,
+          "uci": "c2c3",
+          "origin": "c2",
+          "destination": "c3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 12,
+          "uci": "b4d5",
+          "origin": "b4",
+          "destination": "d5",
+          "capture": "d5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 13,
+          "uci": "d1d3",
+          "origin": "d1",
+          "destination": "d3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 14,
+          "uci": "e5d4",
+          "origin": "e5",
+          "destination": "d4",
+          "capture": "d4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 15,
+          "uci": "c3d4",
+          "origin": "c3",
+          "destination": "d4",
+          "capture": "d4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 16,
+          "uci": "d8h4",
+          "origin": "d8",
+          "destination": "h4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 17,
+          "uci": "h3f2",
+          "origin": "h3",
+          "destination": "f2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        }
+      ]
+    },
+    {
+      "uci": "g1f3",
+      "san": "Nf3",
+      "origin_square": "g1",
+      "destination_square": "f3",
+      "is_capture": false,
+      "captured_square": null,
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3p/1p3n1P/3P2P1/4BN2/PPP1PP2/RN1QKB1R b KQkq - 1 9",
+      "score": {
+        "type": "cp",
+        "value": -128,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "f5e3"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "g1f3",
+          "origin": "g1",
+          "destination": "f3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "f5e3",
+          "origin": "f5",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        }
+      ]
+    },
+    {
+      "uci": "f1h3",
+      "san": "Bh3",
+      "origin_square": "f1",
+      "destination_square": "h3",
+      "is_capture": false,
+      "captured_square": null,
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3p/1p3n1P/3P2P1/4B2B/PPP1PP2/RN1QK1NR b KQkq - 1 9",
+      "score": {
+        "type": "cp",
+        "value": -167,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "f5e3",
+        "f2e3",
+        "e7e5",
+        "a2a4",
+        "e5e4",
+        "a4b5",
+        "a6c7",
+        "g4g5",
+        "h6g5",
+        "d4d5",
+        "c7b5",
+        "c2c4",
+        "g5g4",
+        "c4b5",
+        "g4h3",
+        "b5c6"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "f1h3",
+          "origin": "f1",
+          "destination": "h3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "f5e3",
+          "origin": "f5",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 3,
+          "uci": "f2e3",
+          "origin": "f2",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 4,
+          "uci": "e7e5",
+          "origin": "e7",
+          "destination": "e5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 5,
+          "uci": "a2a4",
+          "origin": "a2",
+          "destination": "a4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 6,
+          "uci": "e5e4",
+          "origin": "e5",
+          "destination": "e4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 7,
+          "uci": "a4b5",
+          "origin": "a4",
+          "destination": "b5",
+          "capture": "b5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 8,
+          "uci": "a6c7",
+          "origin": "a6",
+          "destination": "c7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 9,
+          "uci": "g4g5",
+          "origin": "g4",
+          "destination": "g5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 10,
+          "uci": "h6g5",
+          "origin": "h6",
+          "destination": "g5",
+          "capture": "g5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 11,
+          "uci": "d4d5",
+          "origin": "d4",
+          "destination": "d5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 12,
+          "uci": "c7b5",
+          "origin": "c7",
+          "destination": "b5",
+          "capture": "b5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 13,
+          "uci": "c2c4",
+          "origin": "c2",
+          "destination": "c4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 14,
+          "uci": "g5g4",
+          "origin": "g5",
+          "destination": "g4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 15,
+          "uci": "c4b5",
+          "origin": "c4",
+          "destination": "b5",
+          "capture": "b5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 16,
+          "uci": "g4h3",
+          "origin": "g4",
+          "destination": "h3",
+          "capture": "h3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 17,
+          "uci": "b5c6",
+          "origin": "b5",
+          "destination": "c6",
+          "capture": "c6",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        }
+      ]
+    },
+    {
+      "uci": "f1g2",
+      "san": "Bg2",
+      "origin_square": "f1",
+      "destination_square": "g2",
+      "is_capture": false,
+      "captured_square": null,
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3p/1p3n1P/3P2P1/4B3/PPP1PPB1/RN1QK1NR b KQkq - 1 9",
+      "score": {
+        "type": "cp",
+        "value": -140,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "f5e3",
+        "f2e3",
+        "e7e6",
+        "a2a4",
+        "b5a4",
+        "a1a4",
+        "a6c7",
+        "c2c4",
+        "f8e7",
+        "g1f3",
+        "e8g8",
+        "d1d3",
+        "c7e8",
+        "a4a1"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "f1g2",
+          "origin": "f1",
+          "destination": "g2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "f5e3",
+          "origin": "f5",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 3,
+          "uci": "f2e3",
+          "origin": "f2",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 4,
+          "uci": "e7e6",
+          "origin": "e7",
+          "destination": "e6",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 5,
+          "uci": "a2a4",
+          "origin": "a2",
+          "destination": "a4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 6,
+          "uci": "b5a4",
+          "origin": "b5",
+          "destination": "a4",
+          "capture": "a4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 7,
+          "uci": "a1a4",
+          "origin": "a1",
+          "destination": "a4",
+          "capture": "a4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 8,
+          "uci": "a6c7",
+          "origin": "a6",
+          "destination": "c7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 9,
+          "uci": "c2c4",
+          "origin": "c2",
+          "destination": "c4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 10,
+          "uci": "f8e7",
+          "origin": "f8",
+          "destination": "e7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 11,
+          "uci": "g1f3",
+          "origin": "g1",
+          "destination": "f3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 12,
+          "uci": "e8g8",
+          "origin": "e8",
+          "destination": "g8",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 13,
+          "uci": "d1d3",
+          "origin": "d1",
+          "destination": "d3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 14,
+          "uci": "c7e8",
+          "origin": "c7",
+          "destination": "e8",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 15,
+          "uci": "a4a1",
+          "origin": "a4",
+          "destination": "a1",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        }
+      ]
+    },
+    {
+      "uci": "e1d2",
+      "san": "Kd2",
+      "origin_square": "e1",
+      "destination_square": "d2",
+      "is_capture": false,
+      "captured_square": null,
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3p/1p3n1P/3P2P1/4B3/PPPKPP2/RN1Q1BNR b kq - 1 9",
+      "score": {
+        "type": "cp",
+        "value": -271,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "f5e3",
+        "f2e3",
+        "e7e5",
+        "f1g2",
+        "f8e7",
+        "a2a4",
+        "b5b4",
+        "d2e1",
+        "e7h4",
+        "e1f1",
+        "d8f6",
+        "g1f3",
+        "e5e4",
+        "h1h4",
+        "e4f3"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "e1d2",
+          "origin": "e1",
+          "destination": "d2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "f5e3",
+          "origin": "f5",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 3,
+          "uci": "f2e3",
+          "origin": "f2",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 4,
+          "uci": "e7e5",
+          "origin": "e7",
+          "destination": "e5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 5,
+          "uci": "f1g2",
+          "origin": "f1",
+          "destination": "g2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 6,
+          "uci": "f8e7",
+          "origin": "f8",
+          "destination": "e7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 7,
+          "uci": "a2a4",
+          "origin": "a2",
+          "destination": "a4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 8,
+          "uci": "b5b4",
+          "origin": "b5",
+          "destination": "b4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 9,
+          "uci": "d2e1",
+          "origin": "d2",
+          "destination": "e1",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 10,
+          "uci": "e7h4",
+          "origin": "e7",
+          "destination": "h4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 11,
+          "uci": "e1f1",
+          "origin": "e1",
+          "destination": "f1",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 12,
+          "uci": "d8f6",
+          "origin": "d8",
+          "destination": "f6",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 13,
+          "uci": "g1f3",
+          "origin": "g1",
+          "destination": "f3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 14,
+          "uci": "e5e4",
+          "origin": "e5",
+          "destination": "e4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 15,
+          "uci": "h1h4",
+          "origin": "h1",
+          "destination": "h4",
+          "capture": "h4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 16,
+          "uci": "e4f3",
+          "origin": "e4",
+          "destination": "f3",
+          "capture": "f3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        }
+      ]
+    },
+    {
+      "uci": "d1d3",
+      "san": "Qd3",
+      "origin_square": "d1",
+      "destination_square": "d3",
+      "is_capture": false,
+      "captured_square": null,
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3p/1p3n1P/3P2P1/3QB3/PPP1PP2/RN2KBNR b KQkq - 1 9",
+      "score": {
+        "type": "cp",
+        "value": -155,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "a6b4",
+        "d3b3",
+        "f5e3",
+        "f2e3",
+        "a7a5",
+        "a2a3",
+        "b4a6",
+        "g1f3",
+        "e7e5",
+        "b1d2",
+        "f8e7",
+        "b3d3",
+        "e8g8",
+        "f1h3",
+        "e7h4",
+        "e1f1"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "d1d3",
+          "origin": "d1",
+          "destination": "d3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "a6b4",
+          "origin": "a6",
+          "destination": "b4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 3,
+          "uci": "d3b3",
+          "origin": "d3",
+          "destination": "b3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 4,
+          "uci": "f5e3",
+          "origin": "f5",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 5,
+          "uci": "f2e3",
+          "origin": "f2",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 6,
+          "uci": "a7a5",
+          "origin": "a7",
+          "destination": "a5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 7,
+          "uci": "a2a3",
+          "origin": "a2",
+          "destination": "a3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 8,
+          "uci": "b4a6",
+          "origin": "b4",
+          "destination": "a6",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 9,
+          "uci": "g1f3",
+          "origin": "g1",
+          "destination": "f3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 10,
+          "uci": "e7e5",
+          "origin": "e7",
+          "destination": "e5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 11,
+          "uci": "b1d2",
+          "origin": "b1",
+          "destination": "d2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 12,
+          "uci": "f8e7",
+          "origin": "f8",
+          "destination": "e7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 13,
+          "uci": "b3d3",
+          "origin": "b3",
+          "destination": "d3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 14,
+          "uci": "e8g8",
+          "origin": "e8",
+          "destination": "g8",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 15,
+          "uci": "f1h3",
+          "origin": "f1",
+          "destination": "h3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 16,
+          "uci": "e7h4",
+          "origin": "e7",
+          "destination": "h4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 17,
+          "uci": "e1f1",
+          "origin": "e1",
+          "destination": "f1",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        }
+      ]
+    },
+    {
+      "uci": "d1d2",
+      "san": "Qd2",
+      "origin_square": "d1",
+      "destination_square": "d2",
+      "is_capture": false,
+      "captured_square": null,
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3p/1p3n1P/3P2P1/4B3/PPPQPP2/RN2KBNR b KQkq - 1 9",
+      "score": {
+        "type": "cp",
+        "value": -75,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "f5e3",
+        "d2e3"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "d1d2",
+          "origin": "d1",
+          "destination": "d2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "f5e3",
+          "origin": "f5",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 3,
+          "uci": "d2e3",
+          "origin": "d2",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        }
+      ]
+    },
+    {
+      "uci": "d1c1",
+      "san": "Qc1",
+      "origin_square": "d1",
+      "destination_square": "c1",
+      "is_capture": false,
+      "captured_square": null,
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3p/1p3n1P/3P2P1/4B3/PPP1PP2/RNQ1KBNR b KQkq - 1 9",
+      "score": {
+        "type": "cp",
+        "value": -82,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "f5e3",
+        "c1e3",
+        "e7e5",
+        "a2a3",
+        "d8g5",
+        "e3g5",
+        "h6g5",
+        "d4e5",
+        "d7g4",
+        "b1d2",
+        "h8h5",
+        "h1h5",
+        "g4h5",
+        "e5d6",
+        "f8d6"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "d1c1",
+          "origin": "d1",
+          "destination": "c1",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "f5e3",
+          "origin": "f5",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 3,
+          "uci": "c1e3",
+          "origin": "c1",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 4,
+          "uci": "e7e5",
+          "origin": "e7",
+          "destination": "e5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 5,
+          "uci": "a2a3",
+          "origin": "a2",
+          "destination": "a3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 6,
+          "uci": "d8g5",
+          "origin": "d8",
+          "destination": "g5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 7,
+          "uci": "e3g5",
+          "origin": "e3",
+          "destination": "g5",
+          "capture": "g5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 8,
+          "uci": "h6g5",
+          "origin": "h6",
+          "destination": "g5",
+          "capture": "g5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 9,
+          "uci": "d4e5",
+          "origin": "d4",
+          "destination": "e5",
+          "capture": "e5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 10,
+          "uci": "d7g4",
+          "origin": "d7",
+          "destination": "g4",
+          "capture": "g4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 11,
+          "uci": "b1d2",
+          "origin": "b1",
+          "destination": "d2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 12,
+          "uci": "h8h5",
+          "origin": "h8",
+          "destination": "h5",
+          "capture": "h5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 13,
+          "uci": "h1h5",
+          "origin": "h1",
+          "destination": "h5",
+          "capture": "h5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 14,
+          "uci": "g4h5",
+          "origin": "g4",
+          "destination": "h5",
+          "capture": "h5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 15,
+          "uci": "e5d6",
+          "origin": "e5",
+          "destination": "d6",
+          "capture": "d6",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 16,
+          "uci": "f8d6",
+          "origin": "f8",
+          "destination": "d6",
+          "capture": "d6",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        }
+      ]
+    },
+    {
+      "uci": "b1c3",
+      "san": "Nc3",
+      "origin_square": "b1",
+      "destination_square": "c3",
+      "is_capture": false,
+      "captured_square": null,
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3p/1p3n1P/3P2P1/2N1B3/PPP1PP2/R2QKBNR b KQkq - 1 9",
+      "score": {
+        "type": "cp",
+        "value": -183,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "f5e3",
+        "f2e3",
+        "e7e5",
+        "a2a3",
+        "d6d5",
+        "d4e5",
+        "d8c7",
+        "g1f3",
+        "a6c5",
+        "f1h3",
+        "f8e7",
+        "d1d2",
+        "c5e6",
+        "c3d1"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "b1c3",
+          "origin": "b1",
+          "destination": "c3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "f5e3",
+          "origin": "f5",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 3,
+          "uci": "f2e3",
+          "origin": "f2",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 4,
+          "uci": "e7e5",
+          "origin": "e7",
+          "destination": "e5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 5,
+          "uci": "a2a3",
+          "origin": "a2",
+          "destination": "a3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 6,
+          "uci": "d6d5",
+          "origin": "d6",
+          "destination": "d5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 7,
+          "uci": "d4e5",
+          "origin": "d4",
+          "destination": "e5",
+          "capture": "e5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 8,
+          "uci": "d8c7",
+          "origin": "d8",
+          "destination": "c7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 9,
+          "uci": "g1f3",
+          "origin": "g1",
+          "destination": "f3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 10,
+          "uci": "a6c5",
+          "origin": "a6",
+          "destination": "c5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 11,
+          "uci": "f1h3",
+          "origin": "f1",
+          "destination": "h3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 12,
+          "uci": "f8e7",
+          "origin": "f8",
+          "destination": "e7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 13,
+          "uci": "d1d2",
+          "origin": "d1",
+          "destination": "d2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 14,
+          "uci": "c5e6",
+          "origin": "c5",
+          "destination": "e6",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 15,
+          "uci": "c3d1",
+          "origin": "c3",
+          "destination": "d1",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        }
+      ]
+    },
+    {
+      "uci": "b1a3",
+      "san": "Na3",
+      "origin_square": "b1",
+      "destination_square": "a3",
+      "is_capture": false,
+      "captured_square": null,
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3p/1p3n1P/3P2P1/N3B3/PPP1PP2/R2QKBNR b KQkq - 1 9",
+      "score": {
+        "type": "cp",
+        "value": -257,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "f5e3",
+        "f2e3",
+        "e7e5",
+        "f1g2",
+        "f8e7",
+        "g1h3",
+        "e8g8",
+        "c2c4",
+        "f7f5",
+        "e1g1",
+        "f5g4",
+        "f1f8",
+        "d8f8",
+        "h3f2"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "b1a3",
+          "origin": "b1",
+          "destination": "a3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "f5e3",
+          "origin": "f5",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 3,
+          "uci": "f2e3",
+          "origin": "f2",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 4,
+          "uci": "e7e5",
+          "origin": "e7",
+          "destination": "e5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 5,
+          "uci": "f1g2",
+          "origin": "f1",
+          "destination": "g2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 6,
+          "uci": "f8e7",
+          "origin": "f8",
+          "destination": "e7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 7,
+          "uci": "g1h3",
+          "origin": "g1",
+          "destination": "h3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 8,
+          "uci": "e8g8",
+          "origin": "e8",
+          "destination": "g8",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 9,
+          "uci": "c2c4",
+          "origin": "c2",
+          "destination": "c4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 10,
+          "uci": "f7f5",
+          "origin": "f7",
+          "destination": "f5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 11,
+          "uci": "e1g1",
+          "origin": "e1",
+          "destination": "g1",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 12,
+          "uci": "f5g4",
+          "origin": "f5",
+          "destination": "g4",
+          "capture": "g4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 13,
+          "uci": "f1f8",
+          "origin": "f1",
+          "destination": "f8",
+          "capture": "f8",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 14,
+          "uci": "d8f8",
+          "origin": "d8",
+          "destination": "f8",
+          "capture": "f8",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 15,
+          "uci": "h3f2",
+          "origin": "h3",
+          "destination": "f2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        }
+      ]
+    },
+    {
+      "uci": "b1d2",
+      "san": "Nd2",
+      "origin_square": "b1",
+      "destination_square": "d2",
+      "is_capture": false,
+      "captured_square": null,
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3p/1p3n1P/3P2P1/4B3/PPPNPP2/R2QKBNR b KQkq - 1 9",
+      "score": {
+        "type": "cp",
+        "value": -163,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "f5e3",
+        "f2e3",
+        "e7e5",
+        "a2a4",
+        "f8e7",
+        "f1g2",
+        "b5a4",
+        "a1a4",
+        "a6c7",
+        "d4e5",
+        "d6d5",
+        "c2c3",
+        "e8g8",
+        "g1f3",
+        "c6c5",
+        "a4a1",
+        "a7a5",
+        "d1c2",
+        "d7g4",
+        "c3c4",
+        "d5d4",
+        "e3d4",
+        "c5d4"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "b1d2",
+          "origin": "b1",
+          "destination": "d2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "f5e3",
+          "origin": "f5",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 3,
+          "uci": "f2e3",
+          "origin": "f2",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 4,
+          "uci": "e7e5",
+          "origin": "e7",
+          "destination": "e5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 5,
+          "uci": "a2a4",
+          "origin": "a2",
+          "destination": "a4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 6,
+          "uci": "f8e7",
+          "origin": "f8",
+          "destination": "e7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 7,
+          "uci": "f1g2",
+          "origin": "f1",
+          "destination": "g2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 8,
+          "uci": "b5a4",
+          "origin": "b5",
+          "destination": "a4",
+          "capture": "a4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 9,
+          "uci": "a1a4",
+          "origin": "a1",
+          "destination": "a4",
+          "capture": "a4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 10,
+          "uci": "a6c7",
+          "origin": "a6",
+          "destination": "c7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 11,
+          "uci": "d4e5",
+          "origin": "d4",
+          "destination": "e5",
+          "capture": "e5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 12,
+          "uci": "d6d5",
+          "origin": "d6",
+          "destination": "d5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 13,
+          "uci": "c2c3",
+          "origin": "c2",
+          "destination": "c3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 14,
+          "uci": "e8g8",
+          "origin": "e8",
+          "destination": "g8",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 15,
+          "uci": "g1f3",
+          "origin": "g1",
+          "destination": "f3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 16,
+          "uci": "c6c5",
+          "origin": "c6",
+          "destination": "c5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 17,
+          "uci": "a4a1",
+          "origin": "a4",
+          "destination": "a1",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 18,
+          "uci": "a7a5",
+          "origin": "a7",
+          "destination": "a5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 19,
+          "uci": "d1c2",
+          "origin": "d1",
+          "destination": "c2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 20,
+          "uci": "d7g4",
+          "origin": "d7",
+          "destination": "g4",
+          "capture": "g4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 21,
+          "uci": "c3c4",
+          "origin": "c3",
+          "destination": "c4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 22,
+          "uci": "d5d4",
+          "origin": "d5",
+          "destination": "d4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 23,
+          "uci": "e3d4",
+          "origin": "e3",
+          "destination": "d4",
+          "capture": "d4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 24,
+          "uci": "c5d4",
+          "origin": "c5",
+          "destination": "d4",
+          "capture": "d4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        }
+      ]
+    },
+    {
+      "uci": "g4f5",
+      "san": "gxf5",
+      "origin_square": "g4",
+      "destination_square": "f5",
+      "is_capture": true,
+      "captured_square": "f5",
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3p/1p3P1P/3P4/4B3/PPP1PP2/RN1QKBNR b KQkq - 0 9",
+      "score": {
+        "type": "cp",
+        "value": 342,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "d7f5",
+        "a2a4",
+        "d8a5",
+        "e3d2",
+        "b5b4",
+        "f1g2",
+        "d6d5",
+        "d2f4",
+        "e7e6",
+        "b1d2",
+        "c6c5",
+        "e2e4",
+        "d5e4",
+        "d1e2",
+        "c5d4",
+        "g2e4",
+        "f5e4",
+        "e2e4"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "g4f5",
+          "origin": "g4",
+          "destination": "f5",
+          "capture": "f5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "d7f5",
+          "origin": "d7",
+          "destination": "f5",
+          "capture": "f5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 3,
+          "uci": "a2a4",
+          "origin": "a2",
+          "destination": "a4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 4,
+          "uci": "d8a5",
+          "origin": "d8",
+          "destination": "a5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 5,
+          "uci": "e3d2",
+          "origin": "e3",
+          "destination": "d2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 6,
+          "uci": "b5b4",
+          "origin": "b5",
+          "destination": "b4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 7,
+          "uci": "f1g2",
+          "origin": "f1",
+          "destination": "g2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 8,
+          "uci": "d6d5",
+          "origin": "d6",
+          "destination": "d5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 9,
+          "uci": "d2f4",
+          "origin": "d2",
+          "destination": "f4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 10,
+          "uci": "e7e6",
+          "origin": "e7",
+          "destination": "e6",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 11,
+          "uci": "b1d2",
+          "origin": "b1",
+          "destination": "d2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 12,
+          "uci": "c6c5",
+          "origin": "c6",
+          "destination": "c5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 13,
+          "uci": "e2e4",
+          "origin": "e2",
+          "destination": "e4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 14,
+          "uci": "d5e4",
+          "origin": "d5",
+          "destination": "e4",
+          "capture": "e4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 15,
+          "uci": "d1e2",
+          "origin": "d1",
+          "destination": "e2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 16,
+          "uci": "c5d4",
+          "origin": "c5",
+          "destination": "d4",
+          "capture": "d4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 17,
+          "uci": "g2e4",
+          "origin": "g2",
+          "destination": "e4",
+          "capture": "e4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 18,
+          "uci": "f5e4",
+          "origin": "f5",
+          "destination": "e4",
+          "capture": "e4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 19,
+          "uci": "e2e4",
+          "origin": "e2",
+          "destination": "e4",
+          "capture": "e4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        }
+      ]
+    },
+    {
+      "uci": "g4g5",
+      "san": "g5",
+      "origin_square": "g4",
+      "destination_square": "g5",
+      "is_capture": false,
+      "captured_square": null,
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3p/1p3nPP/3P4/4B3/PPP1PP2/RN1QKBNR b KQkq - 0 9",
+      "score": {
+        "type": "cp",
+        "value": -240,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "f5e3",
+        "f2e3",
+        "h6g5",
+        "a2a4",
+        "b5a4",
+        "e3e4",
+        "c6c5",
+        "e2e3",
+        "a8b8",
+        "d1d2",
+        "a6c7",
+        "b1c3",
+        "g5g4",
+        "c3a4",
+        "c5d4",
+        "e3d4"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "g4g5",
+          "origin": "g4",
+          "destination": "g5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "f5e3",
+          "origin": "f5",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 3,
+          "uci": "f2e3",
+          "origin": "f2",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 4,
+          "uci": "h6g5",
+          "origin": "h6",
+          "destination": "g5",
+          "capture": "g5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 5,
+          "uci": "a2a4",
+          "origin": "a2",
+          "destination": "a4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 6,
+          "uci": "b5a4",
+          "origin": "b5",
+          "destination": "a4",
+          "capture": "a4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 7,
+          "uci": "e3e4",
+          "origin": "e3",
+          "destination": "e4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 8,
+          "uci": "c6c5",
+          "origin": "c6",
+          "destination": "c5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 9,
+          "uci": "e2e3",
+          "origin": "e2",
+          "destination": "e3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 10,
+          "uci": "a8b8",
+          "origin": "a8",
+          "destination": "b8",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 11,
+          "uci": "d1d2",
+          "origin": "d1",
+          "destination": "d2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 12,
+          "uci": "a6c7",
+          "origin": "a6",
+          "destination": "c7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 13,
+          "uci": "b1c3",
+          "origin": "b1",
+          "destination": "c3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 14,
+          "uci": "g5g4",
+          "origin": "g5",
+          "destination": "g4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 15,
+          "uci": "c3a4",
+          "origin": "c3",
+          "destination": "a4",
+          "capture": "a4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 16,
+          "uci": "c5d4",
+          "origin": "c5",
+          "destination": "d4",
+          "capture": "d4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 17,
+          "uci": "e3d4",
+          "origin": "e3",
+          "destination": "d4",
+          "capture": "d4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        }
+      ]
+    },
+    {
+      "uci": "d4d5",
+      "san": "d5",
+      "origin_square": "d4",
+      "destination_square": "d5",
+      "is_capture": false,
+      "captured_square": null,
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3p/1p1P1n1P/6P1/4B3/PPP1PP2/RN1QKBNR b KQkq - 0 9",
+      "score": {
+        "type": "cp",
+        "value": -308,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "f5e3",
+        "f2e3",
+        "c6d5",
+        "d1d5",
+        "a8c8",
+        "d5d4",
+        "e7e6",
+        "f1g2",
+        "d6d5",
+        "g1f3",
+        "a6b4",
+        "b1a3",
+        "f8e7",
+        "c2c3",
+        "b4c6",
+        "d4f4",
+        "b5b4",
+        "a3b5",
+        "e8g8",
+        "e1g1",
+        "b4c3",
+        "b5c3"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "d4d5",
+          "origin": "d4",
+          "destination": "d5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "f5e3",
+          "origin": "f5",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 3,
+          "uci": "f2e3",
+          "origin": "f2",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 4,
+          "uci": "c6d5",
+          "origin": "c6",
+          "destination": "d5",
+          "capture": "d5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 5,
+          "uci": "d1d5",
+          "origin": "d1",
+          "destination": "d5",
+          "capture": "d5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 6,
+          "uci": "a8c8",
+          "origin": "a8",
+          "destination": "c8",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 7,
+          "uci": "d5d4",
+          "origin": "d5",
+          "destination": "d4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 8,
+          "uci": "e7e6",
+          "origin": "e7",
+          "destination": "e6",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 9,
+          "uci": "f1g2",
+          "origin": "f1",
+          "destination": "g2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 10,
+          "uci": "d6d5",
+          "origin": "d6",
+          "destination": "d5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 11,
+          "uci": "g1f3",
+          "origin": "g1",
+          "destination": "f3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 12,
+          "uci": "a6b4",
+          "origin": "a6",
+          "destination": "b4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 13,
+          "uci": "b1a3",
+          "origin": "b1",
+          "destination": "a3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 14,
+          "uci": "f8e7",
+          "origin": "f8",
+          "destination": "e7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 15,
+          "uci": "c2c3",
+          "origin": "c2",
+          "destination": "c3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 16,
+          "uci": "b4c6",
+          "origin": "b4",
+          "destination": "c6",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 17,
+          "uci": "d4f4",
+          "origin": "d4",
+          "destination": "f4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 18,
+          "uci": "b5b4",
+          "origin": "b5",
+          "destination": "b4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 19,
+          "uci": "a3b5",
+          "origin": "a3",
+          "destination": "b5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 20,
+          "uci": "e8g8",
+          "origin": "e8",
+          "destination": "g8",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 21,
+          "uci": "e1g1",
+          "origin": "e1",
+          "destination": "g1",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 22,
+          "uci": "b4c3",
+          "origin": "b4",
+          "destination": "c3",
+          "capture": "c3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 23,
+          "uci": "b5c3",
+          "origin": "b5",
+          "destination": "c3",
+          "capture": "c3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        }
+      ]
+    },
+    {
+      "uci": "f2f3",
+      "san": "f3",
+      "origin_square": "f2",
+      "destination_square": "f3",
+      "is_capture": false,
+      "captured_square": null,
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3p/1p3n1P/3P2P1/4BP2/PPP1P3/RN1QKBNR b KQkq - 0 9",
+      "score": {
+        "type": "cp",
+        "value": -567,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "f5e3",
+        "d1c1",
+        "e3f1",
+        "e1f1",
+        "e7e5",
+        "g1h3",
+        "f8e7",
+        "b1c3",
+        "a6c7",
+        "c3e4",
+        "f7f5",
+        "e4g3",
+        "e8g8",
+        "g4g5",
+        "f5f4",
+        "g5h6"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "f2f3",
+          "origin": "f2",
+          "destination": "f3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "f5e3",
+          "origin": "f5",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 3,
+          "uci": "d1c1",
+          "origin": "d1",
+          "destination": "c1",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 4,
+          "uci": "e3f1",
+          "origin": "e3",
+          "destination": "f1",
+          "capture": "f1",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 5,
+          "uci": "e1f1",
+          "origin": "e1",
+          "destination": "f1",
+          "capture": "f1",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 6,
+          "uci": "e7e5",
+          "origin": "e7",
+          "destination": "e5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 7,
+          "uci": "g1h3",
+          "origin": "g1",
+          "destination": "h3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 8,
+          "uci": "f8e7",
+          "origin": "f8",
+          "destination": "e7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 9,
+          "uci": "b1c3",
+          "origin": "b1",
+          "destination": "c3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 10,
+          "uci": "a6c7",
+          "origin": "a6",
+          "destination": "c7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 11,
+          "uci": "c3e4",
+          "origin": "c3",
+          "destination": "e4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 12,
+          "uci": "f7f5",
+          "origin": "f7",
+          "destination": "f5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 13,
+          "uci": "e4g3",
+          "origin": "e4",
+          "destination": "g3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 14,
+          "uci": "e8g8",
+          "origin": "e8",
+          "destination": "g8",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 15,
+          "uci": "g4g5",
+          "origin": "g4",
+          "destination": "g5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 16,
+          "uci": "f5f4",
+          "origin": "f5",
+          "destination": "f4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 17,
+          "uci": "g5h6",
+          "origin": "g5",
+          "destination": "h6",
+          "capture": "h6",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        }
+      ]
+    },
+    {
+      "uci": "c2c3",
+      "san": "c3",
+      "origin_square": "c2",
+      "destination_square": "c3",
+      "is_capture": false,
+      "captured_square": null,
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3p/1p3n1P/3P2P1/2P1B3/PP2PP2/RN1QKBNR b KQkq - 0 9",
+      "score": {
+        "type": "cp",
+        "value": -164,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "f5e3",
+        "f2e3",
+        "e7e5",
+        "a2a4",
+        "a6c7",
+        "f1g2",
+        "d6d5",
+        "d4e5",
+        "f8c5",
+        "g1f3"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "c2c3",
+          "origin": "c2",
+          "destination": "c3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "f5e3",
+          "origin": "f5",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 3,
+          "uci": "f2e3",
+          "origin": "f2",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 4,
+          "uci": "e7e5",
+          "origin": "e7",
+          "destination": "e5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 5,
+          "uci": "a2a4",
+          "origin": "a2",
+          "destination": "a4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 6,
+          "uci": "a6c7",
+          "origin": "a6",
+          "destination": "c7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 7,
+          "uci": "f1g2",
+          "origin": "f1",
+          "destination": "g2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 8,
+          "uci": "d6d5",
+          "origin": "d6",
+          "destination": "d5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 9,
+          "uci": "d4e5",
+          "origin": "d4",
+          "destination": "e5",
+          "capture": "e5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 10,
+          "uci": "f8c5",
+          "origin": "f8",
+          "destination": "c5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 11,
+          "uci": "g1f3",
+          "origin": "g1",
+          "destination": "f3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        }
+      ]
+    },
+    {
+      "uci": "b2b3",
+      "san": "b3",
+      "origin_square": "b2",
+      "destination_square": "b3",
+      "is_capture": false,
+      "captured_square": null,
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3p/1p3n1P/3P2P1/1P2B3/P1P1PP2/RN1QKBNR b KQkq - 0 9",
+      "score": {
+        "type": "cp",
+        "value": -204,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "f5e3",
+        "f2e3",
+        "e7e5",
+        "a2a4",
+        "f8e7",
+        "a4b5",
+        "e7h4",
+        "e1d2",
+        "a6b4",
+        "f1g2",
+        "e8g8",
+        "c2c3",
+        "b4d5",
+        "b5c6",
+        "d7c6",
+        "g2d5",
+        "c6d5",
+        "g1f3",
+        "h4g5"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "b2b3",
+          "origin": "b2",
+          "destination": "b3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "f5e3",
+          "origin": "f5",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 3,
+          "uci": "f2e3",
+          "origin": "f2",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 4,
+          "uci": "e7e5",
+          "origin": "e7",
+          "destination": "e5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 5,
+          "uci": "a2a4",
+          "origin": "a2",
+          "destination": "a4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 6,
+          "uci": "f8e7",
+          "origin": "f8",
+          "destination": "e7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 7,
+          "uci": "a4b5",
+          "origin": "a4",
+          "destination": "b5",
+          "capture": "b5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 8,
+          "uci": "e7h4",
+          "origin": "e7",
+          "destination": "h4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 9,
+          "uci": "e1d2",
+          "origin": "e1",
+          "destination": "d2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 10,
+          "uci": "a6b4",
+          "origin": "a6",
+          "destination": "b4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 11,
+          "uci": "f1g2",
+          "origin": "f1",
+          "destination": "g2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 12,
+          "uci": "e8g8",
+          "origin": "e8",
+          "destination": "g8",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 13,
+          "uci": "c2c3",
+          "origin": "c2",
+          "destination": "c3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 14,
+          "uci": "b4d5",
+          "origin": "b4",
+          "destination": "d5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 15,
+          "uci": "b5c6",
+          "origin": "b5",
+          "destination": "c6",
+          "capture": "c6",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 16,
+          "uci": "d7c6",
+          "origin": "d7",
+          "destination": "c6",
+          "capture": "c6",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 17,
+          "uci": "g2d5",
+          "origin": "g2",
+          "destination": "d5",
+          "capture": "d5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 18,
+          "uci": "c6d5",
+          "origin": "c6",
+          "destination": "d5",
+          "capture": "d5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 19,
+          "uci": "g1f3",
+          "origin": "g1",
+          "destination": "f3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 20,
+          "uci": "h4g5",
+          "origin": "h4",
+          "destination": "g5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        }
+      ]
+    },
+    {
+      "uci": "a2a3",
+      "san": "a3",
+      "origin_square": "a2",
+      "destination_square": "a3",
+      "is_capture": false,
+      "captured_square": null,
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3p/1p3n1P/3P2P1/P3B3/1PP1PP2/RN1QKBNR b KQkq - 0 9",
+      "score": {
+        "type": "cp",
+        "value": -171,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "f5e3",
+        "f2e3",
+        "e7e5",
+        "b1c3",
+        "d6d5",
+        "d4e5",
+        "d8c7",
+        "g1f3",
+        "a6c5",
+        "d1d4",
+        "c5e6",
+        "d4d3",
+        "a8d8",
+        "f1h3",
+        "f8e7",
+        "g4g5",
+        "h6g5",
+        "e1c1",
+        "a7a5",
+        "h3e6",
+        "d7e6"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "a2a3",
+          "origin": "a2",
+          "destination": "a3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "f5e3",
+          "origin": "f5",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 3,
+          "uci": "f2e3",
+          "origin": "f2",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 4,
+          "uci": "e7e5",
+          "origin": "e7",
+          "destination": "e5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 5,
+          "uci": "b1c3",
+          "origin": "b1",
+          "destination": "c3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 6,
+          "uci": "d6d5",
+          "origin": "d6",
+          "destination": "d5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 7,
+          "uci": "d4e5",
+          "origin": "d4",
+          "destination": "e5",
+          "capture": "e5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 8,
+          "uci": "d8c7",
+          "origin": "d8",
+          "destination": "c7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 9,
+          "uci": "g1f3",
+          "origin": "g1",
+          "destination": "f3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 10,
+          "uci": "a6c5",
+          "origin": "a6",
+          "destination": "c5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 11,
+          "uci": "d1d4",
+          "origin": "d1",
+          "destination": "d4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 12,
+          "uci": "c5e6",
+          "origin": "c5",
+          "destination": "e6",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 13,
+          "uci": "d4d3",
+          "origin": "d4",
+          "destination": "d3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 14,
+          "uci": "a8d8",
+          "origin": "a8",
+          "destination": "d8",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 15,
+          "uci": "f1h3",
+          "origin": "f1",
+          "destination": "h3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 16,
+          "uci": "f8e7",
+          "origin": "f8",
+          "destination": "e7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 17,
+          "uci": "g4g5",
+          "origin": "g4",
+          "destination": "g5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 18,
+          "uci": "h6g5",
+          "origin": "h6",
+          "destination": "g5",
+          "capture": "g5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 19,
+          "uci": "e1c1",
+          "origin": "e1",
+          "destination": "c1",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 20,
+          "uci": "a7a5",
+          "origin": "a7",
+          "destination": "a5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 21,
+          "uci": "h3e6",
+          "origin": "h3",
+          "destination": "e6",
+          "capture": "e6",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 22,
+          "uci": "d7e6",
+          "origin": "d7",
+          "destination": "e6",
+          "capture": "e6",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        }
+      ]
+    },
+    {
+      "uci": "f2f4",
+      "san": "f4",
+      "origin_square": "f2",
+      "destination_square": "f4",
+      "is_capture": false,
+      "captured_square": null,
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3p/1p3n1P/3P1PP1/4B3/PPP1P3/RN1QKBNR b KQkq - 0 9",
+      "score": {
+        "type": "cp",
+        "value": -561,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "f5e3",
+        "d1c1",
+        "a6b4",
+        "b1a3",
+        "e3g4",
+        "e2e4",
+        "e7e5",
+        "c2c3",
+        "b4a6",
+        "f1h3",
+        "e5d4",
+        "c3d4",
+        "d6d5"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "f2f4",
+          "origin": "f2",
+          "destination": "f4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "f5e3",
+          "origin": "f5",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 3,
+          "uci": "d1c1",
+          "origin": "d1",
+          "destination": "c1",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 4,
+          "uci": "a6b4",
+          "origin": "a6",
+          "destination": "b4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 5,
+          "uci": "b1a3",
+          "origin": "b1",
+          "destination": "a3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 6,
+          "uci": "e3g4",
+          "origin": "e3",
+          "destination": "g4",
+          "capture": "g4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 7,
+          "uci": "e2e4",
+          "origin": "e2",
+          "destination": "e4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 8,
+          "uci": "e7e5",
+          "origin": "e7",
+          "destination": "e5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 9,
+          "uci": "c2c3",
+          "origin": "c2",
+          "destination": "c3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 10,
+          "uci": "b4a6",
+          "origin": "b4",
+          "destination": "a6",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 11,
+          "uci": "f1h3",
+          "origin": "f1",
+          "destination": "h3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 12,
+          "uci": "e5d4",
+          "origin": "e5",
+          "destination": "d4",
+          "capture": "d4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 13,
+          "uci": "c3d4",
+          "origin": "c3",
+          "destination": "d4",
+          "capture": "d4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 14,
+          "uci": "d6d5",
+          "origin": "d6",
+          "destination": "d5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        }
+      ]
+    },
+    {
+      "uci": "c2c4",
+      "san": "c4",
+      "origin_square": "c2",
+      "destination_square": "c4",
+      "is_capture": false,
+      "captured_square": null,
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3p/1p3n1P/2PP2P1/4B3/PP2PP2/RN1QKBNR b KQkq - 0 9",
+      "score": {
+        "type": "cp",
+        "value": -232,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "f5e3",
+        "f2e3",
+        "b5c4",
+        "f1g2",
+        "e7e5",
+        "d4d5",
+        "a6b4",
+        "d5c6",
+        "b4c6",
+        "g2e4",
+        "f8e7",
+        "b1c3",
+        "a8c8",
+        "g1f3",
+        "e8g8",
+        "g4g5",
+        "h6g5",
+        "h5h6"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "c2c4",
+          "origin": "c2",
+          "destination": "c4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "f5e3",
+          "origin": "f5",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 3,
+          "uci": "f2e3",
+          "origin": "f2",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 4,
+          "uci": "b5c4",
+          "origin": "b5",
+          "destination": "c4",
+          "capture": "c4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 5,
+          "uci": "f1g2",
+          "origin": "f1",
+          "destination": "g2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 6,
+          "uci": "e7e5",
+          "origin": "e7",
+          "destination": "e5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 7,
+          "uci": "d4d5",
+          "origin": "d4",
+          "destination": "d5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 8,
+          "uci": "a6b4",
+          "origin": "a6",
+          "destination": "b4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 9,
+          "uci": "d5c6",
+          "origin": "d5",
+          "destination": "c6",
+          "capture": "c6",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 10,
+          "uci": "b4c6",
+          "origin": "b4",
+          "destination": "c6",
+          "capture": "c6",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 11,
+          "uci": "g2e4",
+          "origin": "g2",
+          "destination": "e4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 12,
+          "uci": "f8e7",
+          "origin": "f8",
+          "destination": "e7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 13,
+          "uci": "b1c3",
+          "origin": "b1",
+          "destination": "c3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 14,
+          "uci": "a8c8",
+          "origin": "a8",
+          "destination": "c8",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 15,
+          "uci": "g1f3",
+          "origin": "g1",
+          "destination": "f3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 16,
+          "uci": "e8g8",
+          "origin": "e8",
+          "destination": "g8",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 17,
+          "uci": "g4g5",
+          "origin": "g4",
+          "destination": "g5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 18,
+          "uci": "h6g5",
+          "origin": "h6",
+          "destination": "g5",
+          "capture": "g5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 19,
+          "uci": "h5h6",
+          "origin": "h5",
+          "destination": "h6",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        }
+      ]
+    },
+    {
+      "uci": "b2b4",
+      "san": "b4",
+      "origin_square": "b2",
+      "destination_square": "b4",
+      "is_capture": false,
+      "captured_square": null,
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3p/1p3n1P/1P1P2P1/4B3/P1P1PP2/RN1QKBNR b KQkq - 0 9",
+      "score": {
+        "type": "cp",
+        "value": -287,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "f5e3",
+        "f2e3",
+        "a6b4",
+        "a2a4",
+        "d8a5",
+        "e1f2",
+        "b4d5",
+        "g1f3",
+        "d5f6",
+        "f1h3",
+        "b5b4"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "b2b4",
+          "origin": "b2",
+          "destination": "b4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "f5e3",
+          "origin": "f5",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 3,
+          "uci": "f2e3",
+          "origin": "f2",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 4,
+          "uci": "a6b4",
+          "origin": "a6",
+          "destination": "b4",
+          "capture": "b4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 5,
+          "uci": "a2a4",
+          "origin": "a2",
+          "destination": "a4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 6,
+          "uci": "d8a5",
+          "origin": "d8",
+          "destination": "a5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 7,
+          "uci": "e1f2",
+          "origin": "e1",
+          "destination": "f2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 8,
+          "uci": "b4d5",
+          "origin": "b4",
+          "destination": "d5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 9,
+          "uci": "g1f3",
+          "origin": "g1",
+          "destination": "f3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 10,
+          "uci": "d5f6",
+          "origin": "d5",
+          "destination": "f6",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 11,
+          "uci": "f1h3",
+          "origin": "f1",
+          "destination": "h3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 12,
+          "uci": "b5b4",
+          "origin": "b5",
+          "destination": "b4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        }
+      ]
+    },
+    {
+      "uci": "a2a4",
+      "san": "a4",
+      "origin_square": "a2",
+      "destination_square": "a4",
+      "is_capture": false,
+      "captured_square": null,
+      "promotion": null,
+      "is_castling": false,
+      "is_en_passant": false,
+      "resulting_fen": "r2qkb1r/p2bppp1/n1pp3p/1p3n1P/P2P2P1/4B3/1PP1PP2/RN1QKBNR b KQkq - 0 9",
+      "score": {
+        "type": "cp",
+        "value": -140,
+        "perspective": "white"
+      },
+      "regret": null,
+      "principal_variation": [
+        "f5e3",
+        "f2e3",
+        "b5a4",
+        "a1a4",
+        "a6c7",
+        "f1g2",
+        "c7d5",
+        "g2d5",
+        "c6d5",
+        "a4a6",
+        "e7e6",
+        "g1f3",
+        "f8e7",
+        "d1d3",
+        "e8g8",
+        "b1c3",
+        "d8b8",
+        "e1d2",
+        "b8b2"
+      ],
+      "parsed_pv": [
+        {
+          "ply_number": 1,
+          "uci": "a2a4",
+          "origin": "a2",
+          "destination": "a4",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 2,
+          "uci": "f5e3",
+          "origin": "f5",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 3,
+          "uci": "f2e3",
+          "origin": "f2",
+          "destination": "e3",
+          "capture": "e3",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 4,
+          "uci": "b5a4",
+          "origin": "b5",
+          "destination": "a4",
+          "capture": "a4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 5,
+          "uci": "a1a4",
+          "origin": "a1",
+          "destination": "a4",
+          "capture": "a4",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 6,
+          "uci": "a6c7",
+          "origin": "a6",
+          "destination": "c7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 7,
+          "uci": "f1g2",
+          "origin": "f1",
+          "destination": "g2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 8,
+          "uci": "c7d5",
+          "origin": "c7",
+          "destination": "d5",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 9,
+          "uci": "g2d5",
+          "origin": "g2",
+          "destination": "d5",
+          "capture": "d5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 10,
+          "uci": "c6d5",
+          "origin": "c6",
+          "destination": "d5",
+          "capture": "d5",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        },
+        {
+          "ply_number": 11,
+          "uci": "a4a6",
+          "origin": "a4",
+          "destination": "a6",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 12,
+          "uci": "e7e6",
+          "origin": "e7",
+          "destination": "e6",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 13,
+          "uci": "g1f3",
+          "origin": "g1",
+          "destination": "f3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 14,
+          "uci": "f8e7",
+          "origin": "f8",
+          "destination": "e7",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 15,
+          "uci": "d1d3",
+          "origin": "d1",
+          "destination": "d3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 16,
+          "uci": "e8g8",
+          "origin": "e8",
+          "destination": "g8",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 17,
+          "uci": "b1c3",
+          "origin": "b1",
+          "destination": "c3",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 18,
+          "uci": "d8b8",
+          "origin": "d8",
+          "destination": "b8",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 19,
+          "uci": "e1d2",
+          "origin": "e1",
+          "destination": "d2",
+          "capture": null,
+          "roles": [
+            "origin",
+            "destination"
+          ]
+        },
+        {
+          "ply_number": 20,
+          "uci": "b8b2",
+          "origin": "b8",
+          "destination": "b2",
+          "capture": "b2",
+          "roles": [
+            "origin",
+            "destination",
+            "capture"
+          ]
+        }
+      ]
+    }
+  ]
+}
