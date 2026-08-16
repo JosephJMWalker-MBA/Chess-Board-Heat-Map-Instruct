@@ -5,7 +5,7 @@ The purpose of this decision note is to determine whether $L_i$, $E_i$, and futu
 ## Frozen Definitions
 
 - $L_i(x) = 1\{x \text{ is a rule-exact legal opportunity after root } i\}$
-- $E_i(x; I, \theta) = 1\{x \text{ is realized in the continuation produced by instrument } I \text{ under config } \theta\}$
+- $E_i(x; J, \theta) = 1\{x \text{ is realized in the continuation produced by instrument } J \text{ under config } \theta\}$
 - $I_i(x; M)$ = placeholder (not yet implemented) for evidence obtained through a specified legal matched-intervention protocol $M$.
 
 *Note: Do not call $I_i$ causal effect yet.*
