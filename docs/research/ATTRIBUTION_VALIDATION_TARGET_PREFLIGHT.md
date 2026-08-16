@@ -10,51 +10,77 @@ We preserve the separation:
 
 We add the comparative structure variables:
 - $X = \text{frozen upstream evidence available before } Y$
+- $\rho = \text{frozen operator-neutral query encoding}$
 - $R = \text{frozen operator-neutral readout/prediction rule}$
-- $B = \text{strongest non-spatial baseline with the same upstream information budget}$
+- $B_{\text{raw}} = \text{raw-evidence reference predictor}$
+- $B_{\text{matched}} = \text{matched non-spatial representation baseline}$
 
 The comparative utility question is not merely:
 **Does $\mu$ correlate with $Y$?**
 
 It is:
-**Does $R(\mu(X), q)$ predict held-out $Y$ better than comparators and $B(X, q)$?**
+**Does $R(\mu(X), \rho(q))$ predict held-out $Y$ better than comparators, $B_{\text{matched}}$, and $B_{\text{raw}}$ under declared constraints?**
 (where $q$ is the held-out query/alternative when needed).
 
-## 2. Readout Independence Audit
+## 2. The Deterministic Representation Boundary
+
+Let $M_\mu = \mu(X)$.
+
+Because the tested attribution operators are deterministic functions of the frozen upstream evidence, $X \to M_\mu$ is a deterministic transformation.
+
+Therefore, for held-out target $Y$ and an independently supplied query representation $q$, by the data-processing inequality:
+$$I(Y; M_\mu, q) \le I(Y; X, q)$$
+
+**Spatial attribution cannot create information about $Y$ that was not already present in $X$.**
+
+This is a mathematical boundary, not an empirical hypothesis. An attribution operator cannot earn a claim of "incremental information beyond $X$" when the comparator receives full $X$.
+
+## 3. Information vs. Representation Utility
+
+We must explicitly distinguish:
+**Information gain $\neq$ representation utility.**
+
+A spatial representation may provide better:
+- predictive performance
+- generalization under held-out data
+- sample efficiency
+- computational/readout efficiency
+- robustness/transfer
+- compression or task-relevant sufficiency
+
+A spatial representation may improve one or more of these under a frozen comparison even though it cannot increase $I(Y; X)$.
+
+## 4. Dual Baselines
+
+Instead of a single baseline, we require two conceptually distinct controls.
+
+**$B_{\text{raw}}$** is a predictor receiving the full upstream evidence $X$ plus the same operator-neutral query representation $\rho(q)$.
+Its purpose is to ask: How much task performance is lost or gained by passing through the spatial representation under the declared learner/resource constraints? Do not call $\mu$'s advantage over this baseline "additional information."
+
+**$B_{\text{matched}}$** is a non-spatial lossy representation of $X$ under a preregistered matched representation/resource budget. Matching may later involve things such as output dimensionality/schema, readout model class/capacity, training sample count, optimization budget, or compute budget. (Do not pretend these constitute equal Shannon-information content).
+Its purpose is to ask whether spatialization is a useful representation relative to another constrained encoding.
+
+## 5. Readout Independence Audit
 
 Target independence ($Y$ independent of $\mu$) is necessary but insufficient. The prediction/readout rule $R$ must not encode the tested ownership semantics.
 
+The comparison becomes conceptually: $R(M_\mu, \rho(q)) \to Y$.
+We require every attribution operator to receive the identical query encoding.
+
 Reject designs where:
-- $\mu_D$ is read with a destination-specific scoring rule
-- $\mu_T$ is read with a transition-touch-specific scoring rule
-- each operator gets a custom prediction head/capacity
+- destination-specific $q$ encoding is used for $\mu_D$
+- transition-footprint-specific $q$ encoding is used for $\mu_T$
+- each operator gets custom feature engineering or prediction head/capacity
 - operator identity determines which squares/features the scorer examines
 - $R$ is chosen after seeing $Y$ performance
 
 A fair comparison requires either:
-- one identical deterministic readout
-- the same preregistered model class, capacity, training data, optimization budget, and selection rule for every operator and baseline
+- one fixed deterministic $R$
+- separately fitted instances of the same preregistered model class with identical capacity, training data, optimization budget, stopping rule, and selection procedure. (Learned parameter values may differ; the learning procedure and resource budget may not).
 
-Do not choose the production readout yet.
+Do not choose the production $R$ or $\rho$ yet.
 
-## 3. Information-Budget Baseline
-
-We require a non-spatial comparator $B$ that receives the same upstream information $X$ except for the spatial allocation itself.
-
-At minimum ask whether $B$ has access to:
-- sufficient position
-- legal-alternative identities
-- supplied consequence magnitude/type
-- branch identity
-- instrument/provenance fields
-- any other information used to instantiate $\mu$
-
-The purpose is to test:
-**Does spatialization add predictive utility beyond the information that was already present before spatial attribution?**
-
-Explicitly reject a claim of spatial utility if $\mu$ only repackages information already recoverable from $X$.
-
-## 4. Leakage Model
+## 6. Leakage Model
 
 We separate leakage types:
 - target leakage
@@ -77,7 +103,7 @@ Require:
 - threshold/model selection
 - fixture selection
 
-## 5. Independence Levels
+## 7. Independence Levels
 We define an independence ladder for candidate targets:
 - **Y0** — operator-derived target: invalid for comparative validation
 - **Y1** — operator-independent but same-instrument target
@@ -87,7 +113,7 @@ We define an independence ladder for candidate targets:
 
 Higher levels are not automatically feasible or necessary, but the level must be explicitly identified.
 
-## 6. Candidate Target Families
+## 8. Candidate Target Families
 
 *(Note: Target notation uses $Y_{J, \theta}$ or $\hat{V}_{J, \theta}$ where generated by an instrument, not the unearned ultimate consequence $V$. No universal CP/mate/WDL scalar conversion is assumed.)*
 
@@ -104,9 +130,9 @@ Higher levels are not automatically feasible or necessary, but the level must be
 - **Leakage/circularity risk:** Conditional (Low only if alternatives are strictly held out, $R$ is operator-neutral, and tuning/model selection is performed without held-out labels).
 - **Policy/player dependence:** Moderate (dependent on root state).
 - **Noise/confounding:** Horizon effects in unplayed branches.
-- **Utility claim success could earn:** Under frozen target instrument $J_Y, \theta_Y$, attribution operator $\mu$, coupled to a common preregistered readout, contains incremental information useful for discriminating held-out legal alternatives relative to specified comparator operators and a non-spatial information-budget baseline.
-- **Success could NOT establish:** Objective spatial ownership, objective $V$, causal square importance, or instrument-independent consequence.
-- **Strongest falsifier:** Attribution assigns high mass to squares irrelevant to alternative branch evaluations.
+- **Utility claim success could earn:** Under frozen target instrument $J_Y, \theta_Y$, attribution operator $\mu$, evaluated through a common preregistered query encoding/readout procedure, may earn superior held-out discrimination performance, generalization, efficiency, or robustness relative to specified attribution comparators and declared raw/matched baselines.
+- **Success could NOT establish:** New information beyond $X$, objective spatial ownership, objective $V$, causal square importance, or instrument independence (unless separately established).
+- **Strongest falsifier:** Under the preregistered utility statistic and resource budget, the attribution representation fails to outperform the specified comparator required by the claim, or its apparent advantage fails held-out/replication controls.
 
 ### 2. Held-out legal-intervention response
 - **Exact target subject:** Typed change/order under frozen $\hat{V}_{J_Y, \theta_Y}$ for held-out legal interventions.
@@ -210,39 +236,46 @@ Higher levels are not automatically feasible or necessary, but the level must be
 - **Success could NOT establish:** Objective unique ownership (since minimal sets aren't unique).
 - **Strongest falsifier:** $\mu$ ignores the provably minimal perturbation set (if global minimality is guaranteed by protocol).
 
-## 7. Target Leakage Test
+## 9. Three-Way Comparison Ledger
 
-For every candidate $Y$, ask:
-**Could I predict which operator wins merely from knowing how this target was constructed?**
-If yes, the target is structurally biased and rejected for comparative validation.
+Future protocol design must distinguish:
 
-## 8. Decision Relevance
+**A. Raw-evidence reference**
+$R_X(X, \rho(q))$
+- $\mu$ vs raw $X$ establishes: predictive retention / inductive-bias or efficiency behavior, not information creation.
 
-If operator $\mu_1$ substantially and reproducibly outperforms $\mu_2$ on $Y$, what architectural decision would that justify?
-- **Acceptable:** Prefer $\mu_1$ for a declared predictive/measurement purpose.
-- **Not acceptable:** Conclude $\mu_1$ reveals objective square ownership.
+**B. Spatial representations**
+$R_\mu(\mu(X), \rho(q))$ for each frozen attribution operator.
+- $\mu_1$ vs $\mu_2$ establishes: relative utility of attribution conventions under matched procedure.
 
-## 9. Protocol-Readiness Gate
+**C. Matched non-spatial representations**
+$R_B(B_{\text{matched}}(X), \rho(q))$
+- $\mu$ vs $B_{\text{matched}}$ establishes: utility of spatial organization versus a declared matched non-spatial representation.
+
+## 10. Protocol-Readiness Gate
 
 A target family is ready for protocol design only when all are conceptually specified:
-- $X$ — upstream information boundary
-- $\mu$ — comparator attribution operators
-- $R$ — common readout family
-- $B$ — non-spatial information-budget baseline
-- $Y$ — exact held-out target semantics
-- split/holdout boundary
-- utility statistic
-- claim ceiling
+- $X$
+- frozen $\mu$ comparators
+- $\rho(q)$
+- $R$ / fitting procedure
+- $B_{\text{raw}}$
+- $B_{\text{matched}}$
+- $Y$ semantics
+- holdout boundary
+- utility dimension/statistic
+- resource budget
 - leakage controls
+- claim ceiling
 
 Do not define numerical thresholds yet.
 
-## 10. Conclusion
+## 11. Conclusion
 
-**VALIDATION_TARGET_REQUIRES_TARGET_SEMANTICS_FIRST**
+**VALIDATION_COMPARISON_REQUIRES_UTILITY_SEMANTICS_FIRST**
 
-A promising non-spatial Y2 candidate family has been identified (held-out legal-alternative consequence discrimination), but target independence alone does not identify attribution utility. The upstream information boundary, operator-neutral readout, and same-information non-spatial baseline must be defined before a protocol can distinguish utility added by spatial attribution from utility already present in C2 evidence.
+A promising non-spatial Y2 candidate family has been identified (held-out legal-alternative consequence discrimination), but a deterministic spatial attribution cannot add information beyond its upstream evidence. Before protocol design, ChessHeat must define which representation utility is being tested, together with the query encoding, readout procedure, raw-evidence reference, and matched non-spatial comparator.
 
-## 11. Next Planning Question
+## 12. Next Planning Question
 
-What common readout $R$, upstream boundary $X$, and non-spatial baseline $B$ would make held-out legal-alternative discrimination a fair test of incremental spatial-attribution utility?
+Which utility notion, upstream boundary $X$, operator-neutral query encoding $\rho$, readout procedure $R$, raw reference $B_{\text{raw}}$, and matched non-spatial representation $B_{\text{matched}}$ would make held-out legal-alternative discrimination a fair representation-utility test?
