@@ -496,26 +496,27 @@ if __name__ == "__main__":
         
     manifest1 = json.loads(bytes1)
     
-    with open("docs/research/t3/t3b7_matched_fixture_manifest_historical.json", "r") as f:
-        hist_manifest = json.load(f)
+    # Frozen historical selection projection digest
+    HISTORICAL_SELECTION_PROJECTION_DIGEST = "7d3ed0a59a41b0c5cf77809cccdffb9219825676a43104b1887dc79c8c1303a3"
+    
+    check_keys = [
+        "fixture_identity", "fixture_index", "game_index", "half_move_index",
+        "intervention_fen", "qualifying_target_squares", "target_event",
+        "legal_reply_ucis", "C_reply_ucis", "c_1", "c_2", "m_1", "m_2",
+        "M_1_ucis", "M_2_ucis", "H_1_ucis", "H_2_ucis", "observation_reply_ucis",
+        "B_strict", "required_children", "required_search_count"
+    ]
+    
+    projection = []
+    for f in manifest1["fixtures"]:
+        proj = {k: f[k] for k in check_keys}
+        projection.append(proj)
         
-    for i in range(16):
-        mf = hist_manifest["fixtures"][i]
-        rf = manifest1["fixtures"][i]
+    new_projection_digest = hashlib.sha256(json.dumps(projection, sort_keys=True).encode("utf-8")).hexdigest()
+    if new_projection_digest != HISTORICAL_SELECTION_PROJECTION_DIGEST:
+        exit_error("T3B7_SELECTION_PROJECTION_MISMATCH")
         
-        check_keys = [
-            "fixture_identity", "fixture_index", "game_index", "half_move_index",
-            "intervention_fen", "qualifying_target_squares", "target_event",
-            "legal_reply_ucis", "C_reply_ucis", "c_1", "c_2", "m_1", "m_2",
-            "M_1_ucis", "M_2_ucis", "H_1_ucis", "H_2_ucis", "observation_reply_ucis",
-            "B_strict", "required_children", "required_search_count"
-        ]
-        
-        for k in check_keys:
-            if mf[k] != rf[k]:
-                exit_error(f"IDENTITY_REPAIR_FAILURE: {k} changed for fixture {i}")
-                
-    if hist_manifest["expected_future_search_count"] != manifest1["expected_future_search_count"]:
+    if manifest1["expected_future_search_count"] != 171:
         exit_error("IDENTITY_REPAIR_FAILURE: expected_future_search_count changed")
         
     with open("docs/research/t3/t3b7_matched_fixture_manifest.json", "wb") as f:

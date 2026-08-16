@@ -124,23 +124,35 @@ def test_t3b7_manifest_integrity():
         "tests/fixtures/t3a4/raw/t3a4_f10.json": "ffa4fa05fc6e251f2e8d3d7a0f536e548717d503d27801b7b08646420fd9bfd7",
         "tests/fixtures/t3a4/raw/t3a4_f11.json": "37cfc3b58962aeeeecc4723d58ef63b5c9ec00e6f588d9c37c53ba9e41368641"
     }
+    
+    independently_reconstructed_sources = []
 
     pre_t3b3_canonical_fens = set()
     for path, expected_sha in HISTORICAL_SOURCES.items():
-        assert get_file_sha(path) == expected_sha
+        actual_sha = get_file_sha(path)
+        assert actual_sha == expected_sha
         with open(path, "r") as f:
             data = json.load(f)
             
         if "t3a1" in path or "t3a2" in path:
+            extraction_rule = "top-level fen, observations[*].resulting_fen"
             raw_fens = [data["fen"]]
             if "observations" in data:
                 raw_fens.extend([obs["resulting_fen"] for obs in data["observations"]])
         elif "t3a3" in path or "t3a4" in path:
+            extraction_rule = "top-level fen, move_observations[*].resulting_fen"
             raw_fens = [data["fen"]]
             if "move_observations" in data:
                 raw_fens.extend([obs["resulting_fen"] for obs in data["move_observations"]])
         else:
             assert False
+            
+        independently_reconstructed_sources.append({
+            "source_path": path,
+            "expected_sha256": expected_sha,
+            "actual_sha256": actual_sha,
+            "extraction_rule": extraction_rule
+        })
             
         for rfen in raw_fens:
             pre_t3b3_canonical_fens.add(canonicalize_fen(rfen))
@@ -175,6 +187,7 @@ def test_t3b7_manifest_integrity():
     combined_engine_exposure_digest = digest_fens(combined_engine_exposure)
     
     pee = manifest["prior_engine_exposure_provenance"]
+    assert pee["sources"] == independently_reconstructed_sources
     assert pee["pre_t3b3_engine_exposure_count"] == len(pre_t3b3_canonical_fens) == 414
     assert pee["pre_t3b3_engine_exposure_digest"] == digest_fens(pre_t3b3_canonical_fens) == "a4342f713a22ccc3c4790fcc220136b2f78f16e5f014d7a195f26d6fd8842476"
     assert pee["t3b3_observed_child_raw_count"] == 362
@@ -441,9 +454,27 @@ def test_t3b7_manifest_integrity():
     )
     assert suite.model_dump(mode="json") == manifest["s1_suite_manifest"]
     assert suite.suite_digest() == manifest["s1_suite_digest"]
+    assert manifest["s1_suite_digest"] == EXPECTED_SUITE_DIGEST
     
     expected_future_search_count = sum(f["required_search_count"] for f in accepted_fixtures)
     assert expected_future_search_count == manifest["expected_future_search_count"]
+    
+    HISTORICAL_SELECTION_PROJECTION_DIGEST = "7d3ed0a59a41b0c5cf77809cccdffb9219825676a43104b1887dc79c8c1303a3"
+    check_keys = [
+        "fixture_identity", "fixture_index", "game_index", "half_move_index",
+        "intervention_fen", "qualifying_target_squares", "target_event",
+        "legal_reply_ucis", "C_reply_ucis", "c_1", "c_2", "m_1", "m_2",
+        "M_1_ucis", "M_2_ucis", "H_1_ucis", "H_2_ucis", "observation_reply_ucis",
+        "B_strict", "required_children", "required_search_count"
+    ]
+    
+    projection = []
+    for f in manifest["fixtures"]:
+        proj = {k: f[k] for k in check_keys}
+        projection.append(proj)
+        
+    new_projection_digest = hashlib.sha256(json.dumps(projection, sort_keys=True).encode("utf-8")).hexdigest()
+    assert new_projection_digest == HISTORICAL_SELECTION_PROJECTION_DIGEST
 
     def reject_keys(obj):
         bad_keys = {"outcome", "score", "cp", "mate", "evaluation", "pv", "principal_variation", "regret", "S", "Q", "Delta", "engine_binary_sha256", "actual_uci_engine_name"}
