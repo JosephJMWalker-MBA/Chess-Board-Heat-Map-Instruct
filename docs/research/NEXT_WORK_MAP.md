@@ -68,7 +68,7 @@ Proved that exact ordered `future_moves` restore deterministic replay of standar
 
 ---
 
-## Active Research Track
+## Recently Closed Research Track
 
 **Phase:** T3b Legal Reply Intervention
 **Status:** CLOSED / FALSIFIED
@@ -140,9 +140,9 @@ Remain downstream and outside objective Heat.
 
 ---
 
-## Active-Phase Constraints
+## Research Constraints
 
-The following freeze rules apply during the active T3 research phase:
+The following freeze rules continue to apply:
 
 - No new Heat scalar;
 - No M8 or ShapeSelectivity retuning;
