@@ -39,6 +39,14 @@ def test_t3b9_matched_analysis_integrity():
     manifest_path = "docs/research/t3/t3b7_matched_fixture_manifest.json"
     bundle_path = "docs/research/t3/t3b8_presearch_spec_bundle.json"
     analysis_path = "docs/research/t3/t3b9_matched_analysis.json"
+    t3b6_path = "docs/research/t3/T3B6_MATCHED_ESTIMAND_CALIBRATION.md"
+    t3b7_path = "docs/research/t3/T3B7_RULE_ONLY_MATCHED_FIXTURE_PROTOCOL.md"
+    
+    assert get_file_sha(raw_path) == "5d89d9efde0b140bd134a4e9e3e57092120619acf335c05fcbd2bb9bf1d09b2e"
+    assert get_file_sha(manifest_path) == "40949ceeaa5ff1cd1c8a083df45f0dbe0f252d3f1637a692dbf96ae98156ad13"
+    assert get_file_sha(bundle_path) == "6ce6b91d3839998f2b9f24c3c6368cbb30cf799c1e8ddaeb9a9a3dcfc54e957b"
+    assert get_file_sha(t3b6_path) == "7f395355e2505db8cc24468e541db5f9618d81c206a8f489c30a09607b0ac8a8"
+    assert get_file_sha(t3b7_path) == "2b9377a46b5ff54453ec1796b9a5ce8ca3f1e7bf36a112820d9390b69ed819b9"
     
     with open(raw_path) as f: raw = json.load(f)
     with open(manifest_path) as f: manifest = json.load(f)
@@ -53,7 +61,19 @@ def test_t3b9_matched_analysis_integrity():
         man_fix = manifest["fixtures"][f_idx]
         bun_fix = bundle["specs"][f_idx]
         
+        assert raw_fix["fixture_identity"] == man_fix["fixture_identity"]
+        assert bun_fix["fixture_identity"] == man_fix["fixture_identity"]
+        assert raw_fix["spec_digest"] == bun_fix["spec_digest"]
+        
         result_model = ExperimentResult(**raw_fix["experiment_result"])
+        assert result_model.spec_digest == bun_fix["spec_digest"]
+        
+        reconstructed = ExperimentResult.create(
+            spec_digest=result_model.spec_digest,
+            data=json.loads(result_model.data_payload),
+        )
+        assert reconstructed.model_dump() == result_model.model_dump()
+        
         payload = json.loads(result_model.data_payload)
         outcome_map = {obs["uci"]: obs["outcome"] for obs in payload["observed_replies"]}
         
