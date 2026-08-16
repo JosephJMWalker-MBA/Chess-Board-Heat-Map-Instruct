@@ -1,7 +1,7 @@
 import hashlib
 import json
 from enum import Enum
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List, Optional, Literal
 from pydantic import BaseModel, model_validator
 from .semantics import SufficientPosition
 
@@ -42,13 +42,23 @@ class ExperimentSpec(BaseModel):
     budget_config: Dict[str, Any]
     line_source: str
     hypothesis_identifier: str
+    spec_version: Literal[1, 2] = 1
     comparison_perspective: Optional[str] = None
+
+    @model_validator(mode='after')
+    def validate_perspective(self) -> 'ExperimentSpec':
+        if self.spec_version >= 2:
+            if self.comparison_perspective not in ("white", "black"):
+                raise ValueError("comparison_perspective must be 'white' or 'black' for spec_version >= 2")
+        return self
 
     def spec_digest(self) -> str:
         """Deterministic SHA-256 hash of the specification."""
         d = self.model_dump()
         if d.get("comparison_perspective") is None:
             del d["comparison_perspective"]
+        if d.get("spec_version") == 1:
+            del d["spec_version"]
         payload_str = json.dumps(d, sort_keys=True)
         return hashlib.sha256(payload_str.encode('utf-8')).hexdigest()
 
