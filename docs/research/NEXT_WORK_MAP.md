@@ -71,7 +71,7 @@ Proved that exact ordered `future_moves` restore deterministic replay of standar
 ## Active Research Track
 
 **Phase:** T3b Legal Reply Intervention
-**Next Scientific Step:** T3b-5 — Strict Matchability Coverage Audit
+**Next Scientific Step:** T3b-6 — Matched-Control Estimand & Calibration Preregistration
 
 ## T3b Queue
 
@@ -80,8 +80,9 @@ Proved that exact ordered `future_moves` restore deterministic replay of standar
 3. ~~T3b-2 — Rule-Only Fixture & Statistic Preregistration~~ COMPLETE/FROZEN
 4. ~~T3b-3 — Frozen legal-reply intervention execution~~ COMPLETE / WEAK_SUPPORT / INTERVENTION_SENSITIVITY
 5. ~~T3b-4 — Matched-Control Identifiability Feasibility Audit~~ COMPLETE / strict matcher semantically admissible
-6. T3b-5 — Strict Matchability Coverage Audit
-   *(RULE-ONLY / NO ENGINE. If M_2 < 12, abandon strict basis. If M_2 >= 12, strict two-reply destination-event matching has sufficient rule-only availability to justify DESIGNING a separate matched-control protocol.)*
+6. ~~T3b-5 — Strict Matchability Coverage Audit~~ COMPLETE / FEASIBLE_FOR_MATCHED_PROTOCOL_DESIGN / RULE-ONLY
+7. T3b-6 — Matched-Control Estimand & Calibration Preregistration
+   *(DOCUMENTATION / MATHEMATICS ONLY. NO ENGINE. NO FIXTURE GENERATION)*
 
 ---
 
@@ -121,12 +122,13 @@ Remain downstream and outside objective Heat.
 8. **DONE** — T3b-2 Rule-Only Fixture and Statistic Preregistration
 9. **CLOSED** — T3b-3 Frozen legal-reply intervention execution
 10. **DONE** — T3b-4 Matched-Control Identifiability Feasibility Audit
-11. **NEXT P1** — T3b-5 Strict Matchability Coverage Audit (RULE-ONLY / NO ENGINE)
-12. **P2** — Representation Audit
-13. **P2** — Projection Audit
-14. **P2** — Multi-Instrument / T1.12 robustness
-15. **P3** — Pathways / Evidence Fusion / Amplitude
-16. **DEFER** — Human Navigation / Teacher / Explanation
+11. **DONE** — T3b-5 Strict Matchability Coverage Audit
+12. **NEXT P1** — T3b-6 Matched-Control Estimand & Calibration Preregistration (DOCUMENTATION / MATHEMATICS ONLY)
+13. **P2** — Representation Audit
+14. **P2** — Projection Audit
+15. **P2** — Multi-Instrument / T1.12 robustness
+16. **P3** — Pathways / Evidence Fusion / Amplitude
+17. **DEFER** — Human Navigation / Teacher / Explanation
 
 ---
 
