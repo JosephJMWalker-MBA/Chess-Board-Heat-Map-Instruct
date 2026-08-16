@@ -34,9 +34,22 @@ Specify a portable deterministic generator rather than human fixture selection.
 
 Start each generated game from the standard initial chess position.
 
+For game index $g = 0, 1, 2, \dots, 9999$:
+The first generated game is $g=0$; increment by exactly one for every restarted game.
+
+Search exactly $0 \le g \le 9999$.
+Stop immediately when 12 qualifying unique fixtures have been accepted.
+If $g=9999$ has been exhausted and fewer than 12 fixtures exist, corpus construction stops before engine execution with:
+`INSUFFICIENT_QUALIFYING_RULE_ONLY_FIXTURES`
+Do not extend the game-index range or relax criteria afterward.
+This is a corpus-acquisition failure, not an engine result.
+
 For each game index $g$:
 - start from standard initial position;
 - generate until the game becomes terminal or reaches $p=80$;
+- on the live generated board, define terminal using exactly: `board.is_game_over(claim_draw=False)`
+- claimable threefold/50-move draws do not terminate generation merely because they could be claimed.
+- if the generated game becomes terminal before $p=80$, proceed to $g+1$;
 - after scanning the $p=80$ state, stop that generated game regardless of terminality;
 - continue with game index $g+1$ from the standard initial position.
 
@@ -58,7 +71,8 @@ Then:
 `index = digest_integer % len(sorted_legal_ucis)`
 and play the legal move whose UCI is at that zero-based index.
 
-This produces a deterministic pseudo-random legal move without Python RNG/version/byte-order dependence.
+This deterministic pseudo-random legal move algorithm avoids Python RNG, legal-move iteration-order, hash byte-order, and implicit FEN-mode dependence.
+The eventual corpus manifest must record the executing `chess.__version__` as provenance, but library version must not be used to select or reject fixtures.
 
 Scan generated positions only when $12 \le p \le 80$.
 Define $p$ explicitly as the number of half-moves already played from the standard initial position.
@@ -101,9 +115,16 @@ No piece-value or mechanism tie-break. Do not choose based on chess attractivene
 
 ## Corpus Selection
 
-Define fixture uniqueness by the exact six-field FEN string:
-`piece-placement side-to-move castling en-passant halfmove fullmove`
+Define fixture uniqueness by the exact six-field FEN string.
+For every scanned state, construct the fixture-identity FEN exactly with:
+`fen = board.fen(shredder=False, en_passant="fen")`
+This exact string is used for:
+- uniqueness;
+- exclusion checks;
+- manifest identity;
+- eventual `SufficientPosition` reconstruction.
 
+Do not use the Python-chess default en-passant serialization implicitly.
 A scanned state whose exact six-field FEN was already accepted is skipped and generation continues.
 Do not normalize halfmove/fullmove fields for uniqueness.
 
@@ -117,12 +138,23 @@ Accept the first 12 unique qualifying FENs produced by the frozen deterministic 
   - the eventual engine may not choose the capture;
   - the mechanism resembles or differs from T3a-2/T3a-3.
 
-T3a-2 and T3a-3 exact six-field FENs are excluded if encountered.
+Exclude exactly:
+`4k3/8/1b6/8/3R4/8/8/4K3 w - - 0 1`
+`4k3/8/1n6/8/2B5/8/8/4K3 w - - 0 1`
+rather than requiring a future implementation to recover the T3a-2/T3a-3 strings elsewhere.
 
 ## Position Semantics
 
 The deterministic generated move sequence is selection provenance, not retained experiment history.
 The accepted six-field FEN is treated as the authoritative experimental start state.
+
+For fixture eligibility, reconstruct:
+`fixture_board = chess.Board(fen)`
+and perform the root-state validity/nonterminal checks on that reconstructed board, including:
+`fixture_board.is_valid()`
+`fixture_board.is_game_over(claim_draw=False)`
+This ensures fixture acceptance does not secretly depend on generated pre-FEN repetition history.
+The generator's move stack remains selection provenance only.
 
 Therefore for the T3a-4 experiment:
 `history_available = false`
