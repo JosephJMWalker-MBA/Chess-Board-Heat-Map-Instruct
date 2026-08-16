@@ -129,6 +129,20 @@ def test_t3b8_raw_acquisition_integrity():
         man_fix = manifest["fixtures"][f_idx]
         bun_fix = bundle["specs"][f_idx]
         
+        assert raw_fix["fixture_identity"] == man_fix["fixture_identity"]
+        assert bun_fix["fixture_identity"] == man_fix["fixture_identity"]
+        assert bun_fix["fixture_digest"] == man_fix["fixture_content_digest"]
+
+        assert bun_fix["spec"]["fixture_identity"] == man_fix["fixture_identity"]
+        assert bun_fix["spec"]["fixture_digest"] == man_fix["fixture_content_digest"]
+        assert bun_fix["spec"]["sufficient_position"] == man_fix["sufficient_position"]
+
+        assert raw_fix["spec_digest"] == bun_fix["spec_digest"]
+        assert result_model.spec_digest == bun_fix["spec_digest"]
+
+        indexed_spec = ExperimentSpec(**bun_fix["spec"])
+        assert indexed_spec.spec_digest() == bun_fix["spec_digest"]
+        
         raw_observed_ucis = [obs["uci"] for obs in payload_data["observed_replies"]]
         assert raw_observed_ucis == man_fix["observation_reply_ucis"], "Observation replies out of order or mismatched"
         assert raw_observed_ucis == sorted(raw_observed_ucis), "Observation replies not ASCII sorted"
