@@ -57,31 +57,29 @@ Proved that exact ordered `future_moves` restore deterministic replay of standar
 
 ## Active Phase: T3a Branch-Conditioned Consequence Discrimination
 
+**Status: CLOSED**
+
+- **T3a-1**: INCONCLUSIVE — PV horizon
+- **T3a-2**: SUPPORTED — single fixture
+- **T3a-3**: INCONCLUSIVE — zero realized support
+- **T3a-4**: INCONCLUSIVE — provenance; conditional numeric result strongly **FALSIFIED**
+
+**T3a Conclusion**: $E_i(x;J,\theta)$ has earned status as producer-conditioned observational evidence, but $E_i$ has not earned status as a monotonic primitive of objective consequence. Six of the seven informative T3a-4 $P_f$'s ran opposite the preregistered direction. Even with the provenance ceiling, that is enough reason to stop trying to promote single-PV realization through more T3a experiments. No additional T3a experiment may be introduced merely to obtain a favorable single-PV realization result.
+
+---
+
+## Active Phase: T3b Legal Matched Intervention
+
 **Status: ACTIVE P1**
 
-### T3a-1 (Issue #11): First preregistered consequence-association experiment
-**Status: Complete — INCONCLUSIVE**
-- **Preregistration SHA**: 748fb141450ae14ca489120900a520027c21ffc6
-- **Final Semantic Closeout SHA**: 5f0d91b8b55bd3de92722d533918af47e72a4947
-- **Classification**: `INCONCLUSIVE`
-- **Failure Reason**: `INSUFFICIENT_OBSERVED_PV_LENGTH`
-- **Methodological Result**: A fixed 100k-node budget does not guarantee a four-continuation-ply observable PV for every legal root.
-- **Note**: This result must not be interpreted as evidence for or against the branch-conditioned consequence hypothesis.
+### Next Scientific Step: T3b-0
 
-### Next Scientific Experiment: T3a-2
-
-**T3a-2 — Fresh preregistered immediate-continuation consequence association.**
-- Must use a **new manually constructed mechanism** (ideally another immediate hanging-piece capture on a different piece/square).
-- Must use a shortened horizon: `H = {ply 2}` (one continuation ply) to drastically reduce the chance of observing insufficient PV lengths, while still testing genuine future branch evidence and excluding the root move.
-- **IMPORTANT**: Do not reuse the T3a-1 FEN/event as a shortened-horizon rescue because its outcomes are already observed and no longer constitute a clean preregistered test.
+**T3b-0 — Intervention Semantics Contract**
+Define what an intervention actually is before touching the engine again. Not because intervention is expected to rescue T3a, but because T3a exposed the confounding between which future the producer selects and what consequence a legal future carries. See `docs/research/t3/T3B0_INTERVENTION_CONTRACT.md`.
 
 ---
 
 ## Later work, intentionally gated
-
-### T3b — Legal matched intervention
-**Priority: GATED P2 — only if T3a earns it**
-Consequence association is not intervention sensitivity or causality. T3b is gated until T3a earns escalation through interpretable and replicated association tests.
 
 ### Representation Audit
 **Priority: P2**
@@ -111,15 +109,14 @@ Remain downstream and outside objective Heat.
 2. **DONE** — S0 semantic freeze
 3. **DONE** — S1 experiment spine
 4. **CLOSED** — T2b ray/blocker representation inquiry; no privileged relation basis earned
-5. **DONE/INCONCLUSIVE** — T3a-1 first preregistered consequence-association experiment
-6. **NEXT P1** — T3a-2 fresh immediate-continuation preregistered experiment
-7. **P1** — independent T3a replication if T3a-2 is interpretable
-8. **GATED P2** — T3b legal matched intervention
-9. **P2** — Representation Audit
-10. **P2** — Projection Audit
-11. **P2** — Multi-Instrument / T1.12 robustness
-12. **P3** — Pathways / Evidence Fusion / Amplitude
-13. **DEFER** — Human Navigation / Teacher / Explanation
+5. **CLOSED** — T3a consequence-association (T3a-1, T3a-2, T3a-3, T3a-4)
+6. **NEXT P1** — T3b-0 Intervention Semantics Contract
+7. **GATED P2** — T3b legal matched intervention experiment
+8. **P2** — Representation Audit
+9. **P2** — Projection Audit
+10. **P2** — Multi-Instrument / T1.12 robustness
+11. **P3** — Pathways / Evidence Fusion / Amplitude
+12. **DEFER** — Human Navigation / Teacher / Explanation
 
 ---
 
