@@ -34,17 +34,42 @@ Specify a portable deterministic generator rather than human fixture selection.
 
 Start each generated game from the standard initial chess position.
 
-For game index $g = 0, 1, 2, \dots$ and ply $p$:
-1. obtain all legal moves;
-2. sort their UCI strings lexicographically;
-3. compute: `SHA256("T3A4_V1:<game_index>:<ply>")`;
-4. interpret the digest as an unsigned integer;
-5. choose: `digest_integer % legal_move_count`.
+For each game index $g$:
+- start from standard initial position;
+- generate until the game becomes terminal or reaches $p=80$;
+- after scanning the $p=80$ state, stop that generated game regardless of terminality;
+- continue with game index $g+1$ from the standard initial position.
 
-This produces a deterministic pseudo-random legal move without Python RNG/version dependence.
-Start a new generated game if terminal.
+Do not continue unscanned games beyond ply 80.
 
-Scan generated positions only after a preregistered minimum ply, suggested: `ply >= 12` and before: `ply <= 80`.
+For selection of move $p+1$, use the exact UTF-8 byte string:
+`T3A4_V1:<g>:<p>`
+where `<g>` and `<p>` are base-10 integers with no padding, signs, spaces, or additional newline.
+
+Compute SHA-256.
+Convert the 64-character hexadecimal digest using:
+`int(digest_hex, 16)`
+
+For legal-move ordering, use ordinary Python lexicographic ordering of ASCII UCI strings:
+`sorted(move.uci() for move in board.legal_moves)`
+The generator must not rely on python-chess iteration order.
+
+Then:
+`index = digest_integer % len(sorted_legal_ucis)`
+and play the legal move whose UCI is at that zero-based index.
+
+This produces a deterministic pseudo-random legal move without Python RNG/version/byte-order dependence.
+
+Scan generated positions only when $12 \le p \le 80$.
+Define $p$ explicitly as the number of half-moves already played from the standard initial position.
+Therefore:
+- initial position has $p=0$;
+- after White's first move $p=1$;
+- after Black's first move $p=2$.
+
+Evaluate fixture eligibility on the board after exactly $p$ half-moves have been played, before choosing move $p+1$.
+Only states with $12 \le p \le 80$ are scanned.
+Because fixtures require White to move, only qualifying even-$p$ states can ultimately be accepted.
 
 **Do not inspect Stockfish while designing or running this generator.**
 
@@ -56,18 +81,31 @@ A position may enter the corpus only if all of the following are determinable th
 - nonterminal under the FEN-defined state;
 - White is not currently in check;
 - every legal White root results in a position where Black has at least one legal reply;
-- at least one non-king White piece currently occupies a square $s$ for which Black has a legal capture opportunity;
-- considering all legal White roots, at least two roots preserve a legal Black capture onto the original target square $s$;
-- at least two roots remove that immediate capture opportunity;
-- no different White piece can move onto $s$ under a legal root in a way that makes $(s, \text{capture})$ ambiguous with respect to the preregistered target;
-- the exact target/event can therefore be represented unambiguously as: $x_f = (s_f, \text{capture}, \text{ply}=2)$.
+A candidate target square $s$ is eligible iff:
+- at the scanned root state, $s$ contains a non-king White piece;
+- enumerate all legal White root moves;
+- for at least two resulting positions, Black has at least one legal move whose destination is $s$ and which captures the original target piece still occupying $s$;
+- for at least two resulting positions, no such capture of the original target piece on $s$ is legal;
+- roots on which the original target moved from $s$ therefore belong to the opportunity-absent class;
+- if another White piece moves onto $s$, that root cannot count as preservation of the original-target opportunity and must not make the event identity ambiguous.
 
-These are $L_i$-based fixture eligibility conditions only.
+The exact target/event can therefore be represented unambiguously as: $x_f = (s_f, \text{capture}, \text{ply}=2)$.
+
+These are $L_{fi}$-based fixture metadata only.
 They must not be interpreted as observed $E_i$ membership.
 
-If more than one target square satisfies the criteria in a position, choose one through a deterministic rule fixed in the protocol, such as lexicographically smallest square name. Do not choose based on chess attractiveness or likely engine behavior.
+If more than one target square satisfies every rule-only acceptance condition, choose exactly:
+`min(eligible_target_squares)`
+over algebraic square names in ordinary ASCII lexicographic order.
+No piece-value or mechanism tie-break. Do not choose based on chess attractiveness or likely engine behavior.
 
 ## Corpus Selection
+
+Define fixture uniqueness by the exact six-field FEN string:
+`piece-placement side-to-move castling en-passant halfmove fullmove`
+
+A scanned state whose exact six-field FEN was already accepted is skipped and generation continues.
+Do not normalize halfmove/fullmove fields for uniqueness.
 
 Accept the first 12 unique qualifying FENs produced by the frozen deterministic stream.
 
@@ -79,15 +117,22 @@ Accept the first 12 unique qualifying FENs produced by the frozen deterministic 
   - the eventual engine may not choose the capture;
   - the mechanism resembles or differs from T3a-2/T3a-3.
 
-Exact T3a-2 and T3a-3 FENs must not be inserted manually and should be excluded if encountered exactly, because they are already observed development fixtures.
+T3a-2 and T3a-3 exact six-field FENs are excluded if encountered.
 
 ## Position Semantics
 
-Every accepted fixture must preserve a real `SufficientPosition`.
+The deterministic generated move sequence is selection provenance, not retained experiment history.
+The accepted six-field FEN is treated as the authoritative experimental start state.
 
-Treat the generated FEN as the experiment's authoritative start state and explicitly represent history availability according to the S0 contract.
-Do not silently infer repetition history unavailable from FEN.
-Keep halfmove/fullmove/castling/en-passant fields exactly.
+Therefore for the T3a-4 experiment:
+`history_available = false`
+`history_identity = null`
+unless the existing S0 contract mechanically forbids that interpretation.
+
+State explicitly that no repetition claim requiring unavailable pre-FEN history may be made.
+Preserve castling, en-passant, halfmove, and fullmove fields exactly from the accepted FEN.
+
+If this interpretation conflicts with an existing frozen S0 requirement, stop and report the conflict instead of generating the corpus.
 
 ## Event Variable
 
@@ -116,21 +161,24 @@ Freeze prospectively for every fixture:
 
 Every legal root must expose ply 2.
 
-A fixture is realization-informative only if, after complete observation:
-$|E=1| \ge 2$ and $|E=0| \ge 2$.
+A fixture with any of the following remains in the 12-fixture manifest but is non-evaluable for directional association:
+- at least one root lacks observed ply 2;
+- incompatible consequence typing;
+- $|E=1| < 2$;
+- $|E=0| < 2$.
 
-A fixture with all-zero, all-one, or insufficient partition cardinality remains permanently in the suite but contributes no directional association statistic. It must be recorded as uninformative for the corpus association test, not deleted/replaced.
+Such a fixture contributes no $P_f$, but is never replaced.
 
 ## Corpus-Level Identifiability Gate
 
 **Freeze:**
-At least 3 of the 12 fixtures must be realization-informative.
-
-Otherwise the entire T3a-4 association test is:
-`INCONCLUSIVE` / `INSUFFICIENT_REALIZED_EVENT_SUPPORT_ACROSS_CORPUS`.
+The suite is:
+`INCONCLUSIVE` / `INSUFFICIENT_REALIZED_EVENT_SUPPORT_ACROSS_CORPUS`
+iff fewer than 3 of the 12 fixtures yield valid $P_f$.
 
 This is an acquisition result, not a failed fixture-selection problem.
 Do not expand to MultiPV or replace fixtures afterward.
+A global provenance/instrument/spec mismatch is separately suite-invalid and must not be treated merely as one non-evaluable fixture.
 
 ## Fixture-Level Consequence Statistic
 
@@ -140,8 +188,9 @@ $D_f = \text{median}(R_{fi} \mid E_{fi} = 1) - \text{median}(R_{fi} \mid E_{fi} 
 and:
 $M_f = \min(R_{fi} \mid E_{fi} = 1) - \max(R_{fi} \mid E_{fi} = 0)$.
 
-Retain typed CP/mate rules from T3a-2/T3a-3. No mate-to-CP conversion.
-A fixture containing incompatible typed consequences is non-evaluable for directional association and remains recorded.
+For T3a-4 directional statistics, require all root regrets within an informative fixture to be CP-typed.
+If any root regret is mate-typed, that fixture remains recorded but contributes no $P_f$.
+No mate-to-CP conversion.
 
 ## Corpus-Level Statistic
 
