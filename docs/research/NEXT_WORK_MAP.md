@@ -2,220 +2,571 @@
 
 ## Purpose
 
-This plan consolidates the completed external-research track into an execution order for the next phase of ChessHeat.
+This is the current execution-order map for the ChessHeat research program.
 
 The governing rule remains:
 
 > **The mathematics needs to earn the color.**
 
-The document serves as a current-state execution map, recording completed milestones and establishing strict constraints for the active research phase.
+For the broader research-track history and restart context, read first:
+
+```text
+docs/research/RESEARCH_CONTINUITY_CHECKPOINT_2026-08-16.md
+```
+
+Historical milestone synthesis remains preserved in:
+
+```text
+docs/RESEARCH_REPORT_M1_M8.md
+```
+
+This file is intentionally operational: it records the active frontier, the order of unresolved blockers, parked work, and constraints that must survive a chat restart.
 
 ---
 
-## Completed Phases
+# Current Frontier
 
-### Issue #4 — Typed evidence and branch-preserved future semantics
-**Status: Complete**
-Established the additive branch-preserved evidence spine and mechanically demonstrated that root-conditioned consequence structure cannot in general be reconstructed after branch identity is collapsed into ordinary recurrence counts.
+Latest scientific preregistration state before the continuity checkpoint:
 
-### S0 — Semantic Freeze v1
-**Status: Complete and Frozen**
-Froze the semantic contract defining:
-- Sufficient state identity;
-- Evidence epistemic guarantee;
-- Evidence-level ladder (occurrence vs recurrence vs branch discrimination, etc.);
-- Subject identity;
-- Relation shape and state;
-- Branch identity;
-- Instrument semantics and observation validity;
-- Projection semantics (canonical evidence != square projection != visualization);
-- Objective/human boundary.
+```text
+7a6915887ededbccd4aa6cafd2133a8fd4eb8129
+Complete CP-only efficiency preregistration
+```
 
-### S1 — Thin experimental spine
-**Status: Complete**
-`ExperimentSpec`, `ExperimentResult`, `SuiteManifest`, and `ComparisonResult` now exist as frozen reproducibility and integrity primitives for robust branch-preserved consequence testing.
+Continuity checkpoint commit:
 
-### Issue #6 — Ray-blocker information-loss preflight
-**Status: Complete (Historical)**
-Demonstrated that the old lossy `SpatialEvent` projection discarded move-semantic information and could not recover exact chess histories.
+```text
+711d58eb961d1a569dd41503b4c0a55a7663a494
+Add research continuity checkpoint
+```
 
-### Issue #7 — Branch Move-Semantic Sufficiency
-**Status: Complete**
-Proved that exact ordered `future_moves` restore deterministic replay of standard-chess branch states, falsifying primitive ray/blocker irreversibility relative to sufficient state + exact move history.
+Active document:
 
-### T2b — Measurement-basis contest (Ray/Blocker representation inquiry)
-**Status: Complete**
-- **T2b-1 (Issue #8): FALSIFIED** — Sole-blocker ray transition is exactly reproduced by the constituent-square event.
-- **T2b-2 (Issue #9): WEAK_SUPPORT** — Relation breaks a single local-square alias across contexts, but a fixed context-aware square/state composite reconstructs it exactly.
-- **T2b-3 (Issue #10): FALSIFIED** — A strong canonical square-native geometry representation matches the relation at the same information boundary, schema count, binding count, and held-out transfer cost.
+```text
+docs/research/CP_ONLY_REPRESENTATION_EFFICIENCY_PREREGISTRATION.md
+```
 
-**T2 Conclusion**: Rule-exact relations remain legitimate derived chess semantics and may be convenient explanatory coordinates, but the tested ray/blocker family did not earn privileged status as a nonredundant or more compact measurement basis over sufficiently capable canonical square/state geometry.
+Current status:
 
-**Broad T2a graph/ontology construction is explicitly parked**. Deterministic chess semantics remain valid, but a broad first-class relation graph is not currently earned as the next implementation step.
+```text
+PREREGISTRATION_DRAFT_ONLY
+ENGINE_EXECUTION_NOT_AUTHORIZED
+MODEL_TRAINING_NOT_AUTHORIZED
+```
+
+The next blocker-audit repair discussed after `7a691588...` was **not executed** before the session hit a rate limit.
+
+Therefore the immediate next scientific task is still a documentation-only repair/audit of the preregistration—not engine execution.
 
 ---
 
-## Active Phase: T3a Branch-Conditioned Consequence Discrimination
+# Completed Research Track
+
+## Issue #4 — Typed evidence and branch-preserved future semantics
+
+**Status: COMPLETE**
+
+Established branch-preserved evidence and demonstrated that branch-conditioned consequence structure can be destroyed by premature aggregation.
+
+## S0 — Semantic Freeze v1
+
+**Status: COMPLETE / FROZEN**
+
+Normative contract:
+
+```text
+docs/research/SEMANTIC_CONTRACT_V1.md
+```
+
+Canonical semantic-signature digest:
+
+```text
+5fa4d57cf43c673fa31874ce5d19e777acf0ea695fd032412b193c2123461080
+```
+
+Sufficient state, evidence guarantees, subject identity, relation semantics, branch identity, instrument identity, projection boundaries, and objective/human separation are frozen.
+
+## S1 — Thin experimental spine
+
+**Status: COMPLETE**
+
+Future experiments must reuse:
+
+```text
+SuiteManifest
+ExperimentSpec v2
+ExperimentResult
+ComparisonResult
+```
+
+Do not invent parallel provenance infrastructure.
+
+## T2b — Ray/blocker measurement-basis inquiry
 
 **Status: CLOSED**
 
-- **T3a-1**: INCONCLUSIVE — PV horizon
-- **T3a-2**: SUPPORTED — single fixture
-- **T3a-3**: INCONCLUSIVE — zero realized support
-- **T3a-4**: INCONCLUSIVE — provenance; conditional numeric result strongly **FALSIFIED**
+```text
+T2b-1 FALSIFIED
+T2b-2 WEAK_SUPPORT
+T2b-3 FALSIFIED
+```
 
-**T3a Conclusion**: $E_i(x;\mathcal{J},\theta)$ has earned status as producer-conditioned observational evidence, but $E_i$ has not earned status as a monotonic primitive of objective consequence. Six of the seven informative T3a-4 $P_f$'s ran opposite the preregistered direction. Even with the provenance ceiling, that is enough reason to stop trying to promote single-PV realization through more T3a experiments. No additional T3a experiment may be introduced merely to obtain a favorable single-PV realization result.
+Earned conclusion:
 
----
+> Rule-exact relational concepts remain legitimate descriptive coordinates, but the tested ray/blocker family did not earn privileged or irreducible measurement status over a sufficiently capable square/state representation.
 
-## Recently Closed Research Track
+Broad relation/graph rescue remains parked.
 
-**Phase:** T3b Legal Reply Intervention
-**Status:** CLOSED / FALSIFIED
-**Next Scientific Step:** CP-Only Representation Efficiency Preregistration (NEXT / PROTOCOL DESIGN — NO EXECUTION)
+## T3a — Branch-conditioned consequence association
 
-## T3b Queue
+**Status: CLOSED**
 
-1. ~~T3b-0 — Intervention Semantics & Scope~~ COMPLETE
-2. ~~T3b-1 — Comparator Identity~~ COMPLETE
-3. ~~T3b-2 — Rule-Only Fixture & Statistic Preregistration~~ COMPLETE/FROZEN
-4. ~~T3b-3 — Frozen legal-reply intervention execution~~ COMPLETE / WEAK_SUPPORT / INTERVENTION_SENSITIVITY
-5. ~~T3b-4 — Matched-Control Identifiability Feasibility Audit~~ COMPLETE / strict matcher semantically admissible
-6. ~~T3b-5 — Strict Matchability Coverage Audit~~ COMPLETE / FEASIBLE_FOR_MATCHED_PROTOCOL_DESIGN / RULE-ONLY
-7. ~~T3b-6 — Matched-Control Estimand & Calibration Preregistration~~ COMPLETE / MATCHED ESTIMAND & CALIBRATION FROZEN
-8. ~~T3b-7 — Rule-Only Matched Intervention Fixture Protocol~~ COMPLETE / FROZEN
-9. ~~T3b-8 — Acquisition~~ COMPLETE / 171 observations / integrity passed
-10. ~~T3b-9 — Matched Analysis~~ COMPLETE / FALSIFIED
+```text
+T3a-1 INCONCLUSIVE
+T3a-2 SUPPORTED (single preregistered fixture)
+T3a-3 INCONCLUSIVE
+T3a-4 INCONCLUSIVE provenance / conditional numeric FALSIFIED
+```
 
-**Note**: No further T3b fixture hunting, matcher relaxation, alternative calibration, rescue corpus, or outcome-driven retuning is authorized.
+Durable distinction:
 
----
+```text
+LEGAL OPPORTUNITY != SEARCH REALIZATION != CONSEQUENCE
+```
 
-## Later work, intentionally gated
+Search realization earned producer-conditioned observational status, not objective-consequence status.
 
-### Spatial Consequence Object Preflight
+## T3b — Legal-reply intervention
+
+**Status: COMPLETE / CLOSED / FALSIFIED**
+
+Broad Design-A contrast:
+
+```text
+WEAK_SUPPORT / INTERVENTION_SENSITIVITY
+```
+
+Strict matched Design-B:
+
+```text
+FALSIFIED / INTERVENTION_SENSITIVITY
+```
+
+No matcher relaxation, fixture hunting, rescue corpus, or outcome-driven retuning is authorized.
+
+## Spatial Consequence Object Preflight
+
 **Status: COMPLETE / CLOSED**
 
-**Earned result:**
+```text
 SPATIAL_ATTRIBUTION_NOT_IDENTIFIED_BY_CURRENT_AXIOMS
-
-**Primary conclusion:**
 SPATIAL_CONSEQUENCE_OBJECT_REQUIRES_EXPLICIT_ATTRIBUTION_AXIOMS
+```
 
-### Spatial Attribution Axiom Preflight
+## Spatial Attribution Axiom Preflight
+
 **Status: COMPLETE / CLOSED**
 
-**Earned conclusion:**
+```text
 SPATIAL_OWNERSHIP_IS_CONVENTIONAL_NOT_IDENTIFIED
+```
 
-### Attribution Validation Target Preflight
+Empirical utility of an attribution convention does not establish objective square ownership.
+
+## Attribution Validation Target Preflight
+
 **Status: COMPLETE / CLOSED**
 
-**Leading target family:**
-held-out legal-alternative consequence discrimination
-
-**Conclusion:**
+```text
 VALIDATION_COMPARISON_REQUIRES_UTILITY_SEMANTICS_FIRST
+```
 
-### Attribution Utility Semantics Preflight
+## Attribution Utility Semantics Preflight
+
 **Status: COMPLETE / CLOSED**
 
-**Conclusion:**
+```text
 UTILITY_TASK_REQUIRES_SOURCE_TARGET_BOUNDARY
+```
 
-### Attribution Source–Target Boundary Preflight
+## Attribution Source–Target Boundary Preflight
+
 **Status: COMPLETE / CLOSED**
 
-**Conclusion:**
+```text
 SOURCE_ATTRIBUTION_MAGNITUDE_NOT_IDENTIFIED
 SOURCE_ORIENTATION_SEPARATE_FROM_UNSIGNED_SPATIAL_MASS
 CONDITIONAL_INFORMATION_EQUIVALENCE_GIVEN_MOVE_IDENTITY
 OPERATIONAL_READOUT_EQUIVALENCE_NOT_YET_IDENTIFIED
+```
 
-### CP-Only Attribution Utility Protocol Feasibility Preflight
+Important decomposition:
+
+```text
+d_X = ordered source orientation
+
+a_X = unsigned source-score magnitude
+
+G_mu = spatial support convention
+
+M_mu = a_X * G_mu
+```
+
+A universal CP/mate/WDL scalar consequence amplitude is not earned.
+
+A CP-only instrument-conditioned source magnitude remains admissible:
+
+```text
+a_X^CP = |Delta CP_X|
+```
+
+for prospectively CP/CP-eligible cases only.
+
+## CP-Only Attribution Utility Protocol Feasibility Preflight
+
 **Status: COMPLETE / CLOSED**
 
-**Conclusion:**
+```text
 CP_ONLY_UTILITY_REQUIRES_READOUT_BOUNDARY
-*Privileged reference:* NOT REQUIRED
-*Preferred prediction unit:* Unordered legal-alternative pair
+```
 
-### CP-Only Readout Boundary Preflight
+A privileged reference move is not required.
+
+Preferred prediction unit:
+
+```text
+u = (P, {m, n})
+```
+
+for unordered legal-alternative pairs.
+
+## CP-Only Readout Boundary Preflight
+
 **Status: COMPLETE / CLOSED**
 
-**Conclusion:**
+```text
 CURRENT_OPERATORS_ONLY_SUPPORT_CONSTRAINED_EFFICIENCY_TEST
+```
 
-### CP-Only Representation Efficiency Preregistration
-**Priority: NEXT / PROTOCOL DESIGN — NO EXECUTION**
+Preferred first estimand:
 
-**Purpose:**
-Preregister the first information-equalized CP-only representation-efficiency experiment.
+```text
+information-equalized organization
+```
 
-### Representation Audit
-**Priority: PARKED P2 / NOT YET EARNED**
-Test whether independently meaningful chess concepts are recoverable from the representation. `decodable != causally used != useful for Heat`.
+Preferred first utility notion:
 
-### Projection Audit
-**Priority: PARKED P2 / GATED ON EARNED SPATIAL CONSEQUENCE OBJECT**
-Validate the lossy mapping from rich evidence to the 64-square public heatmap. The projection itself must earn faithfulness.
+```text
+sample efficiency
+```
 
-### Multi-Instrument robustness / T1.12
-**Priority: P2**
-Compare Stockfish, LC0, Syzygy, and test robustness against root-evaluation ordering and transposition-table state.
-
-### Pathways / Evidence Fusion / Amplitude Revisit
-**Priority: P3**
-Treat amplitude as a separate research problem. Do not assume it is merely the norm/sum of spatial or relational evidence.
-
-### Human navigation / teacher / explanation
-**Priority: DEFER**
-Remain downstream and outside objective Heat.
+This is learner-relative representation efficiency, not universal inductive bias.
 
 ---
 
-## Current Ordered Queue
+# Active Draft — CP-Only Representation Efficiency Preregistration
+
+Document:
+
+```text
+docs/research/CP_ONLY_REPRESENTATION_EFFICIENCY_PREREGISTRATION.md
+```
+
+Primary question:
+
+> Under one frozen learner/training regime and equalized underlying move information, does destination-only spatial organization or transition-touch organization yield greater sample efficiency for predicting held-out target-instrument ordering of CP/CP-source legal-alternative pairs?
+
+Already frozen in the draft:
+
+- unordered legal-alternative pair as prediction unit;
+- canonical UCI lexicographic serialization;
+- CP-only source eligibility;
+- explicit `d_X` orientation;
+- explicit `a_X` magnitude;
+- destination-only and transition-touch operators;
+- `a_X` supplied explicitly to every spatial condition;
+- common information-equalized interface;
+- root as statistical sampling unit;
+- all source-eligible pairs within selected roots;
+- multiclass negative log likelihood;
+- root-weighted held-out utility;
+- normalized trapezoidal AULC on linear unique-training-root count;
+- primary operator/baseline contrasts;
+- protocol-invalidity conditions.
+
+Execution remains blocked.
+
+---
+
+# Immediate Next Task — Documentation-Only Preregistration Blocker Audit
+
+Before any root acquisition, engine execution, or model work:
+
+1. repair outcome-class semantics so non-significance is not treated as equivalence;
+2. replace any `NO_OPERATOR_PREFERENCE` language with an explicitly unresolved operator state unless an equivalence margin is later justified;
+3. require resolved non-positive evidence—not mere failure to detect improvement—for `NO_SPATIAL_EFFICIENCY_ADVANTAGE`;
+4. treat learning-curve crossings as diagnostics when AULC is the primary estimand;
+5. treat seed sensitivity as a diagnostic until seed aggregation/inference is frozen;
+6. audit every remaining blocker against the existing code and semantic surface;
+7. preserve `PREREGISTRATION_DRAFT_ONLY`.
+
+Suggested commit message from the interrupted session:
+
+```text
+Audit CP-only preregistration blockers
+```
+
+No execution is authorized by this task.
+
+---
+
+# Remaining Blockers — Dependency Order
+
+The blockers should not be resolved in arbitrary order.
+
+```text
+1. ROOT_POPULATION_NOT_YET_FROZEN
+
+2. INSTRUMENT_CONFIG_NOT_YET_FROZEN
+   + ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED
+
+3. source-only feasibility / coverage acquisition
+
+4. SPLIT_AND_BUDGET_NOT_YET_FROZEN
+
+5. P_NUMERIC_ENCODING_NOT_YET_FROZEN
+
+6. LEARNER_FAMILY_NOT_YET_FROZEN
+
+7. MATCHED_COMPARATOR_NOT_YET_FROZEN
+
+8. SEED_SET_NOT_YET_FROZEN
+
+9. CONFIDENCE_LEVEL_NOT_YET_FROZEN
+```
+
+## P semantic status
+
+The semantic identity of `P` is already frozen by S0 through `SufficientPosition`.
+
+Use the distinction:
+
+```text
+P_SEMANTIC_IDENTITY_FROZEN_TO_S0
+P_NUMERIC_ENCODING_NOT_YET_FROZEN
+```
+
+Do not silently reduce sufficient position to piece placement alone.
+
+## Existing engine capabilities
+
+Current code already supports:
+
+```text
+fixed-node budget
+fixed-depth budget
+fixed-time budget
+explicit comparison perspective
+Threads configuration
+Hash configuration
+per-legal-move child-position evaluation
+```
+
+Fixed nodes are the leading candidate budget type because the harness directly supports them, but source and target node counts are not yet frozen.
+
+## Engine-state isolation gap
+
+Current all-legal-move acquisition reuses a persistent engine process across alternatives without an explicitly frozen move-level TT/hash-reset boundary.
+
+Therefore:
+
+```text
+ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED
+```
+
+must be resolved before the new protocol claims independent move/source/target observations.
+
+## Existing ML dependency status
+
+Current project dependencies contain no machine-learning framework.
+
+Learner selection therefore requires both:
+
+- a scientific protocol choice;
+- a future implementation/dependency choice.
+
+Do not imply that an existing neural learner is already available in the repository.
+
+---
+
+# First New Acquisition Stage — Source Only
+
+Only after both the root-population contract and source-instrument contract are frozen may a source-only feasibility acquisition be authorized.
+
+It may measure:
+
+```text
+base roots
+legal-move counts
+source CP-eligible move counts
+source CP/CP pair counts
+source attrition
+execution cost
+```
+
+It may not inspect held-out target labels.
+
+No target-based fixture replacement or source tuning is allowed.
+
+This acquisition should bind into existing S1 provenance semantics.
+
+---
+
+# First New Implementation Stage
+
+After the instrument contract is frozen, the first meaningful code work should be an acquisition path that guarantees the declared engine-state isolation boundary.
+
+It must:
+
+- evaluate all legal alternatives under the exact frozen source instrument;
+- use a declared move/process/hash reset policy;
+- preserve typed CP/mate outcomes;
+- preserve comparison perspective;
+- emit sufficient provenance to bind through `ExperimentSpec` / `ExperimentResult`;
+- support source-only feasibility before any target acquisition.
+
+Do not build the learner first.
+
+---
+
+# Downstream Protocol Freeze
+
+After source-only feasibility, freeze in order:
+
+1. deterministic root split;
+2. nested training-root budget schedule;
+3. numeric encoding of sufficient `P`;
+4. one modest learner family and exact training procedure;
+5. exactly one matched comparator beyond `B_daS` and raw reference;
+6. exact seed set;
+7. paired root uncertainty procedure and confidence level;
+8. deterministic outcome classification logic.
+
+Then perform an independent preregistration-vs-implementation audit.
+
+Only after that audit may engine target acquisition and model training be separately authorized.
+
+---
+
+# Parked Work
+
+## Representation Audit
+
+```text
+PARKED P2 / NOT YET EARNED
+```
+
+`decodable != causally used != useful for Heat`.
+
+## Projection Audit
+
+```text
+PARKED P2 / GATED
+```
+
+The lossy 64-square public projection must earn faithfulness relative to an earned source object.
+
+## Multi-Instrument Robustness / T1.12
+
+```text
+P2 / NO EXECUTION YET
+```
+
+Future robustness work must not be used to rescue falsified earlier claims.
+
+## Pathways / Evidence Fusion / Amplitude
+
+```text
+P3
+```
+
+Amplitude remains a separate research problem.
+
+## Human Navigation / Teacher / Explanation
+
+```text
+DEFERRED
+```
+
+Human decision complexity remains outside objective Heat.
+
+---
+
+# Current Ordered Queue
 
 1. **DONE** — Issue #4 branch-preserved evidence
 2. **DONE** — S0 semantic freeze
 3. **DONE** — S1 experiment spine
-4. **CLOSED** — T2b ray/blocker representation inquiry; no privileged relation basis earned
-5. **CLOSED** — T3a consequence-association (T3a-1, T3a-2, T3a-3, T3a-4)
-6. **DONE** — T3b-0 Intervention Semantics Contract
-7. **DONE** — T3b-1 Comparator Design / Identifiability
-8. **DONE** — T3b-2 Rule-Only Fixture and Statistic Preregistration
-9. **CLOSED** — T3b-3 Frozen legal-reply intervention execution
-10. **DONE** — T3b-4 Matched-Control Identifiability Feasibility Audit
-11. **DONE** — T3b-5 Strict Matchability Coverage Audit
-12. **DONE** — T3b-6 Matched-Control Estimand & Calibration Preregistration (COMPLETE / MATCHED ESTIMAND & CALIBRATION FROZEN)
-13. **CLOSED** — T3b-7 Rule-Only Matched Intervention Fixture Protocol
-14. **CLOSED** — T3b-8 Acquisition
-15. **CLOSED** — T3b-9 Matched Analysis (FALSIFIED)
-16. **CLOSED** — Spatial Consequence Object Preflight
-17. **CLOSED** — Spatial Attribution Axiom Preflight
-18. **CLOSED** — Attribution Validation Target Preflight
-19. **CLOSED** — Attribution Utility Semantics Preflight
-20. **CLOSED** — Attribution Source–Target Boundary Preflight
-21. **CLOSED** — CP-Only Attribution Utility Protocol Feasibility Preflight
-22. **CLOSED** — CP-Only Readout Boundary Preflight
-23. **NEXT** — CP-Only Representation Efficiency Preregistration
-24. **PARKED P2** — Representation Audit (NOT YET EARNED)
-25. **PARKED P2** — Projection Audit (GATED)
-26. **P2** — Multi-Instrument / T1.12 robustness
-27. **P3** — Pathways / Evidence Fusion / Amplitude
-28. **DEFER** — Human Navigation / Teacher / Explanation
+4. **CLOSED** — T2b ray/blocker representation inquiry
+5. **CLOSED** — T3a consequence-association
+6. **CLOSED** — T3b intervention program / matched analysis FALSIFIED
+7. **CLOSED** — Spatial Consequence Object Preflight
+8. **CLOSED** — Spatial Attribution Axiom Preflight
+9. **CLOSED** — Attribution Validation Target Preflight
+10. **CLOSED** — Attribution Utility Semantics Preflight
+11. **CLOSED** — Attribution Source–Target Boundary Preflight
+12. **CLOSED** — CP-Only Attribution Utility Protocol Feasibility Preflight
+13. **CLOSED** — CP-Only Readout Boundary Preflight
+14. **ACTIVE DRAFT** — CP-Only Representation Efficiency Preregistration
+15. **NEXT** — Preregistration outcome-semantics + blocker audit (documentation only)
+16. **THEN** — Freeze root-population contract
+17. **THEN** — Freeze source/target instrument family + engine-state isolation semantics
+18. **THEN** — Implement engine-state-isolated source acquisition
+19. **THEN** — Source-only feasibility/coverage acquisition
+20. **THEN** — Freeze split/budget, `P` encoding, learner, comparator, seeds, inference
+21. **THEN** — Independent preregistration-vs-implementation audit
+22. **ONLY THEN** — separately authorize target acquisition/model training
+23. **PARKED P2** — Representation Audit
+24. **PARKED P2** — Projection Audit
+25. **P2** — Multi-Instrument / T1.12 robustness
+26. **P3** — Pathways / Evidence Fusion / Amplitude
+27. **DEFER** — Human Navigation / Teacher / Explanation
 
 ---
 
-## Research Constraints
+# Research Constraints
 
 The following freeze rules continue to apply:
 
-- No new Heat scalar;
+- No new universal Heat scalar;
+- No fake CP/mate scalarization;
 - No M8 or ShapeSelectivity retuning;
-- No broad relational graph architecture;
-- No relation-rescue experiments unless new evidence independently motivates them;
-- No causal language beyond the evidence level actually earned; T3b intervention sensitivity is not causal identification;
-- No T1.12 execution yet;
-- No human-policy quantity entering objective Heat;
-- Negative, falsified, and inconclusive experiments remain preserved rather than tuned around.
+- No broad relational graph architecture without new independent evidence;
+- No relation-rescue experiment simply because T2b was unfavorable;
+- No causal language beyond the earned evidence level;
+- T3b intervention sensitivity is not causal identification;
+- Search realization is not objective consequence;
+- Legal opportunity is not search realization;
+- Spatial ownership remains conventional / non-identified under current axioms;
+- Empirical utility of an attribution operator does not prove ownership truth;
+- Producer preference is not consequence;
+- Raw source evidence is an information-rich reference, not a finite-resource performance ceiling;
+- Source orientation, source magnitude, and spatial support remain separate objects;
+- Conditional information equivalence does not imply operational readout equivalence unless the side-information boundary is actually supplied;
+- Root is the statistical sampling unit for the active CP-only protocol;
+- Do not infer equivalence from non-significance;
+- Negative, falsified, null, and inconclusive results remain preserved rather than tuned around;
+- No engine or model execution while the preregistration remains `DRAFT_ONLY`.
+
+---
+
+# Restart Rule
+
+On a new chat/session:
+
+1. inspect repository HEAD;
+2. read `RESEARCH_CONTINUITY_CHECKPOINT_2026-08-16.md`;
+3. read this `NEXT_WORK_MAP.md`;
+4. inspect the active preregistration;
+5. compare HEAD against the checkpoint rather than assuming the blocker-audit repair was completed;
+6. continue from the first unresolved dependency only.
