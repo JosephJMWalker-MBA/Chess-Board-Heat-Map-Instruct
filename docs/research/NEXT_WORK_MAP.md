@@ -72,7 +72,7 @@ Proved that exact ordered `future_moves` restore deterministic replay of standar
 
 **Phase:** T3b Legal Reply Intervention
 **Status:** CLOSED / FALSIFIED
-**Next Scientific Step:** CP-Only Readout Boundary Preflight (Next Candidate / planning only)
+**Next Scientific Step:** CP-Only Representation Efficiency Preregistration (NEXT / PROTOCOL DESIGN — NO EXECUTION)
 
 ## T3b Queue
 
@@ -141,10 +141,16 @@ CP_ONLY_UTILITY_REQUIRES_READOUT_BOUNDARY
 *Preferred prediction unit:* Unordered legal-alternative pair
 
 ### CP-Only Readout Boundary Preflight
-**Priority: P2 (Next Candidate / PLANNING ONLY)**
+**Status: COMPLETE / CLOSED**
+
+**Conclusion:**
+CURRENT_OPERATORS_ONLY_SUPPORT_CONSTRAINED_EFFICIENCY_TEST
+
+### CP-Only Representation Efficiency Preregistration
+**Priority: NEXT / PROTOCOL DESIGN — NO EXECUTION**
 
 **Purpose:**
-What exact common information should the readout receive so that a comparison of $\mu_D$ and $\mu_T$ tests an explicitly declared representation property rather than accidental inequality of available chess information?
+Preregister the first information-equalized CP-only representation-efficiency experiment.
 
 ### Representation Audit
 **Priority: PARKED P2 / NOT YET EARNED**
@@ -191,12 +197,13 @@ Remain downstream and outside objective Heat.
 19. **CLOSED** — Attribution Utility Semantics Preflight
 20. **CLOSED** — Attribution Source–Target Boundary Preflight
 21. **CLOSED** — CP-Only Attribution Utility Protocol Feasibility Preflight
-22. **NEXT CANDIDATE P2** — CP-Only Readout Boundary Preflight
-23. **PARKED P2** — Representation Audit (NOT YET EARNED)
-24. **PARKED P2** — Projection Audit (GATED)
-25. **P2** — Multi-Instrument / T1.12 robustness
-26. **P3** — Pathways / Evidence Fusion / Amplitude
-27. **DEFER** — Human Navigation / Teacher / Explanation
+22. **CLOSED** — CP-Only Readout Boundary Preflight
+23. **NEXT** — CP-Only Representation Efficiency Preregistration
+24. **PARKED P2** — Representation Audit (NOT YET EARNED)
+25. **PARKED P2** — Projection Audit (GATED)
+26. **P2** — Multi-Instrument / T1.12 robustness
+27. **P3** — Pathways / Evidence Fusion / Amplitude
+28. **DEFER** — Human Navigation / Teacher / Explanation
 
 ---
 

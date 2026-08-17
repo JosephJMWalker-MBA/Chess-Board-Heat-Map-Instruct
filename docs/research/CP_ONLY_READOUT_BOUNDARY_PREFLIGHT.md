@@ -137,3 +137,5 @@ Yes. The *Information-equalized organization* estimand, combined with a *sample-
 ## 13. Conclusion
 
 **CURRENT_OPERATORS_ONLY_SUPPORT_CONSTRAINED_EFFICIENCY_TEST**
+
+*(This means the strongest currently earned information-equalized comparison between the frozen operators is a learner/resource-constrained efficiency test. It does not prohibit differently scoped representation-as-delivered studies. Furthermore, sample efficiency operationalizes learner-relative representation efficiency under a frozen training procedure; it is not a direct observation of an intrinsic or universal inductive bias).*
