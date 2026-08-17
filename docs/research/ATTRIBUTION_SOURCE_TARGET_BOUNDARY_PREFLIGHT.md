@@ -20,8 +20,11 @@ Let $X_u$ be the exact information available before target acquisition.
 |---|---|---|---|
 | **Can $G_{\mu_D}$ be instantiated?** | Yes | Yes | Yes |
 | **Can $G_{\mu_T}$ be instantiated?** | Yes | Yes | Yes |
-| **Can consequence-weighted $M_{\mu_D}$ be instantiated?** | No | Yes (subject to typed weighting semantics) | Yes |
-| **Can consequence-weighted $M_{\mu_T}$ be instantiated?** | No | Yes (subject to typed weighting semantics) | Yes |
+| **Can CP-only scalar $M_{\mu_D}$ be instantiated?** | No | Yes (on prospectively CP/CP-eligible source comparisons) | Yes (on prospectively CP/CP-eligible source comparisons) |
+| **Can universal all-outcome scalar $M_{\mu_D}$ be instantiated?** | No | NO / NOT IDENTIFIED | NO / NOT IDENTIFIED |
+| **Can CP-only scalar $M_{\mu_T}$ be instantiated?** | No | Yes (on prospectively CP/CP-eligible source comparisons) | Yes (on prospectively CP/CP-eligible source comparisons) |
+| **Can universal all-outcome scalar $M_{\mu_T}$ be instantiated?** | No | NO / NOT IDENTIFIED | NO / NOT IDENTIFIED |
+| **Can typed multichannel be instantiated?** | No | Only through separate $M_\mu^{typed}$ family | Only through separate $M_\mu^{typed}$ family |
 | **$q$ source outcome known?** | No | Yes (under $J_X, \theta_X$) | Yes |
 | **Target $Y$ outcome withheld?** | Yes | Yes | Yes |
 | **Producer dependence** | None | Source instrument ($J_X$) | Source instrument ($J_X$) |
@@ -30,7 +33,7 @@ Let $X_u$ be the exact information available before target acquisition.
 | **Strongest claim ceiling** | Geometry/support representation utility | Source-score-weighted representation utility | Branch-conditioned source-score utility |
 | **Principal leakage/confound** | Reference policy bias | Source/target conflation | Overfitting to source branch depth |
 
-X2 adds branch evidence but must not be assumed superior merely because it is richer.
+X2 adds branch evidence but must not be assumed to solve amplitude or be superior merely because it is richer.
 
 ## 3. Defining the Source Comparison Separately from Objective $V$
 
@@ -46,39 +49,45 @@ We do not assume it is a scalar. It preserves CP, mate, WDL, tie/order, perspect
 
 We explicitly separate three magnitude statuses:
 
-**A. Unit mass**
-$$a_X = 1$$
+**A. Unit mass ($a_X = 1$)**
 This is an admissible geometry/support experimental convention. It does not encode consequence magnitude.
 
-**B. CP-only source-score magnitude**
-For CP/CP source observations under one frozen perspective/instrument:
-$$a_X^{CP} = |\Delta CP_X|$$
-This is classified as a mathematically defined, instrument-conditioned, task-local source-score magnitude. It is **not** an objective consequence amplitude or universal Heat amplitude. It is admissible for a future CP-only source-score-weighted representation study, provided prospective CP-only evaluability semantics are required and no replacement/tuning occurs around mate cases. Do not call this production Heat.
+**B. CP-only source-score magnitude ($a_X^{CP} = |\Delta CP_X|$)**
+For CP/CP source observations under one frozen perspective/instrument. This is classified as a mathematically defined, instrument-conditioned, task-local source-score magnitude. It is **not** an objective consequence amplitude or universal Heat amplitude. It is admissible for a future CP-only source-score-weighted representation study, provided prospective CP-only evaluability semantics are required and no replacement/tuning occurs around mate cases. Do not call this production Heat.
 
 **C. Universal cross-typed consequence amplitude**
-CP/mate/WDL scalarization is **NOT IDENTIFIED / NOT EARNED**. No fake conversion is permitted.
+CP/mate/WDL scalarization is **NOT IDENTIFIED / NOT EARNED**. No fake conversion is permitted. 
+
+**Architectural / Protocol Distinction:**
+The lack of a universal amplitude blocks promotion to a universal scalar consequence-weighted Heat architecture. It does not, by itself, prohibit a narrowly scoped CP-only representation-utility experiment or a geometry/support experiment, provided their claim ceilings are frozen accordingly. *(No experiments are authorized here).*
 
 ## 5. Typed Multi-Channel Option
 
-If we preserve CP, mate, and WDL/order as separate channels without scalarization, this defines a materially new vector-valued representation family:
+If we preserve CP, mate, and WDL/order as separate channels without scalarization, this defines a materially separate vector-valued representation family:
 $$M_\mu^{typed}$$
 This is distinct from $M_\mu = a_X G_\mu$. It is materially new and must not be used to rescue the current scalar attribution design.
 
 ## 6. Target Object for $u=(P,r,q)$
 
 The target candidate $Y_u$ is defined as the **pairwise typed ordering of $r$ versus $q$ under frozen $\hat{V}_{J_Y, \theta_Y}$**.
-A full legal-move ranking at $P$ is not the direct target because $u=(P,r,q)$ natively frames a pairwise contrast. 
-
 Abstractly:
 $$Y_u = \text{CompareTyped}(O_Y(r), O_Y(q))$$
-under one frozen perspective. 
-There is no mate-to-CP scalar.
-Handling semantics:
-- CP/CP: Standard numerical ordering.
-- Mate/Mate: Distance-to-mate ordering.
-- CP/Mate: Mate always strictly dominates CP.
-- Ties: Explicitly handled as equality/undecidable.
-Any cases not covered must be explicitly declared as unordered. We do not invent missing semantics.
+All outcomes are evaluated from one explicitly frozen comparison perspective. There is no mate-to-CP conversion.
+
+Mate signs are defined explicitly:
+- $+Mate(k)$: frozen perspective can force mate in $k$
+- $-Mate(k)$: frozen perspective is forced to be mated in $k$
+
+**Handling Semantics:**
+- **CP vs. CP:** $CP_1 > CP_2$ iff the numerical CP score is greater from the frozen perspective.
+- **Mate vs. CP:** $+Mate(k) > CP > -Mate(j)$ for every finite CP score.
+- **Winning Mate vs. Winning Mate:** $+Mate(k) > +Mate(j) \iff k < j$.
+- **Losing Mate vs. Losing Mate:** $-Mate(k) > -Mate(j) \iff k > j$. (A later forced loss is preferable to an earlier forced loss from the same frozen perspective).
+- **Opposite-sign Mate vs. Mate:** Order by sign.
+
+We explicitly separate equality from undecidable cases:
+- **EQUAL:** Outcomes perfectly tie.
+- **UNORDERED / NOT DEFINED BY CURRENT TYPED COMPARATOR:** Cases where the comparator lacks semantics (e.g., WDL/mixed-type cases are explicitly declared unordered for this preflight). Do not scalarize WDL into CP or mate.
 
 ## 7. Audit of Source→Target Relationships
 
@@ -104,46 +113,31 @@ A single fixed $r(P)$ across all $q$ at a root is strongly preferred for the pro
 
 *We do not choose a reference policy yet unless one is logically dominated.*
 
-## 9. Representation Equivalence Audit
+## 9. Representation Equivalence and Readout Boundary
 
-For the principal admissible source treatments:
+Let the minimal required side information be $S = (P, r, q)$.
 
-**1. X0 + Unit Mass ($a_X = 1$)**
-- $\sum_s M_\mu = a_X$ recovers the magnitude trivially (1).
-- $P, r, q, \rho(q)$ plus the spatial support makes $\mu_D$ and $\mu_T$ effectively invertible/reconstructible.
-- This represents different coordinate organization, not genuinely lossy differences. Both operators contain the same total information about the move geometry.
+Given $S$ and the conserved scalar source magnitude $a_X$, the destination and transition-touch representations are deterministic encodings of the same underlying source comparison, because $S$ determines their respective supports and $\sum_s M_\mu(s) = a_X$. Therefore, they are **conditionally interconvertible given $S$**. We do not claim unconditional information equivalence.
 
-**2. X1 + CP-only source-score magnitude ($a_X^{CP} = |\Delta CP_X|$)**
-- $\sum_s M_\mu = a_X^{CP}$ recovers the complete magnitude.
-- $P, r, q, \rho(q)$ plus spatial support allows full reconstruction of the same scalar source signal.
-- The two operators are effectively injective transforms of the same source variables.
+**Operational Readout Boundary:**
+We distinguish:
+$$R(M_\mu, \rho(q))$$
+from:
+$$R(M_\mu, S, \rho(q))$$
 
-Since these encodings are information-equivalent, **only inductive-bias/efficiency claims remain available**, not claims of capturing fundamentally different consequence information.
+We must ask whether the future fair readout receives $P$, $r$ identity, $q$ identity, or full move origins/destinations beyond what is encoded in $M_\mu$ and $\rho(q)$. Conditional interconvertibility under $S$ does not imply equivalence at a readout interface that withholds some or all of $S$. In particular, transition-touch support may preserve origin information absent from destination-only support if that information is not independently supplied.
+
+Therefore, the audit concludes conditional equivalence, but operational readout equivalence remains unresolved until the readout information boundary is frozen.
 
 ## 10. Matched-Control Implications
 
-Candidate controls and what they establish/destroy:
+Matched-control design depends not only on $X$ but also on which side information $S$ the readout receives. A comparator must not receive origin/reference information that one spatial representation has to preserve internally while another gets it for free externally.
 
-- **Coordinate-scrambled spatial map:**
-  - Destroys: Spatial semantics / geometric coherence.
-  - Preserves: Total mass, sparsity, channel distributions.
-  - Supports: Negative control for coordinate semantics / spatial inductive bias.
-  - Cannot establish: That the control itself is "non-spatial".
-- **Value multiset without square identity:**
-  - Destroys: Coordinate identity and spatial location.
-  - Preserves: The exact set of scalar values.
-  - Supports: Utility of maintaining exact values vs structure.
-  - Cannot establish: The utility of any spatial map if it matches this.
-- **Non-spatial fixed-width source vector:**
-  - Destroys: Spatial organization / board geometry mapping.
-  - Preserves: Declared source variables.
-  - Supports: Pure comparison of spatialization vs flattened encoding.
-  - Cannot establish: Anything if constructed poorly to deliberately fail.
-- **Rule-derived move encoding:**
-  - Destroys: Source magnitude / evaluation signal (unless added).
-  - Preserves: Move semantics.
-  - Supports: Baseline geometry utility without consequence weighting.
-  - Cannot establish: Consequence utility.
+Candidate controls and what they establish/destroy:
+- **Coordinate-scrambled spatial map:** Destroys spatial semantics; preserves total mass, sparsity, channel distributions. Supports negative control for coordinate semantics/spatial inductive bias. Cannot establish that the control itself is "non-spatial".
+- **Value multiset without square identity:** Destroys coordinate identity; preserves exact scalar values. Supports utility of maintaining exact values vs structure. Cannot establish utility of any spatial map if it matches this.
+- **Non-spatial fixed-width source vector:** Destroys spatial organization; preserves declared source variables. Supports pure comparison of spatialization vs flattened encoding. Cannot establish anything if constructed poorly to fail.
+- **Rule-derived move encoding:** Destroys source evaluation signal; preserves move semantics. Supports baseline geometry utility without consequence weighting. Cannot establish consequence utility.
 
 *$B_{\text{matched}}$ remains unchosen until the exact source variables entering $M_\mu$ are known.*
 
@@ -162,5 +156,8 @@ Reject a proposed boundary if:
 ## 12. Conclusion
 
 **SOURCE_ATTRIBUTION_MAGNITUDE_NOT_IDENTIFIED**
+*(The universal cross-typed scalar consequence magnitude required by the intended all-outcome consequence-weighted architecture is not identified. We explicitly preserve $a_X = 1$ as an admissible geometry/support convention, $|\Delta CP_X|$ as an admissible task-local, instrument-conditioned CP-only source-score magnitude, and $M_\mu^{typed}$ as a materially separate vector-valued representation family).*
 
-This means that a *universal consequence magnitude* is not identified, nor is a universal cross-typed amplitude. It does not deny the existence of admissible task-local quantities (like unit support or CP-only source-score differences), but those local quantities cannot be legitimately labeled as universal consequence-weighted "Heat". The fundamental blocker to the intended consequence-weighted architecture is the lack of an earned, universal experimental source magnitude that accommodates all outcome types without fake scalarization.
+**CONDITIONAL_INFORMATION_EQUIVALENCE_GIVEN_MOVE_IDENTITY**
+
+**OPERATIONAL_READOUT_EQUIVALENCE_NOT_YET_IDENTIFIED**
