@@ -72,7 +72,7 @@ Proved that exact ordered `future_moves` restore deterministic replay of standar
 
 **Phase:** T3b Legal Reply Intervention
 **Status:** CLOSED / FALSIFIED
-**Next Scientific Step:** CP-Only Attribution Utility Protocol Feasibility Preflight (Next Candidate / planning only)
+**Next Scientific Step:** CP-Only Readout Boundary Preflight (Next Candidate / planning only)
 
 ## T3b Queue
 
@@ -133,10 +133,18 @@ CONDITIONAL_INFORMATION_EQUIVALENCE_GIVEN_MOVE_IDENTITY
 OPERATIONAL_READOUT_EQUIVALENCE_NOT_YET_IDENTIFIED
 
 ### CP-Only Attribution Utility Protocol Feasibility Preflight
+**Status: COMPLETE / CLOSED**
+
+**Conclusion:**
+CP_ONLY_UTILITY_REQUIRES_READOUT_BOUNDARY
+*Privileged reference:* NOT REQUIRED
+*Preferred prediction unit:* Unordered legal-alternative pair
+
+### CP-Only Readout Boundary Preflight
 **Priority: P2 (Next Candidate / PLANNING ONLY)**
 
 **Purpose:**
-Is there a non-circular, fair, preregistrable CP-only experiment capable of distinguishing representation utility of $\mu_D$ and $\mu_T$, or would the outcome be determined primarily by side-information, reference-policy, learner, or baseline choices?
+What exact common information should the readout receive so that a comparison of $\mu_D$ and $\mu_T$ tests an explicitly declared representation property rather than accidental inequality of available chess information?
 
 ### Representation Audit
 **Priority: PARKED P2 / NOT YET EARNED**
@@ -182,12 +190,13 @@ Remain downstream and outside objective Heat.
 18. **CLOSED** — Attribution Validation Target Preflight
 19. **CLOSED** — Attribution Utility Semantics Preflight
 20. **CLOSED** — Attribution Source–Target Boundary Preflight
-21. **NEXT CANDIDATE P2** — CP-Only Attribution Utility Protocol Feasibility Preflight
-22. **PARKED P2** — Representation Audit (NOT YET EARNED)
-23. **PARKED P2** — Projection Audit (GATED)
-24. **P2** — Multi-Instrument / T1.12 robustness
-25. **P3** — Pathways / Evidence Fusion / Amplitude
-26. **DEFER** — Human Navigation / Teacher / Explanation
+21. **CLOSED** — CP-Only Attribution Utility Protocol Feasibility Preflight
+22. **NEXT CANDIDATE P2** — CP-Only Readout Boundary Preflight
+23. **PARKED P2** — Representation Audit (NOT YET EARNED)
+24. **PARKED P2** — Projection Audit (GATED)
+25. **P2** — Multi-Instrument / T1.12 robustness
+26. **P3** — Pathways / Evidence Fusion / Amplitude
+27. **DEFER** — Human Navigation / Teacher / Explanation
 
 ---
 

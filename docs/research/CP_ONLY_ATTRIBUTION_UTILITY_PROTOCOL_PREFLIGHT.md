@@ -37,7 +37,7 @@ We compare the fixed-reference versus unordered-pair designs:
 | Property | Fixed-reference ($u_r$) | Unordered-pair ($u_{pair}$) |
 |---|---|---|
 | **Arbitrary baseline dependence** | High (if lexicographic/rule) | None (evaluates all valid pairs symmetrically) |
-| **Producer-preference dependence** | High (if best-move reference) | None (evaluates pairs symmetrically) |
+| **Producer-preference dependence** | High (if best-move reference) | No privileged-reference producer dependence. CP/CP eligibility remains source-instrument dependent because $J_X, \theta_X$ determine which source observations are CP typed. |
 | **Symmetry/Equivariance** | Breaks permutation equivariance depending on $r$ | Preserves unordered symmetry (canonical order is for labels only) |
 | **CP/CP evaluability** | Empirically unknown before acquisition | All prospectively valid CP/CP pairs are evaluable |
 | **Number/Dependence of units** | $|L(P)| - 1$ per root | $O(|L(P)|^2)$ per root |
@@ -50,8 +50,15 @@ Because unordered pairs provide a coherent pairwise separation estimand without 
 ## 3. Mandatory Root-Level Dependence
 
 For unordered pairs, pairs sharing the same root state $P$ are statistically dependent.
+A root with $k$ evaluable legal alternatives may contribute $\binom{k}{2}$ unordered pairs.
 Any future data split must operate strictly at the root-position level: **no pair from a held-out root may occur in training/tuning.**
 Individual move-pairs are *not* independent observations.
+
+We must distinguish:
+- **Pair-weighted evaluation** (high-mobility roots dominate the loss/statistic)
+- **Root-weighted evaluation** (each root contributes equally, regardless of pair count)
+
+The choice remains unresolved pending final protocol semantics. Do not treat correlated pairs as independent replicates.
 
 ## 4. Reassessing the Readout Boundary
 
