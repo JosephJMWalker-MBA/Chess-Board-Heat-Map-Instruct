@@ -72,7 +72,7 @@ Proved that exact ordered `future_moves` restore deterministic replay of standar
 
 **Phase:** T3b Legal Reply Intervention
 **Status:** CLOSED / FALSIFIED
-**Next Scientific Step:** Attribution Source–Target Boundary Preflight (Next Candidate / planning only)
+**Next Scientific Step:** CP-Only Attribution Utility Protocol Feasibility Preflight (Next Candidate / planning only)
 
 ## T3b Queue
 
@@ -124,10 +124,19 @@ VALIDATION_COMPARISON_REQUIRES_UTILITY_SEMANTICS_FIRST
 UTILITY_TASK_REQUIRES_SOURCE_TARGET_BOUNDARY
 
 ### Attribution Source–Target Boundary Preflight
+**Status: COMPLETE / CLOSED**
+
+**Conclusion:**
+SOURCE_ATTRIBUTION_MAGNITUDE_NOT_IDENTIFIED
+SOURCE_ORIENTATION_SEPARATE_FROM_UNSIGNED_SPATIAL_MASS
+CONDITIONAL_INFORMATION_EQUIVALENCE_GIVEN_MOVE_IDENTITY
+OPERATIONAL_READOUT_EQUIVALENCE_NOT_YET_IDENTIFIED
+
+### CP-Only Attribution Utility Protocol Feasibility Preflight
 **Priority: P2 (Next Candidate / PLANNING ONLY)**
 
 **Purpose:**
-What exact source observation may be spatialized into $M_\mu$, and what exact held-out target may subsequently test its representation utility, without target leakage, fake outcome conversion, or silently inventing a production amplitude?
+Is there a non-circular, fair, preregistrable CP-only experiment capable of distinguishing representation utility of $\mu_D$ and $\mu_T$, or would the outcome be determined primarily by side-information, reference-policy, learner, or baseline choices?
 
 ### Representation Audit
 **Priority: PARKED P2 / NOT YET EARNED**
@@ -172,12 +181,13 @@ Remain downstream and outside objective Heat.
 17. **CLOSED** — Spatial Attribution Axiom Preflight
 18. **CLOSED** — Attribution Validation Target Preflight
 19. **CLOSED** — Attribution Utility Semantics Preflight
-20. **NEXT CANDIDATE P2** — Attribution Source–Target Boundary Preflight
-21. **PARKED P2** — Representation Audit (NOT YET EARNED)
-22. **PARKED P2** — Projection Audit (GATED)
-23. **P2** — Multi-Instrument / T1.12 robustness
-24. **P3** — Pathways / Evidence Fusion / Amplitude
-25. **DEFER** — Human Navigation / Teacher / Explanation
+20. **CLOSED** — Attribution Source–Target Boundary Preflight
+21. **NEXT CANDIDATE P2** — CP-Only Attribution Utility Protocol Feasibility Preflight
+22. **PARKED P2** — Representation Audit (NOT YET EARNED)
+23. **PARKED P2** — Projection Audit (GATED)
+24. **P2** — Multi-Instrument / T1.12 robustness
+25. **P3** — Pathways / Evidence Fusion / Amplitude
+26. **DEFER** — Human Navigation / Teacher / Explanation
 
 ---
 
