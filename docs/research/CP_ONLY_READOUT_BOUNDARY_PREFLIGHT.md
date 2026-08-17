@@ -40,92 +40,86 @@ Therefore, $S^\star$ need only contain the canonical UCI move identities (or equ
 
 **A. Representation-as-delivered**
 Readout receives only a common minimal context plus $M_\mu$:
-$$R(M_\mu, d_X, \rho_0) \to Y$$
+$$R(M_\mu, d_X, \rho_0 [, P]) \to Y$$
 Differences here may legitimately include information retention, origin/destination preservation, coordinate organization, and inductive bias.
-*Claim ceiling:* Utility of the complete delivered representation under the frozen interface. Do not describe success as pure spatial-organization utility.
+*Claim ceiling:* Utility of the complete delivered representation under the frozen interface. Under the frozen delivered interface, one encoding provides greater task utility and may preserve different task-relevant move information. "Useful" is target/protocol-relative, not inherent. Do not describe success as pure spatial-organization utility.
 
 **B. Information-equalized organization**
 Readout receives sufficient common side information $S^\star$:
-$$R(M_\mu, S^\star, d_X, \rho_0) \to Y$$
-The operators are informationally interconvertible. Any remaining difference is scoped to:
+$$R(M_\mu, S^\star, d_X, \rho_0 [, P]) \to Y$$
+Both operators have equivalent underlying move information. Any remaining difference is scoped to:
 - Learner inductive bias
 - Sample efficiency
 - Capacity efficiency
 - Optimization behavior
 - Robustness under constrained learner/resource class
-*Claim ceiling:* Never call this additional consequence information.
+*Claim ceiling:* Superior sample/capacity/robustness utility under the prospectively frozen learner regime. Never call this additional consequence information or universally superior representation.
 
-## 4. Which Estimand is Relevant to ChessHeat?
+## 4. Reassessing the Estimands for the First Protocol
 
 - **Representation-as-delivered:**
-  - *Scientific hypothesis:* Delivering destination/transition spatial maps natively alters the available consequence-related information.
-  - *Strongest claim:* One operator inherently preserves more useful task-relevant information.
-  - *Strongest non-claim:* Does not isolate purely spatial layout organization.
-  - *Architecture relevance:* Validates the raw encoding output as a standalone consequence token.
-  - *Dominant confound:* We are just measuring the fact that $T$ encodes origins and $D$ does not.
+  - *New scientific knowledge:* Minor. A $\mu_T$ win might simply teach us that the transition-touch map retains move origins while destination-only does not.
+  - *Already known by construction:* $T$ structurally contains more coordinates and retains origin identity.
+  - *Strongest confound:* Unequal information retention masquerading as spatial utility.
+  - *Product relevance:* High (evaluates the token as actually used).
+  - *Mathematical relevance to ChessHeat:* Low (confounds information with organization).
 
 - **Information-equalized organization:**
-  - *Scientific hypothesis:* Specific spatial organization of identical information improves learning efficiency or robustness.
-  - *Strongest claim:* One spatial map structure is a more efficient/robust inductive bias for a specific learner class.
-  - *Strongest non-claim:* Operators do not contain different total information.
-  - *Architecture relevance:* Validates the geometric layout for downstream neural architectures.
-  - *Dominant confound:* Results depend entirely on the chosen learner constraints.
+  - *New scientific knowledge:* Given the identical underlying move information, does spatial organization make it easier to learn?
+  - *Already known by construction:* The encodings are mathematically interconvertible.
+  - *Strongest confound:* Constrained exclusively by learner class choice.
+  - *Product relevance:* Validates the core thesis that specifically orienting information on a spatial board provides a useful geometric prior.
+  - *Mathematical relevance to ChessHeat:* High.
 
-*We do not yet choose one as the stronger first research question; both remain logically distinct and valid depending on the desired product goal.*
+Because representation-as-delivered could yield a win for $\mu_T$ merely because it exposes origins (an already known structural fact), the **Information-equalized organization estimand is scientifically preferable for the first protocol**.
 
 ## 5. Audit of Board-State Access ($P$)
 
 Does the readout need $P$ to make claims about chess spatial organization meaningful?
-- **No $P$:** Square coordinates are merely spatial labels. The learner must infer board context entirely from the training distribution. This tests pure spatial coordinate geometry.
-- **Sufficient $P$ only:** Provides full context. The learner evaluates the spatial map against the board state. This tests context-aware spatial organization.
-- **$P$ + move identities:** Supplies everything. The learner receives substantial chess information independent of $M_\mu$. Tests constrained efficiency.
+- **No $P$:** The readout has no instance-specific root-board context. It can learn population-level coordinate regularities but cannot condition on the actual piece arrangement unless that information is supplied elsewhere. This measures *position-agnostic coordinate-pattern utility*.
+- **$P$ supplied:** Provides full context. This measures *context-aware chess-spatial utility*.
 
-## 6. Preserving Orientation Controls
+Do not call no-$P$ evaluation full chess spatial understanding.
 
-For orientation-aware studies, every representation must receive identical $d_X$.
-We preserve:
-- $B_d = (d_X, \rho)$
-- $B_{da} = (d_X, a_X, \rho)$
+## 6. Primary Utility Notion
 
-**Explicit Note on $a_X$:**
-$a_X$ is fully recoverable from $\sum_s M_\mu(s)$. Therefore, a spatial map must not receive credit merely for transmitting $a_X$. Performance must beat $B_{da}$ to claim any structural or spatial utility.
+Since the encodings are conditionally interconvertible given $S^\star$, unconstrained asymptotic accuracy is not the primary target. We prefer **sample efficiency** as the first utility notion because it directly tests whether one coordinate organization supplies a more useful inductive bias under one prospectively frozen learner class while holding model capacity fixed.
 
-## 7. Defining the Raw-Information Comparator ($B_{raw}$)
+## 7. Preserving Orientation Controls and Splitting Baselines
 
-$B_{raw}$ must be specified exactly. It receives:
-- $P$: Yes (if the readout receives it)
-- $m_1 / m_2$ identities: Yes
-- $CP_X(m_1)$: Yes
-- $CP_X(m_2)$: Yes
-- $d_X$: Yes (derived)
-- $a_X$: Yes (derived)
-- $\rho$: Yes (derived)
+For orientation-aware studies, every representation must receive identical $d_X$. We explicitly note that $a_X$ is fully recoverable from $\sum_s M_\mu(s)$, so a map must not receive credit merely for transmitting it.
 
-*What it can/cannot establish:*
-$B_{raw}$ acts as the theoretical ceiling for information content from the source instrument. Beating it is extremely unlikely and would imply the spatial map somehow filters noise or provides an exceptionally strong inductive bias. Failing to beat it merely confirms the data processing inequality.
+We split the orientation+magnitude baseline by estimand:
+- **For representation-as-delivered:** $B_{da} = (d_X, a_X, \rho_0)$. Beating it establishes incremental utility of the complete delivered encoding beyond source orientation and magnitude. It does not isolate spatial organization, because $M_\mu$ may preserve additional move identity.
+- **For information-equalized organization:** $B_{daS} = (d_X, a_X, S^\star, \rho_0)$ or an exactly equivalent non-spatial representation receiving the same information. A spatial encoding must not receive move identity internally while the comparator is denied it.
 
-## 8. Matched Controls ($B_{matched}$)
+## 8. Defining the Raw-Information Comparator ($B_{raw}$)
 
-- **Same-pair non-spatial rule-derived encoding:** Appropriate for both.
-- **Flattened representation:** Appropriate for both (tests pure spatial organization vs 1D vectors).
-- **Coordinate-scrambled map:** Appropriate for both (tests spatial topology).
-- **Value multiset without coordinate identity:** Appropriate for both (tests identity vs distribution).
+$B_{raw}$ ($X_1$) is an information-rich source reference. Because $M_\mu$ is deterministically derived from source evidence:
+$$I(Y; M_\mu) \le I(Y; B_{raw})$$
+under the relevant conditioning variables.
 
-*We do not finalize $B_{matched}$ until the readout boundary is decisively chosen.*
+However, **information ceiling $\neq$ empirical performance ceiling.** Under a finite learner/resource budget, a transformed representation may outperform raw evidence through inductive bias, compression, denoising, or easier optimization.
 
-## 9. Audit Pair/Root Weighting
+Empirical performance relative to $B_{raw}$ measures the accessibility of the available information under the prospectively frozen learner/resource regime. It does not test the truth of the data-processing inequality.
 
-Root-level train/tune/test separation is preserved.
+## 9. Matched Controls ($B_{matched}$)
 
-Future utility statistics must define their weighting:
-- **Each pair weighted equally:** High-mobility roots dominate the evaluation. Tests overall pair discrimination.
-- **Each root weighted equally:** Every root contributes $1/N$ to the loss/statistic regardless of pair count $\binom{k}{2}$. Tests root-position level generalization.
+We defer $B_{matched}$ until the exact model architecture is chosen, but candidate evaluations under the information-equalized boundary:
+- **Same-pair non-spatial rule-derived encoding:** Appropriate (tests pure spatial organization vs rule semantics).
+- **Flattened representation:** Appropriate (tests 2D spatial topology vs 1D vectors).
+- **Coordinate-scrambled map:** Appropriate (tests specific board topology).
+- **Value multiset without coordinate identity:** Appropriate.
 
-If the primary scientific unit is ultimately the root, root-weighted evaluation is strongly preferred. Do not choose merely based on which yields a stronger effect.
+## 10. Audit Pair/Root Weighting
 
-## 10. Deferring the Learner
+Root-level train/tune/test separation is strictly preserved.
 
-If the information-equalized question is pursued (testing sample/capacity efficiency), the future learner family must satisfy:
+Because sample efficiency is the preferred first utility notion, evaluation should conceptually be **root-weighted**. Every root contributes equally to the loss/statistic, regardless of pair count $\binom{k}{2}$. Do not treat correlated pairs as independent replicates.
+
+## 11. Deferring the Learner
+
+An information-equalized result is necessarily learner-class-relative. The future learner family must satisfy:
 - Identical architecture/class across encodings
 - Identical parameter/resource budget
 - Identical fitting procedure
@@ -134,18 +128,12 @@ If the information-equalized question is pursued (testing sample/capacity effici
 
 *We do not pick hyperparameters or train anything here.*
 
-## 11. Go/No-Go Test
+## 12. Go/No-Go Test
 
 **Is there any readout boundary under which $\mu_D$ versus $\mu_T$ answers a scientifically useful question that cannot be reduced either to unequal information access or to an arbitrary learner choice?**
 
-Yes. The *Information-equalized organization* estimand provides a scientifically useful question regarding sample efficiency, capacity efficiency, and robustness. Even though the operators are interconvertible, testing which one provides a superior inductive bias for standard neural architectures is highly relevant for spatial modeling. 
+Yes. The *Information-equalized organization* estimand, combined with a *sample-efficiency* utility measure and a prospectively frozen learner class, provides a defensible, non-circular protocol to test pure spatial inductive bias without confounding it with unequal information access. 
 
-Alternatively, the *Representation-as-delivered* estimand with minimal $\rho_0$ tests the utility of the standalone spatial token, explicitly acknowledging that unequal information access (origin preservation) is *part of the tested utility*.
+## 13. Conclusion
 
-Both boundaries define scientifically useful, non-circular questions, provided their claim ceilings are strictly respected.
-
-## 12. Conclusion
-
-**READOUT_BOUNDARY_REQUIRES_UTILITY_ESTIMAND**
-
-*(The choice of readout boundary fundamentally dictates whether the experiment tests representation-as-delivered utility or information-equalized inductive bias. The experiment cannot proceed until the project explicitly chooses which of these two distinct scientific questions to answer).*
+**CURRENT_OPERATORS_ONLY_SUPPORT_CONSTRAINED_EFFICIENCY_TEST**
