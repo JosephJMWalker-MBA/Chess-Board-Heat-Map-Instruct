@@ -97,8 +97,11 @@ We require exactly one simple same-pair rule-derived non-spatial representation 
 
 ## 9. Representation of P
 
-Currently: **P_REPRESENTATION_NOT_YET_FROZEN**
-This must be frozen using only already-earned sufficient-state semantics (piece placement, side to move, castling rights, en-passant state, rule-50, history, variant). Do not silently reduce to piece-placement-only FEN.
+The semantic identity of $P$ is already frozen by `SufficientPosition` semantics: `board_arrangement_fen`, `side_to_move`, `castling_rights`, `en_passant_square`, `halfmove_clock`, `fullmove_number`, `history_available`, `history_identity`, `variant`. We do not silently drop history/rule-state fields.
+
+Status:
+- **P_SEMANTIC_IDENTITY_FROZEN_TO_S0**
+- **P_NUMERIC_ENCODING_NOT_YET_FROZEN**
 
 ## 10. Learner Family
 
@@ -149,19 +152,24 @@ If stochastic, we must preregister fixed seed sets applied symmetrically across 
 We use a prospectively frozen paired root bootstrap over held-out roots (treating roots, not seeds or pairs, as the sampling unit) to determine reliability.
 Currently: **CONFIDENCE_LEVEL_NOT_YET_FROZEN**
 
-**Outcome Logic:**
-- `SUPPORT_muD`: $\mu_D$ reliably > $\mu_T$ AND $\mu_D$ reliably > $B_{daS}$
-- `SUPPORT_muT`: $\mu_T$ reliably > $\mu_D$ AND $\mu_T$ reliably > $B_{daS}$
-- `SPATIAL_EFFICIENCY_NO_OPERATOR_PREFERENCE`: spatial condition(s) reliably > $B_{daS}$ but $\mu_D$ vs $\mu_T$ not resolved
-- `NO_SPATIAL_EFFICIENCY_ADVANTAGE`: no spatial condition earns improvement over $B_{daS}$
-- `INCONCLUSIVE`: intervals/diagnostics do not support another scientific class
+Under the frozen uncertainty criterion, define LCB and UCB as the lower and upper confidence bounds.
+With zero superiority margin:
+- resolved positive: $LCB > 0$
+- resolved non-positive: $UCB \le 0$
+- unresolved: interval contains $0$
+
+**Deterministic Outcome Logic:**
+- `SUPPORT_muD`: $LCB(\Delta_{DT}) > 0$ AND $LCB(\Delta_{D0}) > 0$
+- `SUPPORT_muT`: $UCB(\Delta_{DT}) < 0$ AND $LCB(\Delta_{T0}) > 0$
+- `SPATIAL_EFFICIENCY_OPERATOR_UNRESOLVED`: at least one spatial condition earns a resolved improvement over $B_{daS}$ ($LCB(\Delta_{D0}) > 0$ OR $LCB(\Delta_{T0}) > 0$), but the $\mu_D$ vs $\mu_T$ contrast is unresolved.
+- `NO_SPATIAL_EFFICIENCY_ADVANTAGE`: $UCB(\Delta_{D0}) \le 0$ AND $UCB(\Delta_{T0}) \le 0$
+- `INCONCLUSIVE`: intervals/diagnostics do not support another scientific class (e.g. failing to establish positive advantage for either but not resolving them as non-positive)
 - `PROTOCOL_INVALID`: preregistered integrity/leakage/evaluability conditions fail
 
-If no practical-effect margin exists, a zero superiority boundary is used (statistical resolution is sufficient for the scoped protocol-relative efficiency claim).
+## 17. Diagnostics, Falsifiers, and Protocol Invalidity
 
-## 17. Essential Falsifiers and Protocol Invalidity
-
-The spatial-efficiency thesis is not supported if: neither map beats $B_{daS}$, advantage exists at only one budget, ranking reverses materially across budgets, advantage disappears under paired seeds, result depends on pair weighting, or one encoding receives extra tuning capacity.
+Since normalized AULC is the primary estimand, curve crossings across root budgets are a reported *diagnostic*, not automatically a falsifier unless monotonic dominance is separately hypothesized.
+Training-seed sensitivity is a reported stability *diagnostic* until an exact seed-aggregation rule is frozen. Seeds are not independent chess sampling units.
 
 **PROTOCOL_INVALID** if:
 - target leakage
@@ -174,22 +182,37 @@ The spatial-efficiency thesis is not supported if: neither map beats $B_{daS}$, 
 - software/provenance digest mismatch
 - post-hoc replacement of non-evaluable cases
 
-## 18. Provenance
+## 18. Provenance and Blocker Audit
 
-Bound to: S0 semantic signature, ExperimentSpec v2, source/target instruments, manifest digest, split digest, operator version, learner/config digest, seed set, and software revision. Uses existing S1 semantics.
+Future execution must use existing `SufficientPosition`, `ExperimentSpec v2`, `ExperimentResult`, and `SuiteManifest` semantics rather than parallel experiment infrastructure.
+
+### Audit of Remaining Blockers
+
+| Blocker | Constrained by existing code | Scientific Choice Remaining | Implementation Gap | Dependency |
+|---|---|---|---|---|
+| ROOT_POPULATION_NOT_YET_FROZEN | N/A | Definition of the root inclusion/exclusion rule | None | None |
+| INSTRUMENT_CONFIG_NOT_YET_FROZEN | supports fixed node/depth/time, per-legal-move eval, perspective, Threads/Hash | specific nodes/depth budgets, engine version | ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED | ROOT_POPULATION |
+| SPLIT_AND_BUDGET_NOT_YET_FROZEN | N/A | training-root counts, partitions | None | source-only feasibility |
+| P_NUMERIC_ENCODING_NOT_YET_FROZEN | P semantic identity frozen by SufficientPosition | Model's numeric encoding schema | None | None |
+| LEARNER_FAMILY_NOT_YET_FROZEN | N/A | architecture, parameters, stopping rule | No ML framework dependency exists yet | P_NUMERIC_ENCODING |
+| MATCHED_COMPARATOR_NOT_YET_FROZEN | N/A | exact rule-derived null encoding | None | LEARNER_FAMILY |
+| SEED_SET_NOT_YET_FROZEN | N/A | seeds, aggregation rule | None | LEARNER_FAMILY |
+| CONFIDENCE_LEVEL_NOT_YET_FROZEN | N/A | $\alpha$ level, bootstrap size | None | None |
+
+### Blocker Dependency Order
+
+1. ROOT_POPULATION_NOT_YET_FROZEN
+2. INSTRUMENT_CONFIG_NOT_YET_FROZEN + ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED
+3. Source-only feasibility/coverage acquisition (measures CP eligibility, pair counts after root/instrument are frozen. May not inspect held-out target labels)
+4. SPLIT_AND_BUDGET_NOT_YET_FROZEN
+5. P_NUMERIC_ENCODING_NOT_YET_FROZEN
+6. LEARNER_FAMILY_NOT_YET_FROZEN
+7. MATCHED_COMPARATOR_NOT_YET_FROZEN
+8. SEED_SET_NOT_YET_FROZEN
+9. CONFIDENCE_LEVEL_NOT_YET_FROZEN
 
 ## 19. Status
 
 **PREREGISTRATION_DRAFT_ONLY**
 **ENGINE_EXECUTION_NOT_AUTHORIZED**
 **MODEL_TRAINING_NOT_AUTHORIZED**
-
-Remaining Execution Blockers:
-- ROOT_POPULATION_NOT_YET_FROZEN
-- INSTRUMENT_CONFIG_NOT_YET_FROZEN
-- P_REPRESENTATION_NOT_YET_FROZEN
-- LEARNER_FAMILY_NOT_YET_FROZEN
-- MATCHED_COMPARATOR_NOT_YET_FROZEN
-- SPLIT_AND_BUDGET_NOT_YET_FROZEN
-- SEED_SET_NOT_YET_FROZEN
-- CONFIDENCE_LEVEL_NOT_YET_FROZEN
