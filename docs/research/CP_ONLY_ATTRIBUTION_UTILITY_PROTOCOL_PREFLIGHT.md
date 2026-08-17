@@ -6,193 +6,107 @@ Is there a non-circular, fair, preregistrable CP-only experiment capable of dist
 
 This is a go/no-go protocol-feasibility audit. Do not design an experiment merely because CP-only execution is now semantically admissible.
 
-**Preserved Semantics:**
-- $a_X^{CP} = |CP_X(r) - CP_X(q)|$
-- $d_X = \text{sign/order}(CP_X(r) - CP_X(q))$
-- $M_\mu = a_X^{CP} G_\mu$
-- $Y_u = \text{CompareTyped}(O_Y(r), O_Y(q))$
-
 We restrict this preflight prospectively to source comparisons where both source outcomes are CP-typed. Mate cases are non-evaluable by construction, not failures to replace with friendlier fixtures.
 
-## 1. Choosing the Primary Scientific Question
+## 1. Do Not Assume a Fixed Reference is Required
 
-We evaluate possible primary questions (do not combine metrics):
+We must compare two prediction-unit families before accepting a privileged reference policy as mandatory.
 
-- **A. Orientation-aware held-out discrimination:**
-  - *Hypothesis:* Spatial organization provides superior target discrimination given identical source ordering.
-  - *Constant:* Readout receives $d_X$.
-  - *Teaches:* Whether the specific geometric mapping $G_\mu$ contains inductive/predictive utility for consequence.
-  - *Confound:* $d_X$ may saturate $Y$, leaving little residual signal.
-  - *Success justifies:* A specific spatial mapping as a useful consequence representation.
-  - *Failure justifies:* Rejection of the specific spatial mapping for predictive utility.
+**A. Fixed-reference family**
+$$u_r = (P, r(P), q)$$
+with one reference move fixed across all $q$ at a root.
 
-- **B. Orientation-withheld held-out discrimination:**
-  - *Hypothesis:* Representation/readout can recover target ordering without source preference.
-  - *Constant:* Readout receives only $M_\mu, \rho(q)$.
-  - *Teaches:* Whether $M_\mu$ leaks enough source orientation/origin info to recover the ordering.
-  - *Confound:* Measures origin-information preservation / missing orientation rather than intended consequence utility.
-  - *Success justifies:* The representation's capacity to leak/encode order.
-  - *Failure justifies:* Nothing (it might just be effectively unoriented).
+**B. Unordered-pair family**
+$$u_{pair} = (P, \{m, n\})$$
+for distinct legal alternatives $m, n$.
 
-- **C. Sample-efficiency advantage:**
-  - *Hypothesis:* Spatial maps allow faster learning of target consequence.
-  - *Constant:* Performance ceiling.
-  - *Teaches:* Inductive bias strength of the spatial coordinate system.
-  - *Confound:* Overfitting or inappropriate learner selection.
-  - *Success justifies:* Spatial organization as an efficient encoding.
-  - *Failure justifies:* Spatial organization is no better than flattened vectors.
+In the unordered-pair family, we introduce a deterministic canonical serialization:
+$$c(\{m, n\}) = (m_1, m_2)$$
+solely so orientation labels can be represented reproducibly.
+*Canonical serialization $\neq$ scientific reference move.*
 
-- **D. Readout-capacity/compute efficiency:**
-  - *Hypothesis:* A smaller/simpler readout can achieve the same performance with spatial maps.
-  - *Constant:* Performance ceiling, training data.
-  - *Teaches:* Compression and task-relevant sufficiency.
-  - *Confound:* Model architecture mismatch.
-  - *Success justifies:* Spatial maps as computationally efficient representations.
-  - *Failure justifies:* Spatial maps offer no readout efficiency.
+We define:
+$$a_X^{CP} = |CP_X(m_1) - CP_X(m_2)|$$
+$$d_X = \text{CompareTyped}(CP_X(m_1), CP_X(m_2))$$
+The attribution maps remain comparison-order invariant.
 
-- **E. Robustness/transfer:**
-  - *Hypothesis:* Spatial representations transfer better across instruments.
-  - *Constant:* Learner, training data.
-  - *Teaches:* Instrument-agnostic utility of the spatial map.
-  - *Confound:* Engine consensus bias.
-  - *Success justifies:* Robustness.
-  - *Failure justifies:* Instrument-specific overfitting.
+## 2. Audit of Prediction-Unit Families
 
-**Chosen first protocol candidate:** *Not chosen yet.* We must resolve the confounds before selecting the primary question.
+We compare the fixed-reference versus unordered-pair designs:
 
-## 2. Orientation-Aware Interface
-
-The orientation-aware task is:
-$$R(M_\mu, d_X, \rho(q)) \to Y$$
-
-*Advantage:* Every operator receives identical source ordering, focusing the experiment narrowly on spatial organization.
-*Danger:* $d_X$ may already solve so much of $Y$ that little discriminative signal remains for $M_\mu$.
-
-We require orientation-only and magnitude baselines:
-- $R_d(d_X, \rho(q))$
-- $R_{da}(d_X, a_X, \rho(q))$
-
-Any claimed spatial utility must be evaluated relative to these baselines, so spatial maps are not rewarded merely for making the conserved magnitude recoverable.
-
-## 3. Orientation-Withheld Interface
-
-The orientation-withheld task is:
-$$R(M_\mu, \rho(q)) \to Y$$
-
-This primarily measures origin-information preservation or source-orientation recoverability rather than the intended consequence representation utility. Because those factors cannot be easily separated from the intended utility, **this task is unsuitable as the first spatial-utility protocol.**
-
-## 4. Freezing Candidate Reference-Policy Semantics
-
-One $r(P)$ must remain fixed across all $q$ at a root unless varying $r$ preserves the estimand.
-
-- **Fixed lexicographic $r(P)$:**
-  - *Target Leakage:* None
-  - *Producer Dependence:* None
-  - *Equivariance/Arbitrariness:* Arbitrary, breaks permutation equivariance.
-  - *Evaluable CP/CP implications:* Random distribution of CP evaluability.
-  - *Interpretation:* Arbitrary baseline contrast.
-  - *Structural Favoritism:* None.
-
-- **Rule-only deterministic $r(P)$:**
-  - *Target Leakage:* None
-  - *Producer Dependence:* None
-  - *Equivariance/Arbitrariness:* May preserve symmetry depending on the rule.
-  - *Evaluable CP/CP implications:* Depends on the rule.
-  - *Interpretation:* Rule-based baseline contrast.
-  - *Structural Favoritism:* None.
-
-- **Source-producer preferred $r(P)$:**
-  - *Target Leakage:* None (if frozen from $X$)
-  - *Producer Dependence:* Absolute
-  - *Equivariance/Arbitrariness:* Privileges engine top choice.
-  - *Evaluable CP/CP implications:* High chance of CP-evaluability if top choice is CP.
-  - *Interpretation:* Consequence relative to best-play expectation.
-  - *Structural Favoritism:* May favor certain geometric responses implicitly.
-
-*We choose no reference policy yet. It must be defensible before observing target outcomes.*
-
-## 5. Freezing the Side-Information Ledger
-
-We must explicitly declare what the readout receives. A representation must not receive externally what another must encode internally.
-
-| Information | Minimal Common Side Info | Sufficient $S=(P, r, q)$ Side Info |
+| Property | Fixed-reference ($u_r$) | Unordered-pair ($u_{pair}$) |
 |---|---|---|
-| $P$ | No | Yes |
-| $r$ identity | No | Yes |
-| $q$ identity | No | Yes |
-| $\rho(q)$ | Yes | Yes |
-| $d_X$ | Yes (Orientation-aware) | Yes (Orientation-aware) |
-| $a_X$ explicitly | No | No (unless provided as baseline control) |
-| $M_\mu$ | Yes | Yes |
-| Absolute $CP_X(r)$ | No | No |
-| Absolute $CP_X(q)$ | No | No |
+| **Arbitrary baseline dependence** | High (if lexicographic/rule) | None (evaluates all valid pairs symmetrically) |
+| **Producer-preference dependence** | High (if best-move reference) | None (evaluates pairs symmetrically) |
+| **Symmetry/Equivariance** | Breaks permutation equivariance depending on $r$ | Preserves unordered symmetry (canonical order is for labels only) |
+| **CP/CP evaluability** | Empirically unknown before acquisition | All prospectively valid CP/CP pairs are evaluable |
+| **Number/Dependence of units** | $|L(P)| - 1$ per root | $O(|L(P)|^2)$ per root |
+| **Interpretation of estimand** | Target consequence *relative to $r$* | Pairwise consequence separation between alternatives |
+| **Leakage risk** | Depends heavily on $r$'s origin | Zero leakage from a privileged reference choice |
+| **Structural favoritism toward $\mu_D$ or $\mu_T$** | Requires audit (rule-only $r$ can induce systematic spatial distributions) | Requires audit (but avoids single-reference anchoring) |
 
-**If supplying $S$ makes $\mu_D$ and $\mu_T$ deterministically interconvertible, an unrestricted learner will asymptotically erase their difference.** The remaining empirical distinction would only be inductive bias, sample efficiency, or capacity efficiency.
+Because unordered pairs provide a coherent pairwise separation estimand without privileging one move arbitrarily, a **REFERENCE_POLICY is not a fundamental requirement.** The unordered-pair family removes the reference-policy blocker.
 
-## 6. Defining Raw and Matched Baselines
+## 3. Mandatory Root-Level Dependence
 
-We define minimum baselines under the same readout resource constraints:
+For unordered pairs, pairs sharing the same root state $P$ are statistically dependent.
+Any future data split must operate strictly at the root-position level: **no pair from a held-out root may occur in training/tuning.**
+Individual move-pairs are *not* independent observations.
 
-- **Orientation-only:** $B_d = (d_X, \rho(q))$
-- **Orientation + magnitude:** $B_{da} = (d_X, a_X, \rho(q))$
-- **Raw source:** $B_{raw} = X_1$ (typed source observations for $r$ and $q$)
+## 4. Reassessing the Readout Boundary
 
-**Candidate $B_{\text{matched}}$ Encodings:**
-- *Flattened move/source vector:* Controls for pure flattened encoding vs spatial organization.
-- *Coordinate-scrambled spatial map:* Controls for the specific spatial coordinate geometry.
-- *Value multiset without square identity:* Controls for the exact set of scalar values.
-- *Rule-derived move representation with identical scalar source signal:* Controls for move semantics without spatial attribution.
+The scientific meaning of the protocol changes drastically depending on whether full move identities are supplied to the readout.
 
-*We do not select a deliberately weak baseline.*
+Compare two interfaces:
+**A. Minimal common interface:**
+$$R(M_\mu, d_X, \rho(\{m, n\}))$$
 
-## 7. Defining Source/Target Instrument Relationships
+**B. Sufficient move-identity interface:**
+$$R(M_\mu, S, \rho(\{m, n\}))$$
+where $S = (P, m, n)$.
 
-- **Same producer, deeper target budget:**
-  - *Meaning of $Y$:* Deeper search consensus.
-  - *Genuinely held out:* The search increment.
-  - *Dependence:* Very High.
-  - *Expected evaluability:* High.
-  - *Strongest claim ceiling:* Predicts deeper search behavior.
+- **With sufficient $S$:** $\mu_D$ and $\mu_T$ are conditionally interconvertible. Any measured difference can only concern learner, resource, or inductive-bias behavior.
+- **Without sufficient $S$:** The operators may expose genuinely different move information (e.g., transition touches may leak origin identity when $\mu_D$ does not). A performance difference cannot automatically be called pure "spatial organization utility."
 
-- **Same producer, independently configured target:**
-  - *Meaning of $Y$:* Alternative configuration outcome.
-  - *Genuinely held out:* The heuristic parameter changes.
-  - *Dependence:* High (shared core evaluation).
-  - *Expected evaluability:* High.
-  - *Strongest claim ceiling:* Predicts alternative configuration outcomes.
+Because this boundary determines whether we are testing spatial organization or unequal information access, the **readout information boundary is the fundamental remaining blocker.**
 
-- **Different producer target:**
-  - *Meaning of $Y$:* Cross-engine agreement.
-  - *Genuinely held out:* The entire target instrument.
-  - *Dependence:* Medium (shared biases).
-  - *Expected evaluability:* Medium (different CP scales/horizons).
-  - *Strongest claim ceiling:* Robustness across specific tested instruments (NOT objective consequence).
+## 5. Freezing the Utility Notion
 
-## 8. Prospective CP-Only Evaluability
+We cannot select a primary utility question until the information boundary is settled.
 
-A unit is source-evaluable iff before target outcome observation:
-- $O_X(r)$ is CP typed
-- $O_X(q)$ is CP typed
-- source perspective matches
-- source observation validity/provenance passes
-- $r \neq q$
+If supplying $S$ makes asymptotic predictive accuracy trivial or equivalent for both operators, then unconstrained predictive accuracy is the wrong test. A sample-efficiency or capacity-efficiency question is only interpretable relative to a frozen learner/resource class. If withholding $S$ changes information content, then "orientation-withheld" tests missing orientation, not organizational utility.
 
-Target evaluability is completely separate. We do not replace non-evaluable mate/WDL cases after acquisition.
+## 6. Repairing Claim Ceilings
 
-**Population Bias Concern:**
-Filtering for CP-only cases systematically removes positions involving forced mates. These often include highly tactical, forcing, or imbalanced positions near game resolution. Any eventual claim must be strictly scoped to the CP/CP-evaluable population (typically mid-game maneuvers, strategic positioning, or balanced endgames).
+Claims must be strictly protocol-scoped rather than globally broad:
+- **Success:** Superior utility *under the frozen target, learner, side-information, and resource regime*. Finite cross-instrument success establishes robustness *across the tested instruments*, not instrument-agnostic utility.
+- **Failure:** Failing utility *under the frozen target, learner, side-information, and resource regime*. Failure under one protocol does not globally reject the attribution convention.
 
-## 9. Is $\mu_D$ vs $\mu_T$ a Useful Contest?
+## 7. Repairing the CP-Only Population Statement
 
-Because the operators are conditionally interconvertible given $S$, a sufficiently expressive fair learner may asymptotically erase their difference.
-Therefore, an unconstrained predictive accuracy contest is scientifically weak.
+Forced-mate source cases are systematically excluded by CP-only filtering. Therefore, the CP/CP-evaluable population may differ systematically from the full legal-position population. Its empirical composition must be *measured* rather than assumed. Any eventual claim must be scoped exclusively to this CP/CP-evaluable population.
 
-The scientifically meaningful first test must target **sample efficiency**, **capacity efficiency**, or **robustness**, rather than unconstrained predictive accuracy. This must be reasoned through before selecting a learner.
+## 8. Baseline Implications
+
+We preserve fundamental baselines under the same readout resource constraints:
+- **Orientation-only:** $B_d = (d_X, \rho(\{m, n\}))$
+- **Orientation + magnitude:** $B_{da} = (d_X, a_X, \rho(\{m, n\}))$
+- **Raw source:** $B_{raw} = X_1$
+
+However, $B_{\text{matched}}$ cannot be finalized until the readout side-information boundary and prediction-unit family are frozen. For an unordered-pair design, a rule-derived non-spatial representation of the same pair must be included as an especially important comparator.
+
+## 9. Defining Source/Target Instrument Relationships
+
+For completeness:
+- **Same producer, deeper target budget:** (Predicts deeper search behavior of same engine).
+- **Same producer, independently configured target:** (Predicts alternative configuration outcomes).
+- **Different producer target:** (Robustness across specific tested instruments).
+
+We do not call different-producer agreement "objective consequence".
 
 ## 10. Protocol-Identifiability Falsifiers
 
 Reject the protocol family if:
-- reference choice determines the winner
 - side-information choice determines the winner
 - $B_{\text{matched}}$ cannot be defined without favoring an operator
 - $d_X / a_X$ alone saturate $Y$
@@ -205,4 +119,4 @@ Reject the protocol family if:
 
 ## 11. Conclusion
 
-**CP_ONLY_UTILITY_REQUIRES_REFERENCE_POLICY**
+**CP_ONLY_UTILITY_REQUIRES_READOUT_BOUNDARY**
