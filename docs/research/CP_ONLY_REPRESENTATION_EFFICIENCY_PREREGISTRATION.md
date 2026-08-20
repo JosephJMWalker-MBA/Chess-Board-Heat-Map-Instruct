@@ -61,26 +61,70 @@ Lichess official broadcast games, calendar month July 2026, PGN monthly export. 
 10. **Manifest / Provenance Contract**: Reusing `SuiteManifest` / `ExperimentSpec v2` semantics, preserve: external corpus identity, corpus month/version, upstream artifact filename, upstream published checksum, locally verified checksum, parser/version identity, root-selection algorithm/version, game identity/provenance, selected ply, full `SufficientPosition` identity, conservative transposition-group identity, inclusion/exclusion outcome, exclusion reason, duplicate resolution, prior-development-overlap status, software revision, and manifest digest.
 11. **Sample Size**: `SPLIT_AND_BUDGET_NOT_YET_FROZEN` remains unresolved. The population universe and deterministic root-generation procedure are frozen now, while the exact training/tune/test counts remain unfrozen.
 
-## 5. Source and Target Acquisition Instrument Concept
+## 5. Source and Target Acquisition Instrument Contract
 
-Currently: **INSTRUMENT_CONFIG_NOT_YET_FROZEN**
-This is execution-blocking. We must prospectively specify producer/version identity, comparison perspective, exact deterministic acquisition method for all legal alternatives, source budget type/value, target budget type/value, UCI/config settings, process lifecycle, hash reset semantics, threads, hash size, MultiPV/searchmoves behavior, and any randomness. Top-k acquisition is incompatible. The target must use a strictly greater independently acquired budget. Source and target observations must not inherit uncontrolled TT/search state from one another.
+**Status:** INSTRUMENT_CONFIG_FROZEN_SF18_50K_250K_V1
+**Implementation Status:** ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED
+
+**Producer Identity:**
+Both source and target must use the exact Stockfish 18 binary.
+- Observed UCI name: `Stockfish 18`
+- Engine binary SHA-256: `ae4c93fa9676ca7750d0714342fd8a5b1d018000fc6e0f6cedf112067b5ef374`
+Future execution must verify BOTH before any search. If the exact binary is unavailable or the SHA differs, acquisition is blocked.
+
+**Source and Target Budgets:**
+- Source: `CP_SOURCE_SF18_50K_ISOLATED_V1` (budget_type = nodes, budget_value = 50000)
+- Target: `CP_TARGET_SF18_250K_ISOLATED_V1` (budget_type = nodes, budget_value = 250000)
+The target uses exactly 5x the source node allowance. 250k nodes is the prospectively frozen deeper target instrument, not "ground truth" or "objective consequence."
+
+**Static UCI Configuration:**
+Identical for source and target except for node budget:
+`Threads = 1`, `Hash = 16`, `Ponder = false`, `MultiPV = 1`, `Skill Level = 20`, `UCI_LimitStrength = false`, `UCI_Chess960 = false`, `UCI_ShowWDL = false`, `SyzygyProbeLimit = 0`, `SyzygyPath = <empty>`
+No external tablebases permitted. Do not override `EvalFile` or `EvalFileSmall` from the binary's defaults. Record their observed default values during preflight. Record the complete observed UCI option surface in provenance. If the engine reports a required option/configuration incompatible with this frozen contract, acquisition is blocked.
+
+**Comparison Perspective:**
+For each root $P$, `comparison_perspective = side_to_move(P)`. This perspective is frozen before any root move is pushed. Every child observation must be converted back to the ROOT player's perspective (larger CP = better for the player making the root decision). Preserve mate outcomes as typed mate outcomes. Never convert mate to fake centipawns.
+
+**Acquisition Unit:**
+For each admitted root $P$:
+1. Enumerate ALL legal root moves.
+2. Sort legal alternatives by canonical UCI bytewise/lexicographic order.
+3. For each legal move $m$: copy/reconstruct $P$; push exactly $m$; analyze the resulting child position $P_m$; retain the typed result from the root-player comparison perspective.
+The acquisition object is $O_X(P, m)$ for each legal root alternative $m$. Do not use top-k filtering, best-move-only acquisition, MultiPV as a substitute for all-legal-move child evaluation, played-game move preference, search-based candidate admission, or target-based replacement. Do not perform a separate root baseline search.
+
+**Engine-State Isolation Semantics:**
+Source and Target use SEPARATE long-lived Stockfish processes. They must never share one process. For every individual child observation $O_X(P, m)$:
+1. Establish a fresh UCI new-game boundary before the child search.
+2. This boundary must cause Stockfish 18 search state to be cleared before that observation.
+3. Set/send the exact child position.
+4. Perform exactly one node-limited analysis.
+5. Wait for completion before any next observation.
+For python-chess, each child observation must receive a newly distinct `game` token so python-chess emits `ucinewgame`. Stockfish 18 handles `ucinewgame` as `search_clear()`, clearing transposition table state and thread search/history state. This resets the state without relying on legal-move ordering to control contamination.
+
+**Source/Target Independence:**
+The source and target processes must be separate OS engine processes using the identical verified Stockfish binary, identical static UCI options, and independent engine state. Target acquisition must not initialize from source TT state, consume source PVs, use source scores as search hints, skip moves based on source ranking, alter budget based on source uncertainty, replace source-non-CP cases, or inspect model predictions.
+
+**Target Acquisition Remains Unauthorized:**
+Target acquisition remains blocked until the downstream preregistration dependencies are frozen and explicitly authorized. The next stages are implementation and mechanical testing of the isolated acquisition path without touching the frozen July corpus, followed by an independent protocol-vs-implementation audit, and only then source-only feasibility acquisition.
 
 ## 6. Source and Target Evaluability
-
-**Source Pair Eligibility:**
-A pair is source-evaluable only when: both alternatives are legal, have distinct UCI identities, both source observations are valid, both source observations are CP-typed, common frozen perspective is maintained, and provenance is valid. Mate/WDL/non-valid source cases are prospectively non-evaluable and must not be replaced.
-
-**Target Labels:**
-- `FIRST_BETTER`: $O_Y(m_1) > O_Y(m_2)$ under frozen CompareTyped semantics
-- `EQUAL`: Perfect tie
-- `SECOND_BETTER`: $O_Y(m_1) < O_Y(m_2)$ under frozen CompareTyped semantics
-
-**Non-Evaluable Target Cases (retained in coverage accounting, no replacement):**
-- `UNORDERED`: Target-non-evaluable mixed type (if applicable)
-- `TARGET_ACQUISITION_FAILURE`: Evaluation could not be produced
-
-If target attrition leaves a root with zero evaluable pairs, that root is excluded. Do not backfill another root.
+ 
+ **Source Pair Eligibility:**
+ A pair is source-evaluable only when: both alternatives are legal, have distinct UCI identities, both source observations are valid, both source observations are CP-typed, common frozen perspective is maintained, and provenance is valid. Mate/WDL/non-valid source cases are prospectively non-evaluable and must not be replaced. Mate-typed source alternatives are retained in acquisition/coverage accounting but do not enter CP/CP pair construction.
+ 
+ **Population Maintenance Under Attrition:**
+ Do not remove the root from the declared base population merely because some source moves are mate-typed, fewer than two CP moves remain, acquisition fails, the position is expensive, or the source ordering is inconvenient. Report attrition. Do not replace it.
+ 
+ **Target Labels:**
+ - `FIRST_BETTER`: $O_Y(m_1) > O_Y(m_2)$ under frozen CompareTyped semantics
+ - `EQUAL`: Perfect tie
+ - `SECOND_BETTER`: $O_Y(m_1) < O_Y(m_2)$ under frozen CompareTyped semantics
+ 
+ **Non-Evaluable Target Cases (retained in coverage accounting, no replacement):**
+ - `UNORDERED`: Target-non-evaluable mixed type (if applicable)
+ - `TARGET_ACQUISITION_FAILURE`: Evaluation could not be produced
+ 
+ If target attrition leaves a root with zero evaluable pairs, that root is excluded from the pair-level analysis. Do not backfill another root.
 
 ## 7. Spatial Encodings
 
@@ -192,15 +236,28 @@ Since normalized AULC is the primary estimand, curve crossings across root budge
 Training-seed sensitivity is a reported stability *diagnostic* until an exact seed-aggregation rule is frozen. Seeds are not independent chess sampling units.
 
 **PROTOCOL_INVALID** if:
+- wrong UCI producer name
+- engine binary SHA mismatch
+- missing required UCI option
+- configuration mismatch
+- source and target accidentally sharing a process
+- missing per-child reset boundary
+- uncontrolled TT/search-history carryover
+- wrong comparison perspective
+- child-position reconstruction mismatch
+- legal-move omission
+- duplicate move acquisition
+- node-budget mismatch
+- tablebase access
+- custom NNUE override
+- malformed typed score
+- source-derived target search policy
+- post-hoc replacement
 - target leakage
-- source/target instrument mismatch from frozen spec
-- uncontrolled TT/process-state contamination
 - root crosses train/tune/test partitions
 - representation-specific tuning/resource differences
-- malformed sufficient-position state
 - corpus construction inconsistent with frozen rule
 - software/provenance digest mismatch
-- post-hoc replacement of non-evaluable cases
 
 ## 18. Provenance and Blocker Audit
 
@@ -211,7 +268,7 @@ Future execution must use existing `SufficientPosition`, `ExperimentSpec v2`, `E
 | Blocker | Constrained by existing code | Scientific Choice Remaining | Implementation Gap | Dependency |
 |---|---|---|---|---|
 | ROOT_POPULATION_FROZEN_TO_LICHESS_JULY_2026 | N/A | None (Frozen) | None | None |
-| INSTRUMENT_CONFIG_NOT_YET_FROZEN | supports fixed node/depth/time, per-legal-move eval, perspective, Threads/Hash | specific nodes/depth budgets, engine version | ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED | None |
+| INSTRUMENT_CONFIG_FROZEN_SF18_50K_250K_V1 | supports fixed node/depth/time, per-legal-move eval, perspective, Threads/Hash | None (Frozen) | ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED | None |
 | SPLIT_AND_BUDGET_NOT_YET_FROZEN | N/A | training-root counts, partitions | None | source-only feasibility |
 | P_NUMERIC_ENCODING_NOT_YET_FROZEN | P semantic identity frozen by SufficientPosition | Model's numeric encoding schema | None | None |
 | LEARNER_FAMILY_NOT_YET_FROZEN | N/A | architecture, parameters, stopping rule | No ML framework dependency exists yet | P_NUMERIC_ENCODING |
@@ -222,7 +279,7 @@ Future execution must use existing `SufficientPosition`, `ExperimentSpec v2`, `E
 ### Blocker Dependency Order
 
 1. ROOT_POPULATION_FROZEN_TO_LICHESS_JULY_2026
-2. INSTRUMENT_CONFIG_NOT_YET_FROZEN + ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED
+2. INSTRUMENT_CONFIG_FROZEN_SF18_50K_250K_V1 + ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED
 3. Source-only feasibility/coverage acquisition (measures CP eligibility, pair counts after root/instrument are frozen. May not inspect held-out target labels)
 4. SPLIT_AND_BUDGET_NOT_YET_FROZEN
 5. P_NUMERIC_ENCODING_NOT_YET_FROZEN

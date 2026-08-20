@@ -781,10 +781,10 @@ A future session should begin by checking the repository HEAD.
 If HEAD is still:
  
  ```text
- f4b8679f0d0cabdff550c1d8d808002743a51319
+ 9fa1de7e32c2345fe1ecd8880ffcb60fc4552f88
  ```
  
- then the immediate next task is resolving the first scientific dependency: `INSTRUMENT_CONFIG_NOT_YET_FROZEN`.
+ then the immediate next task is resolving the first scientific dependency: `ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED`.
 
 If HEAD is later, inspect the delta rather than assuming this checkpoint is still the frontier.
 

@@ -300,16 +300,15 @@ Execution remains blocked.
 
 # Immediate Next Task — First Scientific Dependency
  
- The root-population contract has been **FROZEN** (Lichess July 2026).
+ The root-population contract and instrument configs have been **FROZEN**.
  
- Before any engine execution or model work, the current ordered queue must be followed. The strongest immediate unresolved blocker is now:
+ Before any source acquisition, the engine state isolation must be implemented. The strongest immediate unresolved blocker is now:
  
  ```text
- INSTRUMENT_CONFIG_NOT_YET_FROZEN
- + ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED
+ ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED
  ```
  
- No execution is authorized while the preregistration remains blocked.
+ The next task is: IMPLEMENT ENGINE-STATE-ISOLATED SOURCE ACQUISITION. That task is implementation/testing only. No corpus downloading or source/target study acquisition is authorized.
  
  ---
  
@@ -320,7 +319,7 @@ Execution remains blocked.
  ```text
  1. ROOT_POPULATION_FROZEN_TO_LICHESS_JULY_2026
  
- 2. INSTRUMENT_CONFIG_NOT_YET_FROZEN
+ 2. INSTRUMENT_CONFIG_FROZEN_SF18_50K_250K_V1
     + ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED
  
  3. source-only feasibility / coverage acquisition
@@ -513,8 +512,8 @@ Human decision complexity remains outside objective Heat.
  14. **ACTIVE DRAFT** — CP-Only Representation Efficiency Preregistration
  15. **DONE** — Preregistration outcome-semantics + blocker audit
  16. **DONE** — Freeze root-population contract
- 17. **NEXT** — Freeze source/target instrument family + engine-state isolation semantics
- 18. **THEN** — Implement engine-state-isolated source acquisition
+ 17. **DONE** — Freeze source/target instrument family + engine-state isolation semantics
+ 18. **NEXT** — Implement engine-state-isolated source acquisition
  19. **THEN** — Source-only feasibility/coverage acquisition
  20. **THEN** — Freeze split/budget, `P` encoding, learner, comparator, seeds, inference
  21. **THEN** — Independent preregistration-vs-implementation audit
@@ -561,4 +560,4 @@ The following freeze rules continue to apply:
  2. read `RESEARCH_CONTINUITY_CHECKPOINT_2026-08-16.md`;
  3. read this `NEXT_WORK_MAP.md`;
  4. inspect the active preregistration;
- 5. continue from the first unresolved dependency only (currently `INSTRUMENT_CONFIG_NOT_YET_FROZEN`).
+ 5. continue from the first unresolved dependency only (currently `ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED`).
