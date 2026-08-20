@@ -660,6 +660,25 @@ def test_acquisition_mechanics_and_child_proofs(mock_popen, mock_verify):
     # ExperimentResult Binding / Integrity
     assert res.spec_digest == spec.spec_digest()
     assert json.loads(res.data_payload)["spec_digest"] == res.spec_digest
+
+    payload = json.loads(res.data_payload)
+    
+    assert payload["pre_spawn_sha256"] == cpi.STOCKFISH_BINARY_SHA256
+    assert payload["post_spawn_sha256"] == cpi.STOCKFISH_BINARY_SHA256
+    
+    options = create_real_options()
+    assert payload["eval_file_default"] == options["EvalFile"].default
+    assert payload["eval_file_small_default"] == options["EvalFileSmall"].default
+    assert payload["observed_syzygy_path_default"] == options["SyzygyPath"].default
+    assert payload["normalized_tablebase_policy"] == "NO_EXTERNAL_TABLEBASE"
+    
+    assert "EvalFile" in payload["options_surface"]
+    assert "EvalFileSmall" in payload["options_surface"]
+    
+    keys = list(payload["options_surface"].keys())
+    assert keys == sorted(keys)
+    
+    assert payload["managed_semantics_enforced"] == sorted(cpi.MANAGED_OPTIONS)
     
     # Tampering test
     payload = json.loads(res.data_payload)
@@ -922,3 +941,51 @@ def test_deterministic_provenance(mock_popen, mock_verify):
     assert res1.data_payload == res2.data_payload
     assert res1.artifact_digest == res2.artifact_digest
 
+
+@patch('chessheat.cp_instrument.verify_executable')
+@patch('chess.engine.SimpleEngine.popen_uci')
+def test_static_option_parse_failure(mock_popen, mock_verify):
+    ident = cpi.ExecutableIdentity("/bin/stockfish", cpi.STOCKFISH_BINARY_SHA256)
+    mock_verify.return_value = ident
+    mock_engine = MagicMock()
+    mock_engine.id = {"name": cpi.STOCKFISH_UCI_NAME}
+    
+    options = create_real_options()
+    # Invalid frozen static option
+    options["Threads"] = chess.engine.Option(
+        "Threads",
+        "spin",
+        2,
+        2,
+        512,
+        []
+    )
+    mock_engine.options = options
+    mock_popen.return_value = mock_engine
+    
+    session = cpi.InstrumentSession("dummy", cpi.InstrumentRole.SOURCE)
+    with pytest.raises(cpi.ProtocolError, match="rejects configured value"):
+        session.start()
+        
+    mock_engine.configure.assert_not_called()
+    mock_engine.quit.assert_called_once()
+    assert session._engine is None
+
+@patch('chessheat.cp_instrument.verify_executable')
+@patch('chess.engine.SimpleEngine.popen_uci')
+def test_configuration_failure_cleanup(mock_popen, mock_verify):
+    ident = cpi.ExecutableIdentity("/bin/stockfish", cpi.STOCKFISH_BINARY_SHA256)
+    mock_verify.return_value = ident
+    mock_engine = MagicMock()
+    mock_engine.id = {"name": cpi.STOCKFISH_UCI_NAME}
+    mock_engine.options = create_real_options()
+    
+    mock_engine.configure.side_effect = RuntimeError("simulated configuration failure")
+    mock_popen.return_value = mock_engine
+    
+    session = cpi.InstrumentSession("dummy", cpi.InstrumentRole.SOURCE)
+    with pytest.raises(cpi.ProtocolError, match="Configuration mismatch"):
+        session.start()
+        
+    mock_engine.quit.assert_called_once()
+    assert session._engine is None
