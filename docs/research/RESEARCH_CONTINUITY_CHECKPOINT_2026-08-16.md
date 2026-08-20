@@ -26,12 +26,21 @@ Only the first two belong to objective Heat; human navigability remains downstre
 
 # 1. Current Repository Frontier
 
-Latest committed scientific state at the time of this checkpoint:
+Latest committed scientific state:
 
 ```text
-7a6915887ededbccd4aa6cafd2133a8fd4eb8129
-Complete CP-only efficiency preregistration
+af9d5770d1da139054734983dea0ab6ffa1e986a
+Audit CP-only preregistration blockers
 ```
+
+Current repository documentation/orientation frontier:
+
+```text
+f4b8679f0d0cabdff550c1d8d808002743a51319
+Remove obsolete Gemini-specific instructions
+```
+
+The repository identity is `JosephJMWalker-MBA/ChessHeat`. `README.md` and `AGENTS.md` serve as current orientation surfaces.
 
 The active experiment document is:
 
@@ -47,7 +56,7 @@ ENGINE_EXECUTION_NOT_AUTHORIZED
 MODEL_TRAINING_NOT_AUTHORIZED
 ```
 
-The next blocker-audit repair discussed after this commit was **not committed** because the working session hit a rate limit. A future session must not assume that repair already exists in the repository.
+The CP-only preregistration blocker audit has been **COMPLETED**. Outcome semantics have been repaired (preserving the strict rule that NON-SIGNIFICANCE != EQUIVALENCE), and deterministic outcome classes are now properly defined.
 
 ---
 
@@ -550,39 +559,23 @@ No experiment is authorized while these remain unresolved.
 
 ---
 
-# 12. Important Statistical Repair Still Pending
+# 12. Completed Statistical Repair
 
-The next proposed documentation repair was not committed before this checkpoint.
+The CP-Only preregistration blocker audit was successfully completed. 
+The current outcome-class logic avoids treating failure to resolve a difference as evidence of equivalence.
 
-The current outcome-class logic must avoid treating failure to resolve a difference as evidence of equivalence.
+Key repairs already present in the active preregistration:
 
-Required conceptual repair:
-
-```text
-SPATIAL_EFFICIENCY_NO_OPERATOR_PREFERENCE
-```
-
-should become something like:
-
-```text
-SPATIAL_EFFICIENCY_OPERATOR_UNRESOLVED
-```
-
-unless a scientifically justified equivalence margin is separately preregistered.
-
-For an uncertainty interval on a contrast Delta with zero superiority boundary:
-
-```text
-resolved positive: lower bound > 0
-resolved non-positive: upper bound <= 0
-unresolved: interval contains 0
-```
-
-`NO_SPATIAL_EFFICIENCY_ADVANTAGE` should require resolved non-positive evidence for both spatial-vs-baseline contrasts, not merely failure to detect positive effects.
-
-Learning-curve crossings should be reported as diagnostics if AULC is the primary estimand; they are not automatically protocol falsifiers.
-
-Training-seed instability is also a diagnostic until a frozen seed-aggregation/inference rule exists. Seeds are not independent chess sampling units.
+- `SPATIAL_EFFICIENCY_NO_OPERATOR_PREFERENCE` was replaced with `SPATIAL_EFFICIENCY_OPERATOR_UNRESOLVED`.
+- For an uncertainty interval on a contrast Delta with zero superiority boundary:
+  ```text
+  resolved positive: lower bound > 0
+  resolved non-positive: upper bound <= 0
+  unresolved: interval contains 0
+  ```
+- `NO_SPATIAL_EFFICIENCY_ADVANTAGE` strictly requires resolved non-positive evidence for both spatial-vs-baseline contrasts.
+- Learning-curve crossings are treated as diagnostics when AULC is the primary estimand; they are not automatically protocol falsifiers.
+- Training-seed instability is treated as a diagnostic until a frozen seed-aggregation/inference rule exists.
 
 ---
 
@@ -650,38 +643,25 @@ Therefore learner selection is both a scientific protocol choice and a future im
 ---
 
 # 14. Future Work — Dependency Order
-
-The current work should proceed slowly and in dependency order rather than resolving every open parameter at once.
-
-## Immediate documentation repair
-
-Before any acquisition:
-
-1. repair the outcome-class semantics so non-significance is not treated as equivalence;
-2. demote learning-curve crossings and seed instability to diagnostics unless separately frozen as inferential rules;
-3. add an explicit blocker-audit table to the preregistration;
-4. preserve `PREREGISTRATION_DRAFT_ONLY`.
-
-Suggested commit message from the interrupted session:
-
-```text
-Audit CP-only preregistration blockers
-```
-
-## Blocker dependency order
-
-```text
-1. ROOT_POPULATION_NOT_YET_FROZEN
-2. INSTRUMENT_CONFIG_NOT_YET_FROZEN
-   + ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED
-3. source-only feasibility / coverage acquisition
-4. SPLIT_AND_BUDGET_NOT_YET_FROZEN
-5. P_NUMERIC_ENCODING_NOT_YET_FROZEN
-6. LEARNER_FAMILY_NOT_YET_FROZEN
-7. MATCHED_COMPARATOR_NOT_YET_FROZEN
-8. SEED_SET_NOT_YET_FROZEN
-9. CONFIDENCE_LEVEL_NOT_YET_FROZEN
-```
+ 
+ The current work should proceed slowly and in dependency order rather than resolving every open parameter at once.
+ 
+ ## Blocker dependency order
+ 
+ ```text
+ 1. ROOT_POPULATION_NOT_YET_FROZEN
+ 2. INSTRUMENT_CONFIG_NOT_YET_FROZEN
+    + ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED
+ 3. source-only feasibility / coverage acquisition
+ 4. SPLIT_AND_BUDGET_NOT_YET_FROZEN
+ 5. P_NUMERIC_ENCODING_NOT_YET_FROZEN
+ 6. LEARNER_FAMILY_NOT_YET_FROZEN
+ 7. MATCHED_COMPARATOR_NOT_YET_FROZEN
+ 8. SEED_SET_NOT_YET_FROZEN
+ 9. CONFIDENCE_LEVEL_NOT_YET_FROZEN
+ ```
+ 
+ The first unresolved scientific dependency is now `ROOT_POPULATION_NOT_YET_FROZEN`.
 
 ## First genuinely new implementation work
 
@@ -801,10 +781,10 @@ A future session should begin by checking the repository HEAD.
 If HEAD is still:
 
 ```text
-7a6915887ededbccd4aa6cafd2133a8fd4eb8129
+f4b8679f0d0cabdff550c1d8d808002743a51319
 ```
 
-then the immediate next task is the uncommitted preregistration-blocker audit described in Sections 12 and 14 above.
+then the immediate next task is resolving the first scientific dependency: `ROOT_POPULATION_NOT_YET_FROZEN`.
 
 If HEAD is later, inspect the delta rather than assuming this checkpoint is still the frontier.
 

@@ -298,25 +298,17 @@ Execution remains blocked.
 
 ---
 
-# Immediate Next Task — Documentation-Only Preregistration Blocker Audit
-
-Before any root acquisition, engine execution, or model work:
-
-1. repair outcome-class semantics so non-significance is not treated as equivalence;
-2. replace any `NO_OPERATOR_PREFERENCE` language with an explicitly unresolved operator state unless an equivalence margin is later justified;
-3. require resolved non-positive evidence—not mere failure to detect improvement—for `NO_SPATIAL_EFFICIENCY_ADVANTAGE`;
-4. treat learning-curve crossings as diagnostics when AULC is the primary estimand;
-5. treat seed sensitivity as a diagnostic until seed aggregation/inference is frozen;
-6. audit every remaining blocker against the existing code and semantic surface;
-7. preserve `PREREGISTRATION_DRAFT_ONLY`.
-
-Suggested commit message from the interrupted session:
-
-```text
-Audit CP-only preregistration blockers
-```
-
-No execution is authorized by this task.
+# Immediate Next Task — First Scientific Dependency
+ 
+ The CP-only preregistration blocker audit has been **COMPLETED**. Outcome semantics were repaired and execution blockers recorded.
+ 
+ Before any root acquisition, engine execution, or model work, the current ordered queue must be followed. The strongest immediate unresolved blocker is now:
+ 
+ ```text
+ ROOT_POPULATION_NOT_YET_FROZEN
+ ```
+ 
+ No execution is authorized while the preregistration remains blocked.
 
 ---
 
@@ -503,34 +495,34 @@ Human decision complexity remains outside objective Heat.
 ---
 
 # Current Ordered Queue
-
-1. **DONE** — Issue #4 branch-preserved evidence
-2. **DONE** — S0 semantic freeze
-3. **DONE** — S1 experiment spine
-4. **CLOSED** — T2b ray/blocker representation inquiry
-5. **CLOSED** — T3a consequence-association
-6. **CLOSED** — T3b intervention program / matched analysis FALSIFIED
-7. **CLOSED** — Spatial Consequence Object Preflight
-8. **CLOSED** — Spatial Attribution Axiom Preflight
-9. **CLOSED** — Attribution Validation Target Preflight
-10. **CLOSED** — Attribution Utility Semantics Preflight
-11. **CLOSED** — Attribution Source–Target Boundary Preflight
-12. **CLOSED** — CP-Only Attribution Utility Protocol Feasibility Preflight
-13. **CLOSED** — CP-Only Readout Boundary Preflight
-14. **ACTIVE DRAFT** — CP-Only Representation Efficiency Preregistration
-15. **NEXT** — Preregistration outcome-semantics + blocker audit (documentation only)
-16. **THEN** — Freeze root-population contract
-17. **THEN** — Freeze source/target instrument family + engine-state isolation semantics
-18. **THEN** — Implement engine-state-isolated source acquisition
-19. **THEN** — Source-only feasibility/coverage acquisition
-20. **THEN** — Freeze split/budget, `P` encoding, learner, comparator, seeds, inference
-21. **THEN** — Independent preregistration-vs-implementation audit
-22. **ONLY THEN** — separately authorize target acquisition/model training
-23. **PARKED P2** — Representation Audit
-24. **PARKED P2** — Projection Audit
-25. **P2** — Multi-Instrument / T1.12 robustness
-26. **P3** — Pathways / Evidence Fusion / Amplitude
-27. **DEFER** — Human Navigation / Teacher / Explanation
+ 
+ 1. **DONE** — Issue #4 branch-preserved evidence
+ 2. **DONE** — S0 semantic freeze
+ 3. **DONE** — S1 experiment spine
+ 4. **CLOSED** — T2b ray/blocker representation inquiry
+ 5. **CLOSED** — T3a consequence-association
+ 6. **CLOSED** — T3b intervention program / matched analysis FALSIFIED
+ 7. **CLOSED** — Spatial Consequence Object Preflight
+ 8. **CLOSED** — Spatial Attribution Axiom Preflight
+ 9. **CLOSED** — Attribution Validation Target Preflight
+ 10. **CLOSED** — Attribution Utility Semantics Preflight
+ 11. **CLOSED** — Attribution Source–Target Boundary Preflight
+ 12. **CLOSED** — CP-Only Attribution Utility Protocol Feasibility Preflight
+ 13. **CLOSED** — CP-Only Readout Boundary Preflight
+ 14. **ACTIVE DRAFT** — CP-Only Representation Efficiency Preregistration
+ 15. **DONE** — Preregistration outcome-semantics + blocker audit
+ 16. **NEXT** — Freeze root-population contract
+ 17. **THEN** — Freeze source/target instrument family + engine-state isolation semantics
+ 18. **THEN** — Implement engine-state-isolated source acquisition
+ 19. **THEN** — Source-only feasibility/coverage acquisition
+ 20. **THEN** — Freeze split/budget, `P` encoding, learner, comparator, seeds, inference
+ 21. **THEN** — Independent preregistration-vs-implementation audit
+ 22. **ONLY THEN** — separately authorize target acquisition/model training
+ 23. **PARKED P2** — Representation Audit
+ 24. **PARKED P2** — Projection Audit
+ 25. **P2** — Multi-Instrument / T1.12 robustness
+ 26. **P3** — Pathways / Evidence Fusion / Amplitude
+ 27. **DEFER** — Human Navigation / Teacher / Explanation
 
 ---
 
@@ -561,12 +553,11 @@ The following freeze rules continue to apply:
 ---
 
 # Restart Rule
-
-On a new chat/session:
-
-1. inspect repository HEAD;
-2. read `RESEARCH_CONTINUITY_CHECKPOINT_2026-08-16.md`;
-3. read this `NEXT_WORK_MAP.md`;
-4. inspect the active preregistration;
-5. compare HEAD against the checkpoint rather than assuming the blocker-audit repair was completed;
-6. continue from the first unresolved dependency only.
+ 
+ On a new chat/session:
+ 
+ 1. inspect repository HEAD;
+ 2. read `RESEARCH_CONTINUITY_CHECKPOINT_2026-08-16.md`;
+ 3. read this `NEXT_WORK_MAP.md`;
+ 4. inspect the active preregistration;
+ 5. continue from the first unresolved dependency only (currently `ROOT_POPULATION_NOT_YET_FROZEN`).
