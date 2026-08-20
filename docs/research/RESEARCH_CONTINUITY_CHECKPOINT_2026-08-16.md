@@ -780,7 +780,7 @@ A future session should begin by inspecting the repository HEAD.
  
  V3 PROOF-HARNESS CANDIDATE FOR RE-AUDIT:
  ```text
- 3924282e1bff4c13063f0728dacaee6194046c97
+ e982366a63151651a2e360fcec995488bb0b357c
  ```
  
  The production implementation remains:
