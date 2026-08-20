@@ -1,8 +1,10 @@
+import argparse
 import zstandard
 import chess.pgn
 import io
 import json
 import hashlib
+import re
 from typing import Dict, Any
 from pathlib import Path
 from chessheat.cp_root_population import (
@@ -12,6 +14,13 @@ from chessheat.cp_root_population import (
 )
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--software-revision", required=True, help="40-hex git SHA")
+    args = parser.parse_args()
+
+    if not re.match(r"^[0-9a-f]{40}$", args.software_revision):
+        raise ValueError(f"Invalid software-revision: {args.software_revision}")
+
     corpus_path = "data/external/lichess/broadcast/2026-07/lichess_db_broadcast_2026-07.pgn.zst"
     expected_sha256 = "714d0eb99f99fca8d791142038b6c59b5ca6a51b3339bd3891a92f4bdffcbf0c"
 
@@ -29,14 +38,18 @@ def main():
         with open(reg_path) as f:
             registry = json.load(f)
             
-    # Map exact_s0_digest -> list of registry fixture_ids
     exact_s0_map = {}
     cons_key_map = {}
     for r in registry:
+        record_info = {
+            "source_file": r.get("source_file"),
+            "fixture_id": r.get("fixture_id"),
+            "extraction_method": r.get("extraction_method")
+        }
         if r.get("exact_s0_digest"):
-            exact_s0_map.setdefault(r["exact_s0_digest"], []).append(r["fixture_id"])
+            exact_s0_map.setdefault(r["exact_s0_digest"], []).append(record_info)
         if r.get("conservative_transposition_group"):
-            cons_key_map.setdefault(r["conservative_transposition_group"], []).append(r["fixture_id"])
+            cons_key_map.setdefault(r["conservative_transposition_group"], []).append(record_info)
 
     manifest_out = "artifacts/research/cp_source_feasibility_2026_07/cp_root_population_manifest_v2.jsonl.zst"
     Path(manifest_out).parent.mkdir(parents=True, exist_ok=True)
@@ -44,6 +57,8 @@ def main():
     records = []
     game_errors_count = 0
     game_url_present_count = 0
+    game_url_eq_site = 0
+    game_url_neq_site = 0
     
     with open(corpus_path, "rb") as f:
         dctx = zstandard.ZstdDecompressor()
@@ -59,8 +74,13 @@ def main():
                     game_errors_count += 1
                 
                 game_url = game.headers.get("GameURL", "").strip()
+                site = game.headers.get("Site", "").strip()
                 if game_url and game_url != "?":
                     game_url_present_count += 1
+                    if game_url == site:
+                        game_url_eq_site += 1
+                    else:
+                        game_url_neq_site += 1
                     
                 res = process_game(game)
                 
@@ -78,9 +98,9 @@ def main():
                     "history_identity_version": HISTORY_IDENTITY_VERSION,
                     "duplicate_resolution_version": DUPLICATE_RESOLUTION_VERSION,
                     "transposition_group_version": TRANSPOSITION_GROUP_VERSION,
-                    "software_revision": "aa3335d2b153d65d7e59b91ac9834b2be3a6a409",
+                    "software_revision": args.software_revision,
                     "GameURL": game_url,
-                    "Site": game.headers.get("Site", ""),
+                    "Site": site,
                     "pgn_ordinal": count,
                 }
                 
@@ -102,7 +122,6 @@ def main():
                 records.append(rec)
                 count += 1
 
-    # Deterministic duplicate resolution based on GameURL, then fallback to canonical base JSON if GameURL ties
     def base_digest(r):
         return canonical_json_digest({k: v for k, v in r.items() if k not in ["inclusion", "exclusion_reason", "pgn_ordinal", "duplicate_of_root_identity", "duplicate_of_game_url", "prior_development_overlap_sources"]})
         
@@ -130,26 +149,28 @@ def main():
         if root_id in exact_s0_map:
             r["inclusion"] = "EXCLUDED"
             r["exclusion_reason"] = "PRIOR_DEVELOPMENT_EXACT_OVERLAP"
-            r["prior_development_overlap_sources"] = sorted(exact_s0_map[root_id])
+            def sort_key(item):
+                return (item["source_file"] or "", item["fixture_id"] or "", item["extraction_method"] or "")
+            r["prior_development_overlap_sources"] = sorted(exact_s0_map[root_id], key=sort_key)
             final_records.append(r)
             continue
             
         if r["transposition_group"] in cons_key_map:
             r["inclusion"] = "EXCLUDED"
             r["exclusion_reason"] = "PRIOR_DEVELOPMENT_TRANSPOSITION_OVERLAP"
-            r["prior_development_overlap_sources"] = sorted(cons_key_map[r["transposition_group"]])
+            def sort_key(item):
+                return (item["source_file"] or "", item["fixture_id"] or "", item["extraction_method"] or "")
+            r["prior_development_overlap_sources"] = sorted(cons_key_map[r["transposition_group"]], key=sort_key)
             final_records.append(r)
             continue
             
         r["inclusion"] = "ADMITTED"
         
-        # Calculate root_record_digest
         canonical = {k: v for k, v in r.items() if k != "root_record_digest"}
         r["root_record_digest"] = canonical_json_digest(canonical)
         
         final_records.append(r)
 
-    # Re-sort to original canonical ordering by GameURL, then base digest
     final_records.sort(key=lambda x: (x.get("GameURL", ""), base_digest(x)))
 
     cctx = zstandard.ZstdCompressor()
@@ -164,7 +185,6 @@ def main():
                 h_out.update(encoded)
                 
     manifest_digest = h_out.hexdigest()
-    
     registry_digest = canonical_json_digest(registry) if registry else None
     
     summary = {
@@ -176,7 +196,9 @@ def main():
         "total_pgn_count": count,
         "game_errors_count": game_errors_count,
         "game_url_present_count": game_url_present_count,
-        "software_revision": "aa3335d2b153d65d7e59b91ac9834b2be3a6a409",
+        "game_url_eq_site_count": game_url_eq_site,
+        "game_url_neq_site_count": game_url_neq_site,
+        "software_revision": args.software_revision,
         "corpus_checksum": observed_sha256,
         "parser_identity": "python-chess",
         "parser_version": chess.__version__,

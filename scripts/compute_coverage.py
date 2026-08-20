@@ -1,101 +1,82 @@
 import json
-import math
-from pathlib import Path
+import hashlib
+from typing import Dict, Any, Tuple
+from collections import Counter
 from chessheat.experiment import ExperimentResult
+from chessheat.cp_root_population import canonical_json_digest
+
+def validate_and_extract_coverage(record: Dict[str, Any]) -> Tuple[Dict[str, int], str]:
+    if record["status"] != "SUCCESS":
+        return None, None
+        
+    er = ExperimentResult(**record["experiment_result"])
+    payload = json.loads(er.data_payload)
+    observations = payload.get("observations", [])
+    
+    cp_count = sum(1 for o in observations if o["score_type"] == "cp")
+    mate_count = sum(1 for o in observations if o["score_type"] == "mate")
+    total_count = len(observations)
+    
+    if cp_count + mate_count != total_count:
+        raise ValueError("Non-cp/mate score_type found")
+        
+    policy = payload.get("candidate_policy", {})
+    required = policy.get("required_search_count")
+    if total_count != required:
+        raise ValueError("Observation count mismatch with required_search_count")
+        
+    options_surface = payload.get("options_surface", [])
+    options_digest = canonical_json_digest(options_surface)
+    
+    counts = {
+        "cp": cp_count,
+        "mate": mate_count,
+        "total": total_count,
+        "pairs": (cp_count * (cp_count - 1)) // 2
+    }
+    return counts, options_digest
 
 def main():
-    result_path = Path("artifacts/research/cp_source_feasibility_2026_07/raw/cp_source_root_results_v2.jsonl")
-    if not result_path.exists():
-        print("No results to compute")
-        return
-        
-    legal_alts_dist = []
-    cp_alts_dist = []
-    pairs_dist = []
+    path = "artifacts/research/cp_source_feasibility_2026_07/raw/cp_source_root_results_v2.jsonl"
     
-    roots_attempted = 0
-    roots_success = 0
-    roots_failed = 0
-    
-    total_legal = 0
+    total_roots = 0
+    success_roots = 0
     total_cp = 0
     total_mate = 0
-    roots_ge2_cp = 0
-    roots_lt2_cp = 0
     total_pairs = 0
+    options_digests = set()
     
-    options_digest_set = set()
-    
-    with open(result_path, "r", encoding="utf-8") as f:
-        for line in f:
-            if not line.strip(): continue
-            rec = json.loads(line)
-            roots_attempted += 1
-            if rec["status"] == "SUCCESS":
-                roots_success += 1
-                er = ExperimentResult(**rec["experiment_result"])
-                payload = json.loads(er.data_payload)
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            for line in f:
+                if not line.strip(): continue
+                total_roots += 1
+                record = json.loads(line)
                 
-                # Options digest
-                opts = payload["options_surface"]
-                opt_str = json.dumps(opts, sort_keys=True, separators=(",", ":")).encode("utf-8")
-                import hashlib
-                opts_digest = hashlib.sha256(opt_str).hexdigest()
-                options_digest_set.add(opts_digest)
-                
-                obs = payload["observations"]
-                L = len(obs)
-                C = sum(1 for o in obs if o["score_type"] == "cp")
-                M = sum(1 for o in obs if o["score_type"] == "mate")
-                
-                if C + M != L:
-                    raise ValueError("Observation count mismatch")
-                
-                pairs = C * (C - 1) // 2
-                
-                total_legal += L
-                total_cp += C
-                total_mate += M
-                total_pairs += pairs
-                
-                if C >= 2:
-                    roots_ge2_cp += 1
-                else:
-                    roots_lt2_cp += 1
+                counts, digest = validate_and_extract_coverage(record)
+                if counts is None:
+                    continue
                     
-                legal_alts_dist.append(L)
-                cp_alts_dist.append(C)
-                pairs_dist.append(pairs)
-                
-            else:
-                roots_failed += 1
-
-    print(f"Attempted: {roots_attempted}, Success: {roots_success}, Failed: {roots_failed}")
-    print(f"Total legal: {total_legal}, Total CP: {total_cp}, Total Mate: {total_mate}")
-    print(f"Roots >=2 CP: {roots_ge2_cp}, Roots <2 CP: {roots_lt2_cp}, Total pairs: {total_pairs}")
+                success_roots += 1
+                total_cp += counts["cp"]
+                total_mate += counts["mate"]
+                total_pairs += counts["pairs"]
+                options_digests.add(digest)
+    except FileNotFoundError:
+        print("No results file found.")
+        return
+        
+    if len(options_digests) > 1:
+        raise ValueError(f"Multiple options surface digests found: {options_digests}")
+        
+    print(f"Total Roots: {total_roots}")
+    print(f"Success Roots: {success_roots}")
+    print(f"Total CP Options: {total_cp}")
+    print(f"Total Mate Options: {total_mate}")
+    print(f"Total CP Pairs: {total_pairs}")
     
-    if len(options_digest_set) > 1:
-        print("WARNING: Multiple options digests observed:", options_digest_set)
-        
-    def get_dist(arr):
-        if not arr: return {}
-        arr = sorted(arr)
-        N = len(arr)
-        def nearest_rank(p):
-            rank = math.ceil(p * N)
-            return arr[max(0, rank - 1)]
-        return {
-            "min": arr[0],
-            "median": arr[N//2] if N % 2 != 0 else (arr[N//2 - 1] + arr[N//2]) / 2.0,
-            "p90": nearest_rank(0.90),
-            "p95": nearest_rank(0.95),
-            "max": arr[-1]
-        }
-        
-    print("Legal dist:", get_dist(legal_alts_dist))
-    print("CP dist:", get_dist(cp_alts_dist))
-    print("Pairs dist:", get_dist(pairs_dist))
-    print("Options digest:", list(options_digest_set))
+    if options_digests:
+        print(f"Unique Options Digest: {list(options_digests)[0]}")
 
 if __name__ == "__main__":
     main()
