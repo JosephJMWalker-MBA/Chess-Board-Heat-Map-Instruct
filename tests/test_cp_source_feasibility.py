@@ -1,32 +1,53 @@
 import pytest
-from chessheat.cp_source_feasibility import SourceFeasibilityRunner
-import os
 import json
 import zstandard
 from pathlib import Path
+from chessheat.cp_source_feasibility import SourceFeasibilityRunnerV2
 
-def test_source_feasibility_init(tmp_path):
-    manifest_path = tmp_path / "manifest.jsonl.zst"
-    output_path = tmp_path / "out.jsonl.zst"
+def test_resume_corrupt(tmp_path):
+    out_path = tmp_path / "out.jsonl"
+    out_path.write_text("{bad json\n")
     
-    # write dummy manifest
-    cctx = zstandard.ZstdCompressor()
-    with open(manifest_path, "wb") as f:
-        with cctx.stream_writer(f) as w:
-            w.write(b"")
-            
-    runner = SourceFeasibilityRunner(str(manifest_path), str(output_path), "stockfish")
-    assert len(runner.completed_roots) == 0
+    meta_path = tmp_path / "meta.json"
+    meta_path.write_text(json.dumps({
+        "manifest_digest": "abcd",
+        "software_revision": "V2_REPAIR"
+    }))
+    
+    with pytest.raises(ValueError, match="Malformed JSON"):
+        SourceFeasibilityRunnerV2("manifest", str(out_path), "stockfish", str(meta_path))
 
-def test_source_feasibility_resumes(tmp_path):
-    manifest_path = tmp_path / "manifest.jsonl.zst"
-    output_path = tmp_path / "out.jsonl.zst"
+def test_resume_schema_mismatch(tmp_path):
+    out_path = tmp_path / "out.jsonl"
+    out_path.write_text(json.dumps({"schema": "WRONG"}) + "\n")
     
-    cctx = zstandard.ZstdCompressor()
-    with open(output_path, "wb") as f:
-        with cctx.stream_writer(f) as w:
-            rec = {"status": "SUCCESS", "root_identity": "abc"}
-            w.write((json.dumps(rec) + "\n").encode("utf-8"))
-            
-    runner = SourceFeasibilityRunner(str(manifest_path), str(output_path), "stockfish")
-    assert "abc" in runner.completed_roots
+    meta_path = tmp_path / "meta.json"
+    meta_path.write_text(json.dumps({
+        "manifest_digest": "abcd",
+        "software_revision": "V2_REPAIR"
+    }))
+    
+    with pytest.raises(ValueError, match="Schema mismatch"):
+        SourceFeasibilityRunnerV2("manifest", str(out_path), "stockfish", str(meta_path))
+
+def test_resume_duplicate_root(tmp_path):
+    rec = {
+        "schema": "CP_SOURCE_FEASIBILITY_RESULT_V2",
+        "manifest_digest": "abcd",
+        "software_revision": "V2_REPAIR",
+        "instrument_id": "CP_SOURCE_SF18_50K_ISOLATED_V1",
+        "producer_binary_sha256": "ae4c93fa9676ca7750d0714342fd8a5b1d018000fc6e0f6cedf112067b5ef374",
+        "root_identity": "r1",
+        "status": "FAILURE"
+    }
+    out_path = tmp_path / "out.jsonl"
+    out_path.write_text(json.dumps(rec) + "\n" + json.dumps(rec) + "\n")
+    
+    meta_path = tmp_path / "meta.json"
+    meta_path.write_text(json.dumps({
+        "manifest_digest": "abcd",
+        "software_revision": "V2_REPAIR"
+    }))
+    
+    with pytest.raises(ValueError, match="Duplicate root_identity"):
+        SourceFeasibilityRunnerV2("manifest", str(out_path), "stockfish", str(meta_path))

@@ -2,72 +2,61 @@ import pytest
 import chess
 import chess.pgn
 import io
-from chessheat.cp_root_population import (
-    process_game, get_history_identity, get_selected_ply, get_conservative_transposition_group,
-    is_eligible, RootPopulationError
-)
+from chessheat.cp_root_population import process_game, reconstruct_root_board
+
+def make_game(fen=None, moves=None, site="https://lichess.org/dummy", setup="0"):
+    pgn_str = f'[Event "?"]\n[Site "site"]\n[GameURL "{site}"]\n'
+    if fen:
+        pgn_str += f'[FEN "{fen}"]\n'
+    if setup:
+        pgn_str += f'[SetUp "{setup}"]\n'
+    pgn_str += '\n'
+    if moves:
+        pgn_str += moves
+    return chess.pgn.read_game(io.StringIO(pgn_str))
 
 def test_missing_game_url():
-    game = chess.pgn.Game()
+    game = make_game(site="?")
     res = process_game(game)
     assert res["error"] == "MISSING_CANONICAL_GAME_ID"
-
-def test_variant_exclusion():
-    game = chess.pgn.Game()
-    game.headers["Site"] = "https://lichess.org/XYZ"
-    game.headers["Variant"] = "Crazyhouse"
+    
+def test_variant():
+    pgn_str = '[Event "?"]\n[Site "site"]\n[GameURL "url"]\n[Variant "Chess960"]\n\n'
+    game = chess.pgn.read_game(io.StringIO(pgn_str))
     res = process_game(game)
     assert res["error"] == "VARIANT_EXCLUDED"
 
-def test_malformed_initial_state():
-    game = chess.pgn.Game()
-    game.headers["Site"] = "https://lichess.org/XYZ"
-    game.headers["FEN"] = "invalid fen"
+def test_setup_no_fen():
+    game = make_game(setup="1")
     res = process_game(game)
     assert res["error"] == "MALFORMED_INITIAL_STATE"
 
-def test_no_rule_eligible_root():
-    game = chess.pgn.Game()
-    game.headers["Site"] = "https://lichess.org/XYZ"
-    game.headers["FEN"] = "8/8/8/8/8/8/8/K7 w - - 0 1"
+def test_game_errors():
+    pgn_str = '[Event "?"]\n[Site "site"]\n[GameURL "url"]\n\n1. e4 e5 2. e6'
+    game = chess.pgn.read_game(io.StringIO(pgn_str))
+    res = process_game(game)
+    assert res["error"] == "MALFORMED_REPLAY"
+
+def test_illegal_move():
+    # E.g. king into check
+    pgn_str = '[Event "?"]\n[Site "site"]\n[GameURL "url"]\n\n1. f3 e6 2. g4 Qh4+ 3. Nc3'
+    game = chess.pgn.read_game(io.StringIO(pgn_str))
+    res = process_game(game)
+    assert res["error"] == "MALFORMED_REPLAY"
+
+def test_zero_eligible():
+    pgn_str = '[Event "?"]\n[Site "site"]\n[GameURL "url"]\n[FEN "8/8/8/8/8/8/8/K7 w - - 0 1"]\n[SetUp "1"]\n\n'
+    game = chess.pgn.read_game(io.StringIO(pgn_str))
     res = process_game(game)
     assert res["error"] == "NO_RULE_ELIGIBLE_ROOT"
 
-def test_successful_game_process():
-    pgn_text = """[Event "test"]
-[Site "https://lichess.org/ABC"]
-[Result "1-0"]
-
-1. e4 e5"""
-    game = chess.pgn.read_game(io.StringIO(pgn_text))
+def test_reconstruction():
+    game = make_game(site="url1", moves="1. e4 e5 2. Nf3 Nc6")
     res = process_game(game)
-    assert "error" not in res
-    assert res["game_url"] == "https://lichess.org/ABC"
-    assert res["eligible_ply_count"] > 0
-    assert "root_identity" in res
-
-def test_history_identity():
-    id1 = get_history_identity(chess.STARTING_FEN, ["e2e4"])
-    id2 = get_history_identity(chess.STARTING_FEN, ["e2e4"])
-    assert id1 == id2
+    assert res["success"]
     
-    id3 = get_history_identity(chess.STARTING_FEN, ["d2d4"])
-    assert id1 != id3
-
-def test_selected_ply_deterministic():
-    ply1 = get_selected_ply("url1", [0, 1, 2])
-    ply2 = get_selected_ply("url1", [0, 1, 2])
-    assert ply1 == ply2
-
-def test_conservative_key():
-    board = chess.Board()
-    k1 = get_conservative_transposition_group(board)
-    k2 = get_conservative_transposition_group(board)
-    assert k1 == k2
-
-def test_is_eligible():
-    board = chess.Board()
-    assert is_eligible(board) == True
-    board.clear()
-    board.set_piece_at(chess.A1, chess.Piece(chess.KING, chess.WHITE))
-    assert is_eligible(board) == False
+    board = reconstruct_root_board(res)
+    assert len(board.move_stack) == res["selected_ply"]
+    
+    # Check history identity and full identity
+    assert board.fen(en_passant="fen").split(" ")[0] == res["sufficient_position"]["board_arrangement_fen"]

@@ -1,82 +1,101 @@
 import json
-import zstandard
-import io
-import statistics
+import math
+from pathlib import Path
+from chessheat.experiment import ExperimentResult
 
-def compute():
-    out_path = "artifacts/research/cp_source_feasibility_2026_07/raw/cp_source_root_results.jsonl.zst"
+def main():
+    result_path = Path("artifacts/research/cp_source_feasibility_2026_07/raw/cp_source_root_results_v2.jsonl")
+    if not result_path.exists():
+        print("No results to compute")
+        return
+        
+    legal_alts_dist = []
+    cp_alts_dist = []
+    pairs_dist = []
     
     roots_attempted = 0
     roots_success = 0
     roots_failed = 0
     
     total_legal = 0
-    total_obs = 0
-    cp_alts = 0
-    mate_alts = 0
+    total_cp = 0
+    total_mate = 0
+    roots_ge2_cp = 0
+    roots_lt2_cp = 0
+    total_pairs = 0
     
-    list_legal = []
-    list_cp = []
-    list_pairs = []
+    options_digest_set = set()
     
-    with open(out_path, "rb") as f:
-        dctx = zstandard.ZstdDecompressor()
-        with dctx.stream_reader(f) as reader:
-            for line in io.TextIOWrapper(reader, encoding="utf-8"):
-                if not line.strip(): continue
-                rec = json.loads(line)
-                roots_attempted += 1
-                if rec["status"] == "SUCCESS":
-                    roots_success += 1
-                    res = rec["result"]
-                    obs_list = res["observations"]
-                    L = len(obs_list)
-                    C = 0
-                    M = 0
-                    for o in obs_list:
-                        if o["type"] == "cp":
-                            C += 1
-                        elif o["type"] == "mate":
-                            M += 1
-                    total_legal += L
-                    total_obs += len(obs_list)
-                    cp_alts += C
-                    mate_alts += M
-                    
-                    pairs = C * (C - 1) // 2
-                    
-                    list_legal.append(L)
-                    list_cp.append(C)
-                    list_pairs.append(pairs)
+    with open(result_path, "r", encoding="utf-8") as f:
+        for line in f:
+            if not line.strip(): continue
+            rec = json.loads(line)
+            roots_attempted += 1
+            if rec["status"] == "SUCCESS":
+                roots_success += 1
+                er = ExperimentResult(**rec["experiment_result"])
+                payload = json.loads(er.data_payload)
+                
+                # Options digest
+                opts = payload["options_surface"]
+                opt_str = json.dumps(opts, sort_keys=True, separators=(",", ":")).encode("utf-8")
+                import hashlib
+                opts_digest = hashlib.sha256(opt_str).hexdigest()
+                options_digest_set.add(opts_digest)
+                
+                obs = payload["observations"]
+                L = len(obs)
+                C = sum(1 for o in obs if o["score_type"] == "cp")
+                M = sum(1 for o in obs if o["score_type"] == "mate")
+                
+                if C + M != L:
+                    raise ValueError("Observation count mismatch")
+                
+                pairs = C * (C - 1) // 2
+                
+                total_legal += L
+                total_cp += C
+                total_mate += M
+                total_pairs += pairs
+                
+                if C >= 2:
+                    roots_ge2_cp += 1
                 else:
-                    roots_failed += 1
+                    roots_lt2_cp += 1
                     
-    def dist(data):
-        if not data: return {}
-        s = sorted(data)
+                legal_alts_dist.append(L)
+                cp_alts_dist.append(C)
+                pairs_dist.append(pairs)
+                
+            else:
+                roots_failed += 1
+
+    print(f"Attempted: {roots_attempted}, Success: {roots_success}, Failed: {roots_failed}")
+    print(f"Total legal: {total_legal}, Total CP: {total_cp}, Total Mate: {total_mate}")
+    print(f"Roots >=2 CP: {roots_ge2_cp}, Roots <2 CP: {roots_lt2_cp}, Total pairs: {total_pairs}")
+    
+    if len(options_digest_set) > 1:
+        print("WARNING: Multiple options digests observed:", options_digest_set)
+        
+    def get_dist(arr):
+        if not arr: return {}
+        arr = sorted(arr)
+        N = len(arr)
+        def nearest_rank(p):
+            rank = math.ceil(p * N)
+            return arr[max(0, rank - 1)]
         return {
-            "min": s[0],
-            "median": statistics.median_low(s),
-            "p90": s[int(len(s)*0.9)],
-            "p95": s[int(len(s)*0.95)],
-            "max": s[-1]
+            "min": arr[0],
+            "median": arr[N//2] if N % 2 != 0 else (arr[N//2 - 1] + arr[N//2]) / 2.0,
+            "p90": nearest_rank(0.90),
+            "p95": nearest_rank(0.95),
+            "max": arr[-1]
         }
         
-    print("Roots attempted:", roots_attempted)
-    print("Roots successful:", roots_success)
-    print("Roots failed:", roots_failed)
-    print("Total legal:", total_legal)
-    print("Total obs:", total_obs)
-    print("CP alts:", cp_alts)
-    print("Mate alts:", mate_alts)
-    print("CP fraction:", cp_alts / max(1, total_obs))
-    print("Roots >=2 CP:", sum(1 for c in list_cp if c >= 2))
-    print("Roots <2 CP:", sum(1 for c in list_cp if c < 2))
-    print("Roots 0 pairs:", sum(1 for p in list_pairs if p == 0))
-    print("Total CP/CP pairs:", sum(list_pairs))
-    print("Dist Legal:", dist(list_legal))
-    print("Dist CP:", dist(list_cp))
-    print("Dist Pairs:", dist(list_pairs))
+    print("Legal dist:", get_dist(legal_alts_dist))
+    print("CP dist:", get_dist(cp_alts_dist))
+    print("Pairs dist:", get_dist(pairs_dist))
+    print("Options digest:", list(options_digest_set))
 
 if __name__ == "__main__":
-    compute()
+    main()
