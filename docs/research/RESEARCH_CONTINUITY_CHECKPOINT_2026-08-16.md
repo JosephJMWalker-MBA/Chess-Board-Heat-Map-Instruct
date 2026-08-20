@@ -781,7 +781,7 @@ A future session should begin by checking the repository HEAD.
 If HEAD is still:
  
  ```text
- 9fa1de7e32c2345fe1ecd8880ffcb60fc4552f88
+ bb61404ce7054a447494a5101158d5bc3a545042
  ```
  
  then the immediate next task is resolving the first scientific dependency: `INDEPENDENT_PROTOCOL_IMPLEMENTATION_AUDIT_NOT_YET_COMPLETED`.
