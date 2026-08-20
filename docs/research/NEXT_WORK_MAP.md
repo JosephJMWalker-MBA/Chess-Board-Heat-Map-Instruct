@@ -301,15 +301,15 @@ Execution remains blocked.
 # Immediate Next Task — First Scientific Dependency
  
  The root-population contract and instrument configs have been **FROZEN**.
- Engine state isolation is **IMPLEMENTED_AUDIT_FAILED**.
+ Engine state isolation is **REPAIRED_REAUDIT_REQUIRED**.
  
- The independent audit found multiple critical protocol violations. The strongest immediate unresolved blocker is now:
+ The independent audit found multiple critical protocol violations, which have now been repaired. The strongest immediate unresolved blocker is now:
  
  ```text
- PROTOCOL_IMPLEMENTATION_REPAIR_REQUIRED
+ INDEPENDENT_PROTOCOL_IMPLEMENTATION_REAUDIT_REQUIRED
  ```
  
- The next task is: REPAIR PROTOCOL IMPLEMENTATION. No corpus downloading or source/target study acquisition is authorized.
+ The next task is: INDEPENDENT PROTOCOL-VS-IMPLEMENTATION RE-AUDIT. No corpus downloading or source/target study acquisition is authorized.
  
  ---
  
@@ -320,7 +320,7 @@ Execution remains blocked.
  ```text
  1. ROOT_POPULATION_FROZEN_TO_LICHESS_JULY_2026
  2. INSTRUMENT_CONFIG_FROZEN_SF18_50K_250K_V1
- 3. ENGINE_STATE_ISOLATION_IMPLEMENTED_AUDIT_FAILED + PROTOCOL_IMPLEMENTATION_REPAIR_REQUIRED
+ 3. ENGINE_STATE_ISOLATION_REPAIRED_REAUDIT_REQUIRED + INDEPENDENT_PROTOCOL_IMPLEMENTATION_REAUDIT_REQUIRED
  4. source-only feasibility / coverage acquisition
  5. SPLIT_AND_BUDGET_NOT_YET_FROZEN
  6. P_NUMERIC_ENCODING_NOT_YET_FROZEN

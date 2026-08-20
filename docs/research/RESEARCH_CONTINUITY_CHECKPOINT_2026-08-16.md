@@ -781,10 +781,10 @@ A future session should begin by checking the repository HEAD.
 If HEAD is still:
  
  ```text
- b4d10462b39fa9844649aacbab82f18c3de8b71f
+ eb3e5e69e3a6145e039b54b960a557d3c33710c6
  ```
  
- then the immediate next task is resolving the first scientific dependency: `PROTOCOL_IMPLEMENTATION_REPAIR_REQUIRED`.
+ then the immediate next task is resolving the first scientific dependency: `INDEPENDENT_PROTOCOL_IMPLEMENTATION_REAUDIT_REQUIRED`.
 
 If HEAD is later, inspect the delta rather than assuming this checkpoint is still the frontier.
 

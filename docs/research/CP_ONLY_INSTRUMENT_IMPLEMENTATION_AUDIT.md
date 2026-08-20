@@ -85,3 +85,11 @@ None further.
 ```text
 PROTOCOL_IMPLEMENTATION_REPAIR_REQUIRED
 ```
+
+## Precision Erratum
+
+The `chess.Board(child_fen)` finding requires precision: FEN reconstruction *does* preserve the halfmove clock and fullmove number. The protocol failure was that it discards the `move_stack` (prior-position history), thereby failing to preserve repetition-sensitive history and the complete history-aware S0 state. Legal-move enumeration itself was complete; the failed requirement was acquisition of the correct history-bearing child state.
+
+Additionally, the `ExperimentSpec/ExperimentResult` bypass is a provenance-spine failure distinct from the process ownership / role mutability finding.
+
+These clarifications do not alter the `AUDIT_FAIL` verdict.
