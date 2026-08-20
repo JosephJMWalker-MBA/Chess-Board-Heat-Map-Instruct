@@ -308,7 +308,9 @@ Execution remains blocked.
  SOURCE_ONLY_FEASIBILITY_COVERAGE_ACQUISITION
  ```
  
- The next task is: AUTHORIZE AND EXECUTE SOURCE-ONLY FEASIBILITY ACQUISITION. No target acquisition or model training is authorized yet.
+ The immediate next task is resolving the first scientific dependency: `SPLIT_AND_BUDGET_NOT_YET_FROZEN`.
+
+No target acquisition or model training is authorized yet.
  
  ---
  

@@ -780,7 +780,7 @@ A future session should begin by inspecting the repository HEAD.
  
  V3 RE-AUDIT VERDICT: PASS
  
- The immediate next task is resolving the first scientific dependency: `SOURCE_ONLY_FEASIBILITY_COVERAGE_ACQUISITION`.
+The immediate next task is resolving the first scientific dependency: `SPLIT_AND_BUDGET_NOT_YET_FROZEN`.
 
 Then:
 
