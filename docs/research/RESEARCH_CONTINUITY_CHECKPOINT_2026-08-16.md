@@ -776,17 +776,20 @@ Keep bounded-human decision complexity outside objective Heat.
 
 # 17. Restart Checklist for the Next Chat
 
-A future session should begin by checking the repository HEAD.
-
-If HEAD is still:
+A future session should begin by inspecting the repository HEAD.
  
+ IMPLEMENTATION CANDIDATE FOR RE-AUDIT:
  ```text
- eb3e5e69e3a6145e039b54b960a557d3c33710c6
+ dfd4845681d2ea765da29c12971ce3cce24dc124
  ```
  
- then the immediate next task is resolving the first scientific dependency: `INDEPENDENT_PROTOCOL_IMPLEMENTATION_REAUDIT_REQUIRED`.
-
-If HEAD is later, inspect the delta rather than assuming this checkpoint is still the frontier.
+ - locate the implementation candidate identified above;
+ - inspect all commits after that implementation candidate;
+ - before re-audit, verify no later commit modified `src/chessheat/cp_instrument.py`, `tests/test_cp_instrument.py`, or other frozen protocol semantics;
+ - documentation-only / workspace-cleanup commits do not change the audited implementation candidate;
+ - if implementation code changed after the candidate, audit the newer implementation commit instead.
+ 
+ The immediate next task is resolving the first scientific dependency: `INDEPENDENT_PROTOCOL_IMPLEMENTATION_REAUDIT_REQUIRED`.
 
 Then:
 
