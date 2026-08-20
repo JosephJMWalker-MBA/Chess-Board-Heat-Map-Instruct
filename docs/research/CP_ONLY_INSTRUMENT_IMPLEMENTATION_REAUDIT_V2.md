@@ -87,3 +87,13 @@ While the implementation code correctly repaired all semantic protocol boundarie
 **Strongest Blocker:** `PROTOCOL_IMPLEMENTATION_REPAIR_REQUIRED_V3`
 **Source Acquisition Status:** UNAUTHORIZED
 **Target Acquisition Status:** UNAUTHORIZED
+
+## Precision Note: Syzygy <empty> Evidence
+
+The original PASS disposition for Syzygy parsing accuracy stands. However, the evidence is more precisely:
+- python-chess sends the literal string value `<empty>` when configured that way;
+- Stockfish 18 `Option::operator=` explicitly performs: for a string option, `<empty>` -> empty string `""`;
+- Stockfish 18 declares `SyzygyPath` with an empty default;
+- the SyzygyPath callback passes the normalized Option to `Tablebases::init`;
+- therefore setting `SyzygyPath = "<empty>"` through this frozen producer path results in the empty Syzygy path;
+- paired with `SyzygyProbeLimit = 0`, the frozen no-external-tablebase requirement is mechanically grounded.

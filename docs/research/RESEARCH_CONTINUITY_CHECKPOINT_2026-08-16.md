@@ -778,18 +778,23 @@ Keep bounded-human decision complexity outside objective Heat.
 
 A future session should begin by inspecting the repository HEAD.
  
- IMPLEMENTATION CANDIDATE AUDITED:
+ V3 PROOF-HARNESS CANDIDATE FOR RE-AUDIT:
+ ```text
+ 66d24865ca13a43e7b1b7b57209be0a440b697ac
+ ```
+ 
+ The production implementation remains:
  ```text
  5a1c61d5895e0d7001f2e93d98d2b5f0ee287791
  ```
  
- - locate the implementation candidate identified above;
- - inspect all commits after that implementation candidate;
+ - locate the proof-harness candidate identified above;
+ - inspect all commits after that candidate;
  - before re-audit, verify no later commit modified `src/chessheat/cp_instrument.py`, `tests/test_cp_instrument.py`, or other frozen protocol semantics;
  - documentation-only / workspace-cleanup commits do not change the audited implementation candidate;
  - if implementation code changed after the candidate, audit the newer implementation commit instead.
  
- The immediate next task is resolving the first scientific dependency: `PROTOCOL_IMPLEMENTATION_REPAIR_REQUIRED_V3`.
+ The immediate next task is resolving the first scientific dependency: `INDEPENDENT_PROTOCOL_IMPLEMENTATION_REAUDIT_V3_REQUIRED`.
 
 Then:
 

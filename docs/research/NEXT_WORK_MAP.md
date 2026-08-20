@@ -301,15 +301,15 @@ Execution remains blocked.
 # Immediate Next Task — First Scientific Dependency
  
  The root-population contract and instrument configs have been **FROZEN**.
- Engine state isolation is **V2_REAUDIT_FAILED**.
+ Engine state isolation is **ENGINE_STATE_ISOLATION_V3_PROOF_HARNESS_REPAIRED_REAUDIT_REQUIRED**.
  
- The second independent re-audit found execution-critical protocol violations in the test adequacy (missing mocked assertion boundaries). The strongest immediate unresolved blocker is now:
+ The V3 proof harness has been fully strengthened. The strongest immediate unresolved blocker is now:
  
  ```text
- PROTOCOL_IMPLEMENTATION_REPAIR_REQUIRED_V3
+ INDEPENDENT_PROTOCOL_IMPLEMENTATION_REAUDIT_V3_REQUIRED
  ```
  
- The next task is: REPAIR PROTOCOL IMPLEMENTATION (V3). No corpus downloading or source/target study acquisition is authorized.
+ The next task is: RE-AUDIT PROTOCOL IMPLEMENTATION (V3). No corpus downloading or source/target study acquisition is authorized.
  
  ---
  
@@ -320,7 +320,7 @@ Execution remains blocked.
  ```text
  1. ROOT_POPULATION_FROZEN_TO_LICHESS_JULY_2026
  2. INSTRUMENT_CONFIG_FROZEN_SF18_50K_250K_V1
- 3. ENGINE_STATE_ISOLATION_V2_REAUDIT_FAILED + PROTOCOL_IMPLEMENTATION_REPAIR_REQUIRED_V3
+ 3. ENGINE_STATE_ISOLATION_V3_PROOF_HARNESS_REPAIRED_REAUDIT_REQUIRED + INDEPENDENT_PROTOCOL_IMPLEMENTATION_REAUDIT_V3_REQUIRED
  4. source-only feasibility / coverage acquisition
  5. SPLIT_AND_BUDGET_NOT_YET_FROZEN
  6. P_NUMERIC_ENCODING_NOT_YET_FROZEN
