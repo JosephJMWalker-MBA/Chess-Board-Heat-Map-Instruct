@@ -38,12 +38,7 @@ def main():
                     res = []
                     if isinstance(obj, dict):
                         if "board_arrangement_fen" in obj and "side_to_move" in obj and "history_available" in obj:
-                            try:
-                                # Ensure it maps completely to SufficientPosition
-                                suff = SufficientPosition(**obj)
-                                res.append(obj)
-                            except Exception:
-                                pass
+                            res.append(obj)
                         for v in obj.values():
                             res.extend(extract_all_suff(v))
                     elif isinstance(obj, list):
@@ -75,13 +70,23 @@ def main():
                             "extraction_status": "SUCCESS"
                         }
                         
-                        rec_str = json.dumps(rec, sort_keys=True)
-                        if rec_str not in seen:
-                            seen.add(rec_str)
-                            registry.append(rec)
                     except Exception as e:
-                        pass
-            except Exception:
+                        rec = {
+                            "registry_schema": "CP_PRIOR_DEVELOPMENT_REGISTRY_V2",
+                            "source_file": str(path),
+                            "fixture_id": f"{path.stem}_{i}",
+                            "extraction_method": "JSON_S0",
+                            "exact_s0": None,
+                            "exact_s0_digest": None,
+                            "conservative_transposition_group": None,
+                            "extraction_status": f"FAILED: {type(e).__name__} - {e}"
+                        }
+                    
+                    rec_str = json.dumps(rec, sort_keys=True)
+                    if rec_str not in seen:
+                        seen.add(rec_str)
+                        registry.append(rec)
+            except Exception as e:
                 pass
                 
         # Simple FEN search across json/md (fen only)
@@ -104,12 +109,22 @@ def main():
                             "conservative_transposition_group": conservative_key,
                             "extraction_status": "FEN_ONLY"
                         }
-                        rec_str = json.dumps(rec, sort_keys=True)
-                        if rec_str not in seen:
-                            seen.add(rec_str)
-                            registry.append(rec)
-                    except Exception:
-                        pass
+                    except Exception as e:
+                        rec = {
+                            "registry_schema": "CP_PRIOR_DEVELOPMENT_REGISTRY_V2",
+                            "source_file": str(path),
+                            "fixture_id": f"{path.stem}_fen_{i}",
+                            "extraction_method": "REGEX_FEN",
+                            "exact_s0": None,
+                            "exact_s0_digest": None,
+                            "conservative_transposition_group": None,
+                            "extraction_status": f"FEN_PARSE_FAILED: {type(e).__name__} - {e}"
+                        }
+                        
+                    rec_str = json.dumps(rec, sort_keys=True)
+                    if rec_str not in seen:
+                        seen.add(rec_str)
+                        registry.append(rec)
             except Exception:
                 pass
 

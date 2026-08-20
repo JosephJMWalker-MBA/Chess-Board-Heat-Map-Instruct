@@ -2,8 +2,9 @@ import json
 import io
 import os
 import zstandard
+import hashlib
 from pathlib import Path
-from typing import Dict, Any
+from typing import Dict, Any, List
 import chess
 from chessheat.cp_instrument import InstrumentSession, InstrumentRole, ProtocolError, get_canonical_instrument_config
 from chessheat.experiment import ExperimentSpec, ExperimentResult
@@ -17,18 +18,34 @@ class SourceFeasibilityRunnerV2:
         self.stockfish_path = stockfish_path
         self.meta_path = Path(meta_path)
         
-        self.completed_roots = set()
-        self.engine_session_epoch = 0
-        
         with open(self.meta_path) as f:
             self.meta = json.load(f)
             
-        self.manifest_digest = self.meta["manifest_digest"]
         self.software_revision = self.meta["software_revision"]
+        
+        # 1. Recompute uncompressed manifest digest instead of trusting meta
+        manifest_records = []
+        h_manifest = hashlib.sha256()
+        with open(self.manifest_path, "rb") as f:
+            dctx = zstandard.ZstdDecompressor()
+            with dctx.stream_reader(f) as reader:
+                for line in io.TextIOWrapper(reader, encoding="utf-8"):
+                    if not line.strip(): continue
+                    encoded = line.encode("utf-8")
+                    h_manifest.update(encoded)
+                    manifest_records.append(json.loads(line))
+        
+        self.manifest_digest = h_manifest.hexdigest()
+        self.manifest_records = manifest_records
+        
+        self.admitted_roots = [r for r in manifest_records if r.get("inclusion") == "ADMITTED"]
+        
+        self.completed_roots: List[str] = []
+        self.engine_session_epoch = 0
         
         if self.output_path.exists():
             with open(self.output_path, "r", encoding="utf-8") as f:
-                for line in f:
+                for i, line in enumerate(f):
                     if not line.strip(): continue
                     try:
                         record = json.loads(line)
@@ -50,38 +67,62 @@ class SourceFeasibilityRunnerV2:
                     if root_id in self.completed_roots:
                         raise ValueError(f"Duplicate root_identity in resume artifact: {root_id}")
                         
+                    # Exact prefix check
+                    if i >= len(self.admitted_roots):
+                        raise ValueError("More records in output than admitted roots")
+                    expected_root_id = self.admitted_roots[i]["root_identity"]
+                    if root_id != expected_root_id:
+                        raise ValueError(f"Resume artifact root {root_id} at index {i} does not match admitted prefix {expected_root_id}")
+                        
                     if record["status"] == "SUCCESS":
                         er_dump = record["experiment_result"]
                         er = ExperimentResult(**er_dump)
-                        er.verify_artifact_digest()
                         
-                        expected_outer_spec = record["experiment_result"]["spec_digest"]
-                        if expected_outer_spec != er.spec_digest:
-                            raise ValueError("Spec digest mismatch")
+                        # Rebuild expected spec to check outer/inner payload
+                        r = self.admitted_roots[i]
+                        board = reconstruct_root_board(r)
+                        sorted_moves = sorted(list(board.legal_moves), key=lambda m: m.uci())
+                        sorted_ucis = [m.uci() for m in sorted_moves]
+                        expected_policy = {
+                            "scope": "cp_all_legal_root_moves_v1",
+                            "ordered_legal_root_ucis": sorted_ucis,
+                            "required_search_count": len(sorted_ucis)
+                        }
+                        
+                        canonical_sig = SemanticSignatureV1.create_canonical()
+                        expected_spec = ExperimentSpec(
+                            semantic_signature_version=canonical_sig.version,
+                            semantic_signature_digest=canonical_sig.signature_hash(),
+                            suite_identity="CP_ROOT_POPULATION_LICHESS_BROADCAST_2026_07_V2",
+                            suite_digest=self.manifest_digest,
+                            fixture_identity=r["root_identity"],
+                            fixture_digest=r["root_record_digest"],
+                            sufficient_position=r["sufficient_position"],
+                            candidate_policy=expected_policy,
+                            producer_identity=record["producer_uci_name"],
+                            instrument_config=get_canonical_instrument_config(InstrumentRole.SOURCE),
+                            budget_config={"type": "nodes", "value": 50000},
+                            line_source="cp_source_feasibility_v2",
+                            hypothesis_identifier="CP_SOURCE_FEASIBILITY_COVERAGE_V2",
+                            spec_version=2,
+                            comparison_perspective="white" if r["sufficient_position"]["side_to_move"] == "w" else "black"
+                        )
+                        
+                        expected_spec_digest = canonical_json_digest(expected_spec.model_dump())
+                        
+                        if expected_spec_digest != er.spec_digest:
+                            raise ValueError("Outer spec digest does not match recomputed expected spec digest")
                             
                         payload = json.loads(er.data_payload)
+                        if payload["spec_digest"] != expected_spec_digest:
+                            raise ValueError("Inner payload spec digest mismatch")
+                            
                         if payload["instrument_role"] != "SOURCE" or payload["instrument_id"] != "CP_SOURCE_SF18_50K_ISOLATED_V1" or payload["pre_spawn_sha256"] != "ae4c93fa9676ca7750d0714342fd8a5b1d018000fc6e0f6cedf112067b5ef374":
                             raise ValueError("Payload mismatches in resume artifact")
                             
-                    self.completed_roots.add(root_id)
+                    self.completed_roots.append(root_id)
 
     def run(self):
-        manifest_records = []
-        with open(self.manifest_path, "rb") as f:
-            dctx = zstandard.ZstdDecompressor()
-            with dctx.stream_reader(f) as reader:
-                for line in io.TextIOWrapper(reader, encoding="utf-8"):
-                    if not line.strip(): continue
-                    manifest_records.append(json.loads(line))
-        
-        admitted = [r for r in manifest_records if r.get("inclusion") == "ADMITTED"]
-        
-        # Check prefix match for completed
-        for i, r in enumerate(admitted):
-            if i < len(self.completed_roots):
-                if r["root_identity"] not in self.completed_roots:
-                    raise ValueError("Resume artifact roots do not form the exact canonical PREFIX of admitted manifest roots")
-                    
         self.output_path.parent.mkdir(parents=True, exist_ok=True)
         f_out = open(self.output_path, "a", encoding="utf-8")
         
@@ -98,7 +139,7 @@ class SourceFeasibilityRunnerV2:
         start_session()
         
         try:
-            for r in admitted:
+            for r in self.admitted_roots:
                 root_id = r["root_identity"]
                 if root_id in self.completed_roots:
                     continue
@@ -123,7 +164,7 @@ class SourceFeasibilityRunnerV2:
                 canonical_sig = SemanticSignatureV1.create_canonical()
                 spec = ExperimentSpec(
                     semantic_signature_version=canonical_sig.version,
-                    semantic_signature_digest=canonical_sig.digest(),
+                    semantic_signature_digest=canonical_sig.signature_hash(),
                     suite_identity="CP_ROOT_POPULATION_LICHESS_BROADCAST_2026_07_V2",
                     suite_digest=self.manifest_digest,
                     fixture_identity=r["root_identity"],
@@ -177,7 +218,7 @@ class SourceFeasibilityRunnerV2:
                 f_out.write(line)
                 f_out.flush()
                 os.fsync(f_out.fileno())
-                self.completed_roots.add(root_id)
+                self.completed_roots.append(root_id)
                 
         finally:
             if session:

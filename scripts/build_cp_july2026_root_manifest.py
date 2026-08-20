@@ -29,8 +29,14 @@ def main():
         with open(reg_path) as f:
             registry = json.load(f)
             
-    exact_s0_set = {r["exact_s0_digest"] for r in registry if r.get("exact_s0_digest")}
-    cons_key_set = {r["conservative_transposition_group"] for r in registry if r.get("conservative_transposition_group")}
+    # Map exact_s0_digest -> list of registry fixture_ids
+    exact_s0_map = {}
+    cons_key_map = {}
+    for r in registry:
+        if r.get("exact_s0_digest"):
+            exact_s0_map.setdefault(r["exact_s0_digest"], []).append(r["fixture_id"])
+        if r.get("conservative_transposition_group"):
+            cons_key_map.setdefault(r["conservative_transposition_group"], []).append(r["fixture_id"])
 
     manifest_out = "artifacts/research/cp_source_feasibility_2026_07/cp_root_population_manifest_v2.jsonl.zst"
     Path(manifest_out).parent.mkdir(parents=True, exist_ok=True)
@@ -72,7 +78,7 @@ def main():
                     "history_identity_version": HISTORY_IDENTITY_VERSION,
                     "duplicate_resolution_version": DUPLICATE_RESOLUTION_VERSION,
                     "transposition_group_version": TRANSPOSITION_GROUP_VERSION,
-                    "software_revision": "V2_REPAIR",
+                    "software_revision": "aa3335d2b153d65d7e59b91ac9834b2be3a6a409",
                     "GameURL": game_url,
                     "Site": game.headers.get("Site", ""),
                     "pgn_ordinal": count,
@@ -96,7 +102,11 @@ def main():
                 records.append(rec)
                 count += 1
 
-    records.sort(key=lambda x: (x.get("GameURL", ""), x["pgn_ordinal"]))
+    # Deterministic duplicate resolution based on GameURL, then fallback to canonical base JSON if GameURL ties
+    def base_digest(r):
+        return canonical_json_digest({k: v for k, v in r.items() if k not in ["inclusion", "exclusion_reason", "pgn_ordinal", "duplicate_of_root_identity", "duplicate_of_game_url", "prior_development_overlap_sources"]})
+        
+    records.sort(key=lambda x: (x.get("GameURL", ""), base_digest(x)))
 
     seen_identities = {}
     final_records = []
@@ -117,15 +127,17 @@ def main():
             
         seen_identities[root_id] = r["GameURL"]
         
-        if root_id in exact_s0_set:
+        if root_id in exact_s0_map:
             r["inclusion"] = "EXCLUDED"
             r["exclusion_reason"] = "PRIOR_DEVELOPMENT_EXACT_OVERLAP"
+            r["prior_development_overlap_sources"] = sorted(exact_s0_map[root_id])
             final_records.append(r)
             continue
             
-        if r["transposition_group"] in cons_key_set:
+        if r["transposition_group"] in cons_key_map:
             r["inclusion"] = "EXCLUDED"
             r["exclusion_reason"] = "PRIOR_DEVELOPMENT_TRANSPOSITION_OVERLAP"
+            r["prior_development_overlap_sources"] = sorted(cons_key_map[r["transposition_group"]])
             final_records.append(r)
             continue
             
@@ -137,8 +149,8 @@ def main():
         
         final_records.append(r)
 
-    # Re-sort to original PGN ordinal
-    final_records.sort(key=lambda x: x["pgn_ordinal"])
+    # Re-sort to original canonical ordering by GameURL, then base digest
+    final_records.sort(key=lambda x: (x.get("GameURL", ""), base_digest(x)))
 
     cctx = zstandard.ZstdCompressor()
     h_out = hashlib.sha256()
@@ -164,7 +176,7 @@ def main():
         "total_pgn_count": count,
         "game_errors_count": game_errors_count,
         "game_url_present_count": game_url_present_count,
-        "software_revision": "V2_REPAIR",
+        "software_revision": "aa3335d2b153d65d7e59b91ac9834b2be3a6a409",
         "corpus_checksum": observed_sha256,
         "parser_identity": "python-chess",
         "parser_version": chess.__version__,
