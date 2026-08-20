@@ -301,14 +301,15 @@ Execution remains blocked.
 # Immediate Next Task — First Scientific Dependency
  
  The root-population contract and instrument configs have been **FROZEN**.
+ Engine state isolation is **IMPLEMENTED**.
  
- Before any source acquisition, the engine state isolation must be implemented. The strongest immediate unresolved blocker is now:
+ Before any source acquisition, an independent audit must verify the implementation mechanically. The strongest immediate unresolved blocker is now:
  
  ```text
- ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED
+ INDEPENDENT_PROTOCOL_IMPLEMENTATION_AUDIT_NOT_YET_COMPLETED
  ```
  
- The next task is: IMPLEMENT ENGINE-STATE-ISOLATED SOURCE ACQUISITION. That task is implementation/testing only. No corpus downloading or source/target study acquisition is authorized.
+ The next task is: INDEPENDENT PROTOCOL-VS-IMPLEMENTATION AUDIT. No corpus downloading or source/target study acquisition is authorized.
  
  ---
  
@@ -318,23 +319,15 @@ Execution remains blocked.
  
  ```text
  1. ROOT_POPULATION_FROZEN_TO_LICHESS_JULY_2026
- 
  2. INSTRUMENT_CONFIG_FROZEN_SF18_50K_250K_V1
-    + ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED
- 
- 3. source-only feasibility / coverage acquisition
- 
- 4. SPLIT_AND_BUDGET_NOT_YET_FROZEN
- 
- 5. P_NUMERIC_ENCODING_NOT_YET_FROZEN
- 
- 6. LEARNER_FAMILY_NOT_YET_FROZEN
- 
- 7. MATCHED_COMPARATOR_NOT_YET_FROZEN
- 
- 8. SEED_SET_NOT_YET_FROZEN
- 
- 9. CONFIDENCE_LEVEL_NOT_YET_FROZEN
+ 3. ENGINE_STATE_ISOLATION_IMPLEMENTED_AUDIT_PENDING + INDEPENDENT_PROTOCOL_IMPLEMENTATION_AUDIT_NOT_YET_COMPLETED
+ 4. source-only feasibility / coverage acquisition
+ 5. SPLIT_AND_BUDGET_NOT_YET_FROZEN
+ 6. P_NUMERIC_ENCODING_NOT_YET_FROZEN
+ 7. LEARNER_FAMILY_NOT_YET_FROZEN
+ 8. MATCHED_COMPARATOR_NOT_YET_FROZEN
+ 9. SEED_SET_NOT_YET_FROZEN
+ 10. CONFIDENCE_LEVEL_NOT_YET_FROZEN
  ```
 
 ## P semantic status

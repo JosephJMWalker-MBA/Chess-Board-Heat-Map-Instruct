@@ -64,7 +64,7 @@ Lichess official broadcast games, calendar month July 2026, PGN monthly export. 
 ## 5. Source and Target Acquisition Instrument Contract
 
 **Status:** INSTRUMENT_CONFIG_FROZEN_SF18_50K_250K_V1
-**Implementation Status:** ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED
+**Implementation Status:** ENGINE_STATE_ISOLATION_IMPLEMENTED_AUDIT_PENDING
 
 **Producer Identity:**
 Both source and target must use the exact Stockfish 18 binary.
@@ -268,7 +268,7 @@ Future execution must use existing `SufficientPosition`, `ExperimentSpec v2`, `E
 | Blocker | Constrained by existing code | Scientific Choice Remaining | Implementation Gap | Dependency |
 |---|---|---|---|---|
 | ROOT_POPULATION_FROZEN_TO_LICHESS_JULY_2026 | N/A | None (Frozen) | None | None |
-| INSTRUMENT_CONFIG_FROZEN_SF18_50K_250K_V1 | supports fixed node/depth/time, per-legal-move eval, perspective, Threads/Hash | None (Frozen) | ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED | None |
+| INSTRUMENT_CONFIG_FROZEN_SF18_50K_250K_V1 | supports fixed node/depth/time, per-legal-move eval, perspective, Threads/Hash | None (Frozen) | ENGINE_STATE_ISOLATION_IMPLEMENTED_AUDIT_PENDING | None |
 | SPLIT_AND_BUDGET_NOT_YET_FROZEN | N/A | training-root counts, partitions | None | source-only feasibility |
 | P_NUMERIC_ENCODING_NOT_YET_FROZEN | P semantic identity frozen by SufficientPosition | Model's numeric encoding schema | None | None |
 | LEARNER_FAMILY_NOT_YET_FROZEN | N/A | architecture, parameters, stopping rule | No ML framework dependency exists yet | P_NUMERIC_ENCODING |
@@ -277,16 +277,17 @@ Future execution must use existing `SufficientPosition`, `ExperimentSpec v2`, `E
 | CONFIDENCE_LEVEL_NOT_YET_FROZEN | N/A | $\alpha$ level, bootstrap size | None | None |
 
 ### Blocker Dependency Order
-
-1. ROOT_POPULATION_FROZEN_TO_LICHESS_JULY_2026
-2. INSTRUMENT_CONFIG_FROZEN_SF18_50K_250K_V1 + ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED
-3. Source-only feasibility/coverage acquisition (measures CP eligibility, pair counts after root/instrument are frozen. May not inspect held-out target labels)
-4. SPLIT_AND_BUDGET_NOT_YET_FROZEN
-5. P_NUMERIC_ENCODING_NOT_YET_FROZEN
-6. LEARNER_FAMILY_NOT_YET_FROZEN
-7. MATCHED_COMPARATOR_NOT_YET_FROZEN
-8. SEED_SET_NOT_YET_FROZEN
-9. CONFIDENCE_LEVEL_NOT_YET_FROZEN
+ 
+ 1. ROOT_POPULATION_FROZEN_TO_LICHESS_JULY_2026
+ 2. INSTRUMENT_CONFIG_FROZEN_SF18_50K_250K_V1
+ 3. ENGINE_STATE_ISOLATION_IMPLEMENTED_AUDIT_PENDING + INDEPENDENT_PROTOCOL_IMPLEMENTATION_AUDIT_NOT_YET_COMPLETED
+ 4. Source-only feasibility/coverage acquisition (measures CP eligibility, pair counts after root/instrument are frozen. May not inspect held-out target labels)
+ 5. SPLIT_AND_BUDGET_NOT_YET_FROZEN
+ 6. P_NUMERIC_ENCODING_NOT_YET_FROZEN
+ 7. LEARNER_FAMILY_NOT_YET_FROZEN
+ 8. MATCHED_COMPARATOR_NOT_YET_FROZEN
+ 9. SEED_SET_NOT_YET_FROZEN
+ 10. CONFIDENCE_LEVEL_NOT_YET_FROZEN
 
 ## 19. Status
 

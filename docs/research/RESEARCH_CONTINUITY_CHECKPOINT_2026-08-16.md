@@ -784,7 +784,7 @@ If HEAD is still:
  9fa1de7e32c2345fe1ecd8880ffcb60fc4552f88
  ```
  
- then the immediate next task is resolving the first scientific dependency: `ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED`.
+ then the immediate next task is resolving the first scientific dependency: `INDEPENDENT_PROTOCOL_IMPLEMENTATION_AUDIT_NOT_YET_COMPLETED`.
 
 If HEAD is later, inspect the delta rather than assuming this checkpoint is still the frontier.
 
