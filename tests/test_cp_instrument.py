@@ -715,6 +715,9 @@ def test_failed_child_acquisition(mock_popen, mock_verify):
     with pytest.raises(cpi.ProtocolError, match="Analysis failed"):
         session.acquire(spec, board)
         
+    assert mock_engine.analyse.call_count == 3
+    assert call_counts[0] == 3
+    
     # No result returned, no partial data
 
 @patch('chessheat.cp_instrument.verify_executable')
