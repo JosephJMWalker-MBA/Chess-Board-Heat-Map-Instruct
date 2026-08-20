@@ -11,6 +11,7 @@ requires-python = ">=3.9"
 dependencies = [
     "chess>=1.10.0",
     "pydantic>=2.0.0",
+    "zstandard>=0.22.0",
 ]
 
 [tool.hatch.build.targets.wheel]

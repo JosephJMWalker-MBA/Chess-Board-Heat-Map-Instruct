@@ -3,3 +3,10 @@ __pycache__/
 .venv/
 .pytest_cache/
 .DS_Store
+
+# External data
+data/external/
+
+# Acquisition artifacts (raw data)
+artifacts/research/cp_source_feasibility_2026_07/raw/
+artifacts/research/cp_source_feasibility_2026_07/checkpoints/
