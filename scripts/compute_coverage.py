@@ -51,7 +51,8 @@ def main():
     
     with open(args.output, "r", encoding="utf-8") as f:
         for i, line in enumerate(f):
-            if not line.strip(): continue
+            if not line.strip():
+                raise ValueError("Blank line in result artifact")
             roots_attempted += 1
             record = json.loads(line)
             
@@ -107,7 +108,7 @@ def main():
                 roots_ge_2_cp += 1
             else:
                 roots_lt_2_cp += 1
-            if c_count == 0:
+            if pairs == 0:
                 roots_zero_cp += 1
                 
             total_cp_pairs += pairs
@@ -117,7 +118,11 @@ def main():
             pairs_per_root.append(pairs)
             
             from chessheat.cp_root_population import canonical_json_digest
-            opt_digest = canonical_json_digest(payload.get("options_surface", []))
+            if "options_surface" not in payload:
+                raise ValueError("Provenance error: missing options_surface")
+            if not payload["options_surface"]:
+                raise ValueError("Provenance error: empty options_surface")
+            opt_digest = canonical_json_digest(payload["options_surface"])
             options_digests.add(opt_digest)
 
     if len(options_digests) > 1:
@@ -139,6 +144,12 @@ def main():
     print(f"roots with zero CP/CP pairs: {roots_zero_cp}")
     print(f"total CP/CP unordered pairs: {total_cp_pairs}")
     
+def get_median(vals):
+    n = len(vals)
+    if n % 2 == 1:
+        return vals[n//2]
+    return (vals[n//2 - 1] + vals[n//2]) / 2.0
+
     def report_dist(name, vals):
         if not vals:
             print(f"{name}: N/A")
@@ -146,7 +157,7 @@ def main():
         vals_sorted = sorted(vals)
         print(f"{name}:")
         print(f"  min: {vals_sorted[0]}")
-        print(f"  median: {vals_sorted[len(vals)//2]}")
+        print(f"  median: {get_median(vals_sorted)}")
         print(f"  nearest-rank p90: {percentile_nearest_rank(vals, 0.90)}")
         print(f"  nearest-rank p95: {percentile_nearest_rank(vals, 0.95)}")
         print(f"  max: {vals_sorted[-1]}")

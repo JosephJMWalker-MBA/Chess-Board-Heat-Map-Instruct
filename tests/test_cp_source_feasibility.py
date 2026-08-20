@@ -8,7 +8,19 @@ from chessheat.cp_source_feasibility import SourceFeasibilityRunnerV2, build_sou
 from chessheat.cp_root_population import canonical_json_digest, get_history_identity
 from chessheat.semantics import SufficientPosition
 from chessheat.experiment import ExperimentResult
+
+# Wrap all valid SourceFeasibilityRunnerV2 instantiations to mock git check
 import subprocess
+orig_run = subprocess.run
+def fake_subprocess_run(*args, **kwargs):
+    if args[0][0] == "git":
+        return subprocess.CompletedProcess(args=args[0], returncode=0, stdout="")
+    return orig_run(*args, **kwargs)
+
+@pytest.fixture(autouse=True)
+def mock_git(monkeypatch):
+    monkeypatch.setattr(subprocess, "run", fake_subprocess_run)
+
 
 def write_mock_manifest(path, records):
     h_out = hashlib.sha256()
@@ -246,6 +258,83 @@ def test_coverage_validation(tmp_path):
     with pytest.raises(ValueError, match="Observations length != expected required_search_count"):
         cc_main()
 
+    # Negative test: missing options_surface
+    def mut3(obs): return obs
+    rec_mut3 = dict(rec)
+    er_mut3 = create_fake_experiment_result(r1, digest, mut3)
+    p3 = json.loads(er_mut3["data_payload"])
+    del p3["options_surface"]
+    er_mut3 = ExperimentResult.create(rec["experiment_result"]["spec_digest"], p3).model_dump()
+    rec_mut3["experiment_result"] = er_mut3
+    out_path.write_text(json.dumps(rec_mut3, sort_keys=True, separators=(",", ":")) + "\n")
+    with pytest.raises(ValueError, match="missing options_surface"):
+        cc_main()
+
+    # Negative test: empty options_surface
+    er_mut4 = create_fake_experiment_result(r1, digest, mut3)
+    p4 = json.loads(er_mut4["data_payload"])
+    p4["options_surface"] = []
+    er_mut4 = ExperimentResult.create(rec["experiment_result"]["spec_digest"], p4).model_dump()
+    rec_mut3["experiment_result"] = er_mut4
+    out_path.write_text(json.dumps(rec_mut3, sort_keys=True, separators=(",", ":")) + "\n")
+    with pytest.raises(ValueError, match="empty options_surface"):
+        cc_main()
+
+    # Negative test: mismatching options surfaces
+    r2 = make_valid_root("r2", fen="rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1")
+    digest2 = write_mock_manifest(manifest, [r1, r2])
+    meta_path.write_text(json.dumps(make_valid_meta(digest2, count=2)))
+    er1 = create_fake_experiment_result(r1, digest2)
+    p1 = json.loads(er1["data_payload"])
+    p1["options_surface"] = [{"name": "Hash", "value": "16"}]
+    er1 = ExperimentResult.create(er1["spec_digest"], p1).model_dump()
+    rec1 = dict(rec)
+    rec1["experiment_result"] = er1
+    rec1["manifest_digest"] = digest2
+    er2 = create_fake_experiment_result(r2, digest2)
+    p2 = json.loads(er2["data_payload"])
+    p2["options_surface"] = [{"name": "Hash", "value": "32"}]  # Mismatch!
+    er2 = ExperimentResult.create(er2["spec_digest"], p2).model_dump()
+    rec2 = dict(rec)
+    rec2["experiment_result"] = er2
+    rec2["root_identity"] = r2["root_identity"]
+    rec2["root_record_digest"] = r2["root_record_digest"]
+    rec2["manifest_digest"] = digest2
+    out_path.write_text(
+        json.dumps(rec1, sort_keys=True, separators=(",", ":")) + "\n" +
+        json.dumps(rec2, sort_keys=True, separators=(",", ":")) + "\n"
+    )
+    with pytest.raises(ValueError, match="Provenance inconsistency"):
+        cc_main()
+
+    # Move order mismatch
+    digest = write_mock_manifest(manifest, [r1])
+    er_mut_order = create_fake_experiment_result(r1, digest, mut3)
+    p_order = json.loads(er_mut_order["data_payload"])
+    if len(p_order["observations"]) > 1:
+        p_order["observations"] = p_order["observations"][::-1] # Reverse observations
+    er_mut_order = ExperimentResult.create(rec["experiment_result"]["spec_digest"], p_order).model_dump()
+    rec_order = dict(rec)
+    rec_order["experiment_result"] = er_mut_order
+    out_path.write_text(json.dumps(rec_order, sort_keys=True, separators=(",", ":")) + "\n")
+    meta_path.write_text(json.dumps(make_valid_meta(digest, count=1)))
+    with pytest.raises(ValueError, match="Observation ucis do not match canonical_order exactly"):
+        cc_main()
+
+    # C=1 zero pair test
+    er_c1 = create_fake_experiment_result(r1, digest)
+    p_c1 = json.loads(er_c1["data_payload"])
+    if len(p_c1["observations"]) > 0:
+        p_c1["observations"][0]["score_type"] = "cp"
+        for i in range(1, len(p_c1["observations"])):
+            p_c1["observations"][i]["score_type"] = "mate"
+    er_c1 = ExperimentResult.create(rec["experiment_result"]["spec_digest"], p_c1).model_dump()
+    rec_c1 = dict(rec)
+    rec_c1["experiment_result"] = er_c1
+    out_path.write_text(json.dumps(rec_c1, sort_keys=True, separators=(",", ":")) + "\n")
+    cc_main() # Will print and succeed. C=1 -> pairs == 0
+
+
 def test_failure_durability_and_success_path(tmp_path, monkeypatch):
     r1 = make_valid_root("r1")
     r2 = make_valid_root("r2", fen="rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1")
@@ -362,3 +451,44 @@ def test_manifest_noncanonical(tmp_path):
     with pytest.raises(ValueError, match="Non-canonical JSON line in manifest"):
         SourceFeasibilityRunnerV2(str(manifest), str(tmp_path / "out.jsonl"), "stockfish", str(meta_path))
 
+
+def test_final_root_failure(tmp_path, monkeypatch):
+    r1 = make_valid_root("r1")
+    manifest = tmp_path / "manifest.jsonl.zst"
+    digest = write_mock_manifest(manifest, [r1])
+    meta_path = tmp_path / "meta.json"
+    meta_path.write_text(json.dumps(make_valid_meta(digest, count=1)))
+    out_path = tmp_path / "out.jsonl"
+    
+    events = []
+    class FakeSession2:
+        def __init__(self, stockfish_path, role):
+            self.role = role
+            self._provenance = {
+                "producer": "Stockfish 18",
+                "pre_spawn_sha256": "ae4c93fa9676ca7750d0714342fd8a5b1d018000fc6e0f6cedf112067b5ef374",
+                "post_spawn_sha256": "ae4c93fa9676ca7750d0714342fd8a5b1d018000fc6e0f6cedf112067b5ef374"
+            }
+        def start(self): events.append("start")
+        def close(self): events.append("close")
+        def acquire(self, spec, board):
+            raise RuntimeError("Failed")
+            
+    import chessheat.cp_source_feasibility
+    monkeypatch.setattr(chessheat.cp_source_feasibility, "InstrumentSession", FakeSession2)
+    import os
+    orig_fsync = os.fsync
+    def fake_fsync(fd):
+        events.append("fsync")
+        orig_fsync(fd)
+    monkeypatch.setattr(os, "fsync", fake_fsync)
+    
+    runner = SourceFeasibilityRunnerV2(str(manifest), str(out_path), "stockfish", str(meta_path))
+    runner.run()
+    
+    assert events == ["start", "fsync", "close"] # Only 1 session constructed!
+
+def test_median():
+    from scripts.compute_coverage import get_median
+    assert get_median([1,2,3]) == 2
+    assert get_median([1,2,3,4]) == 2.5

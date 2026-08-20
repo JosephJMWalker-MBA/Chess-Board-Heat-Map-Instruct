@@ -51,6 +51,31 @@ class SourceFeasibilityRunnerV2:
             self.meta = json.load(f)
             
         self.software_revision = self.meta["software_revision"]
+        import subprocess
+        # Check that commit exists
+        try:
+            subprocess.run(["git", "cat-file", "-t", self.software_revision], check=True, capture_output=True)
+        except subprocess.CalledProcessError:
+            raise ValueError(f"Software revision {self.software_revision} does not exist in git")
+            
+        bound_files = [
+            "src/chessheat/cp_root_population.py",
+            "src/chessheat/cp_source_feasibility.py",
+            "scripts/run_cp_source_feasibility.py",
+            "scripts/compute_coverage.py"
+        ]
+        
+        # Check diff relative to revision
+        try:
+            subprocess.run(["git", "diff", "--quiet", self.software_revision, "--"] + bound_files, check=True, capture_output=True)
+        except subprocess.CalledProcessError:
+            raise ValueError(f"Bound implementation files differ from software_revision {self.software_revision}")
+            
+        # Check uncommitted changes
+        status = subprocess.run(["git", "status", "--porcelain", "--"] + bound_files, check=True, capture_output=True, text=True)
+        if status.stdout.strip():
+            raise ValueError("Uncommitted changes in bound implementation files")
+
         
         manifest_records = []
         h_manifest = hashlib.sha256()
@@ -58,7 +83,8 @@ class SourceFeasibilityRunnerV2:
             dctx = zstandard.ZstdDecompressor()
             with dctx.stream_reader(f) as reader:
                 for line in io.TextIOWrapper(reader, encoding="utf-8"):
-                    if not line.strip(): continue
+                    if not line.strip():
+                        raise ValueError("Blank line in artifact")
                     encoded = line.encode("utf-8")
                     h_manifest.update(encoded)
                     
@@ -98,6 +124,7 @@ class SourceFeasibilityRunnerV2:
                      raise ValueError("root_record_digest equality failure")
                  if "sufficient_position" not in r or "selected_ply" not in r:
                      raise ValueError("Missing reconstruction fields")
+                 reconstruct_root_board(r)
                      
                  admitted.append(r)
                  
@@ -111,7 +138,8 @@ class SourceFeasibilityRunnerV2:
         if self.output_path.exists():
             with open(self.output_path, "r", encoding="utf-8") as f:
                 for i, line in enumerate(f):
-                    if not line.strip(): continue
+                    if not line.strip():
+                        raise ValueError("Blank line in artifact")
                     try:
                         record = json.loads(line)
                     except json.JSONDecodeError:
