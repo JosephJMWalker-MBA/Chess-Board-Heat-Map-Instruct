@@ -61,9 +61,12 @@ class SourceFeasibilityRunnerV2:
                     if not line.strip(): continue
                     encoded = line.encode("utf-8")
                     h_manifest.update(encoded)
-                    rec = json.loads(line)
-                    if json.dumps(rec, sort_keys=True, separators=(",", ":")) != json.loads(line, object_pairs_hook=lambda x: json.dumps(dict(x), sort_keys=True, separators=(",", ":"))):
-                         pass
+                    
+                    raw = line.rstrip("\n")
+                    rec = json.loads(raw)
+                    canonical = json.dumps(rec, sort_keys=True, separators=(",", ":"))
+                    if raw != canonical:
+                        raise ValueError("Non-canonical JSON line in manifest")
                     
                     if rec["software_revision"] != self.software_revision:
                          raise ValueError("Record software revision mismatch")
@@ -122,6 +125,8 @@ class SourceFeasibilityRunnerV2:
                         raise ValueError("Schema mismatch in resume artifact")
                     if record.get("manifest_digest") != self.manifest_digest:
                         raise ValueError("Manifest digest mismatch in resume artifact")
+                    if record.get("root_manifest_schema") != "CP_ROOT_POPULATION_JULY_2026_MANIFEST_V2":
+                        raise ValueError("root_manifest_schema mismatch")
                     if record.get("software_revision") != self.software_revision:
                         raise ValueError("Software revision mismatch in resume artifact")
                     if record.get("instrument_id") != "CP_SOURCE_SF18_50K_ISOLATED_V1":
@@ -131,15 +136,22 @@ class SourceFeasibilityRunnerV2:
                     if record.get("producer_binary_sha256") != "ae4c93fa9676ca7750d0714342fd8a5b1d018000fc6e0f6cedf112067b5ef374":
                         raise ValueError("Producer SHA mismatch")
                         
-                    root_id = record["root_identity"]
+                    epoch = record.get("engine_session_epoch")
+                    if type(epoch) is not int or epoch < 1:
+                        raise ValueError("engine_session_epoch must be int >= 1")
+                        
+                    root_id = record.get("root_identity")
+                    root_digest = record.get("root_record_digest")
                     if root_id in self.completed_roots:
                         raise ValueError(f"Duplicate root_identity in resume artifact: {root_id}")
                         
                     if i >= len(self.admitted_roots):
                         raise ValueError("More records in output than admitted roots")
-                    expected_root_id = self.admitted_roots[i]["root_identity"]
-                    if root_id != expected_root_id:
-                        raise ValueError(f"Resume artifact root {root_id} at index {i} does not match admitted prefix {expected_root_id}")
+                    expected_r = self.admitted_roots[i]
+                    if root_id != expected_r["root_identity"]:
+                        raise ValueError(f"Resume artifact root {root_id} at index {i} does not match admitted prefix {expected_r['root_identity']}")
+                    if root_digest != expected_r["root_record_digest"]:
+                        raise ValueError("root_record_digest mismatch in resume artifact")
                         
                     if record["status"] == "SUCCESS":
                         if "experiment_result" not in record:
@@ -147,16 +159,27 @@ class SourceFeasibilityRunnerV2:
                         er_dump = record["experiment_result"]
                         er = ExperimentResult(**er_dump)
                         
-                        r = self.admitted_roots[i]
-                        expected_spec = build_source_v2_spec(r, self.manifest_digest, record["producer_uci_name"])
+                        expected_spec = build_source_v2_spec(expected_r, self.manifest_digest, record["producer_uci_name"])
                         expected_spec_digest = expected_spec.spec_digest()
                         
                         if expected_spec_digest != er.spec_digest:
                             raise ValueError("Outer spec digest does not match recomputed expected spec digest")
                             
                         payload = json.loads(er.data_payload)
-                        if payload["spec_digest"] != expected_spec_digest:
+                        if payload.get("spec_digest") != expected_spec_digest:
                             raise ValueError("Inner payload spec digest mismatch")
+                            
+                        if payload.get("instrument_role") != "SOURCE":
+                            raise ValueError("instrument_role mismatch")
+                        if payload.get("instrument_id") != "CP_SOURCE_SF18_50K_ISOLATED_V1":
+                            raise ValueError("instrument_id mismatch")
+                        if payload.get("producer_uci_name") != "Stockfish 18":
+                            raise ValueError("producer_uci_name mismatch")
+                        frozen_sha = "ae4c93fa9676ca7750d0714342fd8a5b1d018000fc6e0f6cedf112067b5ef374"
+                        if payload.get("pre_spawn_sha256") != frozen_sha:
+                            raise ValueError("pre_spawn_sha256 mismatch")
+                        if payload.get("post_spawn_sha256") != frozen_sha:
+                            raise ValueError("post_spawn_sha256 mismatch")
                     elif record["status"] == "FAILURE":
                         if "experiment_result" in record:
                             raise ValueError("FAILURE cannot have experiment_result")
