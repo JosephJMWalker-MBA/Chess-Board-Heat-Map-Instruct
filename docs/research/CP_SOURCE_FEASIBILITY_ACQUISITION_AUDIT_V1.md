@@ -58,3 +58,10 @@ The entire root population and source feasibility runner layer must be repaired 
 ## Status Updates
 - Resulting status: `SOURCE_ONLY_FEASIBILITY_COVERAGE_INVALID_REPAIR_REQUIRED`
 - Next blocker: `SOURCE_ACQUISITION_IMPLEMENTATION_REPAIR_REQUIRED_V2`
+
+## V1 Audit Precision Note
+
+- Real engine execution occurred before final V1 implementation stabilization.
+- At audit time, the mechanically inspected V1 raw artifact contained 0 records (SHA: a027a78f6156d928c6941c1bf3512e26011380915705e0ea00c641444148b236).
+- Therefore, there are no surviving authoritative V1 source observations that can be bound to the claimed final V1 implementation.
+- The contamination finding concerns unverifiable execution provenance, not a surviving mixed-revision 33,753-record artifact.
