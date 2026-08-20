@@ -649,7 +649,7 @@ Therefore learner selection is both a scientific protocol choice and a future im
  ## Blocker dependency order
  
  ```text
- 1. ROOT_POPULATION_NOT_YET_FROZEN
+ 1. ROOT_POPULATION_FROZEN_TO_LICHESS_JULY_2026
  2. INSTRUMENT_CONFIG_NOT_YET_FROZEN
     + ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED
  3. source-only feasibility / coverage acquisition
@@ -661,7 +661,7 @@ Therefore learner selection is both a scientific protocol choice and a future im
  9. CONFIDENCE_LEVEL_NOT_YET_FROZEN
  ```
  
- The first unresolved scientific dependency is now `ROOT_POPULATION_NOT_YET_FROZEN`.
+ The first unresolved scientific dependency is now `INSTRUMENT_CONFIG_NOT_YET_FROZEN`.
 
 ## First genuinely new implementation work
 
@@ -779,12 +779,12 @@ Keep bounded-human decision complexity outside objective Heat.
 A future session should begin by checking the repository HEAD.
 
 If HEAD is still:
-
-```text
-f4b8679f0d0cabdff550c1d8d808002743a51319
-```
-
-then the immediate next task is resolving the first scientific dependency: `ROOT_POPULATION_NOT_YET_FROZEN`.
+ 
+ ```text
+ f4b8679f0d0cabdff550c1d8d808002743a51319
+ ```
+ 
+ then the immediate next task is resolving the first scientific dependency: `INSTRUMENT_CONFIG_NOT_YET_FROZEN`.
 
 If HEAD is later, inspect the delta rather than assuming this checkpoint is still the frontier.
 

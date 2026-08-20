@@ -300,42 +300,43 @@ Execution remains blocked.
 
 # Immediate Next Task — First Scientific Dependency
  
- The CP-only preregistration blocker audit has been **COMPLETED**. Outcome semantics were repaired and execution blockers recorded.
+ The root-population contract has been **FROZEN** (Lichess July 2026).
  
- Before any root acquisition, engine execution, or model work, the current ordered queue must be followed. The strongest immediate unresolved blocker is now:
+ Before any engine execution or model work, the current ordered queue must be followed. The strongest immediate unresolved blocker is now:
  
  ```text
- ROOT_POPULATION_NOT_YET_FROZEN
+ INSTRUMENT_CONFIG_NOT_YET_FROZEN
+ + ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED
  ```
  
  No execution is authorized while the preregistration remains blocked.
-
----
-
-# Remaining Blockers — Dependency Order
-
-The blockers should not be resolved in arbitrary order.
-
-```text
-1. ROOT_POPULATION_NOT_YET_FROZEN
-
-2. INSTRUMENT_CONFIG_NOT_YET_FROZEN
-   + ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED
-
-3. source-only feasibility / coverage acquisition
-
-4. SPLIT_AND_BUDGET_NOT_YET_FROZEN
-
-5. P_NUMERIC_ENCODING_NOT_YET_FROZEN
-
-6. LEARNER_FAMILY_NOT_YET_FROZEN
-
-7. MATCHED_COMPARATOR_NOT_YET_FROZEN
-
-8. SEED_SET_NOT_YET_FROZEN
-
-9. CONFIDENCE_LEVEL_NOT_YET_FROZEN
-```
+ 
+ ---
+ 
+ # Remaining Blockers — Dependency Order
+ 
+ The blockers should not be resolved in arbitrary order.
+ 
+ ```text
+ 1. ROOT_POPULATION_FROZEN_TO_LICHESS_JULY_2026
+ 
+ 2. INSTRUMENT_CONFIG_NOT_YET_FROZEN
+    + ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED
+ 
+ 3. source-only feasibility / coverage acquisition
+ 
+ 4. SPLIT_AND_BUDGET_NOT_YET_FROZEN
+ 
+ 5. P_NUMERIC_ENCODING_NOT_YET_FROZEN
+ 
+ 6. LEARNER_FAMILY_NOT_YET_FROZEN
+ 
+ 7. MATCHED_COMPARATOR_NOT_YET_FROZEN
+ 
+ 8. SEED_SET_NOT_YET_FROZEN
+ 
+ 9. CONFIDENCE_LEVEL_NOT_YET_FROZEN
+ ```
 
 ## P semantic status
 
@@ -511,8 +512,8 @@ Human decision complexity remains outside objective Heat.
  13. **CLOSED** — CP-Only Readout Boundary Preflight
  14. **ACTIVE DRAFT** — CP-Only Representation Efficiency Preregistration
  15. **DONE** — Preregistration outcome-semantics + blocker audit
- 16. **NEXT** — Freeze root-population contract
- 17. **THEN** — Freeze source/target instrument family + engine-state isolation semantics
+ 16. **DONE** — Freeze root-population contract
+ 17. **NEXT** — Freeze source/target instrument family + engine-state isolation semantics
  18. **THEN** — Implement engine-state-isolated source acquisition
  19. **THEN** — Source-only feasibility/coverage acquisition
  20. **THEN** — Freeze split/budget, `P` encoding, learner, comparator, seeds, inference
@@ -560,4 +561,4 @@ The following freeze rules continue to apply:
  2. read `RESEARCH_CONTINUITY_CHECKPOINT_2026-08-16.md`;
  3. read this `NEXT_WORK_MAP.md`;
  4. inspect the active preregistration;
- 5. continue from the first unresolved dependency only (currently `ROOT_POPULATION_NOT_YET_FROZEN`).
+ 5. continue from the first unresolved dependency only (currently `INSTRUMENT_CONFIG_NOT_YET_FROZEN`).

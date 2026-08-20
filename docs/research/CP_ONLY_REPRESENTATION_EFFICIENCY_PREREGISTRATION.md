@@ -12,6 +12,8 @@ This is the strictly singular, only primary utility question. We do not add capa
 **Maximum Positive Claim:**
 Under the frozen source instrument, target instrument, data population, information boundary, learner class, training procedure, and root-budget schedule, one spatial encoding permits more sample-efficient prediction of held-out target ordering than the specified comparator.
 
+Any result from this experiment is conditional on the prospectively frozen July 2026 Lichess official-broadcast root population and the frozen source/target instruments. It does not establish universal representation efficiency across all legal chess positions or all distributions of human play.
+
 **Explicit Non-Claims:**
 - no objective square ownership
 - no objective consequence $V$
@@ -35,11 +37,23 @@ Serialization exists only for identity/orientation. It is **not** a scientific r
 
 ## 4. Exact Root-Population Contract
 
-The future root population must be defined independently of target $Y$. 
-Currently: **ROOT_POPULATION_NOT_YET_FROZEN**
-This is execution-blocking. We must prospectively define: root source, inclusion rule, exclusion rule, sufficient-position identity, duplicate handling, transposition/equivalent-state handling, variant, history semantics, development-data overlap policy, and manifest construction. Previously examined/tuned/frozen M8/T3 fixtures must not become untouched validation evidence merely by being copied.
+**Status:** ROOT_POPULATION_FROZEN_TO_LICHESS_JULY_2026
 
-Once acquired, report base roots, source-evaluable roots, roots with $\ge 2$ CP-typed legal alternatives, legal-move count distribution, CP-eligible move count distribution, and CP-pair count distribution with no target-based replacement.
+**Root Source Universe:**
+Lichess official broadcast games, calendar month July 2026, PGN monthly export. This is a completed external corpus and must be treated only as the population source, not as engine evidence or target truth. Do not use the Lichess evaluation or puzzle database.
+
+**Root-Construction Contract:**
+1. **Standard Chess Only**: Admit only games reconstructable as standard chess under frozen S0 semantics. Exclude variants entirely. Do not silently reinterpret variants as standard chess.
+2. **Complete Replay / History**: A candidate game must replay legally from its declared initial state through the candidate root. The resulting root must fully populate `SufficientPosition` semantics (`board_arrangement_fen`, `side_to_move`, `castling_rights`, `en_passant_square`, `halfmove_clock`, `fullmove_number`, `history_available`, `history_identity`, `variant`). Malformed or non-replayable games are excluded prospectively with recorded reason.
+3. **One Root Per Source Game**: Use at most one base root from any source game to prevent pseudo-independent roots. The root-selection procedure must be deterministic and independent of engine evaluation, target $Y$, played-move quality, opening identity, tactical motifs, player rating, game result, human annotation, ChessHeat output, or future CP eligibility.
+4. **Rule-Only Candidate Plies**: Before source-engine acquisition, eligible candidate roots must be valid standard-chess states, non-terminal, have $\ge 2$ legal root moves, and have sufficient reconstructable history under S0. Do not require CP/CP eligibility at this stage.
+5. **Deterministic Within-Game Selection**: Choose exactly one eligible root from each admissible game using a cryptographic-hash-derived selection. Hash input must be `SHA-256(game_id + ply)` modulo the number of rule-eligible plies. The procedure must be explicitly specified and versionable. If a game contains zero rule-eligible roots, exclude it with reason.
+6. **Duplicates**: Canonical root identity is the full `SufficientPosition` identity. Exact duplicate semantic roots must not appear twice in the final population. Freeze deterministic duplicate resolution, retaining provenance for every discarded duplicate source. Do not treat two roots with different S0 history identities as identical.
+7. **Transposition / Leakage Group**: For later split construction, use a conservative transposition-equivalence grouping key: `board_arrangement_fen` + `side_to_move` + `castling_rights` + `en_passant_square`. Its purpose is leakage prevention, not redefining canonical S0 identity.
+8. **Prior Development Overlap**: Previously inspected ChessHeat development, fixture, hostile-validation, and research positions (e.g., M8 / W-suite / T1 / T2 / T3) must be excluded. Exclude exact `SufficientPosition` overlaps and conservative transposition overlaps.
+9. **No Target-Based Replacement**: Once admitted to the base population, do not replace a root due to target attrition (e.g. mate-typed source, target acquisition failure). Population construction must remain independent of target $Y$.
+10. **Manifest / Provenance Contract**: Reusing `SuiteManifest` / `ExperimentSpec v2` semantics, preserve: external corpus identity, corpus month/version, upstream artifact filename, upstream published checksum, locally verified checksum, parser/version identity, root-selection algorithm/version, game identity/provenance, selected ply, full `SufficientPosition` identity, conservative transposition-group identity, inclusion/exclusion outcome, exclusion reason, duplicate resolution, prior-development-overlap status, software revision, and manifest digest.
+11. **Sample Size**: `SPLIT_AND_BUDGET_NOT_YET_FROZEN` remains unresolved. The population universe and deterministic root-generation procedure are frozen now, while the exact training/tune/test counts remain unfrozen.
 
 ## 5. Source and Target Acquisition Instrument Concept
 
@@ -190,8 +204,8 @@ Future execution must use existing `SufficientPosition`, `ExperimentSpec v2`, `E
 
 | Blocker | Constrained by existing code | Scientific Choice Remaining | Implementation Gap | Dependency |
 |---|---|---|---|---|
-| ROOT_POPULATION_NOT_YET_FROZEN | N/A | Definition of the root inclusion/exclusion rule | None | None |
-| INSTRUMENT_CONFIG_NOT_YET_FROZEN | supports fixed node/depth/time, per-legal-move eval, perspective, Threads/Hash | specific nodes/depth budgets, engine version | ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED | ROOT_POPULATION |
+| ROOT_POPULATION_FROZEN_TO_LICHESS_JULY_2026 | N/A | None (Frozen) | None | None |
+| INSTRUMENT_CONFIG_NOT_YET_FROZEN | supports fixed node/depth/time, per-legal-move eval, perspective, Threads/Hash | specific nodes/depth budgets, engine version | ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED | None |
 | SPLIT_AND_BUDGET_NOT_YET_FROZEN | N/A | training-root counts, partitions | None | source-only feasibility |
 | P_NUMERIC_ENCODING_NOT_YET_FROZEN | P semantic identity frozen by SufficientPosition | Model's numeric encoding schema | None | None |
 | LEARNER_FAMILY_NOT_YET_FROZEN | N/A | architecture, parameters, stopping rule | No ML framework dependency exists yet | P_NUMERIC_ENCODING |
@@ -201,7 +215,7 @@ Future execution must use existing `SufficientPosition`, `ExperimentSpec v2`, `E
 
 ### Blocker Dependency Order
 
-1. ROOT_POPULATION_NOT_YET_FROZEN
+1. ROOT_POPULATION_FROZEN_TO_LICHESS_JULY_2026
 2. INSTRUMENT_CONFIG_NOT_YET_FROZEN + ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED
 3. Source-only feasibility/coverage acquisition (measures CP eligibility, pair counts after root/instrument are frozen. May not inspect held-out target labels)
 4. SPLIT_AND_BUDGET_NOT_YET_FROZEN
