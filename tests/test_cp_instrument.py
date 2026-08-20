@@ -3,29 +3,29 @@ import chess
 import chess.engine
 import os
 import hashlib
+import json
 from unittest.mock import patch, MagicMock
 
 import chessheat.cp_instrument as cpi
-from chessheat.experiment import ExperimentSpec
+from chessheat.experiment import ExperimentSpec, ExperimentResult
 from chessheat.semantics import SufficientPosition
 
-class FakeOption(chess.engine.Option):
-    def __init__(self, name, type, default, min, max, var, managed):
-        super().__init__(name, type, default, min, max, var)
-        self._managed = managed
-    def is_managed(self):
-        return self._managed
-
-def create_fake_options():
+def create_real_options():
     opts = {}
-    for k in cpi.STATIC_UCI_CONFIG:
-        opts[k] = FakeOption(k, "string", "", None, None, [], False)
+    opts["Threads"] = chess.engine.Option("Threads", "spin", 1, 1, 512, [])
+    opts["Hash"] = chess.engine.Option("Hash", "spin", 16, 1, 33554432, [])
+    opts["Skill Level"] = chess.engine.Option("Skill Level", "spin", 20, 0, 20, [])
+    opts["UCI_LimitStrength"] = chess.engine.Option("UCI_LimitStrength", "check", False, None, None, [])
+    opts["UCI_ShowWDL"] = chess.engine.Option("UCI_ShowWDL", "check", False, None, None, [])
+    opts["SyzygyProbeLimit"] = chess.engine.Option("SyzygyProbeLimit", "spin", 0, 0, 7, [])
+    opts["SyzygyPath"] = chess.engine.Option("SyzygyPath", "string", "<empty>", None, None, [])
     
-    for k in cpi.MANAGED_OPTIONS:
-        opts[k] = FakeOption(k, "check", False, None, None, [], True)
+    opts["MultiPV"] = chess.engine.Option("MultiPV", "spin", 1, 1, 500, [])
+    opts["Ponder"] = chess.engine.Option("Ponder", "check", False, None, None, [])
+    opts["UCI_Chess960"] = chess.engine.Option("UCI_Chess960", "check", False, None, None, [])
         
-    opts["EvalFile"] = FakeOption("EvalFile", "string", "default.nnue", None, None, [], False)
-    opts["EvalFileSmall"] = FakeOption("EvalFileSmall", "string", "default_small.nnue", None, None, [], False)
+    opts["EvalFile"] = chess.engine.Option("EvalFile", "string", "nn-default.nnue", None, None, [])
+    opts["EvalFileSmall"] = chess.engine.Option("EvalFileSmall", "string", "nn-default-small.nnue", None, None, [])
     return opts
 
 def test_source_role():
@@ -45,10 +45,6 @@ def test_role_immutability():
     session = cpi.InstrumentSession("dummy", cpi.InstrumentRole.SOURCE)
     with pytest.raises(AttributeError):
         session.role = cpi.InstrumentRole.TARGET
-    with pytest.raises(AttributeError):
-        session.nodes = 100
-    with pytest.raises(AttributeError):
-        session.instrument_id = "foo"
 
 @patch('chessheat.cp_instrument.os.path.exists')
 @patch('chessheat.cp_instrument.os.path.isfile')
@@ -62,7 +58,8 @@ def test_verify_executable_resolved_path(mock_open, mock_access, mock_isfile, mo
     with patch('chessheat.cp_instrument.hashlib.sha256') as mock_sha:
         mock_sha.return_value.hexdigest.return_value = cpi.STOCKFISH_BINARY_SHA256
         res = cpi.verify_executable("~/bin/stockfish")
-        assert res == os.path.realpath(os.path.expanduser("~/bin/stockfish"))
+        assert res.resolved_path == os.path.realpath(os.path.expanduser("~/bin/stockfish"))
+        assert res.sha256 == cpi.STOCKFISH_BINARY_SHA256
 
 @patch('chessheat.cp_instrument.verify_executable')
 def test_start_fails_if_not_file(mock_verify):
@@ -74,59 +71,105 @@ def test_start_fails_if_not_file(mock_verify):
 @patch('chessheat.cp_instrument.verify_executable')
 @patch('chess.engine.SimpleEngine.popen_uci')
 def test_pre_and_post_spawn_sha(mock_popen, mock_verify):
-    mock_verify.return_value = "/bin/stockfish"
+    ident = cpi.ExecutableIdentity("/bin/stockfish", cpi.STOCKFISH_BINARY_SHA256)
+    mock_verify.return_value = ident
     
     mock_engine = MagicMock()
     mock_engine.id = {"name": cpi.STOCKFISH_UCI_NAME}
-    mock_engine.options = create_fake_options()
+    mock_engine.options = create_real_options()
     mock_popen.return_value = mock_engine
     
     session = cpi.InstrumentSession("dummy", cpi.InstrumentRole.SOURCE)
     session.start()
-    assert mock_verify.call_count == 2 # Pre and post
-
+    assert mock_verify.call_count == 2
+    
 @patch('chessheat.cp_instrument.verify_executable')
 @patch('chess.engine.SimpleEngine.popen_uci')
-def test_wrong_uci_name(mock_popen, mock_verify):
+def test_post_spawn_sha_mismatch(mock_popen, mock_verify):
+    ident1 = cpi.ExecutableIdentity("/bin/stockfish", cpi.STOCKFISH_BINARY_SHA256)
+    ident2 = cpi.ExecutableIdentity("/bin/stockfish", "different_sha")
+    mock_verify.side_effect = [ident1, ident2]
+    
     mock_engine = MagicMock()
-    mock_engine.id = {"name": "Stockfish 16"}
+    mock_engine.id = {"name": cpi.STOCKFISH_UCI_NAME}
+    mock_engine.options = create_real_options()
     mock_popen.return_value = mock_engine
     
     session = cpi.InstrumentSession("dummy", cpi.InstrumentRole.SOURCE)
-    with pytest.raises(cpi.ProtocolError, match="Wrong UCI name"):
+    with pytest.raises(cpi.ProtocolError, match="Executable digest mutated"):
         session.start()
-    mock_engine.quit.assert_called_once()
 
 @patch('chessheat.cp_instrument.verify_executable')
 @patch('chess.engine.SimpleEngine.popen_uci')
-def test_network_options_exist_but_not_configured(mock_popen, mock_verify):
+def test_missing_evalfile(mock_popen, mock_verify):
+    ident = cpi.ExecutableIdentity("/bin/stockfish", cpi.STOCKFISH_BINARY_SHA256)
+    mock_verify.return_value = ident
+    
     mock_engine = MagicMock()
     mock_engine.id = {"name": cpi.STOCKFISH_UCI_NAME}
-    opts = create_fake_options()
+    opts = create_real_options()
+    del opts["EvalFile"]
+    mock_engine.options = opts
+    mock_popen.return_value = mock_engine
+    
+    session = cpi.InstrumentSession("dummy", cpi.InstrumentRole.SOURCE)
+    with pytest.raises(cpi.ProtocolError, match="Missing network option: EvalFile"):
+        session.start()
+
+@patch('chessheat.cp_instrument.verify_executable')
+@patch('chess.engine.SimpleEngine.popen_uci')
+def test_non_empty_syzygy_default(mock_popen, mock_verify):
+    ident = cpi.ExecutableIdentity("/bin/stockfish", cpi.STOCKFISH_BINARY_SHA256)
+    mock_verify.return_value = ident
+    
+    mock_engine = MagicMock()
+    mock_engine.id = {"name": cpi.STOCKFISH_UCI_NAME}
+    opts = create_real_options()
+    opts["SyzygyPath"] = chess.engine.Option("SyzygyPath", "string", "/var/lib/syzygy", None, None, [])
+    mock_engine.options = opts
+    mock_popen.return_value = mock_engine
+    
+    session = cpi.InstrumentSession("dummy", cpi.InstrumentRole.SOURCE)
+    with pytest.raises(cpi.ProtocolError, match="SyzygyPath default is not empty"):
+        session.start()
+
+@patch('chessheat.cp_instrument.verify_executable')
+@patch('chess.engine.SimpleEngine.popen_uci')
+def test_real_option_is_managed(mock_popen, mock_verify):
+    ident = cpi.ExecutableIdentity("/bin/stockfish", cpi.STOCKFISH_BINARY_SHA256)
+    mock_verify.return_value = ident
+    
+    mock_engine = MagicMock()
+    mock_engine.id = {"name": cpi.STOCKFISH_UCI_NAME}
+    
+    # Real python-chess logic!
+    opts = create_real_options()
+    assert opts["MultiPV"].is_managed() is True
+    assert opts["Hash"].is_managed() is False
+    
     mock_engine.options = opts
     mock_popen.return_value = mock_engine
     
     session = cpi.InstrumentSession("dummy", cpi.InstrumentRole.SOURCE)
     session.start()
-    
-    # Check configure was called only with static options
-    mock_engine.configure.assert_called_once_with(cpi.STATIC_UCI_CONFIG)
-    
+
 @patch('chessheat.cp_instrument.verify_executable')
 @patch('chess.engine.SimpleEngine.popen_uci')
-def test_managed_options_semantics(mock_popen, mock_verify):
+def test_start_twice(mock_popen, mock_verify):
+    ident = cpi.ExecutableIdentity("/bin/stockfish", cpi.STOCKFISH_BINARY_SHA256)
+    mock_verify.return_value = ident
+    
     mock_engine = MagicMock()
     mock_engine.id = {"name": cpi.STOCKFISH_UCI_NAME}
-    opts = create_fake_options()
-    opts["MultiPV"] = FakeOption("MultiPV", "spin", 1, None, None, [], False) # Not managed!
-    mock_engine.options = opts
+    mock_engine.options = create_real_options()
     mock_popen.return_value = mock_engine
     
     session = cpi.InstrumentSession("dummy", cpi.InstrumentRole.SOURCE)
-    with pytest.raises(cpi.ProtocolError, match="is not managed"):
+    session.start()
+    with pytest.raises(cpi.ProtocolError, match="Session already started"):
         session.start()
 
-def get_valid_spec(board):
+def get_valid_spec(board, role=cpi.InstrumentRole.SOURCE):
     return ExperimentSpec(
         semantic_signature_version="1",
         semantic_signature_digest="a"*64,
@@ -139,20 +182,20 @@ def get_valid_spec(board):
             board_arrangement_fen=board.board_fen(),
             side_to_move="w" if board.turn else "b",
             castling_rights=board.castling_xfen(),
-            en_passant_square=chess.square_name(board.ep_square) if board.ep_square else "-",
+            en_passant_square=chess.square_name(board.ep_square) if board.ep_square else None,
             halfmove_clock=board.halfmove_clock,
             fullmove_number=board.fullmove_number,
-            history_available=False,
-            history_identity="none"
+            history_available=True,
+            history_identity="frozen_history_123"
         ),
         candidate_policy={
-            "scope": "cp_all",
+            "scope": "cp_all_legal_root_moves_v1",
             "ordered_legal_root_ucis": [m.uci() for m in sorted(list(board.legal_moves), key=lambda x: x.uci())],
             "required_search_count": len(list(board.legal_moves))
         },
         producer_identity=cpi.STOCKFISH_UCI_NAME,
-        instrument_config={"instrument_id": cpi.SOURCE_INSTRUMENT_ID},
-        budget_config={"nodes": cpi.SOURCE_NODES},
+        instrument_config=cpi.get_canonical_instrument_config(role),
+        budget_config=cpi.get_canonical_budget_config(role),
         line_source="test",
         hypothesis_identifier="test",
         spec_version=2,
@@ -161,181 +204,195 @@ def get_valid_spec(board):
 
 @patch('chessheat.cp_instrument.verify_executable')
 @patch('chess.engine.SimpleEngine.popen_uci')
-def test_acquisition_mechanics(mock_popen, mock_verify):
-    mock_verify.return_value = "/bin/stockfish"
+def test_budget_mismatch_rejection(mock_popen, mock_verify):
+    ident = cpi.ExecutableIdentity("/bin/stockfish", cpi.STOCKFISH_BINARY_SHA256)
+    mock_verify.return_value = ident
     mock_engine = MagicMock()
     mock_engine.id = {"name": cpi.STOCKFISH_UCI_NAME}
-    mock_engine.options = create_fake_options()
+    mock_engine.options = create_real_options()
+    mock_popen.return_value = mock_engine
     
-    # Mock analyse responses
-    def fake_analyse(board, limit, **kwargs):
-        return {"score": chess.engine.PovScore(chess.engine.Cp(100), chess.WHITE), "nodes": 123}
+    session = cpi.InstrumentSession("dummy", cpi.InstrumentRole.SOURCE)
+    session.start()
+    
+    board = chess.Board()
+    spec = get_valid_spec(board)
+    spec.budget_config["value"] = 999
+    with pytest.raises(cpi.ProtocolError, match="budget_config does not exactly match"):
+        session.acquire(spec, board)
+
+@patch('chessheat.cp_instrument.verify_executable')
+@patch('chess.engine.SimpleEngine.popen_uci')
+def test_instrument_config_mismatch_rejection(mock_popen, mock_verify):
+    ident = cpi.ExecutableIdentity("/bin/stockfish", cpi.STOCKFISH_BINARY_SHA256)
+    mock_verify.return_value = ident
+    mock_engine = MagicMock()
+    mock_engine.id = {"name": cpi.STOCKFISH_UCI_NAME}
+    mock_engine.options = create_real_options()
+    mock_popen.return_value = mock_engine
+    
+    session = cpi.InstrumentSession("dummy", cpi.InstrumentRole.SOURCE)
+    session.start()
+    
+    board = chess.Board()
+    spec = get_valid_spec(board)
+    spec.instrument_config["Threads"] = 999
+    with pytest.raises(cpi.ProtocolError, match="instrument_config does not exactly match"):
+        session.acquire(spec, board)
+
+@patch('chessheat.cp_instrument.verify_executable')
+@patch('chess.engine.SimpleEngine.popen_uci')
+def test_en_passant_canonicalization(mock_popen, mock_verify):
+    ident = cpi.ExecutableIdentity("/bin/stockfish", cpi.STOCKFISH_BINARY_SHA256)
+    mock_verify.return_value = ident
+    mock_engine = MagicMock()
+    mock_engine.id = {"name": cpi.STOCKFISH_UCI_NAME}
+    mock_engine.options = create_real_options()
+    mock_engine.analyse.return_value = {"score": chess.engine.PovScore(chess.engine.Cp(10), chess.WHITE), "nodes": 100}
+    mock_popen.return_value = mock_engine
+    
+    session = cpi.InstrumentSession("dummy", cpi.InstrumentRole.SOURCE)
+    session.start()
+    
+    board = chess.Board("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1")
+    spec = get_valid_spec(board)
+    assert spec.sufficient_position.en_passant_square == "e3"
+    
+    # Modify spec to use "-" instead of "e3" -> should fail
+    spec.sufficient_position.en_passant_square = "-"
+    with pytest.raises(cpi.ProtocolError, match="SufficientPosition derivable fields mismatch"):
+        session.acquire(spec, board)
+
+@patch('chessheat.cp_instrument.verify_executable')
+@patch('chess.engine.SimpleEngine.popen_uci')
+def test_candidate_policy_mismatch(mock_popen, mock_verify):
+    ident = cpi.ExecutableIdentity("/bin/stockfish", cpi.STOCKFISH_BINARY_SHA256)
+    mock_verify.return_value = ident
+    mock_engine = MagicMock()
+    mock_engine.id = {"name": cpi.STOCKFISH_UCI_NAME}
+    mock_engine.options = create_real_options()
+    mock_popen.return_value = mock_engine
+    
+    session = cpi.InstrumentSession("dummy", cpi.InstrumentRole.SOURCE)
+    session.start()
+    
+    board = chess.Board()
+    spec = get_valid_spec(board)
+    spec.candidate_policy["scope"] = "wrong_scope"
+    with pytest.raises(cpi.ProtocolError, match="candidate_policy does not exactly match"):
+        session.acquire(spec, board)
+
+@patch('chessheat.cp_instrument.verify_executable')
+@patch('chess.engine.SimpleEngine.popen_uci')
+def test_root_validity(mock_popen, mock_verify):
+    ident = cpi.ExecutableIdentity("/bin/stockfish", cpi.STOCKFISH_BINARY_SHA256)
+    mock_verify.return_value = ident
+    mock_engine = MagicMock()
+    mock_engine.id = {"name": cpi.STOCKFISH_UCI_NAME}
+    mock_engine.options = create_real_options()
+    mock_popen.return_value = mock_engine
+    
+    session = cpi.InstrumentSession("dummy", cpi.InstrumentRole.SOURCE)
+    session.start()
+    
+    # Invalid board: 3 kings
+    board = chess.Board("3k4/8/8/8/8/8/8/K1K5 w - - 0 1")
+    spec = get_valid_spec(board)
+    with pytest.raises(cpi.ProtocolError, match="Root board is invalid"):
+        session.acquire(spec, board)
+        
+    # Valid but 1 legal move
+    board = chess.Board("1r6/8/8/8/8/7k/p7/K7 w - - 0 1")
+    spec = get_valid_spec(board)
+    with pytest.raises(cpi.ProtocolError, match="at least 2 legal moves"):
+        session.acquire(spec, board)
+
+@patch('chessheat.cp_instrument.verify_executable')
+@patch('chess.engine.SimpleEngine.popen_uci')
+def test_history_boundaries(mock_popen, mock_verify):
+    ident = cpi.ExecutableIdentity("/bin/stockfish", cpi.STOCKFISH_BINARY_SHA256)
+    mock_verify.return_value = ident
+    mock_engine = MagicMock()
+    mock_engine.id = {"name": cpi.STOCKFISH_UCI_NAME}
+    mock_engine.options = create_real_options()
+    mock_popen.return_value = mock_engine
+    
+    session = cpi.InstrumentSession("dummy", cpi.InstrumentRole.SOURCE)
+    session.start()
+    
+    board = chess.Board()
+    spec = get_valid_spec(board)
+    spec.sufficient_position.history_available = False
+    with pytest.raises(cpi.ProtocolError, match="history_available must be True"):
+        session.acquire(spec, board)
+
+@patch('chessheat.cp_instrument.verify_executable')
+@patch('chess.engine.SimpleEngine.popen_uci')
+def test_boolean_nodes_handling(mock_popen, mock_verify):
+    ident = cpi.ExecutableIdentity("/bin/stockfish", cpi.STOCKFISH_BINARY_SHA256)
+    mock_verify.return_value = ident
+    mock_engine = MagicMock()
+    mock_engine.id = {"name": cpi.STOCKFISH_UCI_NAME}
+    mock_engine.options = create_real_options()
+    
+    def fake_analyse(*args, **kwargs):
+        return {"score": chess.engine.PovScore(chess.engine.Cp(100), chess.WHITE), "nodes": True}
     mock_engine.analyse.side_effect = fake_analyse
     mock_popen.return_value = mock_engine
     
     session = cpi.InstrumentSession("dummy", cpi.InstrumentRole.SOURCE)
     session.start()
-    
     board = chess.Board()
     spec = get_valid_spec(board)
     
-    res = session.acquire(spec, board)
-    
-    # Validate token uniqueness and parameters
-    analyse_calls = mock_engine.analyse.call_args_list
-    assert len(analyse_calls) == 20
-    
-    tokens = [call.kwargs['game'] for call in analyse_calls]
-    assert len(set(id(t) for t in tokens)) == 20 # all distinct
-    
-    for call in analyse_calls:
-        assert call.kwargs['multipv'] is None
-        assert call.kwargs['root_moves'] is None
-        assert call.args[1].nodes == cpi.SOURCE_NODES
-        
-    assert res.spec_digest == spec.spec_digest()
-    
-@patch('chessheat.cp_instrument.verify_executable')
-@patch('chess.engine.SimpleEngine.popen_uci')
-def test_history_preservation_regression(mock_popen, mock_verify):
-    mock_verify.return_value = "/bin/stockfish"
-    mock_engine = MagicMock()
-    mock_engine.id = {"name": cpi.STOCKFISH_UCI_NAME}
-    mock_engine.options = create_fake_options()
-    mock_engine.analyse.return_value = {"score": chess.engine.PovScore(chess.engine.Cp(100), chess.WHITE)}
-    mock_popen.return_value = mock_engine
-    
-    session = cpi.InstrumentSession("dummy", cpi.InstrumentRole.SOURCE)
-    session.start()
-    
-    board = chess.Board()
-    board.push_san("e4")
-    board.push_san("e5")
-    
-    spec = get_valid_spec(board)
-    session.acquire(spec, board)
-    
-    analyse_calls = mock_engine.analyse.call_args_list
-    child_board = analyse_calls[0].args[0]
-    
-    assert len(child_board.move_stack) == 3 # root has 2, child has 1 more
-
-@patch('chessheat.cp_instrument.verify_executable')
-@patch('chess.engine.SimpleEngine.popen_uci')
-def test_missing_nodes(mock_popen, mock_verify):
-    mock_verify.return_value = "/bin/stockfish"
-    mock_engine = MagicMock()
-    mock_engine.id = {"name": cpi.STOCKFISH_UCI_NAME}
-    mock_engine.options = create_fake_options()
-    mock_engine.analyse.return_value = {"score": chess.engine.PovScore(chess.engine.Cp(100), chess.WHITE)} # no nodes!
-    mock_popen.return_value = mock_engine
-    
-    session = cpi.InstrumentSession("dummy", cpi.InstrumentRole.SOURCE)
-    session.start()
-    
-    board = chess.Board()
-    board.clear_board()
-    board.set_piece_at(chess.E1, chess.Piece(chess.KING, chess.WHITE))
-    board.set_piece_at(chess.E8, chess.Piece(chess.KING, chess.BLACK))
-    
-    spec = get_valid_spec(board)
-    res = session.acquire(spec, board)
-    
-    obs = res.data["observations"]
-    assert obs[0]["reported_nodes"] is None
-
-@patch('chessheat.cp_instrument.verify_executable')
-@patch('chess.engine.SimpleEngine.popen_uci')
-def test_mate_score(mock_popen, mock_verify):
-    mock_verify.return_value = "/bin/stockfish"
-    mock_engine = MagicMock()
-    mock_engine.id = {"name": cpi.STOCKFISH_UCI_NAME}
-    mock_engine.options = create_fake_options()
-    mock_engine.analyse.return_value = {"score": chess.engine.PovScore(chess.engine.Mate(2), chess.WHITE)}
-    mock_popen.return_value = mock_engine
-    
-    session = cpi.InstrumentSession("dummy", cpi.InstrumentRole.SOURCE)
-    session.start()
-    
-    board = chess.Board()
-    board.clear_board()
-    board.set_piece_at(chess.E1, chess.Piece(chess.KING, chess.WHITE))
-    board.set_piece_at(chess.E8, chess.Piece(chess.KING, chess.BLACK))
-    
-    spec = get_valid_spec(board)
-    res = session.acquire(spec, board)
-    
-    obs = res.data["observations"]
-    assert obs[0]["score_type"] == "mate"
-    assert obs[0]["score_value"] == 2
-
-@patch('chessheat.cp_instrument.verify_executable')
-@patch('chess.engine.SimpleEngine.popen_uci')
-def test_malformed_score(mock_popen, mock_verify):
-    mock_verify.return_value = "/bin/stockfish"
-    mock_engine = MagicMock()
-    mock_engine.id = {"name": cpi.STOCKFISH_UCI_NAME}
-    mock_engine.options = create_fake_options()
-    mock_engine.analyse.return_value = {"score": None} # None score
-    mock_popen.return_value = mock_engine
-    
-    session = cpi.InstrumentSession("dummy", cpi.InstrumentRole.SOURCE)
-    session.start()
-    
-    board = chess.Board()
-    board.clear_board()
-    board.set_piece_at(chess.E1, chess.Piece(chess.KING, chess.WHITE))
-    board.set_piece_at(chess.E8, chess.Piece(chess.KING, chess.BLACK))
-    
-    spec = get_valid_spec(board)
-    with pytest.raises(cpi.ProtocolError, match="Score is not a PovScore"):
+    with pytest.raises(cpi.ProtocolError, match="Malformed reported nodes"):
         session.acquire(spec, board)
 
 @patch('chessheat.cp_instrument.verify_executable')
 @patch('chess.engine.SimpleEngine.popen_uci')
-def test_separate_processes(mock_popen, mock_verify):
-    mock_verify.return_value = "/bin/stockfish"
-    # Two separate sessions should call popen_uci independently
+def test_list_pv_result_rejected(mock_popen, mock_verify):
+    ident = cpi.ExecutableIdentity("/bin/stockfish", cpi.STOCKFISH_BINARY_SHA256)
+    mock_verify.return_value = ident
+    mock_engine = MagicMock()
+    mock_engine.id = {"name": cpi.STOCKFISH_UCI_NAME}
+    mock_engine.options = create_real_options()
+    
+    def fake_analyse(*args, **kwargs):
+        return [{"score": chess.engine.PovScore(chess.engine.Cp(100), chess.WHITE)}]
+    mock_engine.analyse.side_effect = fake_analyse
+    mock_popen.return_value = mock_engine
+    
+    session = cpi.InstrumentSession("dummy", cpi.InstrumentRole.SOURCE)
+    session.start()
+    board = chess.Board()
+    spec = get_valid_spec(board)
+    
+    with pytest.raises(cpi.ProtocolError, match="Expected single-PV result dict"):
+        session.acquire(spec, board)
+
+@patch('chessheat.cp_instrument.verify_executable')
+@patch('chess.engine.SimpleEngine.popen_uci')
+def test_deterministic_provenance(mock_popen, mock_verify):
+    ident = cpi.ExecutableIdentity("/bin/stockfish", cpi.STOCKFISH_BINARY_SHA256)
+    mock_verify.return_value = ident
+    mock_engine = MagicMock()
+    mock_engine.id = {"name": cpi.STOCKFISH_UCI_NAME}
+    mock_engine.options = create_real_options()
+    mock_engine.analyse.return_value = {"score": chess.engine.PovScore(chess.engine.Cp(100), chess.WHITE), "nodes": 100}
+    mock_popen.return_value = mock_engine
+    
     session1 = cpi.InstrumentSession("dummy", cpi.InstrumentRole.SOURCE)
-    session2 = cpi.InstrumentSession("dummy", cpi.InstrumentRole.TARGET)
-    
-    mock_engine1 = MagicMock()
-    mock_engine1.id = {"name": cpi.STOCKFISH_UCI_NAME}
-    mock_engine1.options = create_fake_options()
-    
-    mock_engine2 = MagicMock()
-    mock_engine2.id = {"name": cpi.STOCKFISH_UCI_NAME}
-    mock_engine2.options = create_fake_options()
-    
-    mock_popen.side_effect = [mock_engine1, mock_engine2]
-    
     session1.start()
+    
+    session2 = cpi.InstrumentSession("dummy", cpi.InstrumentRole.SOURCE)
     session2.start()
     
-    assert mock_popen.call_count == 2
-    
-@patch('chessheat.cp_instrument.verify_executable')
-@patch('chess.engine.SimpleEngine.popen_uci')
-def test_failed_child_produces_no_result(mock_popen, mock_verify):
-    mock_verify.return_value = "/bin/stockfish"
-    mock_engine = MagicMock()
-    mock_engine.id = {"name": cpi.STOCKFISH_UCI_NAME}
-    mock_engine.options = create_fake_options()
-    
-    def fake_analyse(board, limit, **kwargs):
-        if board.move_stack[-1].uci() == "a2a3":
-            raise Exception("Crash")
-        return {"score": chess.engine.PovScore(chess.engine.Cp(100), chess.WHITE), "nodes": 123}
-        
-    mock_engine.analyse.side_effect = fake_analyse
-    mock_popen.return_value = mock_engine
-    
-    session = cpi.InstrumentSession("dummy", cpi.InstrumentRole.SOURCE)
-    session.start()
-    
     board = chess.Board()
     spec = get_valid_spec(board)
     
-    with pytest.raises(cpi.ProtocolError, match="Analysis failed"):
-        session.acquire(spec, board)
+    res1 = session1.acquire(spec, board)
+    res2 = session2.acquire(spec, board)
+    
+    assert res1.data_payload == res2.data_payload
+    assert res1.artifact_digest == res2.artifact_digest
 

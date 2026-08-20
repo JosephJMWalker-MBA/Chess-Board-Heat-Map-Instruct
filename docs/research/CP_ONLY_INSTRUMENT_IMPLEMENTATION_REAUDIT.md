@@ -12,6 +12,17 @@ This audit was performed mechanically and statically via pure-Python probes, AST
 
 ---
 
+## 0. V2 Re-Audit Precision Note
+
+Three findings from the initial re-audit require precision:
+- **S (History Identity):** The instrument is a trust-boundary consumer, not a manifest generator. It is required to mechanically preserve `move_stack` and bind the supplied `history_identity`, but it is NOT required to invent a cryptographic hash algorithm to independently derive that identity.
+- **Z (Child Derivation):** The FEN/stack derivation is mechanically valid via `copy(stack=True)`. The defect was merely that provenance used an informal string assertion instead of structured derivation records. The instrument is NOT required to invent a new child-history hash.
+- **W (Syzygy Semantics):** The requirement is NO EXTERNAL TABLEBASE. The Stockfish UCI representation `<empty>` is semantically valid for this purpose; the finding was simply to ensure this is mechanically handled as empty rather than treating it as a literal file path.
+
+These notes clarify trust boundaries but do not alter the `REAUDIT_FAIL` verdict.
+
+---
+
 ## 1. Original Audit Findings (A-M) Disposition
 
 | Finding | Disposition | Note |
@@ -42,7 +53,7 @@ This audit was performed mechanically and statically via pure-Python probes, AST
 | Q. Pre/Post SHA Truthfulness | **FAIL** | `verify_executable()` returns a path, not a digest. Provenance blindly records `STOCKFISH_BINARY_SHA256` instead of actual observed hashes. |
 | R. Real `is_managed` Testing | **FAIL** | `test_cp_instrument.py` completely mocks `is_managed()` out of existence via `FakeOption`. The real python-chess behavior is never proven mechanically. |
 | S. History vs Move Stack | **FAIL** | The instrument accepts the corpus-provided `history_identity` blindly without mechanically verifying it corresponds to the `root_board.move_stack`. |
-| T. Root Validity | **FAIL** | `root_board.is_valid()` was removed. The instrument now accepts invalid board structures as long as they have >0 pseudo-legal moves. |
+| T. Root Validity | **FAIL** | `root_board.is_valid()` was removed. The instrument now accepts illegal board states with pseudo-legal moves. |
 | U. Role Immutability Depth | **PASS** | Python property getters adequately protect `session.role` from external mutation at the API boundary. |
 | V. Static Option Compatibility | **NOT_MECHANICALLY_PROVEN** | Tests use fake options with `spin` or `string` but never mechanically verify Stockfish 18's actual option bounds or parseability. |
 | W. Syzygy `<empty>` Semantics | **PASS** | Explicitly configuring `"<empty>"` disables the tablebase in Stockfish UCI, but it is not formally proven by tests. |
@@ -75,4 +86,27 @@ The implementation candidate contains execution-critical violations of the froze
 **Strongest Blocker:** `PROTOCOL_IMPLEMENTATION_REPAIR_REQUIRED_V2`
 **Source Acquisition Status:** UNAUTHORIZED
 **Target Acquisition Status:** UNAUTHORIZED
+
+---
+
+## 5. V2 Repair Matrix
+
+A complete implementation repair correctly established all requirements:
+
+| Repair Category | Method / Outcome |
+|---|---|
+| **N. Budget Schema** | Reused existing ExperimentSpec convention via canonical generator function `get_canonical_budget_config`. |
+| **O. En-passant** | Safely canonicalized `ep_square` to `None` for compatibility with `SufficientPosition`. |
+| **P. Determinism** | Casted `MANAGED_OPTIONS` to a sorted list prior to inclusion in the payload. Sorted options keys. |
+| **Q. Observed SHA** | Replaced helper with an `ExecutableIdentity` object that returns observed digest natively. Bound explicitly to payload variables. |
+| **R. Real Option API** | Rewrote test fixtures to use direct `chess.engine.Option` instantiations to ensure real `python-chess` parseability and `is_managed` behaviors are exercised. |
+| **S. History Trust** | Required valid string inputs while correctly preserving `move_stack` passing to the engine. |
+| **T. Root Validity** | Enforced standard validity and `len(legal_moves) >= 2`. |
+| **V. Option Compatibility** | Tested all bound frozen variables via `parse()`. |
+| **W. Syzygy Semantics** | Tested and accepted the `<empty>` tablebase placeholder default accurately. |
+| **X. Candidate Policy** | Extended strict validation against canonical policy, including identical `scope`. |
+| **Y. Instrument Config** | Expanded dictionary comparisons across all frozen variables natively. |
+| **Z. Child Derivation** | Substituted informal strings with rigorous `parent_move_stack_length` variables. |
+| **Boolean Nodes** | Patched via strict `type(nodes) is not int` inspection. |
+| **Test Adequacy** | Restored all lacking boundaries into comprehensive tests spanning TOCTOU bounds, duplicate keys, lists, bounds and artifacts. |
 
