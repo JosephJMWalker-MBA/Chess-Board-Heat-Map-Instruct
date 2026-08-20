@@ -778,7 +778,7 @@ Keep bounded-human decision complexity outside objective Heat.
 
 A future session should begin by inspecting the repository HEAD.
  
- IMPLEMENTATION CANDIDATE FOR RE-AUDIT:
+ IMPLEMENTATION CANDIDATE AUDITED:
  ```text
  dfd4845681d2ea765da29c12971ce3cce24dc124
  ```
@@ -789,7 +789,7 @@ A future session should begin by inspecting the repository HEAD.
  - documentation-only / workspace-cleanup commits do not change the audited implementation candidate;
  - if implementation code changed after the candidate, audit the newer implementation commit instead.
  
- The immediate next task is resolving the first scientific dependency: `INDEPENDENT_PROTOCOL_IMPLEMENTATION_REAUDIT_REQUIRED`.
+ The immediate next task is resolving the first scientific dependency: `PROTOCOL_IMPLEMENTATION_REPAIR_REQUIRED_V2`.
 
 Then:
 
