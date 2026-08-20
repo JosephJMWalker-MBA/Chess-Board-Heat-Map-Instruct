@@ -33,7 +33,7 @@ All execution-critical frozen instrument requirements are sufficiently mechanica
 | Child Derivation Informality | FAIL | Explicit `copy(stack=True)` enforces S_CHILD derivation | PASS |
 | Syzygy `<empty>` Precision | PARTIAL | `python-chess` literal `<empty>` equates formally to empty tablebase path in Stockfish | PASS |
 | Process Leakage | FAIL | Independent fake MagicMock process objects mechanically verified | PASS |
-| Failed-Child Continuation | FAIL | Re-audit V3 asserts exactly `call_count == 3` halting correctly after failure | PASS |
+| Failed-Child Continuation | FAIL | Re-audit V3 asserts exactly `call_count == 3` halting acquisition correctly after failure | PASS |
 | Missing Score/Node Types | FAIL | Exact `test_score_output_proofs` mapping established | PASS |
 | Lifecycle Assertions | FAIL | `test_failed_child_acquisition` + startup teardown asserts `mock_engine.quit()` | PASS |
 
@@ -68,7 +68,7 @@ All execution-critical frozen instrument requirements are sufficiently mechanica
 
 ### 6. Failure / Lifecycle
 - **Requirement:** Fail-closed process. Startup, teardown, mid-acquisition failure halts all operation.
-- **Evidence:** `test_failed_child_acquisition` ensures single immediate quit. `test_configuration_failure_cleanup` proves session destruction.
+- **Evidence:** `test_failed_child_acquisition` proves immediate acquisition abort: the third analyse call fails, no fourth/later child call occurs, and no partial ExperimentResult escapes. `test_configuration_failure_cleanup` proves session destruction. Hard acquisition abort after child failure; startup/configuration failures separately prove process teardown.
 - **Status:** PASS
 
 ### 7. Authoritative Provenance
@@ -87,7 +87,7 @@ No independent flaws or logical regressions were discovered beyond historical fi
 
 **Limitations:**
 - Actual implementation coverage feasibility over the July 2026 Corpus depends on future empirical testing, which may uncover execution-time timeouts outside the instrument's logic bounds.
-- Source feasibility analysis is structurally authorized but pending exact execution.
+- The audited instrument makes SOURCE_ONLY_FEASIBILITY_COVERAGE_ACQUISITION the next stage eligible for separate authorization. Source acquisition has not yet been authorized or executed.
 
 **Next Immediate Stage:**
 `SOURCE_ONLY_FEASIBILITY_COVERAGE_ACQUISITION`
@@ -98,3 +98,12 @@ No independent flaws or logical regressions were discovered beyond historical fi
 - `P_NUMERIC_ENCODING_NOT_YET_FROZEN`
 - `LEARNER_FAMILY_NOT_YET_FROZEN`
 Target acquisition and Model training remain strictly UNAUTHORIZED.
+
+## Post-Audit Precision Note
+
+- this correction is documentation-only;
+- V3_REAUDIT_PASS is unchanged;
+- no production/test behavior changed;
+- child analysis failure aborts the current acquisition without automatically destroying the long-lived engine session;
+- startup/configuration failure does tear the spawned engine down;
+- source-only feasibility is next and eligible for separate authorization, but remains unauthorized until explicitly approved.
