@@ -41,19 +41,24 @@ This was an independent, hostile re-audit covering ONLY the V2 implementation la
 - **Verdict:** PASS
 - **Details:** `__init__` fails closed on blank lines, schema mismatch, corrupt payloads, and out-of-order roots. `acquire` failure guarantees `fsync` and complete session teardown (`close`) sequentially. No ghost sessions or incomplete envelopes are leaked.
 
-### 6. Coverage/Reporting & Known Hostile Check (PASS)
-- **Verdict:** PASS (with non-material limitation)
-- **Details:** Zero-pair count accurately processes `pairs == 0` equivalent to `C < 2`. The median logic is mathematically correct. However, `get_median()` was inadvertently shifted to module scope in a way that captured the subsequent `report_dist` function definition and its invocations within its body. Because `get_median` always returns before reaching them, the distributions (min/median/p90/p95/max) and the options surface digest print statement are strictly unreachable.
-- **Materiality:** This defect *solely* affects the standard output stream of the aggregator script. The acquisition payload generation (the true evidence) remains perfectly valid, the options digest is strictly enforced during aggregation validation, and the core counts (legal alts, CP alts, zeros) are still accurately printed. Because the frozen feasibility stage correctly produces its required evidence artifacts, this reporting defect does not mandate a V3 acquisition-infrastructure replacement.
+### 6. Coverage/Reporting & Known Hostile Check (FAIL)
+- Core acquisition counts before the unreachable block are computable.
+- Zero-pair accounting and median function mathematics are correct.
+- However, the required distribution reporting and final options-surface digest reporting are unreachable because they are nested after an unconditional return in `get_median()`.
+- This is an executable defect in the frozen source-feasibility evidence path.
+- It does not invalidate future raw SOURCE ExperimentResults, but it prevents the stage's required evidence report from being reproducibly produced by the committed implementation.
+
+**Materiality:** EXECUTION-BLOCKING FOR SOURCE FEASIBILITY STAGE COMPLETION
 
 ### 7. Test Adequacy (PASS)
 - **Verdict:** PASS
 - **Details:** All claimed tests (options-surface missing/empty/mismatched, move-order canonical mismatch, root-failure session count, C=1 zero-pair checks) assert explicitly against correct boundary errors.
 
 ## Overall Verdict
-**Verdict:** `SOURCE_ACQUISITION_V2_REAUDIT_PASS`
-**Next Status:** `AUTHORIZED_CORRECTED_SOURCE_ONLY_FEASIBILITY_COVERAGE_EXECUTION`
-**Blocker:** None for Source execution.
+**Verdict:** `SOURCE_ACQUISITION_V2_REAUDIT_FAIL`
+The V2 acquisition infrastructure is substantially validated, and the only current execution blocker identified by this re-audit is the coverage/report control-flow defect.
+**Next Status:** `SOURCE_ACQUISITION_V2_REAUDIT_FAILED`
+**Blocker:** `SOURCE_ACQUISITION_IMPLEMENTATION_REPAIR_REQUIRED_V3`
 
 ## Explicit Non-Authorization
 - The underlying `CP` instrument remains at `V3_REAUDIT_PASS`.

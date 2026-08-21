@@ -780,7 +780,7 @@ A future session should begin by inspecting the repository HEAD.
  
  V3 RE-AUDIT VERDICT: PASS
  
-The immediate next task is resolving the first scientific dependency: `NONE_FOR_SOURCE`.
+The immediate next task is resolving the first scientific dependency: `SOURCE_ACQUISITION_IMPLEMENTATION_REPAIR_REQUIRED_V3`.
 
 Then:
 
