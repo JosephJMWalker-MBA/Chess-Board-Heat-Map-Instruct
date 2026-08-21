@@ -3,7 +3,7 @@
 ```json
 {
   "manifest_schema": "CP_ROOT_POPULATION_JULY_2026_MANIFEST_V2",
-  "manifest_digest": "15246bcd00911933b9b51055a3cde48fdd504df5652cbcc61bd988ffa5928d0b",
+  "manifest_digest": "8983e7314a44e85be63c953de0a60666774314b0a95f15bb1e1551a18390a46e",
   "registry_digest": "19744b0679bdda90f120624c705077a5ccd163a4238dd2f524a284c75732c5ee",
   "record_count": 40038,
   "admitted_root_count": 33859,
@@ -12,7 +12,7 @@
   "game_url_present_count": 40038,
   "game_url_eq_site_count": 23710,
   "game_url_neq_site_count": 16328,
-  "software_revision": "df14dc41215b59ce2ca8c81c4f68258b2fe2b1d2",
+  "software_revision": "86cb8752f5392f37987a3010e6d4fa09e8d671c2",
   "corpus_checksum": "714d0eb99f99fca8d791142038b6c59b5ca6a51b3339bd3891a92f4bdffcbf0c",
   "parser_identity": "python-chess",
   "parser_version": "1.11.2",
