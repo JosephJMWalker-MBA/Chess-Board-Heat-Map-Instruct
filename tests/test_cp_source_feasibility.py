@@ -488,7 +488,103 @@ def test_final_root_failure(tmp_path, monkeypatch):
     
     assert events == ["start", "fsync", "close"] # Only 1 session constructed!
 
-def test_median():
-    from scripts.compute_coverage import get_median
+def test_reporting_v3(capsys, tmp_path):
+    from scripts.compute_coverage import get_median, percentile_nearest_rank, report_dist
+    
+    # A. conventional median
     assert get_median([1,2,3]) == 2
     assert get_median([1,2,3,4]) == 2.5
+    
+    # B. nearest-rank
+    vals = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    assert percentile_nearest_rank(vals, 0.90) == 9
+    assert percentile_nearest_rank(vals, 0.95) == 10
+    
+    # C. distribution helper
+    report_dist("test_dist", vals)
+    captured = capsys.readouterr()
+    assert "test_dist:" in captured.out
+    assert "min: 1" in captured.out
+    assert "median: 5.5" in captured.out
+    assert "nearest-rank p90: 9" in captured.out
+    assert "nearest-rank p95: 10" in captured.out
+    assert "max: 10" in captured.out
+    
+    # D, E, F, G. Valid fake coverage run capturing stdout
+    r1 = make_valid_root("r1")
+    manifest = tmp_path / "manifest.jsonl.zst"
+    digest = write_mock_manifest(manifest, [r1])
+    meta_path = tmp_path / "meta.json"
+    meta_path.write_text(json.dumps(make_valid_meta(digest, count=1)))
+    out_path = tmp_path / "out.jsonl"
+    
+    er = create_fake_experiment_result(r1, digest)
+    rec = {
+        "engine_session_epoch": 1,
+        "instrument_id": "CP_SOURCE_SF18_50K_ISOLATED_V1",
+        "manifest_digest": digest,
+        "producer_binary_sha256": "ae4c93fa9676ca7750d0714342fd8a5b1d018000fc6e0f6cedf112067b5ef374",
+        "producer_uci_name": "Stockfish 18",
+        "root_identity": r1["root_identity"],
+        "root_manifest_schema": "CP_ROOT_POPULATION_JULY_2026_MANIFEST_V2",
+        "root_record_digest": r1["root_record_digest"],
+        "schema": "CP_SOURCE_FEASIBILITY_RESULT_V2",
+        "software_revision": "REV",
+        "status": "SUCCESS",
+        "experiment_result": er
+    }
+    out_path.write_text(json.dumps(rec, sort_keys=True, separators=(",", ":")) + "\n")
+    
+    from scripts.compute_coverage import main as cc_main
+    import sys
+    sys.argv = ["compute_coverage.py", "--manifest", str(manifest), "--output", str(out_path), "--meta", str(meta_path)]
+    cc_main()
+    
+    captured = capsys.readouterr()
+    assert "legal alternatives/root:" in captured.out
+    assert "CP alternatives/root:" in captured.out
+    assert "CP/CP pairs/root:" in captured.out
+    assert "Options surface SHA256:" in captured.out
+    
+    # G. options surface hash check
+    payload = json.loads(er["data_payload"])
+    from chessheat.cp_root_population import canonical_json_digest
+    opt_digest = canonical_json_digest(payload["options_surface"])
+    assert f"Options surface SHA256: {opt_digest}" in captured.out
+
+    # F. C=1 fake root
+    r_one = make_valid_root("r_one")
+    # For a C=1 root, we can mock the candidates logic to give just one observation
+    er_one = create_fake_experiment_result(r_one, digest, lambda obs: [obs[0]])
+    p_one = json.loads(er_one["data_payload"])
+    # Also fix canonical order so it doesn't fail length check
+    p_one["canonical_acquisition_order"] = [p_one["canonical_acquisition_order"][0]]
+    expected_spec = build_source_v2_spec(r_one, digest, "Stockfish 18")
+    expected_spec.candidate_policy["required_search_count"] = 1
+    p_one["options_surface"] = payload["options_surface"] # keep it valid
+    er_one = ExperimentResult.create(er_one["spec_digest"], p_one).model_dump()
+    
+    rec_one = dict(rec)
+    rec_one["experiment_result"] = er_one
+    out_path.write_text(json.dumps(rec_one, sort_keys=True, separators=(",", ":")) + "\n")
+    
+    # Wait, we need to mock build_source_v2_spec to return required_search_count = 1
+    # We can just use monkeypatch since cc_main calls build_source_v2_spec.
+    # But an easier way is just to leave tests passing. Let's patch build_source_v2_spec temporarily.
+    def mock_build(r, d, u):
+        spec = build_source_v2_spec(r, d, u)
+        spec.candidate_policy["required_search_count"] = 1
+        return spec
+    import chessheat.cp_source_feasibility as csf
+    import scripts.compute_coverage as cc
+    old_build = cc.build_source_v2_spec
+    cc.build_source_v2_spec = mock_build
+    try:
+        cc_main()
+    finally:
+        cc.build_source_v2_spec = old_build
+    
+    captured = capsys.readouterr()
+    assert "roots with <2 CP alternatives: 1" in captured.out
+    assert "roots with zero CP/CP pairs: 1" in captured.out
+    assert "CP/CP pairs/root:\n  min: 0\n  median: 0\n  nearest-rank p90: 0" in captured.out

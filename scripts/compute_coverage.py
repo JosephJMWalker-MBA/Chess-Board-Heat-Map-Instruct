@@ -144,30 +144,30 @@ def main():
     print(f"roots with zero CP/CP pairs: {roots_zero_cp}")
     print(f"total CP/CP unordered pairs: {total_cp_pairs}")
     
-def get_median(vals):
-    n = len(vals)
-    if n % 2 == 1:
-        return vals[n//2]
-    return (vals[n//2 - 1] + vals[n//2]) / 2.0
-
-    def report_dist(name, vals):
-        if not vals:
-            print(f"{name}: N/A")
-            return
-        vals_sorted = sorted(vals)
-        print(f"{name}:")
-        print(f"  min: {vals_sorted[0]}")
-        print(f"  median: {get_median(vals_sorted)}")
-        print(f"  nearest-rank p90: {percentile_nearest_rank(vals, 0.90)}")
-        print(f"  nearest-rank p95: {percentile_nearest_rank(vals, 0.95)}")
-        print(f"  max: {vals_sorted[-1]}")
-
     report_dist("legal alternatives/root", legal_alts_per_root)
     report_dist("CP alternatives/root", cp_alts_per_root)
     report_dist("CP/CP pairs/root", pairs_per_root)
     
     if options_digests:
         print(f"Options surface SHA256: {list(options_digests)[0]}")
+
+def get_median(vals):
+    n = len(vals)
+    if n % 2 == 1:
+        return vals[n//2]
+    return (vals[n//2 - 1] + vals[n//2]) / 2.0
+
+def report_dist(name, vals):
+    if not vals:
+        print(f"{name}: N/A")
+        return
+    vals_sorted = sorted(vals)
+    print(f"{name}:")
+    print(f"  min: {vals_sorted[0]}")
+    print(f"  median: {get_median(vals_sorted)}")
+    print(f"  nearest-rank p90: {percentile_nearest_rank(vals, 0.90)}")
+    print(f"  nearest-rank p95: {percentile_nearest_rank(vals, 0.95)}")
+    print(f"  max: {vals_sorted[-1]}")
 
 if __name__ == "__main__":
     main()
