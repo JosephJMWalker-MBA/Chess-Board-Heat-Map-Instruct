@@ -308,7 +308,7 @@ Execution remains blocked.
  SOURCE_ONLY_FEASIBILITY_COVERAGE_ACQUISITION
  ```
  
- The immediate next task is resolving the first scientific dependency: `INDEPENDENT_SOURCE_ACQUISITION_REAUDIT_V2_REQUIRED`.
+ The immediate next task is resolving the first scientific dependency: `NONE_FOR_SOURCE`.
 
 No target acquisition or model training is authorized yet.
  
