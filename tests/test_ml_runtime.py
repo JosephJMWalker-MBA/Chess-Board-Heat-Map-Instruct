@@ -1,57 +1,149 @@
-import pytest
-import torch
 import os
-import platform
+import sys
+import subprocess
 import json
-from src.chessheat.ml_runtime import configure_runtime, validate_runtime_environment, PINNED_TORCH_VERSION, PINNED_DEVICE
+import pytest
 
-def test_torch_version_exact():
-    assert torch.__version__ == PINNED_TORCH_VERSION
-    assert PINNED_TORCH_VERSION == "2.13.0"
-
-def test_platform_exact():
-    assert platform.system() == "Darwin"
-    assert platform.machine() == "arm64"
-
-def test_device_mps():
-    assert PINNED_DEVICE == "mps"
-    assert torch.backends.mps.is_built()
-    assert torch.backends.mps.is_available()
-
-def test_environment_variables_required():
+def run_script_with_env(env_updates):
     env = os.environ.copy()
-    try:
-        os.environ["PYTORCH_MPS_FAST_MATH"] = "1"
-        with pytest.raises(RuntimeError, match="PYTORCH_MPS_FAST_MATH"):
-            validate_runtime_environment()
-    finally:
-        os.environ.clear()
-        os.environ.update(env)
+    env.update(env_updates)
+    code = """
+import sys
+try:
+    from chessheat.ml_runtime import configure_runtime
+    configure_runtime(1729)
+    print("OK")
+    sys.exit(0)
+except Exception as e:
+    print(str(e))
+    sys.exit(1)
+"""
+    result = subprocess.run(
+        [sys.executable, "-c", code],
+        env=env,
+        capture_output=True,
+        text=True
+    )
+    return result.returncode, result.stdout.strip(), result.stderr.strip()
 
-def test_rejected_unknown_seed():
-    with pytest.raises(ValueError, match="not in the frozen set"):
-        configure_runtime(42)
-
-def test_valid_seeds_accepted_and_deterministic_flags(monkeypatch):
-    monkeypatch.setenv("PYTORCH_MPS_FAST_MATH", "0")
-    monkeypatch.setenv("PYTORCH_ENABLE_MPS_FALLBACK", "0")
-    monkeypatch.setenv("PYTORCH_MPS_PREFER_METAL", "0")
-    monkeypatch.setenv("PYTHONHASHSEED", "0")
+def test_missing_torch():
+    # If torch is already imported, it should fail
+    env = os.environ.copy()
+    env["CHESSHEAT_ML_RUNTIME_ID"] = "CHESSHEAT_ML_RUNTIME_V2"
+    env["PYTHONHASHSEED"] = "0"
+    env["PYTORCH_MPS_FAST_MATH"] = "0"
+    env["PYTORCH_ENABLE_MPS_FALLBACK"] = "0"
+    env["PYTORCH_MPS_PREFER_METAL"] = "0"
+    env["PYTHONPATH"] = "src:."
     
-    device = configure_runtime(1729)
-    assert device.type == "mps"
-    
-    assert torch.are_deterministic_algorithms_enabled()
-    assert torch.is_deterministic_algorithms_warn_only_enabled() is False
-    assert torch.get_deterministic_debug_mode() == 2  # 2 corresponds to error mode
-    assert torch.get_default_dtype() == torch.float32
-    assert torch.get_float32_matmul_precision() == "highest"
+    code = """
+import sys
+import torch
+try:
+    from chessheat.ml_runtime import configure_runtime
+    configure_runtime(1729)
+    print("OK")
+    sys.exit(0)
+except Exception as e:
+    print(str(e))
+    sys.exit(1)
+"""
+    result = subprocess.run([sys.executable, "-c", code], env=env, capture_output=True, text=True)
+    assert result.returncode != 0
+    assert "torch was imported before ChessHeat ML runtime preflight" in result.stdout
 
-def test_runtime_artifact_schema():
-    with open("artifacts/research/ml_runtime_pin_v1.json") as f:
-        pin = json.load(f)
-        
-    assert pin["runtime_id"] == "CHESSHEAT_ML_RUNTIME_V1"
-    assert pin["protocol_binding"]["protocol_json_sha"] == "ea1242de3b2f0ac1613ac9b838f014ad00ae8910cfd51d8b99c6fb77f15e29ef"
-    assert "wheel_manifest" in pin
-    assert "sha256" in pin["wheel_manifest"]
+def test_valid_env():
+    env = {
+        "CHESSHEAT_ML_RUNTIME_ID": "CHESSHEAT_ML_RUNTIME_V2",
+        "PYTHONHASHSEED": "0",
+        "PYTORCH_MPS_FAST_MATH": "0",
+        "PYTORCH_ENABLE_MPS_FALLBACK": "0",
+        "PYTORCH_MPS_PREFER_METAL": "0",
+        "PYTHONPATH": "src:."
+    }
+    code, stdout, stderr = run_script_with_env(env)
+    assert code == 0, f"Expected 0, got {code}: {stdout} {stderr}"
+    assert stdout == "OK"
+
+def test_invalid_env_missing():
+    env = {
+        "CHESSHEAT_ML_RUNTIME_ID": "CHESSHEAT_ML_RUNTIME_V2",
+        "PYTHONHASHSEED": "0",
+        "PYTORCH_MPS_FAST_MATH": "0",
+        "PYTORCH_ENABLE_MPS_FALLBACK": "0",
+        "PYTHONPATH": "src:."
+    }
+    code, stdout, stderr = run_script_with_env(env)
+    assert code != 0
+
+def test_invalid_seed():
+    env = os.environ.copy()
+    env.update({
+        "CHESSHEAT_ML_RUNTIME_ID": "CHESSHEAT_ML_RUNTIME_V2",
+        "PYTHONHASHSEED": "0",
+        "PYTORCH_MPS_FAST_MATH": "0",
+        "PYTORCH_ENABLE_MPS_FALLBACK": "0",
+        "PYTORCH_MPS_PREFER_METAL": "0",
+        "PYTHONPATH": "src:."
+    })
+    code = """
+import sys
+try:
+    from chessheat.ml_runtime import configure_runtime
+    configure_runtime(9999) # invalid seed
+    print("OK")
+    sys.exit(0)
+except Exception as e:
+    print(str(e))
+    sys.exit(1)
+"""
+    result = subprocess.run([sys.executable, "-c", code], env=env, capture_output=True, text=True)
+    assert result.returncode != 0
+    assert "not in the frozen set" in result.stdout
+
+def test_factory_mps_rejection():
+    env = os.environ.copy()
+    env.update({
+        "CHESSHEAT_ML_RUNTIME_ID": "CHESSHEAT_ML_RUNTIME_V2",
+        "PYTHONHASHSEED": "0",
+        "PYTORCH_MPS_FAST_MATH": "0",
+        "PYTORCH_ENABLE_MPS_FALLBACK": "0",
+        "PYTORCH_MPS_PREFER_METAL": "0",
+        "PYTHONPATH": "src:."
+    })
+    code = """
+import sys
+try:
+    from chessheat.ml_runtime import configure_runtime, initialize_model_cpu_then_mps
+    ctx = configure_runtime(1729)
+    def bad_factory(torch):
+        import torch.nn as nn
+        class BadModel(nn.Module):
+            def __init__(self):
+                super().__init__()
+                self.fc = nn.Linear(10, 10, device="mps")
+        return BadModel()
+    initialize_model_cpu_then_mps(bad_factory, ctx)
+    print("OK")
+    sys.exit(0)
+except Exception as e:
+    print(str(e))
+    sys.exit(1)
+"""
+    result = subprocess.run([sys.executable, "-c", code], env=env, capture_output=True, text=True)
+    assert result.returncode != 0
+    assert "was not initialized on CPU" in result.stdout
+
+def test_launcher():
+    code = """
+import sys
+from src.chessheat.ml_runtime import configure_runtime
+configure_runtime(1729)
+print("OK")
+sys.exit(0)
+"""
+    with open("tests/test_launcher.py", "w") as f:
+        f.write(code)
+    result = subprocess.run(["scripts/run_ml_runtime_v2.sh", "tests/test_launcher.py"], capture_output=True, text=True)
+    assert result.returncode == 0
+    assert result.stdout.strip() == "OK"

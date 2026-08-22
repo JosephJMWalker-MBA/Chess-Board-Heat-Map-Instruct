@@ -1,0 +1,104 @@
+{
+  "critical_runtime_code_hashes": {
+    "artifacts/research/ml_runtime_package_lock_v2.json": "2127b9709ef8786f47b9306040a56706ff3a7f6535d2439d692c67bac5fac54d",
+    "requirements/ml-runtime-v2.txt": "79ea33529376312052c7f98d0e19e812029697d4ff15a2e93106f94f023bf7c9",
+    "scripts/run_ml_runtime_v2.sh": "cd7efbc5f97a6790c65fa55aa1be3a45f94e24b8bc29920d9923511ac20edd0b",
+    "scripts/validate_ml_runtime_v2.py": "b0608f445e899a960e6bd6c1f1029d94f5ad8f9d9526a7138e5781f681ff55da",
+    "src/chessheat/ml_runtime.py": "8ecab5dc6c174e01caf69efa7cb1b8fd5d0b9582cd9f503ec28cf1d228439b6b"
+  },
+  "execution_rules": {
+    "adam_complete_runtime_settings": {
+      "amsgrad": false,
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "capturable": false,
+      "differentiable": false,
+      "eps": 1e-08,
+      "foreach": null,
+      "fused": null,
+      "lr": 0.001,
+      "maximize": false,
+      "weight_decay": 1e-05
+    },
+    "canonical_launcher": "scripts/run_ml_runtime_v2.sh",
+    "cpu_initialization_path": "Instantiate model on CPU. Verify all parameters on CPU. Move to MPS. Verify all parameters on MPS.",
+    "deterministic_flags": {
+      "default_dtype": "torch.float32",
+      "deterministic_debug_mode": "error",
+      "float32_matmul_precision": "highest",
+      "use_deterministic_algorithms": true,
+      "warn_only": false
+    },
+    "frozen_seeds": [
+      1729,
+      2718,
+      31415,
+      65537,
+      104729
+    ],
+    "mps_transfer_point": "After initialization, before optimizer creation.",
+    "optimizer_construction_order": "Adam constructed from MPS parameters.",
+    "pre_import_environment_contract": {
+      "CHESSHEAT_ML_RUNTIME_ID": "CHESSHEAT_ML_RUNTIME_V2",
+      "PYTHONHASHSEED": "0",
+      "PYTORCH_ENABLE_MPS_FALLBACK": "0",
+      "PYTORCH_MPS_FAST_MATH": "0",
+      "PYTORCH_MPS_PREFER_METAL": "0"
+    }
+  },
+  "hardware_identity": {
+    "chip": "Apple M4",
+    "machine": "arm64",
+    "memory_bytes": 17179869184,
+    "model_identifier": "Mac16,10"
+  },
+  "lineage": {
+    "protocol": {
+      "audit_sha": "ac26f3ae3c4f1f04e1fb5cb54a58a98882a4f368",
+      "id": "CP_REPRESENTATION_EFFICIENCY_PROTOCOL_V7",
+      "implementation_sha": "bf113817621894034929d9aa89b83dec14c35e69",
+      "json_sha": "ea1242de3b2f0ac1613ac9b838f014ad00ae8910cfd51d8b99c6fb77f15e29ef"
+    },
+    "runtime_v1_audit": "fe5d6c7208ad0adbb4fd57cb9b48c065637a1872",
+    "runtime_v1_implementation": "20e77095f8c188a9d2694451fd4e9d0e0c91dd64"
+  },
+  "os_identity": {
+    "build": "25G83",
+    "kernel_release": "25.6.0",
+    "name": "macOS",
+    "product_version": "26.6.2"
+  },
+  "package_paths": {
+    "package_freeze_path": "artifacts/research/ml_runtime_pip_freeze_v1.txt",
+    "package_freeze_sha": "1330debffc73292cd27d72f92eda2b1d652165a4952ceb92a8ab828cc665fc30",
+    "package_lock_path": "artifacts/research/ml_runtime_package_lock_v2.json",
+    "package_lock_sha": "2127b9709ef8786f47b9306040a56706ff3a7f6535d2439d692c67bac5fac54d",
+    "wheel_manifest_path": "artifacts/research/ml_runtime_wheel_manifest_v1.json",
+    "wheel_manifest_sha": "6427cb2a43e5a1d3971933ef2a246b1df4af6b591c047c9d7ccd4f4eb4cf24ec"
+  },
+  "python_identity": {
+    "executable_sha256": "542c879fdc2cfe0be223e4729082bac529780d90c6d811c853de852765b35a35",
+    "implementation": "CPython",
+    "soabi": "cpython-313-darwin",
+    "version": "3.13.5"
+  },
+  "runtime_id": "CHESSHEAT_ML_RUNTIME_V2",
+  "status": {
+    "chess_data_model_training": "no",
+    "source": "untouched",
+    "target": "unauthorized"
+  },
+  "torch_identity": {
+    "device": "mps",
+    "git_version": "cf30153c4c131c8164ee7798e5022d810682e2cb",
+    "version": "2.13.0"
+  },
+  "validation_evidence": {
+    "legacy_v1_model_hash_equivalence": "PASS",
+    "root_weighted_loss_evidence": "PASS",
+    "short_batch_evidence": "PASS",
+    "v2_extended_hashes_path": "artifacts/research/ml_runtime_validation_hashes_v2.json"
+  }
+}
