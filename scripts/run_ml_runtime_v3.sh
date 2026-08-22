@@ -1,0 +1,18 @@
+#!/bin/sh
+set -eu
+
+SCRIPT_DIR=$(dirname "$0")
+ROOT=$(cd "$SCRIPT_DIR/.." && pwd)
+
+export CHESSHEAT_ML_RUNTIME_ID=CHESSHEAT_ML_RUNTIME_V3
+export PYTHONHASHSEED=0
+export PYTORCH_MPS_FAST_MATH=0
+export PYTORCH_ENABLE_MPS_FALLBACK=0
+export PYTORCH_MPS_PREFER_METAL=0
+
+unset PYTHONPATH
+export PYTHONPATH="$ROOT/src:$ROOT"
+export PYTHONNOUSERSITE=1
+export CHESSHEAT_REPO_ROOT="$ROOT"
+
+exec "$ROOT/.venv/bin/python" "$@"

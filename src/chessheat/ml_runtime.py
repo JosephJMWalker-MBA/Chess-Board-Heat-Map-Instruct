@@ -21,11 +21,57 @@ def _get_system_info(cmd: list[str]) -> str:
     except Exception:
         return ""
 
+
+def validate_canonical_import_path():
+    expected_root = os.environ.get("CHESSHEAT_REPO_ROOT")
+    if not expected_root:
+        raise RuntimeError("CHESSHEAT_REPO_ROOT not set")
+    expected_path = pathlib.Path(expected_root).resolve() / "src" / "chessheat" / "ml_runtime.py"
+    actual_path = pathlib.Path(__file__).resolve()
+    if actual_path != expected_path:
+        raise RuntimeError(f"Canonical import path mismatch. Expected {expected_path}, got {actual_path}")
+
+def validate_package_lock_v3():
+    root = pathlib.Path(os.environ.get("CHESSHEAT_REPO_ROOT", "."))
+    lock_path = root / "artifacts" / "research" / "ml_runtime_package_lock_v3.json"
+    with open(lock_path) as f:
+        lock_data = json.load(f)
+    
+    # Check that this lock file exactly matches expected (to be checked by code lock)
+    for pkg, expected_version in lock_data.items():
+        try:
+            actual_version = importlib.metadata.version(pkg)
+            if actual_version != expected_version:
+                raise RuntimeError(f"Package {pkg} version mismatch. Expected {expected_version}, got {actual_version}")
+        except importlib.metadata.PackageNotFoundError:
+            raise RuntimeError(f"Package {pkg} is missing")
+
+def validate_code_lock_v3():
+    root = pathlib.Path(os.environ.get("CHESSHEAT_REPO_ROOT", "."))
+    lock_path = root / "artifacts" / "research" / "ml_runtime_code_lock_v3.json"
+    with open(lock_path) as f:
+        lock_data = json.load(f)
+        
+    for rel_path, expected_hash in lock_data.items():
+        file_path = root / rel_path
+        h = hashlib.sha256(file_path.read_bytes()).hexdigest()
+        if h != expected_hash:
+            raise RuntimeError(f"Code lock mismatch for {rel_path}. Expected {expected_hash}, got {h}")
+            
+    # Also verify no tracked working-tree modification exists for locked files
+    # (Checking diff is a bit tricky inside python, but we can do a quick subprocess check)
+    files = list(lock_data.keys())
+    try:
+        subprocess.check_call(["git", "diff", "--quiet", "--"] + files, cwd=str(root))
+        subprocess.check_call(["git", "diff", "--cached", "--quiet", "--"] + files, cwd=str(root))
+    except subprocess.CalledProcessError:
+        raise RuntimeError(f"Tracked modifications exist for critical files: {files}")
+
 def validate_runtime_identity():
     if "torch" in sys.modules:
         raise RuntimeError("torch was imported before ChessHeat ML runtime preflight")
 
-    if os.environ.get("CHESSHEAT_ML_RUNTIME_ID") != "CHESSHEAT_ML_RUNTIME_V2":
+    if os.environ.get("CHESSHEAT_ML_RUNTIME_ID") != "CHESSHEAT_ML_RUNTIME_V3":
         raise RuntimeError("CHESSHEAT_ML_RUNTIME_ID must be 'CHESSHEAT_ML_RUNTIME_V2'")
     if os.environ.get("PYTHONHASHSEED") != "0":
         raise RuntimeError("PYTHONHASHSEED must be '0'")
@@ -73,6 +119,10 @@ def validate_runtime_identity():
     h = hashlib.sha256(executable.read_bytes()).hexdigest()
     if h != "542c879fdc2cfe0be223e4729082bac529780d90c6d811c853de852765b35a35":
         raise RuntimeError("Python executable hash mismatch")
+
+    validate_canonical_import_path()
+    validate_package_lock_v3()
+    validate_code_lock_v3()
 
     dist_version = importlib.metadata.version("torch")
     if dist_version != PINNED_TORCH_VERSION:
@@ -164,5 +214,6 @@ def build_frozen_adam(model, torch_module):
         maximize=False,
         capturable=False,
         differentiable=False,
-        fused=None
+        fused=None,
+        decoupled_weight_decay=False
     )
