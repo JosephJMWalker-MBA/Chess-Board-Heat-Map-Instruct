@@ -305,7 +305,7 @@ Execution remains blocked.
  The next dependency becomes:
  
  ```text
- DOWNSTREAM_EXPERIMENT_PROTOCOL_FROZEN_V1
+ DOWNSTREAM_EXPERIMENT_PROTOCOL_AUDIT_FAILED
  ```
  
  The immediate next task is resolving the first scientific dependency: `EXECUTE_CORRECTED_SOURCE_ONLY_50K_ACQUISITION`.
@@ -322,7 +322,7 @@ No target acquisition or model training is authorized yet.
  1. ROOT_POPULATION_FROZEN_TO_LICHESS_JULY_2026
  2. INSTRUMENT_CONFIG_FROZEN_SF18_50K_250K_V1
  3. ENGINE_STATE_ISOLATION_AUDITED
- 4. DOWNSTREAM_EXPERIMENT_PROTOCOL_FROZEN_V1
+ 4. DOWNSTREAM_EXPERIMENT_PROTOCOL_AUDIT_FAILED
  5. SPLIT_AND_BUDGET_NOT_YET_FROZEN
  6. P_NUMERIC_ENCODING_NOT_YET_FROZEN
  7. LEARNER_FAMILY_NOT_YET_FROZEN
@@ -555,4 +555,4 @@ The following freeze rules continue to apply:
  3. read this `NEXT_WORK_MAP.md`;
  4. inspect the active preregistration;
  5. continue from the first unresolved dependency only (currently `ENGINE_STATE_ISOLATION_NOT_YET_IMPLEMENTED`).
-Next blocker: INDEPENDENT_DOWNSTREAM_PROTOCOL_AUDIT_REQUIRED
+Next blocker: DOWNSTREAM_EXPERIMENT_PROTOCOL_REPAIR_REQUIRED_V2
