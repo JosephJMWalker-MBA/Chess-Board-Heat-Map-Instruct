@@ -59,7 +59,7 @@ Lichess official broadcast games, calendar month July 2026, PGN monthly export. 
 8. **Prior Development Overlap**: Previously inspected ChessHeat development, fixture, hostile-validation, and research positions (e.g., M8 / W-suite / T1 / T2 / T3) must be excluded. Exclude exact `SufficientPosition` overlaps and conservative transposition overlaps.
 9. **No Target-Based Replacement**: Once admitted to the base population, do not replace a root due to target attrition (e.g. mate-typed source, target acquisition failure). Population construction must remain independent of target $Y$.
 10. **Manifest / Provenance Contract**: Reusing `SuiteManifest` / `ExperimentSpec v2` semantics, preserve: external corpus identity, corpus month/version, upstream artifact filename, upstream published checksum, locally verified checksum, parser/version identity, root-selection algorithm/version, game identity/provenance, selected ply, full `SufficientPosition` identity, conservative transposition-group identity, inclusion/exclusion outcome, exclusion reason, duplicate resolution, prior-development-overlap status, software revision, and manifest digest.
-11. **Sample Size**: `SPLIT_AND_BUDGET_FROZEN_V2` remains unresolved. The population universe and deterministic root-generation procedure are frozen now, while the exact training/tune/test counts remain unfrozen.
+11. **Sample Size**: `SPLIT_AND_BUDGET_FROZEN_V4` remains unresolved. The population universe and deterministic root-generation procedure are frozen now, while the exact training/tune/test counts remain unfrozen.
 
 ## 5. Source and Target Acquisition Instrument Contract
 
@@ -156,7 +156,7 @@ where $M_0$ is the exact null/zero spatial channel required to preserve the same
 Includes $P, m_1/m_2 \text{ identities}, CP_X(m_1), CP_X(m_2), d_X, a_X, \rho$ under the same learner/resource procedure where schema permits. *Raw source is an information-rich diagnostic reference, not a guaranteed empirical-performance upper bound.*
 
 **Matched Comparator:**
-Currently: **MATCHED_COMPARATOR_FROZEN_V3**
+Currently: **MATCHED_COMPARATOR_FROZEN_V4**
 We require exactly one simple same-pair rule-derived non-spatial representation that answers a distinct control question, receiving the exact same $P, S^\star, d_X, a_X$ and using the same learner/resource budget.
 
 ## 9. Representation of P
@@ -165,11 +165,11 @@ The semantic identity of $P$ is already frozen by `SufficientPosition` semantics
 
 Status:
 - **P_SEMANTIC_IDENTITY_FROZEN_TO_S0**
-- **P_NUMERIC_ENCODING_FROZEN_V3**
+- **P_NUMERIC_ENCODING_FROZEN_V4**
 
 ## 10. Learner Family
 
-Currently: **LEARNER_FAMILY_FROZEN_V3**
+Currently: **LEARNER_FAMILY_FROZEN_V4**
 We must choose one deliberately modest learner family using identical architecture, parameterization, optimizer, regularization, initialization, batch construction, and stopping rule for $\mu_D, \mu_T, B_{daS}$, and the matched control (masking/zeroing input slots explicitly). No representation-specific tuning.
 
 ## 11. Pair Subsampling
@@ -178,7 +178,7 @@ We use **all** source-eligible pairs within selected training/evaluation roots. 
 
 ## 12. Split Construction and Learning Budgets
 
-Currently: **SPLIT_AND_BUDGET_FROZEN_V2**
+Currently: **SPLIT_AND_BUDGET_FROZEN_V4**
 We must split partitions by the conservative transposition-equivalent group identity (to prevent leakage) while preserving the canonical root identity to identify each root. The process uses a deterministic, target-blind procedure. All pairs from one root remain in one partition. Training-root sample-efficiency subsets must be nested and shared across every representation/baseline. We must freeze a deterministic budget schedule as a function of final training-root count, tuning-root partition, and held-out test-root partition.
 
 ## 13. Prediction Loss and Root Aggregation
@@ -208,13 +208,13 @@ $$\Delta_{T0} = AULC_T - AULC_{B_{daS}}$$
 
 ## 15. Randomness and Hyperparameter Policy
 
-Currently: **SEED_SET_FROZEN_V3**
+Currently: **SEED_SET_FROZEN_V4**
 If stochastic, we must preregister fixed seed sets applied symmetrically across representations. No dropping bad seeds. Training seeds $\neq$ root-split identity. Hyperparameters must be identical across all representations (either fixed or a shared, preregistered tuning budget disjoint from test roots).
 
 ## 16. Inference and Outcome Classification
 
 We use a prospectively frozen paired root bootstrap over held-out roots (treating roots, not seeds or pairs, as the sampling unit) to determine reliability.
-Currently: **CONFIDENCE_LEVEL_FROZEN_V3**
+Currently: **CONFIDENCE_LEVEL_FROZEN_V4**
 
 Under the frozen uncertainty criterion, define LCB and UCB as the lower and upper confidence bounds.
 With zero superiority margin:
@@ -269,12 +269,12 @@ Future execution must use existing `SufficientPosition`, `ExperimentSpec v2`, `E
 |---|---|---|---|---|
 | ROOT_POPULATION_FROZEN_TO_LICHESS_JULY_2026 | N/A | None (Frozen) | None | None |
 | INSTRUMENT_CONFIG_FROZEN_SF18_50K_250K_V1 | supports fixed node/depth/time, per-legal-move eval, perspective, Threads/Hash | None (Frozen) | ENGINE_STATE_ISOLATION_AUDITED | None |
-| SPLIT_AND_BUDGET_FROZEN_V2 | N/A | None (Frozen V3) | None | source-only feasibility |
-| P_NUMERIC_ENCODING_FROZEN_V3 | P semantic identity frozen by SufficientPosition | None (Frozen V3) | None | None |
-| LEARNER_FAMILY_FROZEN_V3 | N/A | None (Frozen V3) | ML_RUNTIME_DEPENDENCY_NOT_YET_SATISFIED | P_NUMERIC_ENCODING |
-| MATCHED_COMPARATOR_FROZEN_V3 | N/A | None (Frozen V3) | None | LEARNER_FAMILY |
-| SEED_SET_FROZEN_V3 | N/A | None (Frozen V3) | None | LEARNER_FAMILY |
-| CONFIDENCE_LEVEL_FROZEN_V3 | N/A | $\alpha$ level, bootstrap size | None | None |
+| SPLIT_AND_BUDGET_FROZEN_V4 | N/A | None (Frozen V3) | None | source-only feasibility |
+| P_NUMERIC_ENCODING_FROZEN_V4 | P semantic identity frozen by SufficientPosition | None (Frozen V3) | None | None |
+| LEARNER_FAMILY_FROZEN_V4 | N/A | None (Frozen V3) | ML_RUNTIME_DEPENDENCY_NOT_YET_SATISFIED | P_NUMERIC_ENCODING |
+| MATCHED_COMPARATOR_FROZEN_V4 | N/A | None (Frozen V3) | None | LEARNER_FAMILY |
+| SEED_SET_FROZEN_V4 | N/A | None (Frozen V3) | None | LEARNER_FAMILY |
+| CONFIDENCE_LEVEL_FROZEN_V4 | N/A | $\alpha$ level, bootstrap size | None | None |
 
 ### Blocker Dependency Order
  
@@ -282,12 +282,12 @@ Future execution must use existing `SufficientPosition`, `ExperimentSpec v2`, `E
  2. INSTRUMENT_CONFIG_FROZEN_SF18_50K_250K_V1
  3. ENGINE_STATE_ISOLATION_AUDITED
  4. SOURCE_ACQUISITION_V2_IMPLEMENTED_REAUDIT_REQUIRED
- 5. SPLIT_AND_BUDGET_FROZEN_V2
- 6. P_NUMERIC_ENCODING_FROZEN_V3
- 7. LEARNER_FAMILY_FROZEN_V3
- 8. MATCHED_COMPARATOR_FROZEN_V3
- 9. SEED_SET_FROZEN_V3
- 10. CONFIDENCE_LEVEL_FROZEN_V3
+ 5. SPLIT_AND_BUDGET_FROZEN_V4
+ 6. P_NUMERIC_ENCODING_FROZEN_V4
+ 7. LEARNER_FAMILY_FROZEN_V4
+ 8. MATCHED_COMPARATOR_FROZEN_V4
+ 9. SEED_SET_FROZEN_V4
+ 10. CONFIDENCE_LEVEL_FROZEN_V4
 
 ## 19. Status
 

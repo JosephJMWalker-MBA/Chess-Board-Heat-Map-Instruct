@@ -2,16 +2,15 @@ import hashlib
 import json
 import math
 import struct
-from typing import Tuple, List, Set, Dict, Any, Optional
+import re
+from typing import Tuple, List, Set, Dict, Any, Optional, Mapping
 
 class CanonicalTensorF32:
-    """Canonical IEEE-754 float32 tensor."""
     def __init__(self, shape: Tuple[int, ...], values: List[float]):
         if math.prod(shape) != len(values):
             raise ValueError(f"Shape {shape} requires {math.prod(shape)} elements, got {len(values)}")
         self.shape = shape
         self.dtype = "float32-le"
-        
         self.values = []
         for v in values:
             v_float = float(v)
@@ -24,34 +23,34 @@ class CanonicalTensorF32:
     def to_bytes(self) -> bytes:
         return b"".join(struct.pack("<f", v) for v in self.values)
 
+def _validate_square(square: str):
+    if not isinstance(square, str) or not re.match(r"^[a-h][1-8]$", square):
+        raise ValueError(f"Invalid canonical square: {square}")
+
+def _validate_move(move: str):
+    if not isinstance(move, str) or not re.match(r"^[a-h][1-8][a-h][1-8][qrbn]?$", move):
+        raise ValueError(f"Invalid canonical move: {move}")
+
 def uci_square_index(square: str) -> int:
-    """Categorical square index for S*. a1=0, b1=1... h8=63."""
-    file_c = square[0]
-    rank_c = square[1]
-    f = ord(file_c) - ord('a')
-    r = int(rank_c) - 1
+    _validate_square(square)
+    f = ord(square[0]) - ord('a')
+    r = int(square[1]) - 1
     return r * 8 + f
 
 def spatial_row_col(square: str) -> Tuple[int, int]:
-    """Spatial tensor coordinates. row 0 = rank 8, col 0 = file a."""
-    file_c = square[0]
-    rank_c = square[1]
-    f = ord(file_c) - ord('a')
-    r = int(rank_c)
-    row = 8 - r
-    col = f
-    return row, col
+    _validate_square(square)
+    f = ord(square[0]) - ord('a')
+    r = int(square[1])
+    return 8 - r, f
 
 def spatial_flat_index(square: str) -> int:
-    """Row-major spatial flat index."""
     row, col = spatial_row_col(square)
     return row * 8 + col
 
 class SourcePairFeatures:
     def __init__(self, m_a: str, cp_a: int, m_b: str, cp_b: int):
-        for m in [m_a, m_b]:
-            if len(m) == 5 and m[4] not in "qrbn":
-                raise ValueError("Invalid promo")
+        _validate_move(m_a)
+        _validate_move(m_b)
         if m_a == m_b:
             raise ValueError("Moves must be distinct")
         if not math.isfinite(cp_a) or not math.isfinite(cp_b):
@@ -124,7 +123,6 @@ def encode_position(sufficient_position: dict) -> CanonicalTensorF32:
 
 def encode_side_information(pair: SourcePairFeatures) -> CanonicalTensorF32:
     out = [0.0] * 270
-    
     def encode_move(m: str, offset: int):
         from_sq = uci_square_index(m[0:2])
         to_sq = uci_square_index(m[2:4])
@@ -144,14 +142,10 @@ def encode_side_information(pair: SourcePairFeatures) -> CanonicalTensorF32:
     encode_move(pair.m1_uci, 0)
     encode_move(pair.m2_uci, 133)
     
-    if pair.d_x == "SOURCE_FIRST_BETTER":
-        out[266] = 1.0
-    elif pair.d_x == "SOURCE_EQUAL":
-        out[267] = 1.0
-    elif pair.d_x == "SOURCE_SECOND_BETTER":
-        out[268] = 1.0
-    else:
-        raise ValueError(f"Unknown d_x: {pair.d_x}")
+    if pair.d_x == "SOURCE_FIRST_BETTER": out[266] = 1.0
+    elif pair.d_x == "SOURCE_EQUAL": out[267] = 1.0
+    elif pair.d_x == "SOURCE_SECOND_BETTER": out[268] = 1.0
+    else: raise ValueError(f"Unknown d_x: {pair.d_x}")
         
     out[269] = float(pair.a_x)
     return CanonicalTensorF32((270,), out)
@@ -225,11 +219,12 @@ def compute_aulc(budgets: List[int], utilities: List[float]) -> float:
         raise ValueError("Mismatched lengths")
     if len(budgets) < 2:
         raise ValueError("Requires >= 2 points")
+    for i in range(len(utilities)):
+        if not math.isfinite(utilities[i]):
+            raise ValueError("Utility must be finite")
     for i in range(1, len(budgets)):
         if budgets[i] <= budgets[i-1]:
             raise ValueError("Budgets must be strictly increasing")
-        if not math.isfinite(utilities[i]) or not math.isfinite(utilities[i-1]):
-            raise ValueError("Utility must be finite")
             
     width = budgets[-1] - budgets[0]
     if width <= 0:
@@ -258,14 +253,10 @@ def classify_outcome(delta_dt_ci: Tuple[float, float], delta_d0_ci: Tuple[float,
     if dt_lcb > dt_ucb or d0_lcb > d0_ucb or t0_lcb > t0_ucb:
         raise ValueError("CIs must be ordered correctly")
         
-    if dt_lcb > 0 and d0_lcb > 0:
-        return "SUPPORT_muD"
-    if dt_ucb < 0 and t0_lcb > 0:
-        return "SUPPORT_muT"
-    if (d0_lcb > 0 or t0_lcb > 0) and dt_lcb <= 0 <= dt_ucb:
-        return "SPATIAL_EFFICIENCY_OPERATOR_UNRESOLVED"
-    if d0_ucb <= 0 and t0_ucb <= 0:
-        return "NO_SPATIAL_EFFICIENCY_ADVANTAGE"
+    if dt_lcb > 0 and d0_lcb > 0: return "SUPPORT_muD"
+    if dt_ucb < 0 and t0_lcb > 0: return "SUPPORT_muT"
+    if (d0_lcb > 0 or t0_lcb > 0) and dt_lcb <= 0 <= dt_ucb: return "SPATIAL_EFFICIENCY_OPERATOR_UNRESOLVED"
+    if d0_ucb <= 0 and t0_ucb <= 0: return "NO_SPATIAL_EFFICIENCY_ADVANTAGE"
     return "INCONCLUSIVE"
 
 def bootstrap_indices(b: int, j: int, n_test: int) -> int:
@@ -281,26 +272,88 @@ def bootstrap_indices(b: int, j: int, n_test: int) -> int:
 def percentile_rank(n_elements: int, p: float) -> int:
     return math.ceil(p * n_elements) - 1
 
-def full_bootstrap_procedure(root_ids: List[str], lbar_D: List[float], lbar_T: List[float], lbar_0: List[float], budgets: List[int]) -> Dict[str, Tuple[float, float]]:
-    # This is a simplified mathematical representation for validation in tests
-    # In reality, this requires evaluating at multiple budgets. 
-    # To strictly freeze it, we'd need a multi-budget matrix.
-    pass
+def mean_five_seed_root_nll(losses_by_seed: Mapping[int, float]) -> float:
+    expected_seeds = {1729, 2718, 31415, 65537, 104729}
+    if set(losses_by_seed.keys()) != expected_seeds:
+        raise ValueError("Must have exactly the five frozen seeds")
+    total = 0.0
+    for v in losses_by_seed.values():
+        if not math.isfinite(v):
+            raise ValueError("Loss must be finite")
+        total += v
+    return total / 5.0
 
-def canonical_protocol_payload_v3() -> dict:
+def full_bootstrap_procedure(root_ids: List[str], root_losses: Dict[str, Dict[int, Dict[str, float]]]) -> Dict[str, Dict[str, float]]:
+    if not root_ids: raise ValueError("root_ids must be nonempty")
+    if len(root_ids) != len(set(root_ids)): raise ValueError("root_ids must be unique")
+    expected_conditions = {"mu_D", "mu_T", "B_daS"}
+    expected_budgets = [250, 500, 1000, 2000, 4000, 8000, 16000, 20000]
+    
+    if set(root_losses.keys()) != expected_conditions:
+        raise ValueError("Missing or extra conditions")
+        
+    for cond in expected_conditions:
+        if sorted(list(root_losses[cond].keys())) != expected_budgets:
+            raise ValueError("Budgets do not match frozen budgets exactly")
+        for b in expected_budgets:
+            if set(root_losses[cond][b].keys()) != set(root_ids):
+                raise ValueError("Root set mismatch")
+            for v in root_losses[cond][b].values():
+                if not math.isfinite(v): raise ValueError("Loss must be finite")
+                
+    N = len(root_ids)
+    delta_dt_all = []
+    delta_d0_all = []
+    delta_t0_all = []
+    
+    for b in range(10000):
+        sample_indices = [bootstrap_indices(b, j, N) for j in range(N)]
+        sampled_roots = [root_ids[i] for i in sample_indices]
+        
+        aulc = {}
+        for cond in expected_conditions:
+            u_vals = []
+            for budget in expected_budgets:
+                u_budget = -sum(root_losses[cond][budget][r] for r in sampled_roots) / N
+                u_vals.append(u_budget)
+            aulc[cond] = compute_aulc(expected_budgets, u_vals)
+            
+        delta_dt_all.append(aulc["mu_D"] - aulc["mu_T"])
+        delta_d0_all.append(aulc["mu_D"] - aulc["B_daS"])
+        delta_t0_all.append(aulc["mu_T"] - aulc["B_daS"])
+        
+    delta_dt_all.sort()
+    delta_d0_all.sort()
+    delta_t0_all.sort()
+    
+    l_idx = percentile_rank(10000, 0.025)
+    u_idx = percentile_rank(10000, 0.975)
+    
     return {
-        "protocol_identifier": "CP_REPRESENTATION_EFFICIENCY_PROTOCOL_V3",
+        "Delta_DT": {"lcb": delta_dt_all[l_idx], "ucb": delta_dt_all[u_idx]},
+        "Delta_D0": {"lcb": delta_d0_all[l_idx], "ucb": delta_d0_all[u_idx]},
+        "Delta_T0": {"lcb": delta_t0_all[l_idx], "ucb": delta_t0_all[u_idx]}
+    }
+
+def canonical_protocol_payload_v4() -> dict:
+    return {
+        "protocol_identifier": "CP_REPRESENTATION_EFFICIENCY_PROTOCOL_V4",
         "authoritative_references": {
-            "pre_freeze_sha": "8876f8cf2d6e1da47b2b40b818413b4095786c36"
+            "pre_freeze_sha": "8876f8cf2d6e1da47b2b40b818413b4095786c36",
+            "repair_v1_fail": "ba11bde7af3623b3272900b7da66bc5ec53627de",
+            "repair_v2_fail": "c0914d88530810d9e07bc4e951c8721aca1a611d",
+            "repair_v3_fail": "af620cd1f5b5beaa850baf08baca0f8bd6b90894"
         },
         "source_evidence": {
+            "commit": "8876f8cf2d6e1da47b2b40b818413b4095786c36",
+            "raw_sha256": "7eb640c572dad4c6607cfb1b5ccf99597672042e5c516f131feab02223ccfa6b",
             "population_count": 33859,
             "source_pair_eligible_count": 33444,
             "source_zero_pair_count": 415,
             "eligibility_rule": ">=2 finite SOURCE CP alternatives, determined before TARGET"
         },
         "target_labels": {
-            "semantics": "Inherited CompareTyped. Typed mate observations remain typed and ordered if CompareTyped allows. Not blindly excluded.",
+            "semantics": "Concrete CompareTyped binding to src/chessheat/attribution.py:compare_scores. Typed mate observations remain ordered. Not blanket excluded.",
             "attrition_training": "Nominal selected training roots with 0 TARGET-evaluable pairs contribute 0 training examples, are not replaced, consume no minibatch slot.",
             "attrition_val_test": "Roots must have >=1 TARGET-evaluable pair. Exact identical root set across all representations and budgets."
         },
@@ -309,8 +362,9 @@ def canonical_protocol_payload_v3() -> dict:
             "domain_string": "CHESSHEAT_SPLIT_V3|",
             "key_definition": "JSON serialization of board_arrangement_fen, castling_rights, en_passant_square, side_to_move",
             "partitions": {"TRAIN": [0, 69], "VALIDATION": [70, 84], "TEST": [85, 99]},
-            "expected_all_root_counts": {"TRAIN": 23689, "VALIDATION": 5013, "TEST": 5157}, # Will update with exact counts later
-            "expected_eligible_counts": {"TRAIN": 23395, "VALIDATION": 4955, "TEST": 5094}
+            "expected_all_root_counts": {"TRAIN": 23639, "VALIDATION": 5148, "TEST": 5072},
+            "expected_eligible_counts": {"TRAIN": 23350, "VALIDATION": 5094, "TEST": 5000},
+            "expected_zero_counts": {"TRAIN": 289, "VALIDATION": 54, "TEST": 72}
         },
         "budget": {
             "domain_string": "CHESSHEAT_BUDGET_ORDER_V3|",
@@ -343,14 +397,24 @@ def canonical_protocol_payload_v3() -> dict:
             "mu_D": "a_X / |D| if s in deduplicated D else 0",
             "mu_T": "a_X / |T| if s in deduplicated T else 0",
             "B_daS": "M_0 (all zeros)",
-            "B_perm": "M_T mapped through global fixed spatial permutation",
+            "B_perm": "M_T mapped through global fixed spatial permutation (domain CHESSHEAT_MATCHED_PERM_V3|)",
             "quantization": "IEEE-754 float32 of analytical values"
         },
         "learner": {
-            "architecture": "Conv3(19->64)->Conv3(64->64)->Conv3(64->64)->GAP(64) concat Dense(270->128) -> Dense(192->128)->Dense(128->3)",
-            "activation": "ReLU",
+            "layers": [
+                {"type": "Conv2d", "in": 19, "out": 64, "kernel": [3,3], "stride": [1,1], "padding": [1,1], "bias": True, "activation": "ReLU"},
+                {"type": "Conv2d", "in": 64, "out": 64, "kernel": [3,3], "stride": [1,1], "padding": [1,1], "bias": True, "activation": "ReLU"},
+                {"type": "Conv2d", "in": 64, "out": 64, "kernel": [3,3], "stride": [1,1], "padding": [1,1], "bias": True, "activation": "ReLU"},
+                {"type": "GAP", "operation": "mean across both 8x8 axes"},
+                {"type": "Linear", "in": 270, "out": 128, "bias": True, "activation": "ReLU"},
+                {"type": "Concat", "sources": ["GAP", "Linear_270_128"]},
+                {"type": "Linear", "in": 192, "out": 128, "bias": True, "activation": "ReLU"},
+                {"type": "Linear", "in": 128, "out": 3, "bias": True, "activation": "none"}
+            ],
             "normalization": "none",
             "dropout": "none",
+            "class_weighting": "none",
+            "gradient_clipping": "none",
             "optimizer": {
                 "name": "Adam",
                 "lr": 0.001,
@@ -359,7 +423,16 @@ def canonical_protocol_payload_v3() -> dict:
                 "weight_decay": 1e-05,
                 "amsgrad": False
             },
-            "initialization": "kaiming_uniform_(a=sqrt(5)) for weights, uniform(-1/sqrt(fan_in), 1/sqrt(fan_in)) for bias"
+            "initialization": {
+                "weights": "torch.nn.init.kaiming_uniform_(a=sqrt(5), mode=fan_in, nonlinearity=leaky_relu)",
+                "bias": "uniform(-1/sqrt(fan_in), 1/sqrt(fan_in))",
+                "fan_in_conv1": 171,
+                "fan_in_conv2": 576,
+                "fan_in_conv3": 576,
+                "fan_in_side": 270,
+                "fan_in_fusion": 192,
+                "fan_in_output": 128
+            }
         },
         "training": {
             "batch_size_effective_roots": 64,
@@ -382,12 +455,14 @@ def canonical_protocol_payload_v3() -> dict:
             "utility": "- mean_root(NLL)",
             "primary_contrast": "Delta_DT = AULC_D - AULC_T",
             "sign": "positive Delta_DT favors D",
-            "aulc_rules": "fail-closed on non-finite U, mismatched lengths, non-strict budgets"
+            "aulc_rules": "fail-closed on non-finite U, mismatched lengths, non-strict budgets",
+            "classifier_precedence": "PROTOCOL_INVALID precedence over support classes"
         },
         "bootstrap": {
             "replicates": 10000,
             "domain_string": "CHESSHEAT_BOOTSTRAP_V3|b|j",
             "unit": "held-out root",
+            "procedure": "Resample roots -> recompute U at every budget -> recompute AULC -> recompute contrasts",
             "ci_type": "percentile",
             "bounds": [2.5, 97.5],
             "indices": [249, 9749]
@@ -404,9 +479,9 @@ def canonical_protocol_payload_v3() -> dict:
         "claim_ceiling": "representation efficiency comparison only"
     }
 
-def canonical_protocol_bytes_v3() -> bytes:
-    payload = canonical_protocol_payload_v3()
+def canonical_protocol_bytes_v4() -> bytes:
+    payload = canonical_protocol_payload_v4()
     return json.dumps(payload, sort_keys=True, separators=(',', ':')).encode('utf-8')
 
-def canonical_protocol_sha256_v3() -> str:
-    return hashlib.sha256(canonical_protocol_bytes_v3()).hexdigest()
+def canonical_protocol_sha256_v4() -> str:
+    return hashlib.sha256(canonical_protocol_bytes_v4()).hexdigest()

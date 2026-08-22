@@ -808,3 +808,11 @@ The correct scientific posture at this checkpoint is:
 - V2 repair -> failed independent re-audit
 - V3 repair -> failed independent re-audit (DOWNSTREAM_EXPERIMENT_PROTOCOL_V3_REAUDIT_FAILED)
 - V4 repair -> next task (DOWNSTREAM_EXPERIMENT_PROTOCOL_REPAIR_REQUIRED_V4)
+
+---
+
+# Current V4 Repair
+- V4 repair implemented.
+- Current status: DOWNSTREAM_EXPERIMENT_PROTOCOL_V4_IMPLEMENTED_REAUDIT_REQUIRED
+- Next blocker: INDEPENDENT_DOWNSTREAM_PROTOCOL_REAUDIT_V4_REQUIRED
+- Execution blocker: ML_RUNTIME_DEPENDENCY_NOT_YET_SATISFIED
