@@ -1,12 +1,12 @@
 # RESEARCH_CONTINUITY_CHECKPOINT_2026-08-16
 
-**Last Checkpoint Update**: Protocol V2 Repair
+**Last Checkpoint Update**: Protocol V2 Re-audit Failed
 
 ChessHeat is currently frozen at:
-DOWNSTREAM_EXPERIMENT_PROTOCOL_V2_IMPLEMENTED_REAUDIT_REQUIRED
+DOWNSTREAM_EXPERIMENT_PROTOCOL_V2_REAUDIT_FAILED
 
-We have completely specified the mathematical and numerical representation contract for downstream learning on CP source feasibility evidence.
+The V2 protocol repair was determined to be fatally incomplete, introducing coordinate contradictions, shape irreproducibility, and wiping out historical governance documents.
 
 TARGET execution remains strictly UNAUTHORIZED.
 
-Next dependency is an independent V2 re-audit.
+Next dependency is DOWNSTREAM_EXPERIMENT_PROTOCOL_REPAIR_REQUIRED_V3.
