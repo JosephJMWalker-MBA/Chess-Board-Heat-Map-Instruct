@@ -800,3 +800,11 @@ The correct scientific posture at this checkpoint is:
 - V1 freeze -> failed independent audit
 - V2 repair -> failed independent re-audit
 - V3 repair -> current work (DOWNSTREAM_EXPERIMENT_PROTOCOL_REPAIR_REQUIRED_V3)
+
+---
+
+# Current V4 State Update
+- V1 freeze -> failed independent audit
+- V2 repair -> failed independent re-audit
+- V3 repair -> failed independent re-audit (DOWNSTREAM_EXPERIMENT_PROTOCOL_V3_REAUDIT_FAILED)
+- V4 repair -> next task (DOWNSTREAM_EXPERIMENT_PROTOCOL_REPAIR_REQUIRED_V4)
