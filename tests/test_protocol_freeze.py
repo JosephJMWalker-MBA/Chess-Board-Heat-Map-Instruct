@@ -6,7 +6,8 @@ from chessheat.protocol_freeze import (
     CanonicalTensorF32, uci_square_index, spatial_row_col, spatial_flat_index,
     SourcePairFeatures, encode_position, encode_side_information, build_m_d, build_m_t, build_m_zero, build_m_perm,
     get_partition, canonical_budget_order, compute_aulc, classify_outcome, bootstrap_indices, percentile_rank,
-    canonical_protocol_payload_v5, canonical_protocol_bytes_v5, canonical_group_json_bytes
+    canonical_protocol_payload_v6, canonical_protocol_bytes_v6, canonical_group_json_bytes,
+    mean_five_seed_root_nll, full_bootstrap_procedure
 )
 
 def test_canonical_pair():
@@ -137,11 +138,11 @@ def test_outcome():
 
 def test_protocol_seal():
     # Load JSON from disk
-    with open('artifacts/research/cp_representation_efficiency_protocol_v5.json', 'rb') as f:
+    with open('artifacts/research/cp_representation_efficiency_protocol_v6.json', 'rb') as f:
         disk_bytes = f.read()
-    mem_bytes = canonical_protocol_bytes_v5()
+    mem_bytes = canonical_protocol_bytes_v6()
     assert disk_bytes == mem_bytes
-    payload = canonical_protocol_payload_v5()
+    payload = canonical_protocol_payload_v6()
     assert payload['s_numeric_encoding']['dimension'] == 270
 
 def test_continuity():
@@ -156,29 +157,7 @@ import struct
 import json
 from typing import Dict
 
-from src.chessheat.protocol_freeze import (
-    CanonicalTensorF32,
-    uci_square_index,
-    spatial_row_col,
-    spatial_flat_index,
-    SourcePairFeatures,
-    encode_position,
-    encode_side_information,
-    build_m_d,
-    build_m_t,
-    build_m_zero,
-    build_m_perm,
-    get_partition,
-    canonical_budget_order,
-    compute_aulc,
-    classify_outcome,
-    bootstrap_indices,
-    percentile_rank,
-    mean_five_seed_root_nll,
-    full_bootstrap_procedure,
-    canonical_protocol_payload_v5,
-    canonical_protocol_bytes_v5
-)
+
 
 def test_square_validation():
     assert uci_square_index("a1") == 0
@@ -205,12 +184,12 @@ def test_uci_validation():
 
 def test_promotion_validation():
     pair = SourcePairFeatures("e7e8q", 10, "e2e4", 20)
-    # this will pass encode_side_information
-    encode_side_information(pair)
-    
-    # but let's mock the internal pair to have an invalid promotion string
-    # since SourcePairFeatures regex requires [qrbn], we can't test invalid promotion inside it directly
-    # because it will be rejected early, which is exactly what we want!
+    arr = encode_side_information(pair)
+    # Queens are at index 266 (NONE=265, QUEEN=266, ROOK=267, BISHOP=268, KNIGHT=269)
+    # But wait, we shouldn't assume the index without checking.
+    # Let's just assert that it constructs and doesn't raise, and the length is correct.
+    assert arr.shape == (270,)
+    assert arr.values[266] == 1.0 # Queen promotion
 
 def test_canonical_swapping():
     # canonicalization sorts moves
@@ -245,7 +224,7 @@ def test_float32():
     with pytest.raises(ValueError): CanonicalTensorF32((2,), [float('inf'), 1.0])
     with pytest.raises(ValueError): CanonicalTensorF32((2,), [1.0, 2.0, 3.0])
 
-def test_coordinates_v5():
+def test_coordinates_v6():
     assert spatial_row_col("a8") == (0, 0)
     assert spatial_row_col("h8") == (0, 7)
     assert spatial_row_col("a1") == (7, 0)
@@ -253,7 +232,7 @@ def test_coordinates_v5():
     assert spatial_row_col("e4") == (4, 4)
 
 def test_source_counts():
-    payload = canonical_protocol_payload_v5()
+    payload = canonical_protocol_payload_v6()
     assert payload["source_evidence"]["population_count"] == 33859
     assert payload["source_evidence"]["source_pair_eligible_count"] == 33444
     assert payload["source_evidence"]["source_zero_pair_count"] == 415
@@ -265,11 +244,11 @@ def test_source_counts():
     assert sum(payload["split"]["expected_all_root_counts"].values()) == 33859
     assert sum(payload["split"]["expected_eligible_counts"].values()) == 33444
 
-def test_split_v5():
+def test_split_v6():
     pos = {"board_arrangement_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR", "side_to_move": "w", "castling_rights": "KQkq", "en_passant_square": None}
     assert get_partition(pos) == get_partition(pos)
 
-def test_budget_v5():
+def test_budget_v6():
     b1, _ = canonical_budget_order("root1")
     b2, _ = canonical_budget_order("root2")
     assert b1 != b2
@@ -284,7 +263,7 @@ def test_seeds():
     # nonfinite
     with pytest.raises(ValueError): mean_five_seed_root_nll({1729: 1.0, 2718: 2.0, 31415: float('inf'), 65537: 4.0, 104729: 5.0})
 
-def test_aulc_v5():
+def test_aulc_v6():
     assert compute_aulc([10, 20], [1.0, 1.0]) == 1.0
     
     # +1 D better, -1 T better
@@ -344,7 +323,7 @@ def test_full_bootstrap():
     # Non unique roots
     with pytest.raises(ValueError): full_bootstrap_procedure(["root1", "root1"], losses)
 
-def test_outcome_v5():
+def test_outcome_v6():
     # PROTOCOL_INVALID
     assert classify_outcome((1, 2), (1, 2), (1, 2), False) == "PROTOCOL_INVALID"
     
@@ -368,8 +347,8 @@ def test_outcome_v5():
     with pytest.raises(ValueError): classify_outcome((float('nan'), 1), (1, 2), (1, 2), True)
     with pytest.raises(ValueError): classify_outcome((1, float('inf')), (1, 2), (1, 2), True)
 
-def test_protocol_seal_v5():
-    payload = canonical_protocol_payload_v5()
+def test_protocol_seal_v6():
+    payload = canonical_protocol_payload_v6()
     # Check learner properties
     assert payload["learner"]["initialization"]["fan_in_conv1"] == 171
     assert payload["learner"]["optimizer"]["name"] == "Adam"
@@ -380,7 +359,7 @@ def test_protocol_seal_v5():
     assert "compare_scores" in payload["target_labels"]["semantics"]
     
     # byte check
-    b = canonical_protocol_bytes_v5()
+    b = canonical_protocol_bytes_v6()
     p2 = json.loads(b.decode('utf-8'))
     assert p2 == payload
 
@@ -429,3 +408,45 @@ def test_no_duplicate_test_names_ast():
         tree = ast.parse(f.read())
     names = [node.name for node in tree.body if isinstance(node, ast.FunctionDef) and node.name.startswith("test_")]
     assert len(names) == len(set(names))
+
+
+def test_v6_seal_dt_definitions():
+    from chessheat.protocol_freeze import canonical_protocol_payload_v6
+    payload = canonical_protocol_payload_v6()
+    so = payload["spatial_operators"]
+    assert set(so["D"]["members"]) == {"to(m1)", "to(m2)"}
+    assert set(so["T"]["members"]) == {"from(m1)", "to(m1)", "from(m2)", "to(m2)"}
+    assert so["D"]["deduplicate"] is True
+    assert so["T"]["deduplicate"] is True
+    assert so["M_D"]["nonzero_rule"] == "a_X / |D|"
+    assert so["M_T"]["nonzero_rule"] == "a_X / |T|"
+    assert so["B_raw"]["role"] == "diagnostic only"
+    assert so["B_raw"]["primary_contrast"] is False
+
+def test_v6_seal_outcome_classifier():
+    from chessheat.protocol_freeze import canonical_protocol_payload_v6
+    payload = canonical_protocol_payload_v6()
+    oc = payload["outcome_classifier"]
+    assert "Delta_DT = AULC_D - AULC_T" in oc["primary_contrast"]
+    assert "Delta_D0" in oc["gating_contrasts"]
+    assert "Delta_T0" in oc["gating_contrasts"]
+    
+    logic = oc["logic"]
+    assert logic["PROTOCOL_INVALID"] == "protocol_valid == false"
+    assert "LCB(Delta_DT) > 0" in logic["SUPPORT_muD"]
+    assert "LCB(Delta_D0) > 0" in logic["SUPPORT_muD"]
+    assert "UCB(Delta_DT) < 0" in logic["SUPPORT_muT"]
+    assert "LCB(Delta_T0) > 0" in logic["SUPPORT_muT"]
+    assert "LCB(Delta_D0) > 0 OR LCB(Delta_T0) > 0" in logic["SPATIAL_EFFICIENCY_OPERATOR_UNRESOLVED"]
+    assert "UCB(Delta_D0) <= 0" in logic["NO_SPATIAL_EFFICIENCY_ADVANTAGE"]
+
+def test_preregistration_consistency_check():
+    import os
+    with open("docs/research/CP_ONLY_REPRESENTATION_EFFICIENCY_PREREGISTRATION.md", "r") as f:
+        doc = f.read()
+    
+    assert "remains unresolved" not in doc
+    assert "until an exact seed-aggregation rule is frozen" not in doc
+    assert "alpha level, bootstrap size" not in doc
+    assert "DOWNSTREAM_EXPERIMENT_PROTOCOL_V3_IMPLEMENTED_REAUDIT_REQUIRED" not in doc
+    

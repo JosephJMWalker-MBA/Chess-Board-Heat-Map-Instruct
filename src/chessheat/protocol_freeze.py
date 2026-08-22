@@ -353,9 +353,9 @@ def canonical_json_bytes(obj: Any) -> bytes:
         allow_nan=False
     ).encode('utf-8')
 
-def canonical_protocol_payload_v5() -> dict:
+def canonical_protocol_payload_v6() -> dict:
     return {
-        "protocol_identifier": "CP_REPRESENTATION_EFFICIENCY_PROTOCOL_V5",
+        "protocol_identifier": "CP_REPRESENTATION_EFFICIENCY_PROTOCOL_V6",
         "authoritative_references": {
             "pre_freeze_sha": "8876f8cf2d6e1da47b2b40b818413b4095786c36",
             "repair_v1_fail": "ba11bde7af3623b3272900b7da66bc5ec53627de",
@@ -411,14 +411,43 @@ def canonical_protocol_payload_v5() -> dict:
             "promotion_order": ["NONE", "QUEEN", "ROOK", "BISHOP", "KNIGHT"],
             "d_X_order": ["SOURCE_FIRST_BETTER", "SOURCE_EQUAL", "SOURCE_SECOND_BETTER"]
         },
-        "m_channel_definitions": {
-            "shape": [1, 8, 8],
-            "orientation": "spatial_row_col: row 0 = rank 8, col 0 = file a",
-            "mu_D": "a_X / |D| if s in deduplicated D else 0",
-            "mu_T": "a_X / |T| if s in deduplicated T else 0",
-            "B_daS": "M_0 (all zeros)",
+        "spatial_operators": {
+            "a_X": {
+                "definition": "abs(CP_X(m1) - CP_X(m2))",
+                "source_type": "finite SOURCE CP"
+            },
+            "D": {
+                "collection_type": "set",
+                "deduplicate": True,
+                "members": ["to(m1)", "to(m2)"]
+            },
+            "T": {
+                "collection_type": "set",
+                "deduplicate": True,
+                "members": ["from(m1)", "to(m1)", "from(m2)", "to(m2)"]
+            },
+            "M_D": {
+                "nonzero_rule": "a_X / |D|",
+                "support": "D",
+                "else": 0
+            },
+            "M_T": {
+                "nonzero_rule": "a_X / |T|",
+                "support": "T",
+                "else": 0
+            },
+            "M_0": {
+                "rule": "0 on all 64 squares"
+            },
+            "B_daS": "M_0",
             "B_perm": "M_T mapped through global fixed spatial permutation (domain CHESSHEAT_MATCHED_PERM_V3|)",
-            "quantization": "IEEE-754 float32 of analytical values"
+            "B_raw": {
+                "role": "diagnostic only",
+                "primary_contrast": False
+            },
+            "quantization": "IEEE-754 float32 of analytical values",
+            "shape": [1, 8, 8],
+            "orientation": "spatial_row_col: row 0 = rank 8, col 0 = file a"
         },
         "learner": {
             "layers": [
@@ -486,12 +515,39 @@ def canonical_protocol_payload_v5() -> dict:
             "set": [1729, 2718, 31415, 65537, 104729],
             "aggregation": "mean seed root NLL across 5 seeds BEFORE computing root inference or AULC"
         },
-        "outcome_logic": {
-            "utility": "- mean_root(NLL)",
+        "outcome_classifier": {
+            "utility": "U_mu(n) = - mean_root(NLL) with five-seed averaging already performed within root",
+            "x_axis": "linear nominal SOURCE-selected training-root budget",
+            "budgets": [250, 500, 1000, 2000, 4000, 8000, 16000, 20000],
+            "integration": "normalized trapezoidal integral over linear n. AULC = [ sum_j (n_j - n_{j-1}) (U_j + U_{j-1}) / 2 ] / (n_max - n_min). larger AULC = better",
             "primary_contrast": "Delta_DT = AULC_D - AULC_T",
-            "sign": "positive Delta_DT favors D",
-            "aulc_rules": "fail-closed on non-finite U, mismatched lengths, non-strict budgets",
-            "classifier_precedence": "PROTOCOL_INVALID precedence over support classes"
+            "primary_contrast_status": "sole PRIMARY operator contrast",
+            "gating_contrasts": {
+                "Delta_D0": "AULC_D - AULC_BdaS (prespecified gating/control contrast)",
+                "Delta_T0": "AULC_T - AULC_BdaS (prespecified gating/control contrast)"
+            },
+            "ci_boundary_semantics": {
+                "resolved_positive": "LCB > 0",
+                "resolved_negative": "UCB < 0",
+                "non_positive": "UCB <= 0",
+                "contains_zero": "LCB <= 0 <= UCB"
+            },
+            "evaluation_order": [
+                "PROTOCOL_INVALID",
+                "SUPPORT_muD",
+                "SUPPORT_muT",
+                "SPATIAL_EFFICIENCY_OPERATOR_UNRESOLVED",
+                "NO_SPATIAL_EFFICIENCY_ADVANTAGE",
+                "INCONCLUSIVE"
+            ],
+            "logic": {
+                "PROTOCOL_INVALID": "protocol_valid == false",
+                "SUPPORT_muD": "LCB(Delta_DT) > 0 AND LCB(Delta_D0) > 0",
+                "SUPPORT_muT": "UCB(Delta_DT) < 0 AND LCB(Delta_T0) > 0",
+                "SPATIAL_EFFICIENCY_OPERATOR_UNRESOLVED": "(LCB(Delta_D0) > 0 OR LCB(Delta_T0) > 0) AND LCB(Delta_DT) <= 0 AND UCB(Delta_DT) >= 0",
+                "NO_SPATIAL_EFFICIENCY_ADVANTAGE": "UCB(Delta_D0) <= 0 AND UCB(Delta_T0) <= 0",
+                "INCONCLUSIVE": "otherwise"
+            }
         },
         "bootstrap": {
             "replicates": 10000,
@@ -516,9 +572,9 @@ def canonical_protocol_payload_v5() -> dict:
         "claim_ceiling": "representation efficiency comparison only"
     }
 
-def canonical_protocol_bytes_v5() -> bytes:
-    payload = canonical_protocol_payload_v5()
+def canonical_protocol_bytes_v6() -> bytes:
+    payload = canonical_protocol_payload_v6()
     return canonical_json_bytes(payload)
 
-def canonical_protocol_sha256_v5() -> str:
-    return hashlib.sha256(canonical_protocol_bytes_v5()).hexdigest()
+def canonical_protocol_sha256_v6() -> str:
+    return hashlib.sha256(canonical_protocol_bytes_v6()).hexdigest()

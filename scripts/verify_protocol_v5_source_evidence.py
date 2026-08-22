@@ -1,7 +1,7 @@
 import sys
 import json
 import hashlib
-from src.chessheat.protocol_freeze import get_partition, canonical_protocol_payload_v5
+from src.chessheat.protocol_freeze import get_partition, canonical_protocol_payload_v6
 
 def main():
     print("Verifying SOURCE protocol V5 counts and SHA...")
@@ -48,7 +48,7 @@ def main():
         "TEST": all_counts["TEST"] - eligible_counts["TEST"]
     }
     
-    v5_payload = canonical_protocol_payload_v5()
+    v5_payload = canonical_protocol_payload_v6()
     p_all = v5_payload["split"]["expected_all_root_counts"]
     p_el = v5_payload["split"]["expected_eligible_counts"]
     p_z = v5_payload["split"]["expected_zero_counts"]
