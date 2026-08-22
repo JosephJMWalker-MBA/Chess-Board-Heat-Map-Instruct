@@ -855,3 +855,6 @@ The correct scientific posture at this checkpoint is:
 
 - ML Runtime Dependency -> pinned (ML_RUNTIME_DEPENDENCY_PINNED_REAUDIT_REQUIRED)
 - Next task -> INDEPENDENT_ML_RUNTIME_REAUDIT_REQUIRED
+
+- ML Runtime Dependency Re-Audit -> failed (ML_RUNTIME_DEPENDENCY_PIN_REAUDIT_FAILED)
+- Next task -> ML_RUNTIME_DEPENDENCY_REPAIR_REQUIRED_V2
