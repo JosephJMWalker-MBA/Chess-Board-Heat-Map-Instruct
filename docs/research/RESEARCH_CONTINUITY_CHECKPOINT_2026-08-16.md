@@ -813,7 +813,8 @@ The correct scientific posture at this checkpoint is:
 
 # Current V4 Repair
 - V4 repair implemented.
-- Current status: DOWNSTREAM_EXPERIMENT_PROTOCOL_V4_IMPLEMENTED_REAUDIT_REQUIRED
+- Current status:
+TARGET_ACQUISITION_AUTHORIZED_NOT_YET_RUN
 - Next blocker: INDEPENDENT_DOWNSTREAM_PROTOCOL_REAUDIT_V4_REQUIRED
 - Execution blocker: ML_RUNTIME_DEPENDENCY_NOT_YET_SATISFIED
 
