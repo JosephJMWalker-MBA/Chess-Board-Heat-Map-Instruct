@@ -813,8 +813,7 @@ The correct scientific posture at this checkpoint is:
 
 # Current V4 Repair
 - V4 repair implemented.
-- Current status:
-TARGET_ACQUISITION_AUTHORIZED_NOT_YET_RUN
+- Current status: DOWNSTREAM_EXPERIMENT_PROTOCOL_V4_IMPLEMENTED_REAUDIT_REQUIRED
 - Next blocker: INDEPENDENT_DOWNSTREAM_PROTOCOL_REAUDIT_V4_REQUIRED
 - Execution blocker: ML_RUNTIME_DEPENDENCY_NOT_YET_SATISFIED
 
@@ -871,3 +870,12 @@ TARGET_ACQUISITION_AUTHORIZED_NOT_YET_RUN
 
 - ML Runtime Dependency Pin V3 Re-Audit -> passed (ML_RUNTIME_DEPENDENCY_PIN_V3_REAUDIT_PASS)
 - Next task -> EXPLICIT_TARGET_ACQUISITION_AUTHORIZATION_REQUIRED
+
+---
+
+# Current Target Acquisition Status
+- TARGET acquisition explicitly authorized
+- V1 runner preliminary review failed
+- V2 runner repaired/implemented
+- TARGET still NOT RUN
+- Next task: INDEPENDENT_TARGET_ACQUISITION_IMPLEMENTATION_REAUDIT_V2_REQUIRED

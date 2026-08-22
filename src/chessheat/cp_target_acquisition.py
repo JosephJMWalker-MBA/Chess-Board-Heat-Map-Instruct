@@ -1,6 +1,8 @@
 import json
 import os
 import zstandard
+import hashlib
+import subprocess
 from typing import Dict, Any, List
 from pathlib import Path
 
@@ -9,7 +11,7 @@ from chessheat.experiment import ExperimentSpec, ExperimentResult
 from chessheat.semantics import SemanticSignatureV1
 from chessheat.cp_root_population import reconstruct_root_board, canonical_json_digest
 
-def build_target_v1_spec(root_record: Dict[str, Any], manifest_digest: str, producer: str) -> ExperimentSpec:
+def build_target_v2_spec(root_record: Dict[str, Any], manifest_digest: str, producer: str) -> ExperimentSpec:
     board = reconstruct_root_board(root_record)
     sorted_moves = sorted(list(board.legal_moves), key=lambda m: m.uci())
     sorted_ucis = [m.uci() for m in sorted_moves]
@@ -32,19 +34,47 @@ def build_target_v1_spec(root_record: Dict[str, Any], manifest_digest: str, prod
         producer_identity=producer,
         instrument_config=get_canonical_instrument_config(InstrumentRole.TARGET),
         budget_config={"type": "nodes", "value": 250000},
-        line_source="cp_target_acquisition_v1",
-        hypothesis_identifier="CP_TARGET_ACQUISITION_V1",
-        spec_version=1,
+        line_source="cp_target_acquisition_v2",
+        hypothesis_identifier="CP_TARGET_ACQUISITION_V2",
+        spec_version=2,
         comparison_perspective="white" if root_record["sufficient_position"]["side_to_move"] == "w" else "black"
     )
 
-class TargetAcquisitionRunnerV1:
+class TargetAcquisitionRunnerV2:
     def __init__(self, manifest_path: str, output_path: str, stockfish_path: str, meta_path: str):
         self.manifest_path = Path(manifest_path)
         self.output_path = Path(output_path)
         self.stockfish_path = stockfish_path
         self.meta_path = Path(meta_path)
         
+        # Verify approved SHA
+        self.target_acquisition_software_revision = os.environ.get("CHESSHEAT_TARGET_ACQUISITION_APPROVED_SHA")
+        if not self.target_acquisition_software_revision:
+            raise ValueError("CHESSHEAT_TARGET_ACQUISITION_APPROVED_SHA must be set")
+            
+        try:
+            res = subprocess.run(["git", "cat-file", "-t", self.target_acquisition_software_revision], capture_output=True, text=True, check=True)
+            if res.stdout.strip() != "commit":
+                raise ValueError("Approved SHA must be a commit")
+        except subprocess.CalledProcessError:
+            raise ValueError(f"Approved SHA not found: {self.target_acquisition_software_revision}")
+            
+        bound_files = [
+            "src/chessheat/cp_instrument.py",
+            "src/chessheat/cp_root_population.py",
+            "src/chessheat/cp_target_acquisition.py",
+            "scripts/run_cp_target_acquisition.py"
+        ]
+        
+        for fpath in bound_files:
+            res = subprocess.run(["git", "diff", "--quiet", self.target_acquisition_software_revision, "--", fpath])
+            if res.returncode != 0:
+                raise ValueError(f"Bound file {fpath} differs from approved SHA")
+            res_working = subprocess.run(["git", "diff", "--quiet", "--", fpath])
+            if res_working.returncode != 0:
+                raise ValueError(f"Uncommitted changes in bound file {fpath}")
+                
+        # META verification
         with open(self.meta_path, "r", encoding="utf-8") as f:
             meta = json.load(f)
             self.manifest_digest = meta["manifest_digest"]
@@ -56,39 +86,91 @@ class TargetAcquisitionRunnerV1:
                 raise ValueError("Manifest meta admitted_root_count mismatch")
             if meta["record_count"] != 40038:
                 raise ValueError("Manifest meta record_count mismatch")
+            if meta["manifest_schema"] != "CP_ROOT_POPULATION_JULY_2026_MANIFEST_V2":
+                raise ValueError("Meta schema mismatch")
+            if meta["software_revision"] != "a49b6ce62a59cc056b67aefc94b121799d950045":
+                raise ValueError("Meta software_revision mismatch")
+            if meta["corpus_checksum"] != "714d0eb99f99fca8d791142038b6c59b5ca6a51b3339bd3891a92f4bdffcbf0c":
+                raise ValueError("Meta corpus_checksum mismatch")
                 
-        # Hardcoded implementation revision as per instructions
-        self.target_acquisition_software_revision = "TARGET_ACQUISITION_V1_REVISION"
-        
+        # Validate manifest content
         self.admitted_roots = []
         dctx = zstandard.ZstdDecompressor()
+        sha_hasher = hashlib.sha256()
+        
+        seen_roots = set()
+        
         with open(self.manifest_path, "rb") as f:
             with dctx.stream_reader(f) as reader:
-                text = reader.read().decode("utf-8")
-                for line in text.strip().split("\n"):
-                    if line:
-                        rec = json.loads(line)
+                buffer = b""
+                while True:
+                    chunk = reader.read(65536)
+                    if not chunk:
+                        break
+                    buffer += chunk
+                    while b"\n" in buffer:
+                        line, buffer = buffer.split(b"\n", 1)
+                        if not line:
+                            raise ValueError("Blank line in manifest")
+                            
+                        encoded_line = line + b"\n"
+                        sha_hasher.update(encoded_line)
+                        
+                        raw = line.decode("utf-8")
+                        rec = json.loads(raw)
+                        canonical = json.dumps(rec, sort_keys=True, separators=(",", ":"))
+                        if raw != canonical:
+                            raise ValueError("Non-canonical JSON in manifest")
+                            
+                        if rec["manifest_schema"] != "CP_ROOT_POPULATION_JULY_2026_MANIFEST_V2":
+                            raise ValueError("Record schema mismatch")
+                        if rec["software_revision"] != self.software_revision:
+                            raise ValueError("Record software_revision mismatch")
+                            
                         if rec.get("inclusion") == "ADMITTED":
+                            root_id = rec["root_identity"]
+                            if root_id in seen_roots:
+                                raise ValueError("Duplicate root_identity in manifest")
+                            seen_roots.add(root_id)
+                            
+                            c_rec = rec.copy()
+                            del c_rec["root_record_digest"]
+                            if canonical_json_digest(c_rec) != rec["root_record_digest"]:
+                                raise ValueError("root_record_digest validation failed")
+                                
+                            reconstruct_root_board(rec)
                             self.admitted_roots.append(rec)
                             
+                if buffer:
+                    raise ValueError("Manifest does not end with a newline")
+                    
+        computed_digest = sha_hasher.hexdigest()
+        if computed_digest != "5a013e64265820b65d1d3687fcee98aa607ab41470294d11df7b2f803c8e063d":
+            raise ValueError(f"Recomputed manifest digest mismatch: {computed_digest}")
+        if computed_digest != self.manifest_digest:
+            raise ValueError("Manifest digest mismatch with meta")
+            
         if len(self.admitted_roots) != 33859:
-            raise ValueError("Parsed admitted roots does not match 33859")
+            raise ValueError(f"Parsed admitted roots {len(self.admitted_roots)} does not match 33859")
             
         self.completed_roots = []
         self.engine_session_epoch = 0
+        self._parse_resume()
         
+    def _parse_resume(self):
         if self.output_path.exists():
             with open(self.output_path, "r", encoding="utf-8") as f:
-                lines = f.read().strip().split("\n")
-                if lines == [""]: lines = []
-                for i, line in enumerate(lines):
-                    if not line:
+                for i, line in enumerate(f):
+                    raw = line.rstrip("\n")
+                    if not raw:
                         raise ValueError("Blank line in resume artifact")
-                    record = json.loads(line)
-                    if canonical_json_digest(record) != canonical_json_digest(json.loads(line)):
-                        raise ValueError("Non-canonical JSON in resume artifact")
                         
-                    if record.get("schema") != "CP_TARGET_ACQUISITION_RESULT_V1":
+                    record = json.loads(raw)
+                    canonical = json.dumps(record, sort_keys=True, separators=(",", ":"))
+                    if raw != canonical:
+                        raise ValueError("NONCANONICAL_TARGET_RESULT_JSON")
+                        
+                    if record.get("schema") != "CP_TARGET_ACQUISITION_RESULT_V2":
                         raise ValueError("Schema mismatch in resume artifact")
                     if record.get("manifest_digest") != self.manifest_digest:
                         raise ValueError("Manifest digest mismatch in resume artifact")
@@ -128,7 +210,7 @@ class TargetAcquisitionRunnerV1:
                         er_dump = record["experiment_result"]
                         er = ExperimentResult(**er_dump)
                         
-                        expected_spec = build_target_v1_spec(expected_r, self.manifest_digest, record["producer_uci_name"])
+                        expected_spec = build_target_v2_spec(expected_r, self.manifest_digest, record["producer_uci_name"])
                         expected_spec_digest = expected_spec.spec_digest()
                         
                         if expected_spec_digest != er.spec_digest:
@@ -149,11 +231,34 @@ class TargetAcquisitionRunnerV1:
                             raise ValueError("pre_spawn_sha256 mismatch")
                         if payload.get("post_spawn_sha256") != frozen_sha:
                             raise ValueError("post_spawn_sha256 mismatch")
+                        if payload.get("comparison_perspective") != expected_spec.comparison_perspective:
+                            raise ValueError("comparison_perspective mismatch")
                             
-                        data = json.loads(er.data_payload)
-                        for obs in data.get("observations", []):
+                        obs_list = payload.get("observations")
+                        if type(obs_list) is not list:
+                            raise ValueError("observations must be a list")
+                            
+                        expected_ucis = expected_spec.candidate_policy["ordered_legal_root_ucis"]
+                        expected_count = expected_spec.candidate_policy["required_search_count"]
+                        if len(obs_list) != expected_count:
+                            raise ValueError("observations length mismatch")
+                            
+                        acq_ucis = []
+                        for obs_idx, obs in enumerate(obs_list):
                             if obs.get("requested_nodes") != 250000:
                                 raise ValueError("requested_nodes mismatch in successful observation")
+                            if "score_type" not in obs or obs["score_type"] not in ("cp", "mate"):
+                                raise ValueError("invalid score_type")
+                            if "root_move_uci" not in obs:
+                                raise ValueError("missing root_move_uci")
+                            if obs.get("acquisition_index") != obs_idx:
+                                raise ValueError("invalid acquisition_index")
+                            if obs.get("comparison_perspective") != expected_spec.comparison_perspective:
+                                raise ValueError("observation comparison_perspective mismatch")
+                            acq_ucis.append(obs["root_move_uci"])
+                            
+                        if acq_ucis != expected_ucis:
+                            raise ValueError("canonical acquisition order mismatch")
                                 
                     elif record["status"] == "FAILURE":
                         if "experiment_result" in record:
@@ -183,18 +288,40 @@ class TargetAcquisitionRunnerV1:
                     session.start()
                     self.engine_session_epoch += 1
                     
-                spec = build_target_v1_spec(r, self.manifest_digest, session._provenance["producer"])
+                spec = build_target_v2_spec(r, self.manifest_digest, session._provenance["producer"])
                 board = reconstruct_root_board(r)
                 
                 try:
                     result = session.acquire(spec, board)
                     
-                    for obs in result.observations:
-                        if obs.requested_nodes != 250000:
-                            raise ValueError(f"Acquired observation has wrong requested nodes: {obs.requested_nodes}")
+                    payload = result.data
+                    
+                    if payload.get("instrument_role") != "TARGET":
+                        raise ValueError("instrument_role mismatch")
+                    if payload.get("instrument_id") != "CP_TARGET_SF18_250K_ISOLATED_V1":
+                        raise ValueError("instrument_id mismatch")
+                        
+                    obs_list = payload.get("observations")
+                    if type(obs_list) is not list:
+                        raise ValueError("observations must be a list")
+                        
+                    expected_ucis = spec.candidate_policy["ordered_legal_root_ucis"]
+                    if len(obs_list) != spec.candidate_policy["required_search_count"]:
+                        raise ValueError("observations length mismatch")
+                        
+                    acq_ucis = []
+                    for obs_idx, obs in enumerate(obs_list):
+                        if obs.get("requested_nodes") != 250000:
+                            raise ValueError(f"Acquired observation has wrong requested nodes: {obs.get('requested_nodes')}")
+                        if "root_move_uci" not in obs:
+                            raise ValueError("Observation missing root_move_uci")
+                        acq_ucis.append(obs["root_move_uci"])
+                        
+                    if acq_ucis != expected_ucis:
+                        raise ValueError("canonical acquisition order mismatch")
                             
                     rec = {
-                        "schema": "CP_TARGET_ACQUISITION_RESULT_V1",
+                        "schema": "CP_TARGET_ACQUISITION_RESULT_V2",
                         "manifest_digest": self.manifest_digest,
                         "root_manifest_schema": r["manifest_schema"],
                         "root_population_software_revision": self.software_revision,
@@ -210,7 +337,7 @@ class TargetAcquisitionRunnerV1:
                     }
                 except Exception as e:
                     rec = {
-                        "schema": "CP_TARGET_ACQUISITION_RESULT_V1",
+                        "schema": "CP_TARGET_ACQUISITION_RESULT_V2",
                         "manifest_digest": self.manifest_digest,
                         "root_manifest_schema": r["manifest_schema"],
                         "root_population_software_revision": self.software_revision,
