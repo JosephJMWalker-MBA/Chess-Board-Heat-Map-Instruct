@@ -2,6 +2,6 @@
   "artifacts/research/ml_runtime_package_lock_v3.json": "2127b9709ef8786f47b9306040a56706ff3a7f6535d2439d692c67bac5fac54d",
   "requirements/ml-runtime-v3.txt": "79ea33529376312052c7f98d0e19e812029697d4ff15a2e93106f94f023bf7c9",
   "scripts/run_ml_runtime_v3.sh": "eb19de7fb6ec955e55a267a8ca3f0f74ba46b0cd978ebb6bb531ef74db563078",
-  "scripts/validate_ml_runtime_v3.py": "dbf4a860c0eea84e94369de72188f10314f2b65844f9287946383e02e8b6936e",
-  "src/chessheat/ml_runtime.py": "2ca2fc506eca933864ca1aad90f1c8876082b7c90cbeb9269c234d319823a7c6"
+  "scripts/validate_ml_runtime_v3.py": "b8a56748edc08ea5ca4e46fb0da018f76aa8fca5d0c802eea8085701bfd9e7ac",
+  "src/chessheat/ml_runtime.py": "51a011c220f5f46c5e62083e0b4c2af701aebc023f343f0c56889392496246c8"
 }

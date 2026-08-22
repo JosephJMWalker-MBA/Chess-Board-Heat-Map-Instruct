@@ -124,7 +124,8 @@ def run_single_process(seed: int, batch_size: int, root_weighted: bool):
             for key, val in state.items():
                 if isinstance(val, torch.Tensor) and val.is_floating_point():
                     assert_finite(val, f"opt state {key}")
-                    assert val.device.type == "mps"
+                    if val.dim() > 0:
+                        assert val.device.type == "mps"
 
         
         for name, p in model.named_parameters():

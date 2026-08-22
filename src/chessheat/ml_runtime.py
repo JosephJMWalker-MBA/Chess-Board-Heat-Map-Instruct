@@ -72,7 +72,7 @@ def validate_runtime_identity():
         raise RuntimeError("torch was imported before ChessHeat ML runtime preflight")
 
     if os.environ.get("CHESSHEAT_ML_RUNTIME_ID") != "CHESSHEAT_ML_RUNTIME_V3":
-        raise RuntimeError("CHESSHEAT_ML_RUNTIME_ID must be 'CHESSHEAT_ML_RUNTIME_V2'")
+        raise RuntimeError("CHESSHEAT_ML_RUNTIME_ID must be 'CHESSHEAT_ML_RUNTIME_V3'")
     if os.environ.get("PYTHONHASHSEED") != "0":
         raise RuntimeError("PYTHONHASHSEED must be '0'")
     if os.environ.get("PYTORCH_MPS_FAST_MATH") != "0":
