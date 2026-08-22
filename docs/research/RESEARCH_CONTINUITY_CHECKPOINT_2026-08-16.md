@@ -879,3 +879,6 @@ The correct scientific posture at this checkpoint is:
 - V2 runner repaired/implemented
 - TARGET still NOT RUN
 - Next task: INDEPENDENT_TARGET_ACQUISITION_IMPLEMENTATION_REAUDIT_V2_REQUIRED
+
+## 2026-08-22 TARGET Acquisition V3 Re-Audit
+Hostile audit of the V3 target acquisition runner implementation has passed (`TARGET_ACQUISITION_IMPLEMENTATION_V3_REAUDIT_PASS`). Execution remains paused pending final specific authorization bound to the audited SHA.
