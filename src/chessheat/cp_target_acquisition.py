@@ -40,6 +40,92 @@ def build_target_v2_spec(root_record: Dict[str, Any], manifest_digest: str, prod
         comparison_perspective="white" if root_record["sufficient_position"]["side_to_move"] == "w" else "black"
     )
 
+def _validate_success_result(experiment_result: ExperimentResult, expected_spec: ExperimentSpec, expected_root: Dict[str, Any]):
+    if expected_spec.spec_digest() != experiment_result.spec_digest:
+        raise ValueError("Outer spec digest does not match recomputed expected spec digest")
+        
+    payload = experiment_result.data
+    
+    if payload.get("spec_digest") != expected_spec.spec_digest():
+        raise ValueError("Inner payload spec digest mismatch")
+        
+    if payload.get("instrument_role") != "TARGET":
+        raise ValueError("instrument_role mismatch")
+    if payload.get("instrument_id") != "CP_TARGET_SF18_250K_ISOLATED_V1":
+        raise ValueError("instrument_id mismatch")
+    if payload.get("producer_uci_name") != "Stockfish 18":
+        raise ValueError("producer_uci_name mismatch")
+    frozen_sha = "ae4c93fa9676ca7750d0714342fd8a5b1d018000fc6e0f6cedf112067b5ef374"
+    if payload.get("pre_spawn_sha256") != frozen_sha:
+        raise ValueError("pre_spawn_sha256 mismatch")
+    if payload.get("post_spawn_sha256") != frozen_sha:
+        raise ValueError("post_spawn_sha256 mismatch")
+    if payload.get("comparison_perspective") != expected_spec.comparison_perspective:
+        raise ValueError("comparison_perspective mismatch")
+        
+    expected_ucis = expected_spec.candidate_policy["ordered_legal_root_ucis"]
+    expected_count = expected_spec.candidate_policy["required_search_count"]
+    
+    if payload.get("canonical_acquisition_order") != expected_ucis:
+        raise ValueError("canonical_acquisition_order mismatch")
+        
+    obs_list = payload.get("observations")
+    if type(obs_list) is not list:
+        raise ValueError("observations must be a list")
+        
+    if len(obs_list) != expected_count:
+        raise ValueError("observations length mismatch")
+        
+    acq_ucis = []
+    parent_history = expected_root["sufficient_position"]["history_identity"]
+    
+    for obs_idx, obs in enumerate(obs_list):
+        if "canonical_acquisition_index" not in obs:
+            raise ValueError("missing canonical_acquisition_index")
+        if obs["canonical_acquisition_index"] != obs_idx:
+            raise ValueError("invalid canonical_acquisition_index")
+            
+        if "isolation_sequence_index" not in obs:
+            raise ValueError("missing isolation_sequence_index")
+        if obs["isolation_sequence_index"] != obs_idx:
+            raise ValueError("invalid isolation_sequence_index")
+            
+        if "root_move_uci" not in obs:
+            raise ValueError("missing root_move_uci")
+        if obs["root_move_uci"] != expected_ucis[obs_idx]:
+            raise ValueError("invalid root_move_uci at index")
+        acq_ucis.append(obs["root_move_uci"])
+            
+        if obs.get("requested_nodes") != 250000:
+            raise ValueError("requested_nodes mismatch in successful observation")
+            
+        if "score_type" not in obs or obs["score_type"] not in ("cp", "mate"):
+            raise ValueError("invalid score_type")
+            
+        if "score_value" not in obs or type(obs["score_value"]) is not int:
+            raise ValueError("missing or invalid score_value")
+            
+        if obs.get("perspective") != expected_spec.comparison_perspective:
+            raise ValueError("observation perspective mismatch")
+            
+        if obs.get("parent_history_identity") != parent_history:
+            raise ValueError("observation parent_history_identity mismatch")
+            
+        if obs.get("history_derivation_version") != "S0_CHILD_PUSH_V1":
+            raise ValueError("observation history_derivation_version mismatch")
+            
+        if type(obs.get("parent_move_stack_length")) is not int or type(obs.get("child_move_stack_length")) is not int:
+            raise ValueError("missing move stack lengths")
+            
+        if obs["child_move_stack_length"] != obs["parent_move_stack_length"] + 1:
+            raise ValueError("child_move_stack_length must be parent + 1")
+            
+        if "acquisition_index" in obs or "comparison_perspective" in obs:
+            raise ValueError("Invalid V2 observation keys found")
+            
+    if acq_ucis != expected_ucis:
+        raise ValueError("canonical acquisition order mismatch in observations")
+
 class TargetAcquisitionRunnerV2:
     def __init__(self, manifest_path: str, output_path: str, stockfish_path: str, meta_path: str):
         self.manifest_path = Path(manifest_path)
@@ -63,6 +149,8 @@ class TargetAcquisitionRunnerV2:
             "src/chessheat/cp_instrument.py",
             "src/chessheat/cp_root_population.py",
             "src/chessheat/cp_target_acquisition.py",
+            "src/chessheat/experiment.py",
+            "src/chessheat/semantics.py",
             "scripts/run_cp_target_acquisition.py"
         ]
         
@@ -211,55 +299,8 @@ class TargetAcquisitionRunnerV2:
                         er = ExperimentResult(**er_dump)
                         
                         expected_spec = build_target_v2_spec(expected_r, self.manifest_digest, record["producer_uci_name"])
-                        expected_spec_digest = expected_spec.spec_digest()
+                        _validate_success_result(er, expected_spec, expected_r)
                         
-                        if expected_spec_digest != er.spec_digest:
-                            raise ValueError("Outer spec digest does not match recomputed expected spec digest")
-                            
-                        payload = json.loads(er.data_payload)
-                        if payload.get("spec_digest") != expected_spec_digest:
-                            raise ValueError("Inner payload spec digest mismatch")
-                            
-                        if payload.get("instrument_role") != "TARGET":
-                            raise ValueError("instrument_role mismatch")
-                        if payload.get("instrument_id") != "CP_TARGET_SF18_250K_ISOLATED_V1":
-                            raise ValueError("instrument_id mismatch")
-                        if payload.get("producer_uci_name") != "Stockfish 18":
-                            raise ValueError("producer_uci_name mismatch")
-                        frozen_sha = "ae4c93fa9676ca7750d0714342fd8a5b1d018000fc6e0f6cedf112067b5ef374"
-                        if payload.get("pre_spawn_sha256") != frozen_sha:
-                            raise ValueError("pre_spawn_sha256 mismatch")
-                        if payload.get("post_spawn_sha256") != frozen_sha:
-                            raise ValueError("post_spawn_sha256 mismatch")
-                        if payload.get("comparison_perspective") != expected_spec.comparison_perspective:
-                            raise ValueError("comparison_perspective mismatch")
-                            
-                        obs_list = payload.get("observations")
-                        if type(obs_list) is not list:
-                            raise ValueError("observations must be a list")
-                            
-                        expected_ucis = expected_spec.candidate_policy["ordered_legal_root_ucis"]
-                        expected_count = expected_spec.candidate_policy["required_search_count"]
-                        if len(obs_list) != expected_count:
-                            raise ValueError("observations length mismatch")
-                            
-                        acq_ucis = []
-                        for obs_idx, obs in enumerate(obs_list):
-                            if obs.get("requested_nodes") != 250000:
-                                raise ValueError("requested_nodes mismatch in successful observation")
-                            if "score_type" not in obs or obs["score_type"] not in ("cp", "mate"):
-                                raise ValueError("invalid score_type")
-                            if "root_move_uci" not in obs:
-                                raise ValueError("missing root_move_uci")
-                            if obs.get("acquisition_index") != obs_idx:
-                                raise ValueError("invalid acquisition_index")
-                            if obs.get("comparison_perspective") != expected_spec.comparison_perspective:
-                                raise ValueError("observation comparison_perspective mismatch")
-                            acq_ucis.append(obs["root_move_uci"])
-                            
-                        if acq_ucis != expected_ucis:
-                            raise ValueError("canonical acquisition order mismatch")
-                                
                     elif record["status"] == "FAILURE":
                         if "experiment_result" in record:
                             raise ValueError("FAILURE cannot have experiment_result")
@@ -293,32 +334,7 @@ class TargetAcquisitionRunnerV2:
                 
                 try:
                     result = session.acquire(spec, board)
-                    
-                    payload = result.data
-                    
-                    if payload.get("instrument_role") != "TARGET":
-                        raise ValueError("instrument_role mismatch")
-                    if payload.get("instrument_id") != "CP_TARGET_SF18_250K_ISOLATED_V1":
-                        raise ValueError("instrument_id mismatch")
-                        
-                    obs_list = payload.get("observations")
-                    if type(obs_list) is not list:
-                        raise ValueError("observations must be a list")
-                        
-                    expected_ucis = spec.candidate_policy["ordered_legal_root_ucis"]
-                    if len(obs_list) != spec.candidate_policy["required_search_count"]:
-                        raise ValueError("observations length mismatch")
-                        
-                    acq_ucis = []
-                    for obs_idx, obs in enumerate(obs_list):
-                        if obs.get("requested_nodes") != 250000:
-                            raise ValueError(f"Acquired observation has wrong requested nodes: {obs.get('requested_nodes')}")
-                        if "root_move_uci" not in obs:
-                            raise ValueError("Observation missing root_move_uci")
-                        acq_ucis.append(obs["root_move_uci"])
-                        
-                    if acq_ucis != expected_ucis:
-                        raise ValueError("canonical acquisition order mismatch")
+                    _validate_success_result(result, spec, r)
                             
                     rec = {
                         "schema": "CP_TARGET_ACQUISITION_RESULT_V2",
