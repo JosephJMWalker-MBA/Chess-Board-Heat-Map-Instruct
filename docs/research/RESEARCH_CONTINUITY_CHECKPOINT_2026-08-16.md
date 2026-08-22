@@ -852,3 +852,6 @@ The correct scientific posture at this checkpoint is:
 # Current ML Runtime Status
 - V7 audit -> passed (DOWNSTREAM_EXPERIMENT_PROTOCOL_V7_REAUDIT_PASS)
 - ML Runtime Dependency -> next task (ML_RUNTIME_DEPENDENCY_PIN_REQUIRED)
+
+- ML Runtime Dependency -> pinned (ML_RUNTIME_DEPENDENCY_PINNED_REAUDIT_REQUIRED)
+- Next task -> INDEPENDENT_ML_RUNTIME_REAUDIT_REQUIRED

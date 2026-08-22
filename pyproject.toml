@@ -19,6 +19,9 @@ packages = ["src/chessheat"]
 
 
 [project.optional-dependencies]
+ml = [
+    "torch==2.13.0",
+]
 dev = [
     "pytest>=7.0.0",
 ]
