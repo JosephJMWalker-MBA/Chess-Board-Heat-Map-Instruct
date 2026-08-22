@@ -834,3 +834,9 @@ The correct scientific posture at this checkpoint is:
 # Current V6 Status
 - V6 repair -> implemented (DOWNSTREAM_EXPERIMENT_PROTOCOL_V6_IMPLEMENTED_REAUDIT_REQUIRED)
 - V6 audit -> next task (INDEPENDENT_DOWNSTREAM_PROTOCOL_REAUDIT_V6_REQUIRED)
+
+---
+
+# Current V7 Status
+- V6 re-audit -> failed (DOWNSTREAM_EXPERIMENT_PROTOCOL_V6_REAUDIT_FAILED)
+- V7 repair -> next task (DOWNSTREAM_EXPERIMENT_PROTOCOL_REPAIR_REQUIRED_V7)
