@@ -169,8 +169,9 @@ sys.exit(0)
         assert result.returncode == 0
         assert "OK" in result.stdout.strip()
 
+
 def test_hostile_pythonpath():
-    with tempfile.TemporaryDirectory() as td:
+    with tempfile.TemporaryDirectory() as td, tempfile.TemporaryDirectory() as td2:
         shadow_dir = os.path.join(td, "chessheat")
         os.makedirs(shadow_dir)
         with open(os.path.join(shadow_dir, "__init__.py"), "w") as f:
@@ -178,14 +179,14 @@ def test_hostile_pythonpath():
         with open(os.path.join(shadow_dir, "ml_runtime.py"), "w") as f:
             f.write("print('MALICIOUS SHADOW RUNTIME EXECUTED')")
             
-        code = """
+        code = '''
 from chessheat.ml_runtime import configure_runtime
 configure_runtime(1729)
 import sys
 print('SUCCESS_CANONICAL')
 sys.exit(0)
-"""
-        tf = os.path.join(td, "test_launcher_script.py")
+'''
+        tf = os.path.join(td2, "test_launcher_script.py")
         with open(tf, "w") as f:
             f.write(code)
             
