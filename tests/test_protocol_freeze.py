@@ -7,6 +7,7 @@ from chessheat.protocol_freeze import (
     SourcePairFeatures, encode_position, encode_side_information, build_m_d, build_m_t, build_m_zero, build_m_perm,
     get_partition, canonical_budget_order, compute_aulc, classify_outcome, bootstrap_indices, percentile_rank,
     canonical_protocol_payload_v6, canonical_protocol_bytes_v6, canonical_group_json_bytes,
+    canonical_protocol_payload_v7, canonical_protocol_bytes_v7,
     mean_five_seed_root_nll, full_bootstrap_procedure
 )
 
@@ -183,13 +184,22 @@ def test_uci_validation():
     SourcePairFeatures("e7e8q", 10, "e7e8r", 20)
 
 def test_promotion_validation():
-    pair = SourcePairFeatures("e7e8q", 10, "e2e4", 20)
-    arr = encode_side_information(pair)
-    # Queens are at index 266 (NONE=265, QUEEN=266, ROOK=267, BISHOP=268, KNIGHT=269)
-    # But wait, we shouldn't assume the index without checking.
-    # Let's just assert that it constructs and doesn't raise, and the length is correct.
-    assert arr.shape == (270,)
-    assert arr.values[266] == 1.0 # Queen promotion
+    promos = ["", "q", "r", "b", "n"]
+    for p, idx in zip(promos, [0, 1, 2, 3, 4]):
+        pair = SourcePairFeatures("e7e8" + p, 10, "e2e4", 20)
+        arr = encode_side_information(pair)
+        assert arr.values[261 + idx] == 1.0, f"m2 promo {p} failed"
+        for i in range(5):
+            if i != idx:
+                assert arr.values[261 + i] == 0.0
+                
+        pair2 = SourcePairFeatures("e2e4", 10, "e7e8" + p, 20)
+        arr2 = encode_side_information(pair2)
+        assert arr2.values[261 + idx] == 1.0, f"m2 promo {p} failed on swap"
+        
+        pair3 = SourcePairFeatures("a7a8" + p, 10, "e7e8", 20)
+        arr3 = encode_side_information(pair3)
+        assert arr3.values[128 + idx] == 1.0, f"m1 promo {p} failed"
 
 def test_canonical_swapping():
     # canonicalization sorts moves
@@ -450,3 +460,42 @@ def test_preregistration_consistency_check():
     assert "alpha level, bootstrap size" not in doc
     assert "DOWNSTREAM_EXPERIMENT_PROTOCOL_V3_IMPLEMENTED_REAUDIT_REQUIRED" not in doc
     
+
+
+def test_v7_multiplicity_seal():
+    payload = canonical_protocol_payload_v7()
+    policy = payload["inference_policy"]
+    assert "Delta_DT" in policy["primary_contrasts"]
+    assert len(policy["primary_contrasts"]) == 1
+    assert "Delta_D0" in policy["gating_control_contrasts"]
+    assert "Delta_T0" in policy["gating_control_contrasts"]
+    
+    mc = policy["multiplicity_correction"]
+    assert mc["applied"] is False
+    assert mc["method"] is None
+    assert "Delta_DT is sole primary contrast" in mc["scope"]
+
+def test_v7_no_drift():
+    import copy
+    v6 = canonical_protocol_payload_v6()
+    v7 = canonical_protocol_payload_v7()
+    
+    def strip_v6(p):
+        p = copy.deepcopy(p)
+        del p["protocol_identifier"]
+        del p["authoritative_references"]
+        return p
+        
+    def strip_v7(p):
+        p = copy.deepcopy(p)
+        del p["protocol_identifier"]
+        del p["authoritative_references"]
+        del p["inference_policy"]
+        return p
+        
+    assert strip_v6(v6) == strip_v7(v7)
+
+def test_protocol_seal_v7():
+    with open('artifacts/research/cp_representation_efficiency_protocol_v7.json', 'rb') as f:
+        disk_bytes = f.read()
+    assert disk_bytes == canonical_protocol_bytes_v7()

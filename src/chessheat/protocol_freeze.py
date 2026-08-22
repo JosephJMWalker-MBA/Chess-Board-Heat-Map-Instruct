@@ -578,3 +578,243 @@ def canonical_protocol_bytes_v6() -> bytes:
 
 def canonical_protocol_sha256_v6() -> str:
     return hashlib.sha256(canonical_protocol_bytes_v6()).hexdigest()
+
+
+def canonical_protocol_payload_v7() -> dict:
+    return {
+        "protocol_identifier": "CP_REPRESENTATION_EFFICIENCY_PROTOCOL_V7",
+        "authoritative_references": {
+            "pre_freeze_sha": "8876f8cf2d6e1da47b2b40b818413b4095786c36",
+            "repair_v1_fail": "ba11bde7af3623b3272900b7da66bc5ec53627de",
+            "repair_v2_fail": "c0914d88530810d9e07bc4e951c8721aca1a611d",
+            "repair_v3_fail": "af620cd1f5b5beaa850baf08baca0f8bd6b90894",
+            "repair_v4_fail": "7bbbef81fa83ff9babab6049aa7c891a53cdf948",
+            "repair_v5_fail": "df3dd79443fb4f067971500605eee8cfe9bc8c70",
+            "audit_v5": "ef56b140aa9cc192a7ad8c571235dd4676066ffe",
+            "repair_v6_fail": "9cdaee995614e65fffd5c22b2a22b6912c31be0b",
+            "audit_v6": "2ebeb4123da7425c570eed3b903e7f0b94e54e85"
+        },
+        "inference_policy": {
+            "primary_contrasts": ["Delta_DT"],
+            "gating_control_contrasts": ["Delta_D0", "Delta_T0"],
+            "multiplicity_correction": {
+                "applied": False,
+                "method": None,
+                "scope": "Delta_DT is sole primary contrast; Delta_D0 and Delta_T0 are prespecified gating/control contrasts"
+            }
+        },
+        "source_evidence": {
+            "commit": "8876f8cf2d6e1da47b2b40b818413b4095786c36",
+            "raw_path": "artifacts/research/cp_source_feasibility_2026_07/raw/cp_source_root_results_v2.jsonl",
+            "raw_sha256": "7eb640c572dad4c6607cfb1b5ccf99597672042e5c516f131feab02223ccfa6b",
+            "population_count": 33859,
+            "source_pair_eligible_count": 33444,
+            "source_zero_pair_count": 415,
+            "eligibility_rule": ">=2 finite SOURCE CP alternatives, determined before TARGET"
+        },
+        "target_labels": {
+            "semantics": "Concrete CompareTyped binding to src/chessheat/attribution.py:compare_scores. Typed mate observations remain ordered. Not blanket excluded.",
+            "attrition_training": "Nominal selected training roots with 0 TARGET-evaluable pairs contribute 0 training examples, are not replaced, consume no minibatch slot.",
+            "attrition_val_test": "Roots must have >=1 TARGET-evaluable pair. Exact identical root set across all representations and budgets."
+        },
+        "canonical_pair_orientation": "lexicographical_uci_m1_lt_m2",
+        "split": {
+            "domain_string": "CHESSHEAT_SPLIT_V3|",
+            "key_definition": "JSON serialization of board_arrangement_fen, castling_rights, en_passant_square, side_to_move",
+            "partitions": {"TRAIN": [0, 69], "VALIDATION": [70, 84], "TEST": [85, 99]},
+            "expected_all_root_counts": {"TRAIN": 23639, "VALIDATION": 5148, "TEST": 5072},
+            "expected_eligible_counts": {"TRAIN": 23350, "VALIDATION": 5094, "TEST": 5000},
+            "expected_zero_counts": {"TRAIN": 289, "VALIDATION": 54, "TEST": 72}
+        },
+        "budget": {
+            "domain_string": "CHESSHEAT_BUDGET_ORDER_V3|",
+            "sizes": [250, 500, 1000, 2000, 4000, 8000, 16000, 20000],
+            "tie_break": "(digest_bytes, root_identity)"
+        },
+        "p_numeric_encoding": {
+            "shape": [18, 8, 8],
+            "dtype": "float32-le",
+            "orientation": "spatial_row_col: row 0 = rank 8, col 0 = file a",
+            "channels": [
+                "white pawn", "white knight", "white bishop", "white rook", "white queen", "white king",
+                "black pawn", "black knight", "black bishop", "black rook", "black queen", "black king",
+                "side to move", "white kingside", "white queenside", "black kingside", "black queenside",
+                "en-passant target"
+            ],
+            "omitted_s0_features": ["halfmove_clock", "fullmove_number", "history_available", "history_identity", "variant"]
+        },
+        "s_numeric_encoding": {
+            "dimension": 270,
+            "dtype": "float32-le",
+            "orientation": "uci_square_index: a1=0, h8=63",
+            "structure": "133 (m1), 133 (m2), 3 (d_X), 1 (a_X)",
+            "promotion_order": ["NONE", "QUEEN", "ROOK", "BISHOP", "KNIGHT"],
+            "d_X_order": ["SOURCE_FIRST_BETTER", "SOURCE_EQUAL", "SOURCE_SECOND_BETTER"]
+        },
+        "spatial_operators": {
+            "a_X": {
+                "definition": "abs(CP_X(m1) - CP_X(m2))",
+                "source_type": "finite SOURCE CP"
+            },
+            "D": {
+                "collection_type": "set",
+                "deduplicate": True,
+                "members": ["to(m1)", "to(m2)"]
+            },
+            "T": {
+                "collection_type": "set",
+                "deduplicate": True,
+                "members": ["from(m1)", "to(m1)", "from(m2)", "to(m2)"]
+            },
+            "M_D": {
+                "nonzero_rule": "a_X / |D|",
+                "support": "D",
+                "else": 0
+            },
+            "M_T": {
+                "nonzero_rule": "a_X / |T|",
+                "support": "T",
+                "else": 0
+            },
+            "M_0": {
+                "rule": "0 on all 64 squares"
+            },
+            "B_daS": "M_0",
+            "B_perm": "M_T mapped through global fixed spatial permutation (domain CHESSHEAT_MATCHED_PERM_V3|)",
+            "B_raw": {
+                "role": "diagnostic only",
+                "primary_contrast": False
+            },
+            "quantization": "IEEE-754 float32 of analytical values",
+            "shape": [1, 8, 8],
+            "orientation": "spatial_row_col: row 0 = rank 8, col 0 = file a"
+        },
+        "learner": {
+            "layers": [
+                {"type": "Conv2d", "in": 19, "out": 64, "kernel": [3,3], "stride": [1,1], "padding": [1,1], "dilation": [1,1], "groups": 1, "bias": True, "activation": "ReLU"},
+                {"type": "Conv2d", "in": 64, "out": 64, "kernel": [3,3], "stride": [1,1], "padding": [1,1], "dilation": [1,1], "groups": 1, "bias": True, "activation": "ReLU"},
+                {"type": "Conv2d", "in": 64, "out": 64, "kernel": [3,3], "stride": [1,1], "padding": [1,1], "dilation": [1,1], "groups": 1, "bias": True, "activation": "ReLU"},
+                {"type": "GAP", "operation": "mean across both 8x8 axes"},
+                {"type": "Linear", "in": 270, "out": 128, "bias": True, "activation": "ReLU"},
+                {"type": "Concat", "sources": ["GAP", "Linear_270_128"]},
+                {"type": "Linear", "in": 192, "out": 128, "bias": True, "activation": "ReLU"},
+                {"type": "Linear", "in": 128, "out": 3, "bias": True, "activation": "none"}
+            ],
+            "output_logits": {
+                "class_order": [
+                    "FIRST_BETTER",
+                    "EQUAL",
+                    "SECOND_BETTER"
+                ]
+            },
+            "normalization": "none",
+            "dropout": "none",
+            "class_weighting": "none",
+            "gradient_clipping": "none",
+            "optimizer": {
+                "name": "Adam",
+                "lr": 0.001,
+                "betas": [0.9, 0.999],
+                "eps": 1e-08,
+                "weight_decay": 1e-05,
+                "amsgrad": False
+            },
+            "initialization": {
+                "weights": "torch.nn.init.kaiming_uniform_(a=sqrt(5), mode=fan_in, nonlinearity=leaky_relu)",
+                "bias": "uniform(-1/sqrt(fan_in), 1/sqrt(fan_in))",
+                "fan_in_conv1": 171,
+                "fan_in_conv2": 576,
+                "fan_in_conv3": 576,
+                "fan_in_side": 270,
+                "fan_in_fusion": 192,
+                "fan_in_output": 128
+            }
+        },
+        "training": {
+            "batch_unit": "EFFECTIVE_ROOT",
+            "batch_size": 64,
+            "final_short_batch_allowed": True,
+            "pair_policy": "all TARGET-evaluable pairs within each effective root",
+            "root_loss": "arithmetic mean pair NLL within root",
+            "batch_loss": "arithmetic mean root losses within minibatch",
+            "target_zero_root": "excluded before minibatch construction; nominal budget retained; no replacement",
+            "validation_frequency": "after every completed epoch",
+            "test_evaluation": "exactly once after best checkpoint restoration",
+            "epoch_ordering": "SHA256(CHESSHEAT_MINIBATCH_V3|s|e|root_identity)",
+            "max_epochs": 200,
+            "validation_metric": "root-weighted NLL",
+            "early_stopping": {
+                "patience": 20,
+                "min_delta": 0.0,
+                "improvement": "strict inequality",
+                "tie_break": "earliest epoch"
+            },
+            "best_checkpoint_restored": True
+        },
+        "seed": {
+            "set": [1729, 2718, 31415, 65537, 104729],
+            "aggregation": "mean seed root NLL across 5 seeds BEFORE computing root inference or AULC"
+        },
+        "outcome_classifier": {
+            "utility": "U_mu(n) = - mean_root(NLL) with five-seed averaging already performed within root",
+            "x_axis": "linear nominal SOURCE-selected training-root budget",
+            "budgets": [250, 500, 1000, 2000, 4000, 8000, 16000, 20000],
+            "integration": "normalized trapezoidal integral over linear n. AULC = [ sum_j (n_j - n_{j-1}) (U_j + U_{j-1}) / 2 ] / (n_max - n_min). larger AULC = better",
+            "primary_contrast": "Delta_DT = AULC_D - AULC_T",
+            "primary_contrast_status": "sole PRIMARY operator contrast",
+            "gating_contrasts": {
+                "Delta_D0": "AULC_D - AULC_BdaS (prespecified gating/control contrast)",
+                "Delta_T0": "AULC_T - AULC_BdaS (prespecified gating/control contrast)"
+            },
+            "ci_boundary_semantics": {
+                "resolved_positive": "LCB > 0",
+                "resolved_negative": "UCB < 0",
+                "non_positive": "UCB <= 0",
+                "contains_zero": "LCB <= 0 <= UCB"
+            },
+            "evaluation_order": [
+                "PROTOCOL_INVALID",
+                "SUPPORT_muD",
+                "SUPPORT_muT",
+                "SPATIAL_EFFICIENCY_OPERATOR_UNRESOLVED",
+                "NO_SPATIAL_EFFICIENCY_ADVANTAGE",
+                "INCONCLUSIVE"
+            ],
+            "logic": {
+                "PROTOCOL_INVALID": "protocol_valid == false",
+                "SUPPORT_muD": "LCB(Delta_DT) > 0 AND LCB(Delta_D0) > 0",
+                "SUPPORT_muT": "UCB(Delta_DT) < 0 AND LCB(Delta_T0) > 0",
+                "SPATIAL_EFFICIENCY_OPERATOR_UNRESOLVED": "(LCB(Delta_D0) > 0 OR LCB(Delta_T0) > 0) AND LCB(Delta_DT) <= 0 AND UCB(Delta_DT) >= 0",
+                "NO_SPATIAL_EFFICIENCY_ADVANTAGE": "UCB(Delta_D0) <= 0 AND UCB(Delta_T0) <= 0",
+                "INCONCLUSIVE": "otherwise"
+            }
+        },
+        "bootstrap": {
+            "replicates": 10000,
+            "domain_string": "CHESSHEAT_BOOTSTRAP_V3|b|j",
+            "unit": "held-out root",
+            "procedure": "Resample roots -> recompute U at every budget -> recompute AULC -> recompute contrasts",
+            "root_order": "lexicographically ascending canonical root_identity",
+            "index_binding": "SHA-derived integer modulo N indexes canonical_root_order",
+            "ci_type": "percentile",
+            "bounds": [2.5, 97.5],
+            "indices": [249, 9749]
+        },
+        "runtime": {
+            "framework": "PyTorch",
+            "version": None,
+            "status": "ML_RUNTIME_DEPENDENCY_NOT_YET_SATISFIED"
+        },
+        "execution_status": {
+            "target": "STRICTLY UNAUTHORIZED",
+            "model_training": "STRICTLY UNAUTHORIZED"
+        },
+        "claim_ceiling": "representation efficiency comparison only"
+    }
+
+def canonical_protocol_bytes_v7() -> bytes:
+    payload = canonical_protocol_payload_v7()
+    return canonical_json_bytes(payload)
+
+def canonical_protocol_sha256_v7() -> str:
+    return hashlib.sha256(canonical_protocol_bytes_v7()).hexdigest()

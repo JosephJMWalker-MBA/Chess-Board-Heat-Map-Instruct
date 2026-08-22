@@ -231,6 +231,8 @@ With zero superiority margin:
 - resolved non-positive: $UCB \le 0$
 - unresolved: interval contains $0$
 
+**Multiplicity Policy (Frozen)**: $\Delta_{DT}$ is the sole primary operator contrast. $\Delta_{D0}$ and $\Delta_{T0}$ are prespecified gating/control contrasts. The 95% bootstrap confidence intervals are marginal. No multiplicity correction is applied because $D_0$ and $T_0$ are not independent co-primary discovery hypotheses. This is the already-frozen policy, not a new post hoc choice.
+
 **Deterministic Outcome Logic:**
 - `SUPPORT_muD`: $LCB(\Delta_{DT}) > 0$ AND $LCB(\Delta_{D0}) > 0$
 - `SUPPORT_muT`: $UCB(\Delta_{DT}) < 0$ AND $LCB(\Delta_{T0}) > 0$
@@ -300,8 +302,8 @@ Future execution must use existing `SufficientPosition`, `ExperimentSpec v2`, `E
 
 ## 19. Status
 
-**DOWNSTREAM_EXPERIMENT_PROTOCOL_V6_IMPLEMENTED_REAUDIT_REQUIRED**
-**INDEPENDENT_DOWNSTREAM_PROTOCOL_REAUDIT_V6_REQUIRED**
+**DOWNSTREAM_EXPERIMENT_PROTOCOL_V7_IMPLEMENTED_REAUDIT_REQUIRED**
+**INDEPENDENT_DOWNSTREAM_PROTOCOL_REAUDIT_V7_REQUIRED**
 **ML_RUNTIME_DEPENDENCY_NOT_YET_SATISFIED**
 **ENGINE_EXECUTION_NOT_AUTHORIZED**
 **MODEL_TRAINING_NOT_AUTHORIZED**
