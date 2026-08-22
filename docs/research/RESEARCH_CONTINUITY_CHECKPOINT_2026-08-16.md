@@ -846,3 +846,9 @@ The correct scientific posture at this checkpoint is:
 # Current V7 Status
 - V7 repair -> implemented (DOWNSTREAM_EXPERIMENT_PROTOCOL_V7_IMPLEMENTED_REAUDIT_REQUIRED)
 - V7 audit -> next task (INDEPENDENT_DOWNSTREAM_PROTOCOL_REAUDIT_V7_REQUIRED)
+
+---
+
+# Current ML Runtime Status
+- V7 audit -> passed (DOWNSTREAM_EXPERIMENT_PROTOCOL_V7_REAUDIT_PASS)
+- ML Runtime Dependency -> next task (ML_RUNTIME_DEPENDENCY_PIN_REQUIRED)
