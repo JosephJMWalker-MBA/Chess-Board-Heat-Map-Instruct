@@ -6,7 +6,7 @@ from chessheat.protocol_freeze import (
     CanonicalTensorF32, uci_square_index, spatial_row_col, spatial_flat_index,
     SourcePairFeatures, encode_position, encode_side_information, build_m_d, build_m_t, build_m_zero, build_m_perm,
     get_partition, canonical_budget_order, compute_aulc, classify_outcome, bootstrap_indices, percentile_rank,
-    canonical_protocol_payload_v4, canonical_protocol_bytes_v4, canonical_group_json_bytes
+    canonical_protocol_payload_v5, canonical_protocol_bytes_v5, canonical_group_json_bytes
 )
 
 def test_canonical_pair():
@@ -137,11 +137,11 @@ def test_outcome():
 
 def test_protocol_seal():
     # Load JSON from disk
-    with open('artifacts/research/cp_representation_efficiency_protocol_v4.json', 'rb') as f:
+    with open('artifacts/research/cp_representation_efficiency_protocol_v5.json', 'rb') as f:
         disk_bytes = f.read()
-    mem_bytes = canonical_protocol_bytes_v4()
+    mem_bytes = canonical_protocol_bytes_v5()
     assert disk_bytes == mem_bytes
-    payload = canonical_protocol_payload_v4()
+    payload = canonical_protocol_payload_v5()
     assert payload['s_numeric_encoding']['dimension'] == 270
 
 def test_continuity():
@@ -176,8 +176,8 @@ from src.chessheat.protocol_freeze import (
     percentile_rank,
     mean_five_seed_root_nll,
     full_bootstrap_procedure,
-    canonical_protocol_payload_v4,
-    canonical_protocol_bytes_v4
+    canonical_protocol_payload_v5,
+    canonical_protocol_bytes_v5
 )
 
 def test_square_validation():
@@ -245,7 +245,7 @@ def test_float32():
     with pytest.raises(ValueError): CanonicalTensorF32((2,), [float('inf'), 1.0])
     with pytest.raises(ValueError): CanonicalTensorF32((2,), [1.0, 2.0, 3.0])
 
-def test_coordinates():
+def test_coordinates_v5():
     assert spatial_row_col("a8") == (0, 0)
     assert spatial_row_col("h8") == (0, 7)
     assert spatial_row_col("a1") == (7, 0)
@@ -253,7 +253,7 @@ def test_coordinates():
     assert spatial_row_col("e4") == (4, 4)
 
 def test_source_counts():
-    payload = canonical_protocol_payload_v4()
+    payload = canonical_protocol_payload_v5()
     assert payload["source_evidence"]["population_count"] == 33859
     assert payload["source_evidence"]["source_pair_eligible_count"] == 33444
     assert payload["source_evidence"]["source_zero_pair_count"] == 415
@@ -265,11 +265,11 @@ def test_source_counts():
     assert sum(payload["split"]["expected_all_root_counts"].values()) == 33859
     assert sum(payload["split"]["expected_eligible_counts"].values()) == 33444
 
-def test_split():
+def test_split_v5():
     pos = {"board_arrangement_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR", "side_to_move": "w", "castling_rights": "KQkq", "en_passant_square": None}
     assert get_partition(pos) == get_partition(pos)
 
-def test_budget():
+def test_budget_v5():
     b1, _ = canonical_budget_order("root1")
     b2, _ = canonical_budget_order("root2")
     assert b1 != b2
@@ -284,7 +284,7 @@ def test_seeds():
     # nonfinite
     with pytest.raises(ValueError): mean_five_seed_root_nll({1729: 1.0, 2718: 2.0, 31415: float('inf'), 65537: 4.0, 104729: 5.0})
 
-def test_aulc():
+def test_aulc_v5():
     assert compute_aulc([10, 20], [1.0, 1.0]) == 1.0
     
     # +1 D better, -1 T better
@@ -344,7 +344,7 @@ def test_full_bootstrap():
     # Non unique roots
     with pytest.raises(ValueError): full_bootstrap_procedure(["root1", "root1"], losses)
 
-def test_outcome():
+def test_outcome_v5():
     # PROTOCOL_INVALID
     assert classify_outcome((1, 2), (1, 2), (1, 2), False) == "PROTOCOL_INVALID"
     
@@ -368,8 +368,8 @@ def test_outcome():
     with pytest.raises(ValueError): classify_outcome((float('nan'), 1), (1, 2), (1, 2), True)
     with pytest.raises(ValueError): classify_outcome((1, float('inf')), (1, 2), (1, 2), True)
 
-def test_protocol_seal():
-    payload = canonical_protocol_payload_v4()
+def test_protocol_seal_v5():
+    payload = canonical_protocol_payload_v5()
     # Check learner properties
     assert payload["learner"]["initialization"]["fan_in_conv1"] == 171
     assert payload["learner"]["optimizer"]["name"] == "Adam"
@@ -380,7 +380,52 @@ def test_protocol_seal():
     assert "compare_scores" in payload["target_labels"]["semantics"]
     
     # byte check
-    b = canonical_protocol_bytes_v4()
+    b = canonical_protocol_bytes_v5()
     p2 = json.loads(b.decode('utf-8'))
     assert p2 == payload
 
+
+def test_allow_nan_behavior():
+    from src.chessheat.protocol_freeze import canonical_json_bytes
+    import math
+    with pytest.raises(ValueError):
+        canonical_json_bytes({"x": float("nan")})
+    with pytest.raises(ValueError):
+        canonical_json_bytes({"x": float("inf")})
+    with pytest.raises(ValueError):
+        canonical_json_bytes({"x": float("-inf")})
+
+def test_bootstrap_root_order_invariance():
+    from src.chessheat.protocol_freeze import full_bootstrap_procedure
+    root_ids_A = [f"root{i}" for i in range(20)]
+    root_ids_B = list(reversed(root_ids_A))
+    
+    expected_budgets = [250, 500, 1000, 2000, 4000, 8000, 16000, 20000]
+    loss_vals = {}
+    for i, r in enumerate(root_ids_A):
+        loss_vals[r] = {
+            "mu_D": i * 1.5,
+            "mu_T": i * 0.5,
+            "B_daS": i * 2.0
+        }
+    
+    def mk_losses():
+        d = {"mu_D": {}, "mu_T": {}, "B_daS": {}}
+        for b in expected_budgets:
+            d["mu_D"][b] = {r: loss_vals[r]["mu_D"] for r in root_ids_A}
+            d["mu_T"][b] = {r: loss_vals[r]["mu_T"] for r in root_ids_A}
+            d["B_daS"][b] = {r: loss_vals[r]["B_daS"] for r in root_ids_A}
+        return d
+    
+    losses = mk_losses()
+    res_A = full_bootstrap_procedure(root_ids_A, losses)
+    res_B = full_bootstrap_procedure(root_ids_B, losses)
+    
+    assert res_A == res_B
+
+def test_no_duplicate_test_names_ast():
+    import ast
+    with open(__file__, "r") as f:
+        tree = ast.parse(f.read())
+    names = [node.name for node in tree.body if isinstance(node, ast.FunctionDef) and node.name.startswith("test_")]
+    assert len(names) == len(set(names))

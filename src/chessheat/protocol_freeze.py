@@ -283,9 +283,19 @@ def mean_five_seed_root_nll(losses_by_seed: Mapping[int, float]) -> float:
         total += v
     return total / 5.0
 
+def canonical_bootstrap_root_order(root_ids: List[str]) -> Tuple[str, ...]:
+    if not root_ids:
+        raise ValueError("root_ids must be nonempty")
+    for r in root_ids:
+        if not isinstance(r, str) or not r:
+            raise ValueError("root_ids must be nonempty strings")
+    if len(root_ids) != len(set(root_ids)):
+        raise ValueError("root_ids must be unique")
+    return tuple(sorted(root_ids))
+
 def full_bootstrap_procedure(root_ids: List[str], root_losses: Dict[str, Dict[int, Dict[str, float]]]) -> Dict[str, Dict[str, float]]:
-    if not root_ids: raise ValueError("root_ids must be nonempty")
-    if len(root_ids) != len(set(root_ids)): raise ValueError("root_ids must be unique")
+    ordered_root_ids = canonical_bootstrap_root_order(root_ids)
+    
     expected_conditions = {"mu_D", "mu_T", "B_daS"}
     expected_budgets = [250, 500, 1000, 2000, 4000, 8000, 16000, 20000]
     
@@ -296,19 +306,19 @@ def full_bootstrap_procedure(root_ids: List[str], root_losses: Dict[str, Dict[in
         if sorted(list(root_losses[cond].keys())) != expected_budgets:
             raise ValueError("Budgets do not match frozen budgets exactly")
         for b in expected_budgets:
-            if set(root_losses[cond][b].keys()) != set(root_ids):
+            if set(root_losses[cond][b].keys()) != set(ordered_root_ids):
                 raise ValueError("Root set mismatch")
             for v in root_losses[cond][b].values():
                 if not math.isfinite(v): raise ValueError("Loss must be finite")
                 
-    N = len(root_ids)
+    N = len(ordered_root_ids)
     delta_dt_all = []
     delta_d0_all = []
     delta_t0_all = []
     
     for b in range(10000):
         sample_indices = [bootstrap_indices(b, j, N) for j in range(N)]
-        sampled_roots = [root_ids[i] for i in sample_indices]
+        sampled_roots = [ordered_root_ids[i] for i in sample_indices]
         
         aulc = {}
         for cond in expected_conditions:
@@ -335,17 +345,27 @@ def full_bootstrap_procedure(root_ids: List[str], root_losses: Dict[str, Dict[in
         "Delta_T0": {"lcb": delta_t0_all[l_idx], "ucb": delta_t0_all[u_idx]}
     }
 
-def canonical_protocol_payload_v4() -> dict:
+def canonical_json_bytes(obj: Any) -> bytes:
+    return json.dumps(
+        obj,
+        sort_keys=True,
+        separators=(',', ':'),
+        allow_nan=False
+    ).encode('utf-8')
+
+def canonical_protocol_payload_v5() -> dict:
     return {
-        "protocol_identifier": "CP_REPRESENTATION_EFFICIENCY_PROTOCOL_V4",
+        "protocol_identifier": "CP_REPRESENTATION_EFFICIENCY_PROTOCOL_V5",
         "authoritative_references": {
             "pre_freeze_sha": "8876f8cf2d6e1da47b2b40b818413b4095786c36",
             "repair_v1_fail": "ba11bde7af3623b3272900b7da66bc5ec53627de",
             "repair_v2_fail": "c0914d88530810d9e07bc4e951c8721aca1a611d",
-            "repair_v3_fail": "af620cd1f5b5beaa850baf08baca0f8bd6b90894"
+            "repair_v3_fail": "af620cd1f5b5beaa850baf08baca0f8bd6b90894",
+            "repair_v4_fail": "7bbbef81fa83ff9babab6049aa7c891a53cdf948"
         },
         "source_evidence": {
             "commit": "8876f8cf2d6e1da47b2b40b818413b4095786c36",
+            "raw_path": "artifacts/research/cp_source_feasibility_2026_07/raw/cp_source_root_results_v2.jsonl",
             "raw_sha256": "7eb640c572dad4c6607cfb1b5ccf99597672042e5c516f131feab02223ccfa6b",
             "population_count": 33859,
             "source_pair_eligible_count": 33444,
@@ -402,15 +422,22 @@ def canonical_protocol_payload_v4() -> dict:
         },
         "learner": {
             "layers": [
-                {"type": "Conv2d", "in": 19, "out": 64, "kernel": [3,3], "stride": [1,1], "padding": [1,1], "bias": True, "activation": "ReLU"},
-                {"type": "Conv2d", "in": 64, "out": 64, "kernel": [3,3], "stride": [1,1], "padding": [1,1], "bias": True, "activation": "ReLU"},
-                {"type": "Conv2d", "in": 64, "out": 64, "kernel": [3,3], "stride": [1,1], "padding": [1,1], "bias": True, "activation": "ReLU"},
+                {"type": "Conv2d", "in": 19, "out": 64, "kernel": [3,3], "stride": [1,1], "padding": [1,1], "dilation": [1,1], "groups": 1, "bias": True, "activation": "ReLU"},
+                {"type": "Conv2d", "in": 64, "out": 64, "kernel": [3,3], "stride": [1,1], "padding": [1,1], "dilation": [1,1], "groups": 1, "bias": True, "activation": "ReLU"},
+                {"type": "Conv2d", "in": 64, "out": 64, "kernel": [3,3], "stride": [1,1], "padding": [1,1], "dilation": [1,1], "groups": 1, "bias": True, "activation": "ReLU"},
                 {"type": "GAP", "operation": "mean across both 8x8 axes"},
                 {"type": "Linear", "in": 270, "out": 128, "bias": True, "activation": "ReLU"},
                 {"type": "Concat", "sources": ["GAP", "Linear_270_128"]},
                 {"type": "Linear", "in": 192, "out": 128, "bias": True, "activation": "ReLU"},
                 {"type": "Linear", "in": 128, "out": 3, "bias": True, "activation": "none"}
             ],
+            "output_logits": {
+                "class_order": [
+                    "FIRST_BETTER",
+                    "EQUAL",
+                    "SECOND_BETTER"
+                ]
+            },
             "normalization": "none",
             "dropout": "none",
             "class_weighting": "none",
@@ -435,7 +462,15 @@ def canonical_protocol_payload_v4() -> dict:
             }
         },
         "training": {
-            "batch_size_effective_roots": 64,
+            "batch_unit": "EFFECTIVE_ROOT",
+            "batch_size": 64,
+            "final_short_batch_allowed": True,
+            "pair_policy": "all TARGET-evaluable pairs within each effective root",
+            "root_loss": "arithmetic mean pair NLL within root",
+            "batch_loss": "arithmetic mean root losses within minibatch",
+            "target_zero_root": "excluded before minibatch construction; nominal budget retained; no replacement",
+            "validation_frequency": "after every completed epoch",
+            "test_evaluation": "exactly once after best checkpoint restoration",
             "epoch_ordering": "SHA256(CHESSHEAT_MINIBATCH_V3|s|e|root_identity)",
             "max_epochs": 200,
             "validation_metric": "root-weighted NLL",
@@ -463,6 +498,8 @@ def canonical_protocol_payload_v4() -> dict:
             "domain_string": "CHESSHEAT_BOOTSTRAP_V3|b|j",
             "unit": "held-out root",
             "procedure": "Resample roots -> recompute U at every budget -> recompute AULC -> recompute contrasts",
+            "root_order": "lexicographically ascending canonical root_identity",
+            "index_binding": "SHA-derived integer modulo N indexes canonical_root_order",
             "ci_type": "percentile",
             "bounds": [2.5, 97.5],
             "indices": [249, 9749]
@@ -479,9 +516,9 @@ def canonical_protocol_payload_v4() -> dict:
         "claim_ceiling": "representation efficiency comparison only"
     }
 
-def canonical_protocol_bytes_v4() -> bytes:
-    payload = canonical_protocol_payload_v4()
-    return json.dumps(payload, sort_keys=True, separators=(',', ':')).encode('utf-8')
+def canonical_protocol_bytes_v5() -> bytes:
+    payload = canonical_protocol_payload_v5()
+    return canonical_json_bytes(payload)
 
-def canonical_protocol_sha256_v4() -> str:
-    return hashlib.sha256(canonical_protocol_bytes_v4()).hexdigest()
+def canonical_protocol_sha256_v5() -> str:
+    return hashlib.sha256(canonical_protocol_bytes_v5()).hexdigest()
